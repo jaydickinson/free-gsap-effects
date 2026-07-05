@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Parallax Hero Demo | GSAP Vault</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">Parallax Hero</h1>
+            <p class="page-subtitle">A layered hero where every element scrolls at its own speed, scrubbed by ScrollTrigger for real depth</p>
+        </header>
+
+        <!-- Example 1: Layered Hero -->
+        <section class="example">
+            <div class="example-header">
+                <span class="example-number">01</span>
+                <h2 class="example-title">Layered Hero</h2>
+            </div>
+            <div class="example-content">
+                <p class="example-instruction">Scroll through the hero. The gradient blobs drift slowly in the background, the headline moves at mid speed and fades as it leaves, and the label strip races ahead in the foreground:</p>
+
+                <section class="parallax-hero" data-parallax aria-label="Layered parallax hero">
+                    <div class="parallax-layer" data-parallax-speed="0.2" aria-hidden="true">
+                        <div class="hero-blob hero-blob--violet"></div>
+                        <div class="hero-blob hero-blob--magenta"></div>
+                    </div>
+                    <div class="parallax-layer" data-parallax-speed="0.45" aria-hidden="true">
+                        <div class="hero-blob hero-blob--indigo"></div>
+                        <div class="hero-grid"></div>
+                    </div>
+                    <div class="parallax-layer parallax-layer--title" data-parallax-speed="0.7" data-parallax-fade>
+                        <p class="hero-kicker">GSAP Vault</p>
+                        <h2 class="hero-title">Depth<br><span>In Motion</span></h2>
+                    </div>
+                    <div class="parallax-layer parallax-layer--strip" data-parallax-speed="1.3">
+                        <div class="hero-strip">
+                            <span>Scrubbed</span>
+                            <span>ScrollTrigger</span>
+                            <span>Layered</span>
+                            <span>Parallax</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Example 2: Scroll Room / Context -->
+        <section class="example">
+            <div class="example-header">
+                <span class="example-number">02</span>
+                <h2 class="example-title">After The Hero</h2>
+            </div>
+            <div class="example-content">
+                <p class="example-instruction">Scroll back up and watch the layers separate again. The effect is fully scrubbed, so it plays forwards and backwards with the scrollbar:</p>
+
+                <div class="after-hero">
+                    <p class="label">How it reads</p>
+                    <h3 class="after-hero-title">Three speeds, one scrollbar</h3>
+                    <p class="after-hero-copy">The background blobs use a speed of 0.2, so they barely move while the page scrolls past them. The headline sits at 0.7, close to normal scroll speed, and fades out as the hero leaves the viewport. The label strip uses 1.3, moving faster than the scroll itself, which pushes it into the foreground.</p>
+                    <p class="after-hero-copy">Each layer is a single scrubbed tween on <code>yPercent</code>, so the whole hero costs one ScrollTrigger and a handful of GPU-accelerated transforms.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- GSAP Core -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis smooth scroll -->
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+
+    <!-- Effect code -->
+    <script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--bg: #050505;
+	--surface: #0f0f0f;
+	--card: #141414;
+	--text: #f0f0f0;
+	--text-muted: #888;
+	--accent: #c8ff00;
+	--accent-dim: rgba(200, 255, 0, 0.1);
+	--border: rgba(255, 255, 255, 0.08);
+	--border-hover: rgba(255, 255, 255, 0.15);
+	--radius: 12px;
+	--radius-lg: 16px;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--bg);
+	color: var(--text);
+	font-family: 'Space Grotesk', system-ui, sans-serif;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+	background: var(--accent);
+	color: var(--bg);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 2rem;
+	position: relative;
+	background: radial-gradient(ellipse at center, var(--surface) 0%, var(--bg) 70%);
+}
+
+.hero-content {
+	max-width: 600px;
+}
+
+.hero-title {
+	font-family: 'Syne', sans-serif;
+	font-size: clamp(2.5rem, 10vw, 4.5rem);
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+	margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+	font-size: 1.25rem;
+	color: var(--text-muted);
+	margin-bottom: 3rem;
+}
+
+.scroll-hint {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	color: var(--text-muted);
+	font-size: 0.85rem;
+	animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-hint svg {
+	color: var(--accent);
+}
+
+@keyframes bounce {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(8px); }
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+.container {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 4rem 2rem 8rem;
+}
+
+/* ============================================
+   PAGE BADGE
+   ============================================ */
+.page-badge {
+	display: inline-block;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.7rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.15em;
+	color: var(--accent);
+	background: var(--accent-dim);
+	padding: 0.4rem 0.8rem;
+	border-radius: 100px;
+	margin-bottom: 1.5rem;
+}
+
+/* ============================================
+   EXAMPLE SECTIONS
+   ============================================ */
+.example {
+	margin-bottom: 6rem;
+}
+
+.example:last-child {
+	margin-bottom: 0;
+}
+
+.example-header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.example-number {
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.75rem;
+	color: var(--accent);
+	letter-spacing: 0.1em;
+}
+
+.example-title {
+	font-size: 0.8rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--text-muted);
+}
+
+.example-content {
+	margin-bottom: 1.5rem;
+}
+
+.example-instruction {
+	font-size: 0.95rem;
+	color: var(--text-muted);
+	margin-bottom: 1.5rem;
+}
+
+.example-instruction code {
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.85em;
+	background: var(--surface);
+	padding: 0.2em 0.4em;
+	border-radius: 4px;
+}
+
+/* ============================================
+   DEMO AREA
+   ============================================ */
+.demo-area {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 2.5rem;
+	position: relative;
+}
+
+.demo-area::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+	opacity: 0.03;
+	pointer-events: none;
+	border-radius: inherit;
+}
+
+/* ============================================
+   PROSE CONTENT
+   ============================================ */
+.prose {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.prose p {
+	font-size: 0.95rem;
+	line-height: 1.7;
+	color: var(--text-muted);
+}
+
+/* ============================================
+   CODE BLOCKS
+   ============================================ */
+.code-block {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	overflow: hidden;
+	margin-top: 1.5rem;
+}
+
+.code-block pre {
+	padding: 1.25rem;
+	overflow-x: auto;
+}
+
+.code-block code {
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.8rem;
+	line-height: 1.7;
+	color: var(--text-muted);
+}
+
+/* ============================================
+   SCROLL PROGRESS - LINEAR BAR
+   ============================================ */
+.progress-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: var(--border);
+	z-index: 1000;
+}
+
+.progress-bar__fill {
+	height: 100%;
+	background: var(--accent);
+	transform-origin: left;
+	transform: scaleX(0);
+	will-change: transform;
+}
+
+/* Bottom position variant */
+.progress-bar--bottom {
+	top: auto;
+	bottom: 0;
+}
+
+/* Thicker variant */
+.progress-bar--thick {
+	height: 5px;
+}
+
+/* ============================================
+   SCROLL PROGRESS - CIRCULAR RING
+   ============================================ */
+.progress-circle {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	width: 60px;
+	height: 60px;
+	z-index: 1000;
+}
+
+.progress-circle__svg {
+	transform: rotate(-90deg);
+	width: 100%;
+	height: 100%;
+}
+
+.progress-circle__bg {
+	fill: none;
+	stroke: var(--border);
+	stroke-width: 3;
+}
+
+.progress-circle__fill {
+	fill: none;
+	stroke: var(--accent);
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-dasharray: 157;
+	stroke-dashoffset: 157;
+	will-change: stroke-dashoffset;
+}
+
+.progress-circle__text {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.7rem;
+	color: var(--text-muted);
+}
+
+/* Top-right variant */
+.progress-circle--top-right {
+	bottom: auto;
+	top: 2rem;
+}
+
+/* Top-left variant */
+.progress-circle--top-left {
+	bottom: auto;
+	right: auto;
+	top: 2rem;
+	left: 2rem;
+}
+
+/* Bottom-left variant */
+.progress-circle--bottom-left {
+	right: auto;
+	left: 2rem;
+}
+
+/* ============================================
+   SCROLL PROGRESS - SIDE RAIL
+   ============================================ */
+.progress-rail {
+	position: fixed;
+	top: 0;
+	width: 4px;
+	height: 100vh;
+	background: var(--border);
+	z-index: 1000;
+}
+
+.progress-rail--left {
+	left: 0;
+}
+
+.progress-rail--right {
+	right: 0;
+}
+
+.progress-rail__fill {
+	width: 100%;
+	height: 100%;
+	background: var(--accent);
+	transform-origin: top;
+	transform: scaleY(0);
+	will-change: transform;
+}
+
+/* ============================================
+   SCROLL PROGRESS - PERCENTAGE COUNTER
+   ============================================ */
+.progress-counter {
+	position: fixed;
+	bottom: 2rem;
+	left: 2rem;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 1rem;
+	color: var(--text-muted);
+	z-index: 1000;
+	display: flex;
+	align-items: baseline;
+	gap: 0.1em;
+}
+
+.progress-counter__value {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--accent);
+	min-width: 2.5ch;
+	text-align: right;
+}
+
+.progress-counter__symbol {
+	font-size: 1rem;
+	color: var(--text-muted);
+}
+
+/* Top-left variant */
+.progress-counter--top-left {
+	bottom: auto;
+	top: 2rem;
+}
+
+/* Top-right variant */
+.progress-counter--top-right {
+	bottom: auto;
+	left: auto;
+	top: 2rem;
+	right: 2rem;
+}
+
+/* Bottom-right variant */
+.progress-counter--bottom-right {
+	left: auto;
+	right: 2rem;
+}
+
+/* ============================================
+   INFO SECTION
+   ============================================ */
+.example--info .example-number {
+	background: var(--accent-dim);
+	padding: 0.5rem;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.example--info .example-number svg {
+	color: var(--accent);
+}
+
+.info-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1.25rem;
+}
+
+.info-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.5rem;
+}
+
+.info-card h3 {
+	font-size: 0.85rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.info-card--positive h3 {
+	color: var(--accent);
+}
+
+.info-card--neutral h3 {
+	color: var(--text-muted);
+}
+
+.info-card ul {
+	list-style: none;
+}
+
+.info-card li {
+	font-size: 0.85rem;
+	color: var(--text-muted);
+	padding: 0.35rem 0;
+	padding-left: 1.25rem;
+	position: relative;
+}
+
+.info-card li::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0.75rem;
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--border-hover);
+}
+
+.info-card--positive li::before {
+	background: var(--accent);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+	.container {
+		padding: 2rem 1.25rem 6rem;
+	}
+
+	.example {
+		margin-bottom: 4rem;
+	}
+
+	.demo-area {
+		padding: 1.5rem;
+	}
+
+	.info-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.code-block pre {
+		padding: 1rem;
+	}
+
+	.code-block code {
+		font-size: 0.75rem;
+	}
+
+	/* Progress indicators - smaller on mobile */
+	.progress-circle {
+		width: 50px;
+		height: 50px;
+		bottom: 1rem;
+		right: 1rem;
+	}
+
+	.progress-counter {
+		bottom: 1rem;
+		left: 1rem;
+	}
+
+	.progress-counter__value {
+		font-size: 1.5rem;
+	}
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-delay: 0ms !important;
+		transition-duration: 0.01ms !important;
+	}
+
+	/* Show progress at 100% for reduced motion */
+	.progress-bar__fill {
+		transform: scaleX(1);
+	}
+
+	.progress-circle__fill {
+		stroke-dashoffset: 0;
+	}
+
+	.progress-rail__fill {
+		transform: scaleY(1);
+		height: 100%;
+	}
+
+	.progress-counter__value::after {
+		content: '100';
+	}
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hover Underline</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <header class="page-header">
+            <h1 class="page-title">Hover Underline</h1>
+            <p class="page-subtitle">Animated link underlines with three variants: slide, fill, and wave. One data attribute, keyboard included.</p>
+        </header>
+
+        <!-- Example 1: All three variants -->
+        <section class="example">
+            <div class="example-header">
+                <span class="example-number">01</span>
+                <h2 class="example-title">Three Variants</h2>
+            </div>
+            <div class="example-content">
+                <p class="example-instruction">Hover or tab through the links below. Each variant is chosen with a single <code>data-underline</code> attribute; the script injects the underline for you.</p>
+
+                <nav class="demo-nav" aria-label="Underline variant demos">
+                    <div class="demo-nav__group">
+                        <span class="label">slide</span>
+                        <a href="#work" data-underline>Work</a>
+                        <a href="#studio" data-underline="slide">Studio</a>
+                    </div>
+                    <div class="demo-nav__group">
+                        <span class="label">fill</span>
+                        <a href="#projects" data-underline="fill">Projects</a>
+                        <a href="#about" data-underline="fill">About</a>
+                    </div>
+                    <div class="demo-nav__group">
+                        <span class="label">wave</span>
+                        <a href="#journal" data-underline="wave">Journal</a>
+                        <a href="#contact" data-underline="wave">Contact</a>
+                    </div>
+                </nav>
+
+                <p class="demo-copy">
+                    They work inline too. The default <a href="#slide" data-underline>slide variant</a> grows
+                    from the left and exits through the right, the
+                    <a href="#fill" data-underline="fill">fill variant</a> sweeps up behind the text like a
+                    marker, and the <a href="#wave" data-underline="wave">wave variant</a> draws itself in
+                    with a springy settle. You can also override the colour per link with
+                    <a href="#color" data-underline="wave" data-underline-color="#22d3ee">data-underline-color</a>.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- GSAP Core -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+    <!-- Effect code -->
+    <script src="assets/script.js"></script>
+</body>
+</html>

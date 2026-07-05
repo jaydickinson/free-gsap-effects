@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow">
+		<title>CSS Scroll Reveal Demo | GSAP Vault</title>
+		<link rel="stylesheet" href="assets/style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Hero fills viewport to demonstrate scroll animations -->
+		<section class="hero" data-thumbnail-target>
+			<div class="hero-content">
+				<span class="page-badge">CSS Only</span>
+				<h2 class="hero-title">CSS Scroll Reveal</h2>
+				<p class="hero-subtitle">Native scroll-triggered animations. No JavaScript required.</p>
+				<div class="scroll-hint">
+					<span>Scroll to see animations</span>
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<path d="M12 5v14M5 12l7 7 7-7"/>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<main class="container">
+			<!-- Browser Support Notice -->
+			<div class="browser-notice">
+				<div class="browser-notice-icon">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<circle cx="12" cy="12" r="10"/>
+						<path d="M12 16v-4"/>
+						<path d="M12 8h.01"/>
+					</svg>
+				</div>
+				<div class="browser-notice-content">
+					<strong>Pure CSS Demo:</strong> This page uses native CSS scroll-driven animations. No JavaScript is used for the animation logic.
+					<a href="https://caniuse.com/css-scroll-driven-animations" target="_blank" rel="noopener">Check browser support</a>
+				</div>
+			</div>
+
+			<!-- Example 1: Fade In -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">01</span>
+					<h2 class="example-title">Fade In</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Elements fade from transparent to opaque as they enter the viewport:</p>
+					<div class="demo-area">
+						<div class="demo-grid">
+							<div class="card reveal-fade">
+								<div class="card-icon">
+									<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+										<circle cx="12" cy="12" r="10"/>
+										<path d="M12 6v6l4 2"/>
+									</svg>
+								</div>
+								<h3>Fast</h3>
+								<p>Optimized for performance</p>
+							</div>
+							<div class="card reveal-fade">
+								<div class="card-icon">
+									<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+										<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+										<path d="M2 17l10 5 10-5"/>
+										<path d="M2 12l10 5 10-5"/>
+									</svg>
+								</div>
+								<h3>Simple</h3>
+								<p>No JavaScript needed</p>
+							</div>
+							<div class="card reveal-fade">
+								<div class="card-icon">
+									<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+										<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+										<polyline points="22 4 12 14.01 9 11.01"/>
+									</svg>
+								</div>
+								<h3>Native</h3>
+								<p>Built into the browser</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 2: Slide Up -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">02</span>
+					<h2 class="example-title">Slide Up</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Elements fade in while sliding up from below:</p>
+					<div class="demo-area">
+						<div class="demo-grid">
+							<div class="card reveal-slide-up">
+								<span class="card-number">01</span>
+								<h3>Research</h3>
+								<p>Understand the problem space</p>
+							</div>
+							<div class="card reveal-slide-up">
+								<span class="card-number">02</span>
+								<h3>Design</h3>
+								<p>Create the solution</p>
+							</div>
+							<div class="card reveal-slide-up">
+								<span class="card-number">03</span>
+								<h3>Build</h3>
+								<p>Implement with care</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 3: Scale In -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">03</span>
+					<h2 class="example-title">Scale In</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Elements grow from smaller to full size:</p>
+					<div class="demo-area">
+						<div class="demo-grid demo-grid--2col">
+							<div class="card card--large reveal-scale">
+								<div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+									<span class="card-label">Featured</span>
+								</div>
+								<div class="card-body">
+									<h3>Scale Animation</h3>
+									<p>Grows smoothly into view</p>
+								</div>
+							</div>
+							<div class="card card--large reveal-scale">
+								<div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+									<span class="card-label">Popular</span>
+								</div>
+								<div class="card-body">
+									<h3>Subtle Effect</h3>
+									<p>Adds depth without distraction</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 4: Slide from Sides -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">04</span>
+					<h2 class="example-title">Slide From Sides</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Elements slide in from left or right:</p>
+					<div class="demo-area">
+						<div class="demo-split">
+							<div class="card reveal-slide-left">
+								<h3>From Left</h3>
+								<p>Slides in from the left side</p>
+							</div>
+							<div class="card reveal-slide-right">
+								<h3>From Right</h3>
+								<p>Slides in from the right side</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Limitations Section -->
+			<section class="example example--info">
+				<div class="example-header">
+					<span class="example-number">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+							<path d="M2 17l10 5 10-5"/>
+							<path d="M2 12l10 5 10-5"/>
+						</svg>
+					</span>
+					<h2 class="example-title">When to Use This</h2>
+				</div>
+				<div class="example-content">
+					<div class="info-grid">
+						<div class="info-card info-card--positive">
+							<h3>CSS Scroll Animations Work Great For</h3>
+							<ul>
+								<li>Simple entrance animations (fade, slide, scale)</li>
+								<li>Projects targeting modern browsers only</li>
+								<li>When you need zero JavaScript</li>
+								<li>Quick prototypes and MVPs</li>
+								<li>Performance-critical lightweight pages</li>
+							</ul>
+						</div>
+						<div class="info-card info-card--neutral">
+							<h3>GSAP ScrollTrigger Advantages</h3>
+							<ul>
+								<li><strong>Full Browser Support</strong> - Works everywhere, not just modern browsers</li>
+								<li><strong>Scrubbing & Pinning</strong> - Easily pin elements or scrub animations</li>
+								<li><strong>Complexity</strong> - Handle complex sequencing and staggered timelines</li>
+								<li><strong>Callbacks</strong> - Trigger JS functions at specific scroll points</li>
+								<li><strong>Lenis/Smooth Scroll</strong> - Perfect integration with smooth scrolling</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<!-- Minimal JS for browser support detection only -->
+		<script src="assets/script.js"></script>
+	</body>
+</html>

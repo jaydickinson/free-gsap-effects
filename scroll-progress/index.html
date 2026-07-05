@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow">
+		<title>Scroll Progress Indicator Demo | GSAP Vault</title>
+		<link rel="stylesheet" href="assets/style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Global Progress Bar (top of page) -->
+		<div class="progress-bar" data-progress-style="bar" aria-hidden="true">
+			<div class="progress-bar__fill"></div>
+		</div>
+
+		<!-- Hero fills viewport to demonstrate scroll animations -->
+		<section class="hero" data-thumbnail-target>
+			<div class="hero-content">
+				<span class="page-badge">ScrollTrigger</span>
+				<h2 class="hero-title">Scroll Progress</h2>
+				<p class="hero-subtitle">Four visualization styles for tracking page scroll position.</p>
+				<div class="scroll-hint">
+					<span>Scroll to see progress</span>
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<path d="M12 5v14M5 12l7 7 7-7"/>
+					</svg>
+				</div>
+			</div>
+		</section>
+
+		<main class="container">
+			<!-- Example 1: Linear Bar -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">01</span>
+					<h2 class="example-title">Linear Bar</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">A horizontal progress bar at the top of the viewport. Uses <code>scaleX</code> for smooth GPU-accelerated animation.</p>
+					<div class="demo-area">
+						<div class="prose">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+							<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 2: Circular Ring -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">02</span>
+					<h2 class="example-title">Circular Ring</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">An SVG circle that fills using <code>stroke-dashoffset</code>. Optionally shows percentage text.</p>
+
+					<!-- Circular progress indicator for this section -->
+					<div class="progress-circle" data-progress-style="circle" aria-hidden="true">
+						<svg class="progress-circle__svg" viewBox="0 0 60 60">
+							<circle class="progress-circle__bg" cx="30" cy="30" r="25"/>
+							<circle class="progress-circle__fill" cx="30" cy="30" r="25"/>
+						</svg>
+						<span class="progress-circle__text">0%</span>
+					</div>
+
+					<div class="demo-area">
+						<div class="prose">
+							<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+							<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 3: Side Rail -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">03</span>
+					<h2 class="example-title">Side Rail</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">A vertical bar on the left or right edge. Uses <code>scaleY</code> with <code>transform-origin: top</code>.</p>
+
+					<!-- Rail progress indicator -->
+					<div class="progress-rail progress-rail--right" data-progress-style="rail" aria-hidden="true">
+						<div class="progress-rail__fill"></div>
+					</div>
+
+					<div class="demo-area">
+						<div class="prose">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
+							<p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+							<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 4: Percentage Counter -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">04</span>
+					<h2 class="example-title">Percentage Counter</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">A numeric display using <code>gsap.quickTo()</code> for smooth number interpolation.</p>
+
+					<!-- Counter progress indicator -->
+					<div class="progress-counter" data-progress-style="counter" aria-hidden="true">
+						<span class="progress-counter__value">0</span>
+						<span class="progress-counter__symbol">%</span>
+					</div>
+
+					<div class="demo-area">
+						<div class="prose">
+							<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+							<p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Use Cases Section -->
+			<section class="example example--info">
+				<div class="example-header">
+					<span class="example-number">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+							<path d="M2 17l10 5 10-5"/>
+							<path d="M2 12l10 5 10-5"/>
+						</svg>
+					</span>
+					<h2 class="example-title">When to Use Each Style</h2>
+				</div>
+				<div class="example-content">
+					<div class="info-grid">
+						<div class="info-card info-card--positive">
+							<h3>Best Practices</h3>
+							<ul>
+								<li><strong>Bar:</strong> Blog posts, documentation, long-form content</li>
+								<li><strong>Circle:</strong> Landing pages, minimal designs, corner placement</li>
+								<li><strong>Rail:</strong> Editorial sites, vertical emphasis, full-height</li>
+								<li><strong>Counter:</strong> Technical docs, precise feedback, data-driven</li>
+							</ul>
+						</div>
+						<div class="info-card info-card--neutral">
+							<h3>Accessibility Notes</h3>
+							<ul>
+								<li>All indicators use <code>aria-hidden="true"</code> (decorative)</li>
+								<li>CSS provides static 100% state for reduced motion</li>
+								<li>No keyboard interaction required (passive visualization)</li>
+								<li>Works with any smooth scroll library or native scroll</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<!-- Scripts -->
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+		<script src="assets/script.js"></script>
+	</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex, nofollow">
+		<title>3D Card Flip Gallery Demo | GSAP Vault</title>
+		<link rel="stylesheet" href="assets/style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<main class="container">
+			<header class="page-header">
+				<h2 class="page-title">3D Card Flip</h2>
+				<p class="page-subtitle">Interactive cards with smooth 3D flip animations</p>
+			</header>
+
+			<!-- Example 1: Basic Hover Flip -->
+			<section class="example" data-thumbnail-target>
+				<div class="example-header">
+					<span class="example-number">01</span>
+					<h2 class="example-title">Hover Flip (Desktop)</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Hover over the card to reveal the back:</p>
+					<div class="cards-row">
+						<div class="flip-card" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon">
+										<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<circle cx="12" cy="8" r="4"/>
+											<path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+										</svg>
+									</div>
+									<h3>Alex Chen</h3>
+									<p class="card-role">Creative Director</p>
+								</div>
+								<div class="flip-card-back">
+									<p>15 years in the creative industry. Specializes in brand identity and strategic design thinking.</p>
+									<button class="card-btn">Contact</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 2: Click/Tap Toggle -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">02</span>
+					<h2 class="example-title">Click/Tap Toggle</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Click or tap the card to flip (works on all devices):</p>
+					<div class="cards-row">
+						<div class="flip-card" data-flip="click">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon">
+										<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<rect x="3" y="3" width="18" height="18" rx="2"/>
+											<path d="M9 9h6v6H9z"/>
+										</svg>
+									</div>
+									<h3>Project Alpha</h3>
+									<p class="card-role">Web Application</p>
+								</div>
+								<div class="flip-card-back">
+									<p>A comprehensive dashboard for real-time analytics and data visualization.</p>
+									<button class="card-btn">View Details</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 3: Grid with Auto-Close -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">03</span>
+					<h2 class="example-title">Grid with Auto-Close</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Click a card to flip. Other cards auto-close:</p>
+					<div class="cards-grid" data-flip-group="auto-close">
+						<div class="flip-card" data-flip="click">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon accent-purple">
+										<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+											<path d="M2 17l10 5 10-5"/>
+											<path d="M2 12l10 5 10-5"/>
+										</svg>
+									</div>
+									<h3>Design</h3>
+								</div>
+								<div class="flip-card-back">
+									<p>UI/UX design, prototyping, and user research.</p>
+								</div>
+							</div>
+						</div>
+						<div class="flip-card" data-flip="click">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon accent-blue">
+										<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<polyline points="16 18 22 12 16 6"/>
+											<polyline points="8 6 2 12 8 18"/>
+										</svg>
+									</div>
+									<h3>Develop</h3>
+								</div>
+								<div class="flip-card-back">
+									<p>Full-stack development with modern frameworks.</p>
+								</div>
+							</div>
+						</div>
+						<div class="flip-card" data-flip="click">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon accent-green">
+										<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+											<polyline points="22 4 12 14.01 9 11.01"/>
+										</svg>
+									</div>
+									<h3>Deploy</h3>
+								</div>
+								<div class="flip-card-back">
+									<p>CI/CD pipelines and cloud infrastructure.</p>
+								</div>
+							</div>
+						</div>
+						<div class="flip-card" data-flip="click">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-icon accent-orange">
+										<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+											<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+										</svg>
+									</div>
+									<h3>Support</h3>
+								</div>
+								<div class="flip-card-back">
+									<p>24/7 maintenance and technical support.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 4: Staggered Entrance -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">04</span>
+					<h2 class="example-title">Staggered Scroll Entrance</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Scroll to reveal cards with staggered animation:</p>
+					<div class="cards-row" data-flip-stagger>
+						<div class="flip-card" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<h3>01</h3>
+									<p class="card-role">Research</p>
+								</div>
+								<div class="flip-card-back">
+									<p>Deep dive into user needs and market analysis.</p>
+								</div>
+							</div>
+						</div>
+						<div class="flip-card" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<h3>02</h3>
+									<p class="card-role">Ideate</p>
+								</div>
+								<div class="flip-card-back">
+									<p>Brainstorm and explore creative solutions.</p>
+								</div>
+							</div>
+						</div>
+						<div class="flip-card" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<h3>03</h3>
+									<p class="card-role">Execute</p>
+								</div>
+								<div class="flip-card-back">
+									<p>Build and iterate towards perfection.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Example 5: Content Variants -->
+			<section class="example">
+				<div class="example-header">
+					<span class="example-number">05</span>
+					<h2 class="example-title">Content Variants</h2>
+				</div>
+				<div class="example-content">
+					<p class="example-instruction">Different front/back content patterns:</p>
+					<div class="cards-row cards-row--wide">
+						<!-- Image front -->
+						<div class="flip-card flip-card--image" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+										<span class="card-image-label">Featured</span>
+									</div>
+								</div>
+								<div class="flip-card-back">
+									<h3>Image Card</h3>
+									<p>Front displays an image or gradient, back shows details.</p>
+								</div>
+							</div>
+						</div>
+						<!-- Stats card -->
+						<div class="flip-card flip-card--stats" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<span class="stat-value">99%</span>
+									<span class="stat-label">Satisfaction</span>
+								</div>
+								<div class="flip-card-back">
+									<p>Based on 500+ client reviews over 5 years of service.</p>
+								</div>
+							</div>
+						</div>
+						<!-- Icon-heavy -->
+						<div class="flip-card flip-card--icon-heavy" data-flip="hover">
+							<div class="flip-card-inner">
+								<div class="flip-card-front">
+									<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+										<circle cx="12" cy="12" r="10"/>
+										<path d="M12 6v6l4 2"/>
+									</svg>
+								</div>
+								<div class="flip-card-back">
+									<h3>Quick Delivery</h3>
+									<p>Fast turnaround on all projects.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<!-- GSAP -->
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+
+		<!-- LENIS SMOOTH SCROLL (OPTIONAL) -->
+		<script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+
+		<!-- EFFECT CODE -->
+		<script src="assets/script.js"></script>
+	</body>
+</html>

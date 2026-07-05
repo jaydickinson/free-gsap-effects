@@ -1,0 +1,406 @@
+/* ============================================
+   GSAP VAULT DESIGN SYSTEM
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Core colors */
+    --black: #0a0a0a;
+    --dark: #111111;
+    --surface: #1a1a1a;
+    --surface-light: #242424;
+    --border: #2a2a2a;
+    --border-light: #3a3a3a;
+
+    /* Text hierarchy */
+    --text: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #999999;
+
+    /* Accent colors - CHOOSE ONE per effect */
+    --lime: #c8ff00;        /* Energetic, techy */
+    --lime-dim: #a8d900;
+    --purple: #a855f7;      /* Creative, premium */
+    --purple-light: #c084fc;
+    --orange: #ff6b35;      /* Warm, playful */
+    --orange-light: #ff8c5a;
+    --cyan: #22d3ee;        /* Cool, modern */
+    --pink: #ff3366;        /* Bold, vibrant */
+
+    /* Set chosen accent (change per effect) */
+    --accent: var(--purple);
+
+    /* Easing - matches GSAP patterns */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--black);
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--surface-light);
+    border-radius: 5px;
+    border: 2px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-light);
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+/* Syne for display/headlines */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+/* JetBrains Mono for code/labels */
+code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.page-header {
+    text-align: center;
+    margin-bottom: 6rem;
+    padding-top: 2rem;
+}
+
+.page-title {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   EXAMPLE SECTIONS
+   ============================================ */
+.example {
+    margin-bottom: 8rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.example:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.example-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.example-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+}
+
+.example-title {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.example-content {
+    padding-left: 3rem;
+}
+
+.example-instruction {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+/* ============================================
+   LABELS
+   ============================================ */
+.label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+}
+
+/* ============================================
+   EFFECT-SPECIFIC STYLES: PARALLAX HERO
+   ============================================ */
+
+.parallax-hero {
+    position: relative;
+    height: 92vh;
+    min-height: 540px;
+    overflow: clip;
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--dark) 0%, var(--black) 100%);
+}
+
+/* Every layer fills the hero and is moved by GSAP */
+.parallax-layer {
+    position: absolute;
+    inset: -12% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* --- Background blobs (pure CSS, no images) --- */
+.hero-blob {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.hero-blob--violet {
+    width: min(560px, 70vw);
+    height: min(560px, 70vw);
+    top: 2%;
+    left: -8%;
+    background: radial-gradient(circle at 35% 35%, rgba(168, 85, 247, 0.55) 0%, rgba(168, 85, 247, 0) 68%);
+}
+
+.hero-blob--magenta {
+    width: min(480px, 62vw);
+    height: min(480px, 62vw);
+    bottom: -4%;
+    right: -6%;
+    background: radial-gradient(circle at 60% 40%, rgba(255, 51, 102, 0.35) 0%, rgba(255, 51, 102, 0) 70%);
+}
+
+.hero-blob--indigo {
+    width: min(420px, 55vw);
+    height: min(420px, 55vw);
+    top: 24%;
+    right: 14%;
+    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 0%, rgba(99, 102, 241, 0) 66%);
+}
+
+/* Faint dot grid for extra depth on the mid layer */
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+/* --- Mid layer: headline --- */
+.parallax-layer--title {
+    gap: 1.25rem;
+    text-align: center;
+}
+
+.hero-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+}
+
+.hero-title {
+    font-family: 'Syne', system-ui, sans-serif;
+    font-size: clamp(3.25rem, 11vw, 8rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+
+.hero-title span {
+    background: linear-gradient(90deg, var(--purple-light), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* --- Foreground layer: label strip --- */
+.parallax-layer--strip {
+    justify-content: flex-end;
+    padding-bottom: 16%;
+}
+
+.hero-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 2.5rem;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--border-light);
+    border-radius: 100px;
+    background: rgba(10, 10, 10, 0.7);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-secondary);
+}
+
+.hero-strip span:nth-child(odd) {
+    color: var(--accent);
+}
+
+/* --- Content section below the hero --- */
+.after-hero {
+    max-width: 620px;
+    padding: 2rem 0 4rem;
+}
+
+.after-hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin: 0.75rem 0 1.5rem;
+}
+
+.after-hero-copy {
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        padding: 3rem 1.5rem;
+    }
+
+    .page-header {
+        margin-bottom: 4rem;
+    }
+
+    .example {
+        margin-bottom: 5rem;
+        padding-bottom: 3rem;
+    }
+
+    .example-content {
+        padding-left: 0;
+    }
+
+    .parallax-hero {
+        height: 80vh;
+        min-height: 460px;
+        border-radius: 16px;
+    }
+
+    .hero-strip {
+        gap: 0.5rem 1.25rem;
+        padding: 0.75rem 1.25rem;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .parallax-layer {
+        transform: none !important;
+        opacity: 1 !important;
+        will-change: auto;
+    }
+}
+
+/* ============================================
+   SCREEN READER ONLY (for ARIA live regions)
+   ============================================ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
