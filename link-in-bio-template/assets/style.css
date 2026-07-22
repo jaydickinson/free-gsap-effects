@@ -1,0 +1,463 @@
+/* ============================================
+   TATI MORENO - LINK IN BIO TEMPLATE
+   A creator profile page as a desk of stickers:
+   light lilac ground, die-cut white-edged link
+   cards that toss in on load, drag anywhere,
+   and tidy back into a stack.
+   ============================================ */
+
+:root {
+    /* One light lavender ground, near-black violet ink, and one hot
+       orange spent only where it is loud on purpose. The look this page
+       refuses: a dark "linktree clone" column of identical grey pills.
+       The cards are stickers - white die-cut edges, a thrown scatter -
+       and everything else stays quiet around them.
+
+       Contrast measured as used, composited:
+
+       ON THE GROUND (lilac #D8CEEE)
+         ink name, card labels via face          10.74
+         ink-dim bio, hint, footer                5.92
+       ON THE CARD FACE (#F1EDFA)
+         ink labels                              14.01
+         ink-dim sub lines                        7.72
+       ON THE ACCENT (orange #FF4D0D)
+         ink handle pill, tidy button, CTA        4.85
+       ON THE PANEL (ink #251C38)
+         lilac drop title                        10.74
+         panel-dim body copy                      7.41
+         orange badge text                        4.85
+
+       The accent is banned as TYPE on the ground and on the cards: it
+       measures 2.21 on lilac and 3.32 on white, both under the 4.5
+       floor. It only ever appears as a fill with ink type on it, or as
+       type on the ink panel, where it clears. Keep that rule if you
+       repaint: an orange hot enough to sing on lilac is too light to
+       read on it.
+
+       Reskin = repaint the six values below, keeping the -rgb triples
+       in step; shadows, borders and the desk outline resolve from them. */
+    --ground: #D8CEEE;         /* the desk, page base */
+    --card: #F1EDFA;           /* sticker faces, inside a white die-cut edge */
+    --ink: #251C38;            /* near-black violet: type, and the drop panel */
+    --ink-dim: #4E4370;        /* secondary type on ground and cards */
+    --panel-dim: #B7A8DC;      /* secondary type on the ink panel only */
+    --accent: #FF4D0D;         /* hot orange: fills and panel type, never type on light */
+
+    --ground-rgb: 216, 206, 238;
+    --ink-rgb: 37, 28, 56;
+    --accent-rgb: 255, 77, 13;
+
+    --font-display: 'Baloo 2', 'Arial Rounded MT Bold', system-ui, sans-serif;
+    --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+
+    color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    /* Nothing may pan the page sideways, including a card mid-throw. */
+    overflow-x: clip;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--ink);
+}
+
+a { color: inherit; }
+
+:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.shell {
+    width: min(100% - 2.5rem, 980px);
+    margin-inline: auto;
+    flex: 1;
+}
+
+/* ---------- Profile ---------- */
+
+.hero {
+    text-align: center;
+    padding: clamp(3rem, 8vh, 5rem) 0 1.5rem;
+}
+
+/* The avatar is a drawn monogram on a sticker blob - no photo to
+   source, grade or licence. Swap the initial, or replace the whole
+   block with an <img> at the same size. */
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 104px;
+    height: 104px;
+    margin: 0 auto 1.1rem;
+    background: var(--accent);
+    border: 5px solid #fff;
+    border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+    transform: rotate(-6deg);
+    box-shadow: 0 10px 24px rgba(var(--ink-rgb), 0.18);
+}
+
+.avatar-mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 3.2rem;
+    line-height: 1;
+    color: var(--ink);
+    transform: rotate(6deg) translateY(-4px);
+}
+
+.hero-name {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    /* Display face, capped well under 6rem: it is a name, not a poster. */
+    font-size: clamp(2.6rem, 7.5vw, 4.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+}
+
+.hero-handle { margin: 0 0 1.1rem; }
+
+.handle-pill {
+    display: inline-block;
+    padding: 0.3rem 1rem 0.35rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 999px;
+    transform: rotate(-1.5deg);
+}
+
+.hero-bio {
+    max-width: 34rem;
+    margin: 0 auto;
+    color: var(--ink-dim);
+    font-size: 1.06rem;
+}
+
+/* ---------- The desk of links ---------- */
+
+.links { padding: 2.25rem 0 1rem; }
+
+/* The hint and the Tidy button only mean anything once the cards can
+   move, so the whole bar is injected by script.js rather than written
+   in the HTML - with scripting off it simply never exists. */
+.desk-bar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: min(100%, 640px);
+    margin: 0 auto 0.9rem;
+}
+
+.desk-hint {
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: 0.92rem;
+}
+
+.tidy-btn {
+    flex: none;
+    padding: 0.45rem 1.1rem 0.5rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.35);
+}
+
+.tidy-btn:hover { filter: brightness(1.06); }
+.tidy-btn:active { transform: translateY(1px); }
+
+/* The play surface. Its dashed edge is the cards' drag boundary made
+   visible; without JavaScript there is nothing to drag, so no frame. */
+.desk { padding: 0; }
+
+.has-js .desk {
+    border: 2px dashed rgba(var(--ink-rgb), 0.25);
+    border-radius: 28px;
+    padding: clamp(1.1rem, 3vw, 2rem);
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: min(100%, 420px);
+    margin: 0 auto;
+}
+
+/* A die-cut sticker: pale face, thick white edge, soft drop shadow.
+   GSAP owns the card's transform, so nothing here transitions it. */
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--card);
+    border: 4px solid #fff;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(var(--ink-rgb), 0.14);
+    transition: box-shadow 0.25s ease;
+    will-change: transform;
+}
+
+.has-js .card {
+    cursor: grab;
+    /* Vertical touch swipes stay the page's to scroll; only a sideways
+       start picks a card up (see initDrag in script.js). */
+    touch-action: pan-y;
+}
+
+.card.is-held {
+    cursor: grabbing;
+    box-shadow: 0 18px 40px rgba(var(--ink-rgb), 0.26);
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+}
+
+.card-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--ink);
+}
+
+.card-sub {
+    font-size: 0.9rem;
+    color: var(--ink-dim);
+}
+
+.card-arrow {
+    flex: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--ink);
+}
+
+/* ---------- The latest thing ---------- */
+
+.latest { padding: 2.5rem 0 3rem; }
+
+.latest-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(100%, 760px);
+    margin: 0 auto;
+    padding: clamp(1.6rem, 4vw, 2.5rem) clamp(1.4rem, 4vw, 2.75rem);
+    background: var(--ink);
+    border-radius: 28px;
+    color: var(--ground);
+}
+
+.latest-badge {
+    margin: 0 0 0.4rem;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.latest-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.1;
+    color: var(--ground);
+}
+
+.latest-body {
+    max-width: 26rem;
+    margin: 0 0 1.3rem;
+    color: var(--panel-dim);
+    font-size: 0.98rem;
+}
+
+.latest-cta {
+    display: inline-block;
+    padding: 0.6rem 1.4rem 0.65rem;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1;
+    text-decoration: none;
+    border-radius: 999px;
+}
+
+.latest-cta:hover { filter: brightness(1.06); }
+
+.latest-panel :focus-visible { outline-color: var(--ground); }
+
+/* Three grumpy pigeons, drawn in CSS on white sticker rounds. They are
+   decoration: delete .latest-art and the panel simply narrows. */
+.latest-art {
+    flex: none;
+    position: relative;
+    width: 190px;
+    height: 170px;
+}
+
+.pigeon {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 96px;
+    height: 96px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 8px 18px rgba(var(--ink-rgb), 0.4);
+}
+
+.pigeon-1 { top: 0; left: 0; transform: rotate(-8deg); }
+.pigeon-2 { top: 18px; right: 0; transform: rotate(6deg); }
+.pigeon-3 { bottom: 0; left: 34px; transform: rotate(-3deg); z-index: 1; }
+
+.pigeon-face {
+    position: relative;
+    width: 66px;
+    height: 66px;
+    background: #8F86A8;
+    border-radius: 50%;
+}
+
+.pigeon-brow {
+    position: absolute;
+    top: 20px;
+    left: 13px;
+    width: 40px;
+    height: 8px;
+    background: var(--ink);
+    border-radius: 4px;
+    /* One bar, clipped to a shallow V: the frown. */
+    clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 55%, 50% 100%, 0 55%);
+}
+
+.pigeon-eye {
+    position: absolute;
+    top: 28px;
+    width: 9px;
+    height: 9px;
+    background: var(--ink);
+    border-radius: 50%;
+}
+
+.pigeon-eye-l { left: 17px; }
+.pigeon-eye-r { right: 17px; }
+
+.pigeon-beak {
+    position: absolute;
+    top: 39px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 10px solid var(--accent);
+}
+
+/* ---------- Footer ---------- */
+
+.foot {
+    text-align: center;
+    padding: 0 1.25rem 2rem;
+}
+
+.foot-line {
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: 0.88rem;
+}
+
+.foot-link {
+    color: var(--ink-dim);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.foot-link:hover { color: var(--ink); }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+    .latest-panel {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .latest-art {
+        align-self: center;
+        width: 210px;
+        height: 120px;
+    }
+
+    .pigeon { width: 82px; height: 82px; }
+    .pigeon-face { width: 56px; height: 56px; }
+    .pigeon-brow { top: 16px; left: 10px; width: 36px; }
+    .pigeon-eye { top: 23px; }
+    .pigeon-eye-l { left: 13px; }
+    .pigeon-eye-r { right: 13px; }
+    .pigeon-beak { top: 32px; }
+    .pigeon-1 { top: 0; left: 8px; }
+    .pigeon-2 { top: 10px; right: 8px; }
+    .pigeon-3 { bottom: 0; left: 64px; }
+}
+
+@media (max-width: 480px) {
+    .desk-bar { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+    .tidy-btn { align-self: flex-start; }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

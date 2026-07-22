@@ -1,8 +1,8 @@
 # Free GSAP Effects
 
-Seven free, production-ready GSAP animation effects and two complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Seven free, production-ready GSAP animation effects and three complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animation effects and 22 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animation effects and 24 complete website templates.
 
 ## The Effects
 
@@ -24,6 +24,7 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 |--------|--------------|-----------|
 | [Coming Soon Template](./coming-soon-template) | A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day. | [Demo](https://gsapvault.com/templates/coming-soon-template) |
 | [Charity Campaign Template](./charity-campaign-template) | A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
+| [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
 
 ## Quick Start
 
@@ -57,7 +58,7 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 31 effects and 22 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 31 effects and 24 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
 - All of it, one payment: [All-Access Bundle](https://gsapvault.com/effects) at £29 one-time, unlimited commercial projects

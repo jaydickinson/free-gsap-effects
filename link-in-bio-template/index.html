@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Tati Moreno - illustrator in Bristol. Stickers, riso prints, a weekly pigeon comic, and everywhere else to find her, on one page.">
+    <title>Tati Moreno - Link in Bio Template | GSAP Vault</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<main class="shell">
+
+    <!-- Profile. The avatar is a drawn monogram sticker, not a photo:
+         swap the initial in .avatar-mark and it is yours. -->
+    <header class="hero">
+        <div class="avatar" data-avatar aria-hidden="true">
+            <span class="avatar-mark">t.</span>
+        </div>
+        <h1 class="hero-name" data-rise>Tati Moreno</h1>
+        <p class="hero-handle" data-rise><span class="handle-pill">@tatidoodles</span></p>
+        <p class="hero-bio" data-rise>I draw round animals with bad attitudes.
+        Stickers, riso prints, and one very cross pigeon comic, from a small
+        desk in Bristol.</p>
+    </header>
+
+    <!-- The links. Without JavaScript this is exactly what it looks like:
+         a plain stacked list, every link reachable. With it, the cards
+         toss in like stickers and can be dragged anywhere on the desk.
+         The hint line and the Tidy up button are injected by script.js,
+         because they describe a feature only the script provides; their
+         wording lives in initDeskBar. -->
+    <section class="links" id="links" aria-label="Links">
+        <div class="desk" data-desk>
+            <div class="cards">
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">The shop</span>
+                        <span class="card-sub">Sticker sheets &amp; riso prints</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">Pigeon Post</span>
+                        <span class="card-sub">One cross pigeon, weekly. Free to read</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">Commissions</span>
+                        <span class="card-sub">Two slots open for autumn</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">Sticker Club</span>
+                        <span class="card-sub">A surprise pack in the post, monthly</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">Instagram</span>
+                        <span class="card-sub">Works in progress and studio floor</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+                <a class="card" data-card href="#">
+                    <span class="card-text">
+                        <span class="card-label">Newsletter</span>
+                        <span class="card-sub">One email a month, no more</span>
+                    </span>
+                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The latest thing: one feature slot for whatever is newest.
+         The pigeons are drawn in CSS - restyle or delete them freely. -->
+    <section class="latest" id="latest" aria-labelledby="latest-title">
+        <div class="latest-panel" data-rise>
+            <div class="latest-text">
+                <p class="latest-badge">Latest drop</p>
+                <h2 class="latest-title" id="latest-title">Grumpy Pigeons</h2>
+                <p class="latest-body">Eight die-cut pigeons, each one furious
+                about something different. Waterproof, matte, pigeon-sized.
+                Gone when they&rsquo;re gone.</p>
+                <a class="latest-cta" href="#">Get the sheet &middot; &pound;6</a>
+            </div>
+            <div class="latest-art" aria-hidden="true">
+                <span class="pigeon pigeon-1"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
+                <span class="pigeon pigeon-2"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
+                <span class="pigeon pigeon-3"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="foot" data-rise>
+    <p class="foot-line">&copy; 2026 Tati Moreno &middot; Bristol, UK &middot;
+    <a class="foot-link" href="mailto:hi@tatidoodles.com">hi@tatidoodles.com</a></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/Draggable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/InertiaPlugin.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+<script src="assets/script.js"></script>
+
+</body>
+</html>
