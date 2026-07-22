@@ -2,7 +2,7 @@
 
 Seven free, production-ready GSAP animation effects and three complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animation effects and 24 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animation effects and 27 complete website templates.
 
 ## The Effects
 
@@ -58,10 +58,10 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 31 effects and 24 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 31 effects and 27 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
-- All of it, one payment: [All-Access Bundle](https://gsapvault.com/effects) at £29 one-time, unlimited commercial projects
+- All of it, one payment: [Effects & Templates Vault](https://gsapvault.com/effects) at £29 one-time, unlimited commercial projects
 - Tutorials and guides: [gsapvault.com/blog](https://gsapvault.com/blog)
 
 ## License
