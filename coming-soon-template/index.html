@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="The Lantern - a two-screen repertory picture house opening on Sharrow Vale Road, Sheffield, autumn 2027. Leave your email and we'll hold you a seat.">
+    <title>The Lantern - Coming Soon Template | GSAP Vault</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Cabin:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- The auditorium is decoration: a projector beam raking across the
+     dark, and dust turning over inside it. Both sit BEHIND the slide,
+     so neither can ever wash out the type. -->
+<div class="house" aria-hidden="true">
+    <!-- A house light wandering the room on its own path. Nothing drives
+         it but the clock, and its path never repeats, so it is always
+         moving and never on a beat. -->
+    <div class="spot" data-spot></div>
+
+    <!-- Two elements on purpose: the pivot carries nothing but the
+         transform GSAP leans, so the beam keeps its CSS angle and still
+         looks right with JavaScript switched off. -->
+    <div class="beam-pivot" data-beam>
+        <div class="beam">
+            <canvas class="beam-dust" data-dust></canvas>
+        </div>
+    </div>
+</div>
+
+<header class="top" data-fade>
+    <p class="wordmark">The Lantern<span class="wordmark-lamp" aria-hidden="true"></span></p>
+    <p class="top-place"><span class="top-street">Sharrow Vale Rd &middot; </span>Sheffield</p>
+</header>
+
+<!-- The slide. A picture house projects a still card before the film;
+     this page is that card, and everything lives on it. -->
+<main class="stage">
+    <!-- Academy leader. Set the opening date on data-open; there is no
+         date logic to edit. It sits in the flow above the card so narrow
+         screens get the countdown too, and pins beside the slide on wide
+         ones. The numeral and caption are filled by JS, so with scripting
+         off this is an empty ring rather than a wrong number - the date
+         in the facts row below carries it instead. -->
+    <div class="leader-block" data-leader data-open="2027-10-02T19:30:00" aria-hidden="true">
+        <div class="leader">
+            <span class="leader-sweep" data-leader-sweep></span>
+            <span class="leader-ring"></span>
+            <span class="leader-cross"></span>
+            <span class="leader-num" data-leader-num></span>
+        </div>
+        <p class="leader-cap">
+            <span class="leader-cap-key" data-leader-key></span>
+            <span class="leader-cap-sub" data-leader-sub></span>
+        </p>
+    </div>
+
+    <div class="slide" data-slide>
+        <p class="kicker" data-fade>Coming soon</p>
+
+        <h1 class="title">
+            <span class="line"><span class="line-inner">The lights go down</span></span>
+            <span class="line"><span class="line-inner">on Sharrow Vale</span></span>
+            <span class="line"><span class="line-inner">in autumn 2027.</span></span>
+        </h1>
+
+        <div class="rule" aria-hidden="true"><span class="rule-bar"></span></div>
+
+        <p class="sub" data-fade>Two screens and a hundred and eighty seats on Sharrow Vale
+        Road. Repertory six nights a week, 35mm when the print exists, a bar that stays
+        open long after the credits, and not one second of advertising.</p>
+
+        <ul class="facts" data-fade>
+            <li class="fact"><span class="fact-key">First screening</span><span class="fact-val">2 October 2027</span></li>
+            <li class="fact"><span class="fact-key">Formats</span><span class="fact-val">35mm &amp; 4K digital</span></li>
+            <li class="fact"><span class="fact-key">Seats</span><span class="fact-val">180 across two screens</span></li>
+        </ul>
+
+        <form class="notify" action="#" method="post" data-notify data-fade>
+            <div class="notify-field">
+                <label class="sr-only" for="email">Email address</label>
+                <input class="notify-input" id="email" type="email" name="email"
+                       placeholder="you@example.com" required autocomplete="email">
+                <button class="notify-btn" type="submit">Join the queue</button>
+            </div>
+            <p class="notify-done" hidden>Seat held. We'll be in touch before opening night.</p>
+            <p class="notify-status sr-only" role="status" aria-live="polite"></p>
+            <p class="notify-note">One email when we open. Nothing else, ever.</p>
+        </form>
+    </div>
+</main>
+
+<footer class="foot" data-fade>
+    <div class="foot-links">
+        <a class="foot-link" href="#">Instagram</a>
+        <a class="foot-link" href="mailto:hello@thelantern.film">hello@thelantern.film</a>
+    </div>
+    <p class="foot-note">&copy; 2027 The Lantern Picture House</p>
+</footer>
+
+<!-- Grain sits on top of everything, the way it sits on a print. -->
+<canvas class="grain" data-grain aria-hidden="true"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="assets/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,845 @@
+/* ============================================
+   BRENNA RIVERS TRUST - CHARITY CAMPAIGN TEMPLATE
+
+   A river-restoration appeal that refuses both charity
+   defaults: no NGO blue with smiling stock photos, and
+   no guilt-dark ground with a red DONATE. The ground is
+   the river's own colour - a saturated viridian - chalk
+   does the talking, and the donate buttons are chalk
+   fills with river ink, because the ask should read as
+   the calmest thing on the page, not the loudest.
+
+   Type is a placard system: Barlow Condensed for the
+   tall protest-board caps, Source Serif 4 for the prose,
+   and B612 Mono for every figure on the page - money,
+   gauge readings, counts, dates - because a charity that
+   leads with measurements should set them like readings.
+   ============================================ */
+
+/* ---- Why these values, and what was measured ----------------------
+
+   Three hues: river (the viridian ground and its two surface values),
+   chalk (type and paper), water (one aquatic accent). Water is
+   RATIONED: hairline rules, the gauge staff ticks, the hero thread,
+   small mono labels - never headings, never body copy. Colour on this
+   page means "a reading", not "look here".
+
+   Measured, composited, at the size used:
+
+     TYPE ON THE GREEN GROUNDS
+     chalk          on river         6.97:1
+     chalk          on river-deep    8.99:1
+     chalk          on river-lift    5.94:1
+     dim (chalk.86) on river         5.60:1   ledes, captions, nav,
+     dim (chalk.86) on river-lift    4.85:1   tier copy, footer
+     dim (chalk.86) on river-deep    7.11:1   stat captions
+     water          on river         4.94:1   small mono labels only
+     water          on river-deep    6.38:1   stat units
+
+     TYPE ON CHALK (the donate panel, buttons, comparator tags)
+     ink (river-deep) on chalk       8.99:1
+     ink            on chalk-deep    7.82:1
+     ink-dim (ink.85) on chalk       6.10:1   form notes, fine print
+     ink-dim (ink.85) on chalk-deep  5.47:1
+     river          on chalk         6.97:1
+
+     NON-TEXT (3:1 floor)
+     water rules    on river         4.94:1
+     water rules    on river-lift    4.21:1
+     chalk bar fill on deep track    8.99:1
+
+   BANNED:
+   - Orange, red and charity blue, anywhere, for anything. The only
+     warm pixels on the page are inside the photographs, where the
+     silt is the argument.
+   - Water as TYPE on river-lift (4.21:1). On the raised cards it may
+     only be a rule or a mark; its type homes are river and river-deep.
+   - Anything dimmer than --dim as type on any green ground, and
+     anything dimmer than --ink-dim as type on chalk. There is no
+     third, fainter tier; quietness is carried by the mono voice's
+     size and letterspacing instead.
+   - Lightening --river past about #1A6355 pulls solid chalk toward
+     the dim tier's floor and takes --water below 4.5:1 as a label;
+     darkening --water past about #7CC7B2 does the same from the
+     other side. The pair is measured together - move one, re-measure
+     both.
+
+   The lift and deep surfaces sit close to the ground on purpose
+   (1.2-1.3:1): they are tonal steps, always paired with a hairline
+   or a layout seam, never the only signal of anything.
+   -------------------------------------------------------------- */
+
+:root {
+    /* ---- The palette ----------------------------------------------
+       Three hues; everything else is one of them at another value or
+       opacity. Change these three (and their RGB triples, used for
+       every translucent rule and wash) and the site reskins. */
+
+    --river: #14584A;         /* the ground: the river's viridian */
+    --river-deep: #0E463A;    /* recessed bands, and ink on chalk */
+    --river-lift: #1B6355;    /* raised cards on the ground */
+    --chalk: #EFEBDC;         /* type on green; the donate panel */
+    --chalk-deep: #E2DCC7;    /* chalk's own second value: wells, rules */
+    --water: #8AD6C2;         /* the one aquatic accent, rationed */
+
+    --river-rgb: 20, 88, 74;
+    --chalk-rgb: 239, 235, 220;
+    --water-rgb: 138, 214, 194;
+    --ink-rgb: 14, 70, 58;
+
+    /* Derived type tiers - the measured pairs in the table above */
+    --ink: var(--river-deep);                    /* type on chalk */
+    --dim: rgba(var(--chalk-rgb), 0.86);         /* quiet type on green */
+    --ink-dim: rgba(var(--ink-rgb), 0.85);       /* quiet type on chalk */
+
+    /* Hairlines: frames and seams, never a control's only state */
+    --rule: rgba(var(--chalk-rgb), 0.18);
+    --rule-strong: rgba(var(--chalk-rgb), 0.32);
+    --rule-ink: rgba(var(--ink-rgb), 0.22);
+    --wash: rgba(var(--chalk-rgb), 0.06);
+
+    --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+    --font-mono: 'B612 Mono', 'Courier New', monospace;
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --content: 1160px;
+}
+
+/* ---- Reset and ground ---- */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+/* Anchored sections stop clear of the sticky nav */
+section, footer, [id] { scroll-margin-top: 5rem; }
+
+body {
+    background: var(--river);
+    color: var(--chalk);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+}
+
+::selection { background: var(--water); color: var(--river-deep); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--river-deep); }
+::-webkit-scrollbar-thumb { background: rgba(var(--chalk-rgb), 0.35); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--chalk-rgb), 0.5); }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--water);
+    outline-offset: 3px;
+}
+
+.mono { font-family: var(--font-mono); }
+
+.sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    background: var(--chalk); color: var(--ink);
+    font-family: var(--font-mono); font-size: 0.85rem;
+    padding: 0.7rem 1.1rem; text-decoration: none;
+    transition: top 0.2s;
+}
+.skip:focus { top: 1rem; }
+
+/* ---- Shared section chrome ---- */
+
+.section-inner {
+    max-width: var(--content);
+    margin: 0 auto;
+    padding-left: clamp(1.25rem, 4vw, 2.5rem);
+    padding-right: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: 1.1rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+}
+
+.section-lede {
+    max-width: 56ch;
+    color: var(--dim);
+}
+
+.section-head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+/* ---- Buttons ---- */
+
+.btn {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+    padding: 0.95rem 1.6rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.18s var(--ease-out), background-color 0.18s, border-color 0.18s;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn--chalk { background: var(--chalk); color: var(--ink); }
+.btn--chalk:hover { background: var(--chalk-deep); }
+
+.btn--ghost {
+    background: transparent;
+    color: var(--chalk);
+    border-color: var(--rule-strong);
+}
+.btn--ghost:hover { background: var(--wash); border-color: var(--chalk); }
+
+.btn--river { background: var(--river); color: var(--chalk); border: 0; }
+.btn--river:hover { background: var(--river-deep); }
+
+.btn--small { padding: 0.7rem 1.1rem; font-size: 0.82rem; }
+
+/* ---- Nav ---- */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.9rem clamp(1.25rem, 4vw, 2.5rem);
+    background: rgba(var(--river-rgb), 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+}
+
+.nav-mark {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+}
+.nav-mark-rule {
+    width: 4px; height: 2.1rem;
+    background: var(--water);
+}
+.nav-mark-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.02rem;
+    line-height: 1.02;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.6rem;
+    list-style: none;
+    margin-left: auto;
+}
+.nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.15s;
+}
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--chalk); }
+
+/* ---- Hero: the placard ---- */
+
+.hero { padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(4rem, 9vw, 7rem); }
+
+.hero-inner {
+    max-width: var(--content);
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+}
+
+.placard {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3.4rem, 8.4vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    margin: 0 0 1.6rem;
+}
+
+.mask { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.pl { display: block; will-change: transform; }
+html.has-js .pl { transform: translateY(112%); }
+
+.hero-thread { display: block; width: min(100%, 38rem); margin-top: 0.6rem; color: var(--water); opacity: 0.85; }
+
+.standfirst {
+    font-size: 1.14rem;
+    color: var(--dim);
+    margin-bottom: 2.2rem;
+}
+
+/* The raised-so-far counter */
+.counter {
+    background: var(--river-lift);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.5rem 1.6rem 1.4rem;
+    margin-bottom: 2rem;
+}
+
+.counter-raised {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.counter-fig {
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* B612 Mono gives , and . a full character cell, which at display size opens
+   a gap that reads as a typo ("£41, 380"). The count-up wraps separators in
+   .fig-sep; pull the following digit back into reach. Display figures only —
+   body-size mono keeps the face's natural spacing. */
+.counter-fig .fig-sep,
+.stat-fig .fig-sep { margin-right: -0.34ch; }
+.counter-of { color: var(--dim); font-size: 1rem; }
+
+.counter-bar {
+    height: 10px;
+    background: var(--river-deep);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+}
+.counter-fill {
+    height: 100%;
+    background: var(--chalk);
+    border-radius: 5px;
+    transform-origin: left center;
+}
+
+.counter-meta { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--dim); }
+
+.hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+
+/* ---- The problem: gauge figures on the deep band ---- */
+
+.problem {
+    background: var(--river-deep);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: clamp(1.8rem, 4vw, 3rem);
+}
+
+.stat {
+    border-top: 2px solid var(--water);
+    padding-top: 1.1rem;
+}
+
+.stat-fig {
+    font-size: clamp(2.6rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.7rem;
+}
+.stat-unit {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--water);
+    margin-left: 0.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.stat-caption { color: var(--dim); font-size: 0.98rem; line-height: 1.55; }
+.stat-caption em { font-style: italic; }
+
+/* ---- The work: before/after comparator ---- */
+
+.work { padding: clamp(4rem, 8vw, 6.5rem) 0 0; }
+.work-head { margin-bottom: clamp(2.2rem, 4vw, 3.2rem); }
+
+/* No JavaScript: the two panes are a plain stacked pair with their
+   captions visible - the full story with nothing to drag. The script
+   adds .comp--ready and the panes become one clipped frame. */
+.comp {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    background: var(--river-deep);
+}
+
+.comp-pane { position: relative; margin: 0; }
+.comp-pane img {
+    width: 100%;
+    height: clamp(300px, 60vw, 460px);
+    object-fit: cover;
+    background: var(--river-deep);
+}
+
+.comp-tag {
+    position: absolute;
+    top: 1rem;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    background: var(--chalk);
+    color: var(--ink);
+    font-size: 0.88rem;
+    padding: 0.45rem 0.8rem;
+    border-radius: 2px;
+    max-width: calc(100% - 5rem);
+}
+.comp-tag .mono { font-size: 0.78rem; font-weight: 700; }
+.comp-tag--before { left: 1rem; }
+.comp-tag--after { right: 1rem; }
+
+.comp-staff { display: none; }
+
+/* Upgraded, script-driven layout */
+.comp--ready {
+    display: block;
+    height: clamp(340px, 62vh, 620px);
+    overflow: hidden;
+    touch-action: pan-y; /* vertical swipes belong to the page */
+}
+.comp--ready .comp-pane { position: absolute; inset: 0; }
+.comp--ready .comp-pane img { width: 100%; height: 100%; }
+.comp--ready .comp-pane--before {
+    clip-path: inset(0 54% 0 0);
+    z-index: 2;
+}
+
+.comp--ready .comp-staff {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 46%;
+    width: 44px;
+    margin-left: -22px;
+    z-index: 3;
+    cursor: ew-resize;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* The gauge board: a chalk depth staff with water ticks */
+.staff-board {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 30px;
+    margin-left: -15px;
+    background:
+        repeating-linear-gradient(
+            to top,
+            transparent 0,
+            transparent 9px,
+            rgba(var(--ink-rgb), 0.28) 9px,
+            rgba(var(--ink-rgb), 0.28) 10px,
+            transparent 10px,
+            transparent 40px,
+            rgba(var(--ink-rgb), 0.55) 40px,
+            rgba(var(--ink-rgb), 0.55) 42px,
+            transparent 42px,
+            transparent 80px
+        ),
+        var(--chalk);
+    box-shadow: 0 0 0 1px rgba(var(--ink-rgb), 0.35), 0 2px 14px rgba(0, 0, 0, 0.3);
+}
+
+.staff-num {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+}
+.staff-num--1 { top: 6%; }
+.staff-num--2 { top: 24%; }
+.staff-num--3 { top: 42%; }
+.staff-num--4 { top: 68%; }
+.staff-num--5 { top: 86%; }
+
+.staff-grip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--chalk);
+    color: var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(var(--ink-rgb), 0.35), 0 2px 12px rgba(0, 0, 0, 0.35);
+    transition: transform 0.15s var(--ease-out);
+}
+.comp-staff:hover .staff-grip,
+.comp-staff:focus-visible .staff-grip,
+.comp-staff[data-dragging] .staff-grip { transform: translate(-50%, -50%) scale(1.08); }
+
+.comp-help {
+    color: var(--dim);
+    font-size: 0.95rem;
+    padding-top: 1.1rem;
+    padding-bottom: 0;
+}
+
+/* The drag instruction only exists when the board does */
+.js-only { display: none; }
+html.has-js .js-only { display: inline; }
+html.has-js .nojs-only { display: none; }
+
+/* ---- What your money does ---- */
+
+.money { padding: clamp(4rem, 8vw, 6.5rem) 0; }
+
+.money-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+}
+
+.tiers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+.tier {
+    background: var(--river-lift);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1.5rem 1.5rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+
+.tier-price {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid var(--water);
+}
+.tier-what { color: var(--dim); font-size: 0.98rem; flex: 1; }
+.tier-what strong { color: var(--chalk); font-weight: 600; }
+
+.money-photo img { border-radius: 3px; }
+.money-photo figcaption,
+.parties-photo figcaption,
+.give-photo figcaption {
+    font-size: 0.88rem;
+    color: var(--dim);
+    padding-top: 0.7rem;
+    max-width: 44ch;
+}
+
+/* ---- Work parties ---- */
+
+.parties {
+    background: var(--river-deep);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: clamp(4rem, 8vw, 6.5rem) 0;
+}
+
+.parties-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+}
+
+.party-list { list-style: none; }
+
+.party {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 1.1rem 0;
+    border-top: 1px solid var(--rule);
+}
+.party:last-child { border-bottom: 1px solid var(--rule); }
+
+.party-date {
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--water);
+    min-width: 7ch;
+}
+.party-body { flex: 1; min-width: 0; }
+.party-task { font-size: 1.02rem; }
+.party-meta { font-size: 0.75rem; letter-spacing: 0.06em; color: var(--dim); margin-top: 0.15rem; }
+
+.party--full .party-task { color: var(--dim); }
+.party-full-note {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    border: 1px solid var(--rule-strong);
+    padding: 0.55rem 0.9rem;
+    border-radius: 2px;
+}
+
+.parties-photo img { border-radius: 3px; }
+
+/* ---- Donate: the chalk panel ---- */
+
+.give { padding: clamp(4rem, 8vw, 6.5rem) 0; }
+
+.give-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+    align-items: start;
+}
+
+.give-photo { margin-top: 2rem; }
+.give-photo img { border-radius: 3px; }
+
+.give-form {
+    background: var(--chalk);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.give-form fieldset { border: 0; margin-bottom: 1.6rem; }
+
+.gf-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.7rem;
+}
+legend.gf-label { padding: 0; }
+
+.gf-amount-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+.gf-pill {
+    position: relative;
+    cursor: pointer;
+}
+.gf-pill input {
+    position: absolute;
+    opacity: 0;
+    width: 100%; height: 100%;
+    left: 0; top: 0;
+    cursor: pointer;
+}
+.gf-pill span {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--rule-ink);
+    border-radius: 2px;
+    font-size: 0.95rem;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.gf-pill:hover span { border-color: var(--ink); }
+.gf-pill input:checked + span {
+    background: var(--river-deep);
+    color: var(--chalk);
+    border-color: var(--river-deep);
+}
+.gf-pill input:focus-visible + span {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.gf-other { margin-top: 1rem; }
+.gf-other[hidden] { display: none; }
+
+.gf-outcome {
+    margin-top: 1rem;
+    font-size: 0.98rem;
+    color: var(--ink-dim);
+    font-style: italic;
+    min-height: 1.6em;
+}
+
+.gf-field { margin-bottom: 1.3rem; }
+
+.gf-input {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--ink);
+    background: rgba(var(--ink-rgb), 0.05);
+    border: 1px solid var(--rule-ink);
+    border-radius: 2px;
+    padding: 0.8rem 0.9rem;
+}
+.gf-input:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.gf-input::placeholder { color: var(--ink-dim); opacity: 1; }
+#gf-other-amount { max-width: 12rem; font-family: var(--font-mono); }
+
+.gf-giftaid {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    margin-bottom: 1.6rem;
+    cursor: pointer;
+}
+.gf-giftaid input {
+    flex-shrink: 0;
+    width: 1.15rem; height: 1.15rem;
+    margin-top: 0.2rem;
+    accent-color: var(--river-deep);
+    cursor: pointer;
+}
+
+.gf-submit { width: 100%; font-size: 1rem; padding: 1.1rem 1.5rem; }
+
+.gf-note {
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+    margin-top: 1rem;
+}
+
+.gf-done {
+    margin-top: 1.4rem;
+    border-top: 2px solid var(--river-deep);
+    padding-top: 1.2rem;
+    font-size: 1.02rem;
+}
+.gf-done[hidden] { display: none; }
+
+/* ---- Footer ---- */
+
+.footer {
+    background: var(--river-deep);
+    border-top: 1px solid var(--rule);
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: clamp(1.8rem, 4vw, 3rem);
+}
+
+.footer-mark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 1.02;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.8rem;
+}
+
+.footer-head {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: 0.8rem;
+}
+
+.footer-small { font-size: 0.92rem; color: var(--dim); }
+.footer-small a { color: var(--dim); }
+.footer-small a:hover { color: var(--chalk); }
+
+/* ---- Reveals (pre-hidden only once the script is known present) ---- */
+
+html.has-js [data-fade] { opacity: 0; }
+
+/* ---- Responsive ---- */
+
+@media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .money-grid { grid-template-columns: 1fr; }
+    .money-photo { max-width: 30rem; }
+    .parties-grid { grid-template-columns: 1fr; }
+    .parties-photo { order: -1; max-width: 36rem; }
+    .give-grid { grid-template-columns: 1fr; }
+    .give-photo { max-width: 30rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+    .nav { gap: 1rem; }
+    .nav-links { display: none; }
+    .nav-cta { margin-left: auto; }
+    .placard { font-size: clamp(3rem, 14vw, 4.2rem); }
+    .party { flex-wrap: wrap; gap: 0.6rem 1.2rem; }
+    .party-body { flex-basis: 100%; order: 2; }
+    .party .btn, .party .party-full-note { order: 3; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .comp-tag { font-size: 0.8rem; max-width: calc(100% - 4rem); }
+    .comp-tag--before { left: 0.7rem; }
+    .comp-tag--after { right: 0.7rem; }
+}
+
+/* ---- Reduced motion: a complete static page ---- */
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    html.has-js [data-fade] { opacity: 1; }
+    html.has-js .pl { transform: none; }
+    .btn, .staff-grip { transition: none; }
+    .btn:hover { transform: none; }
+}

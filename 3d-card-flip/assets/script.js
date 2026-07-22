@@ -12,7 +12,16 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-window.addEventListener('DOMContentLoaded', function initCardFlip() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})(function initCardFlip() {
 	// ============================================
 	// LENIS SMOOTH SCROLL (OPTIONAL)
 	// ============================================

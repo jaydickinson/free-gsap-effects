@@ -1,0 +1,577 @@
+/* ============================================
+   THE LANTERN - COMING SOON TEMPLATE
+   A holding page shaped like the card a picture
+   house projects before the film starts.
+
+   Two grounds rather than one: a near-black
+   auditorium, and a lit bone slide floating on
+   it. Type lives on the slide, chrome lives on
+   the dark. The countdown is an Academy leader.
+   ============================================ */
+
+:root {
+    /* An auditorium with the lamp on: two surfaces, one accent, and one
+       warm reserved for the light. Contrast measured as used, composited:
+
+       ON THE SLIDE (bone #EDE6D8)
+         ink headline and fact values          15.17
+         ink-dim body copy, sub and note        7.19
+         oxblood kicker, fact keys, done state  6.97
+         bone on the oxblood button             6.97
+       ON THE DARK (house #1A0E11)
+         bone wordmark and footer links        15.17
+         house-dim place, caption, copyright    6.31
+
+       Three rules the light imposes, worth keeping if you recolour:
+
+       - The beam peaks at bulb 0.30, which would drop house-dim to 3.21
+         on bare ground. .top and .foot carry a house scrim at 0.94 that
+         holds house-dim at 6.10 and bone at 14.66 wherever the beam
+         falls. Keep the scrims if you move the beam.
+       - The beam renders behind the slide. In front of it, it lifts the
+         bone and pulls every dark-on-light pair down at once.
+       - --bulb is light, never type: on the bone slide it is 1.63.
+         --ink and --ink-dim belong on the slide, --house-dim on the dark.
+
+       Reskin = repaint the seven values below, keeping the -rgb triples
+       in step; beam, spot, dust, leader and scrims resolve from them. */
+    --house: #1A0E11;          /* the dark auditorium, page base */
+    --screen: #EDE6D8;         /* the lit slide, and type on the dark */
+    --ink: #1A0E11;            /* primary type, on the slide only */
+    --ink-dim: #574549;        /* body copy, on the slide only */
+    --house-dim: #A99089;      /* secondary type, on the dark only */
+    --oxblood: #8E2233;        /* kicker, rule, button */
+    --bulb: #F0B44E;           /* the lamp - light only, never type */
+
+    --house-rgb: 26, 14, 17;
+    --screen-rgb: 237, 230, 216;
+    --ink-rgb: 26, 14, 17;
+    --oxblood-rgb: 142, 34, 51;
+    --bulb-rgb: 240, 180, 78;
+
+    --font-display: 'Oswald', 'Haettenschweiler', 'Arial Narrow', sans-serif;
+    --font-body: 'Cabin', system-ui, sans-serif;
+
+    color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background: var(--house);
+    color: var(--screen);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- The auditorium ---------- */
+
+.house {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* A little lamp spill low and right, so the dark is not flat. */
+    background:
+        radial-gradient(120vmin 90vmin at 88% 74%,
+            rgba(var(--bulb-rgb), 0.09),
+            rgba(var(--bulb-rgb), 0) 70%),
+        var(--house);
+}
+
+/* A soft house light that wanders the room. Kept low: it crosses
+   everything, and the scrims are sized for the beam, not for both. */
+.spot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 62vmin;
+    height: 62vmin;
+    margin: -31vmin 0 0 -31vmin;
+    border-radius: 50%;
+    background: radial-gradient(closest-side,
+        rgba(var(--bulb-rgb), 0.10),
+        rgba(var(--bulb-rgb), 0.04) 48%,
+        rgba(var(--bulb-rgb), 0) 76%);
+    will-change: transform;
+}
+
+/* Carries only the pointer lean, so GSAP's transform never fights the
+   beam's own angle - and the angle survives with scripting off. */
+.beam-pivot {
+    position: absolute;
+    inset: 0;
+    transform-origin: 88% 14%;
+    will-change: transform, opacity;
+}
+
+/* A rotated band. The vertical gradient gives the shaft soft edges
+   across its width, the mask fades it with distance from the lamp, and
+   the rotation sets the angle. A hard-clipped polygon instead reads as
+   haze rather than as light. */
+.beam {
+    position: absolute;
+    top: 8%;
+    left: -20%;
+    width: 142%;
+    height: 42%;
+    /* Negative so the far end falls away: CSS positive rotation is
+       clockwise, which would swing it up instead. */
+    transform: rotate(-20deg);
+    transform-origin: 86% 40%;
+    background: linear-gradient(to bottom,
+        rgba(var(--bulb-rgb), 0) 0%,
+        rgba(var(--bulb-rgb), 0.10) 22%,
+        rgba(var(--bulb-rgb), 0.44) 47%,
+        rgba(var(--bulb-rgb), 0.36) 57%,
+        rgba(var(--bulb-rgb), 0.09) 80%,
+        rgba(var(--bulb-rgb), 0) 100%);
+    -webkit-mask-image: linear-gradient(to left, #000 4%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.45) 75%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 4%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.45) 75%, transparent 100%);
+    opacity: 0.9;
+}
+
+.beam-dust {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+header, main, footer { position: relative; z-index: 1; }
+
+/* ---------- Academy leader ---------- */
+
+/* In the flow above the card by default, so a phone gets the countdown
+   too; it only pins out into the dark strip beside the slide once there
+   is one. See the wide-screen block further down. */
+.leader-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(9px, 1.5vh, 15px);
+    pointer-events: none;
+}
+
+.leader {
+    position: relative;
+    width: clamp(108px, 26vw, 172px);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+}
+
+.leader > * { grid-area: 1 / 1; }
+
+.leader-ring {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(var(--bulb-rgb), 0.42);
+    border-radius: 50%;
+}
+
+/* The crosshair: two hairlines through the centre, as on real leader. */
+.leader-cross {
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(to right, rgba(var(--bulb-rgb), 0.3) 0 100%) center / 100% 1px no-repeat,
+        linear-gradient(to bottom, rgba(var(--bulb-rgb), 0.3) 0 100%) center / 1px 100% no-repeat;
+}
+
+/* The sweep hand, as a rotating wedge of light rather than a line. */
+.leader-sweep {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+        rgba(var(--bulb-rgb), 0.26),
+        rgba(var(--bulb-rgb), 0.10) 32%,
+        rgba(var(--bulb-rgb), 0) 62%,
+        rgba(var(--bulb-rgb), 0) 100%);
+    will-change: transform;
+}
+
+/* Sized for four digits: a launch three years out is 1,000+ days. */
+.leader-num {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 5.6vw, 3rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--screen);
+    text-shadow: 0 0 26px rgba(var(--bulb-rgb), 0.5);
+    font-variant-numeric: lining-nums;
+    /* The numeral cuts rather than tweening. It changes once a day, so
+       there is nothing to ease. */
+}
+
+.leader-cap {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    text-align: center;
+}
+
+.leader-cap-key {
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--house-dim);
+}
+
+.leader-cap-sub {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    color: var(--house-dim);
+}
+
+/* Filled by JS. Hidden until then so that with scripting off the leader
+   is an empty focus chart rather than a stale or invented number. */
+.leader-block:not(.is-live) .leader-cap { display: none; }
+
+/* Grain rides on top of the whole print. Overlay against mid-grey noise
+   means the tile only ever nudges contrast either side of what is
+   already there, so it textures the image without shifting any pair. */
+.grain {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    opacity: 0.55;
+}
+
+/* ---------- Top bar ---------- */
+
+/* Scrims put the chrome on near-solid house wherever the beam lands, so
+   its contrast does not depend on the beam's geometry missing it. */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: clamp(18px, 2.8vh, 28px) clamp(22px, 5vw, 54px);
+    background: linear-gradient(to bottom,
+        rgba(var(--house-rgb), 0.94) 0%,
+        rgba(var(--house-rgb), 0.94) 58%,
+        rgba(var(--house-rgb), 0) 100%);
+}
+
+.wordmark {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.32rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* The lamp: a small lit dot, the only round thing on the page. */
+.wordmark-lamp {
+    width: 7px;
+    height: 7px;
+    margin-left: 0.6em;
+    border-radius: 50%;
+    background: var(--bulb);
+    box-shadow: 0 0 12px rgba(var(--bulb-rgb), 0.9);
+}
+
+.top-place {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--house-dim);
+}
+
+/* ---------- Stage and slide ---------- */
+
+/* Column so the leader can stack above the card on narrow screens. On
+   wide screens the leader is pinned out of flow and this centres the
+   card alone, as before. */
+.stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 3.4vh, 34px);
+    width: 100%;
+    padding: clamp(10px, 2vh, 26px) clamp(18px, 5vw, 54px);
+}
+
+/* The lit card. The inner shadow is light falling off toward the edges
+   the way it does on a real screen; the outer glow is the room picking
+   up the spill. */
+.slide {
+    position: relative;
+    /* Narrow enough that the condensed headline fills its own measure,
+       and narrow enough to leave dark either side for the beam. */
+    width: min(820px, 100%);
+    padding: clamp(28px, 4.6vw, 54px) clamp(24px, 4.4vw, 56px) clamp(30px, 4.4vw, 50px);
+    background:
+        radial-gradient(140% 130% at 72% 18%,
+            rgba(255, 255, 255, 0.55),
+            rgba(255, 255, 255, 0) 62%),
+        var(--screen);
+    color: var(--ink);
+    border-radius: 3px;
+    box-shadow:
+        0 0 0 1px rgba(var(--ink-rgb), 0.10),
+        0 40px 90px -30px rgba(0, 0, 0, 0.7),
+        0 0 120px -20px rgba(var(--bulb-rgb), 0.22);
+    will-change: transform, opacity;
+}
+
+.kicker {
+    margin: 0 0 clamp(14px, 2.2vh, 22px);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+}
+
+.title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 5.6vw, 4.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+}
+
+.title .line { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.title .line-inner { display: inline-block; will-change: transform; }
+
+.rule { margin: clamp(20px, 3vh, 30px) 0 0; }
+
+.rule-bar {
+    display: block;
+    height: 2px;
+    background: var(--oxblood);
+    will-change: transform;
+}
+
+.sub {
+    margin: clamp(18px, 2.6vh, 26px) 0 0;
+    max-width: 58ch;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    color: var(--ink-dim);
+}
+
+/* ---------- Facts ---------- */
+
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(18px, 3.4vw, 46px);
+    margin: clamp(20px, 3vh, 30px) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fact { display: flex; flex-direction: column; gap: 3px; }
+
+.fact-key {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+}
+
+.fact-val {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+}
+
+/* ---------- Notify form ---------- */
+
+.notify {
+    margin: clamp(24px, 3.6vh, 38px) 0 0;
+    max-width: 540px;
+}
+
+.notify-field { display: flex; gap: 10px; }
+
+.notify-input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 16px;
+    background: rgba(var(--ink-rgb), 0.04);
+    border: 1px solid rgba(var(--ink-rgb), 0.34);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+.notify-input::placeholder { color: var(--ink-dim); opacity: 1; }
+
+.notify-input:focus-visible {
+    outline: 2px solid var(--oxblood);
+    outline-offset: 2px;
+    border-color: transparent;
+}
+
+.notify-btn {
+    padding: 13px 24px;
+    border: none;
+    border-radius: 4px;
+    background: var(--oxblood);
+    color: var(--screen);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.notify-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px -6px rgba(var(--oxblood-rgb), 0.6);
+}
+
+.notify-btn:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.notify-done {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.3rem;
+    letter-spacing: 0.01em;
+    color: var(--oxblood);
+}
+
+.notify-note {
+    margin: 12px 0 0;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+}
+
+/* ---------- Footer ---------- */
+
+.foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: clamp(16px, 2.6vh, 26px) clamp(22px, 5vw, 54px);
+    font-size: 0.82rem;
+    background: linear-gradient(to top,
+        rgba(var(--house-rgb), 0.94) 0%,
+        rgba(var(--house-rgb), 0.94) 58%,
+        rgba(var(--house-rgb), 0) 100%);
+}
+
+.foot-links { display: flex; gap: 22px; }
+
+.foot-link {
+    color: var(--screen);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--bulb-rgb), 0.55);
+    text-underline-offset: 4px;
+}
+
+.foot-link:hover { text-decoration-color: var(--bulb); }
+
+.foot-link:focus-visible {
+    outline: 2px solid var(--bulb);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+.foot-note { margin: 0; color: var(--house-dim); }
+
+/* ---------- Utilities ---------- */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- Compact ---------- */
+
+/* Wide enough for a dark strip beside the card: pin the leader into it
+   and left-align its caption. Below this it stays in the flow above the
+   card, which is where the markup puts it. */
+@media (min-width: 1181px) {
+    .leader-block {
+        position: fixed;
+        left: clamp(28px, 4vw, 74px);
+        bottom: clamp(96px, 14vh, 150px);
+        z-index: 1;
+        align-items: flex-start;
+    }
+
+    .leader-cap { text-align: left; }
+}
+
+@media (max-width: 720px) {
+    .facts { gap: 14px 28px; }
+    .fact { flex: 1 1 40%; }
+}
+
+@media (max-width: 560px) {
+    .top { align-items: center; }
+    .top-place { letter-spacing: 0.12em; }
+    .top-street { display: none; }
+    .kicker { letter-spacing: 0.24em; }
+    .notify-field { flex-direction: column; }
+    .notify-btn { width: 100%; }
+    /* Stacked: "First screening" is wider than the other keys, so a
+       shared key column either wraps or leaves the values unaligned. */
+    .facts { flex-direction: column; gap: 14px; }
+    .fact { flex: 1 1 auto; gap: 2px; }
+    .foot { flex-direction: column; align-items: flex-start; gap: 10px; }
+    /* The beam is a wide-room effect; on a phone it just muddies. */
+    .beam { opacity: 0.55; }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .beam-dust,
+    .grain { display: none; }
+    /* The leader keeps its ring, crosshair and numbers; only the
+       rotating sweep goes. */
+    .leader-sweep { display: none; }
+    .notify-btn { transition: none; }
+    .notify-btn:hover { transform: none; }
+}

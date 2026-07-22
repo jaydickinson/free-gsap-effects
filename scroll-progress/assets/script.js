@@ -1,6 +1,15 @@
 gsap.registerPlugin(ScrollTrigger);
 
-window.addEventListener('DOMContentLoaded', function handleDOMLoaded() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})(function handleDOMLoaded() {
 
 	/* OPTIONAL: Lenis - Remove if not using smooth scroll */
 	let lenis = null;

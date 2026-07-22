@@ -10,7 +10,16 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-window.addEventListener('DOMContentLoaded', function initImageClipReveal() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})(function initImageClipReveal() {
     const CLOSED_INSETS = {
         up: 'inset(100% 0% 0% 0%)',
         down: 'inset(0% 0% 100% 0%)',

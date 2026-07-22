@@ -10,7 +10,16 @@
  * @techniques hover-effect, micro-interaction, underline
  */
 
-window.addEventListener('DOMContentLoaded', function initHoverUnderline() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})(function initHoverUnderline() {
     const SVG_NS = 'http://www.w3.org/2000/svg';
     const WAVE_PATH = 'M0 4 Q 12.5 0 25 4 T 50 4 T 75 4 T 100 4';
 

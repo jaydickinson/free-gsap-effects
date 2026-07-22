@@ -12,7 +12,16 @@
  * This file only handles browser support detection for the UI notice.
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})(function() {
 	'use strict';
 
 	// Check for CSS scroll-driven animation support

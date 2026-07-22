@@ -10,7 +10,16 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
-window.addEventListener('DOMContentLoaded', function initTypewriterText() {
+/* Runs the init straight away if the DOM is already parsed (a script
+   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
+   waits for DOMContentLoaded otherwise. */
+(function onReady(init) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})(function initTypewriterText() {
     const HOLD_TIME = 1.6;          // Seconds a looping phrase stays on screen
     const DELETE_FACTOR = 0.5;      // Deleting runs at 2x typing speed
 
