@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Sorrel, an all-day cafe and kitchen on Larkfield Row. Brunch, small plates, sweets and drinks.">
+  <meta name="theme-color" content="#E7ECE1">
+  <title>Sorrel · All-Day Menu</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add has-js before first paint so reveal start-states never flash (visible then hide). data-cfasync stops Rocket Loader deferring it. -->
+
+    <script data-cfasync="false">document.documentElement.classList.add('has-js')</script>
+
+</head>
+<body>
+  <a class="skip-link" href="#menu">Skip to menu</a>
+
+  <!-- ============ STICKY HEADER ============ -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <div class="brand">
+        <span class="brand__leaf" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21c0-6 0-9 6-13 0 7-2 11-6 13z"></path>
+            <path d="M12 21c0-5 0-8-5-11 0 6 1 9 5 11z"></path>
+            <path d="M12 21v-9"></path>
+          </svg>
+        </span>
+        <div class="brand__text">
+          <span class="brand__name">Sorrel</span>
+          <span class="brand__tag">All-day cafe &amp; kitchen · Larkfield Row</span>
+        </div>
+      </div>
+      <dl class="hours">
+        <div><dt>Open</dt><dd>Tue&ndash;Sun · 8&ndash;4</dd></div>
+        <div><dt>Wi-Fi</dt><dd>sorrel&nbsp;/&nbsp;greenhouse</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <main id="menu" class="menu">
+    <!-- ============ CATEGORY BAR + DIETARY FILTERS ============ -->
+    <div class="controls">
+      <nav class="tabs" aria-label="Menu categories" data-tabs>
+        <a class="tab is-active" data-tab="all"     href="#panel-brunch">All</a>
+        <a class="tab"           data-tab="brunch"  href="#panel-brunch">Brunch</a>
+        <a class="tab"           data-tab="plates"  href="#panel-plates">Small&nbsp;Plates</a>
+        <a class="tab"           data-tab="sweets"  href="#panel-sweets">Sweets</a>
+        <a class="tab"           data-tab="drinks"  href="#panel-drinks">Drinks</a>
+      </nav>
+
+      <div class="filters" data-filters>
+        <span class="filters__label" id="filters-label">Dietary</span>
+        <div class="filters__chips" role="group" aria-labelledby="filters-label">
+          <button type="button" class="chip" data-diet="veg"   aria-pressed="false">Veg</button>
+          <button type="button" class="chip" data-diet="vegan" aria-pressed="false">Vegan</button>
+          <button type="button" class="chip" data-diet="gf"    aria-pressed="false">GF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BRUNCH ============ -->
+    <section class="panel is-active" id="panel-brunch" data-panel="brunch">
+      <h2 class="panel__title">Brunch</h2>
+      <p class="panel__note">Served 8am until 3pm. Add a flat white for £2.</p>
+      <ul class="dishes">
+        <li class="item" data-item data-diet="veg">
+          <div class="item__head">
+            <h3 class="item__name">Sorrel Green Shakshuka</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£11.50</span>
+          </div>
+          <p class="item__desc">Two eggs baked in herb-braised greens, a slick of chilli oil, grilled sourdough.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan">
+          <div class="item__head">
+            <h3 class="item__name">Smashed Avocado &amp; Dukkah</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£9.50</span>
+          </div>
+          <p class="item__desc">Lemon, cherry tomato, toasted seeds and dukkah on charred rye.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg">
+          <div class="item__head">
+            <h3 class="item__name">Buttermilk Pancakes</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£10.00</span>
+          </div>
+          <p class="item__desc">Burnt honey, poached rhubarb and a spoon of crème fraîche.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg gf">
+          <div class="item__head">
+            <h3 class="item__name">Field Mushroom Toast</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£10.50</span>
+          </div>
+          <p class="item__desc">Garlic butter, thyme and a soft poached egg. Ask for gluten-free bread.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li><li class="diet__tag diet__tag--gf">GF*</li></ul>
+        </li>
+        <li class="item" data-item data-diet="">
+          <div class="item__head">
+            <h3 class="item__name">The Full Sorrel</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£13.50</span>
+          </div>
+          <p class="item__desc">Cumberland sausage, smoked bacon, egg, beans, roast tomato, buttered toast.</p>
+        </li>
+      </ul>
+      <p class="panel__empty" data-empty hidden>No brunch dishes match those filters.</p>
+    </section>
+
+    <!-- ============ SMALL PLATES ============ -->
+    <section class="panel" id="panel-plates" data-panel="plates">
+      <h2 class="panel__title">Small Plates</h2>
+      <p class="panel__note">From noon. Three or four between two is about right.</p>
+      <ul class="dishes">
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Padrón Peppers</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£6.00</span>
+          </div>
+          <p class="item__desc">Blistered in olive oil, sea salt and a dust of smoked paprika.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg">
+          <div class="item__head">
+            <h3 class="item__name">Whipped Feta &amp; Honey</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£7.50</span>
+          </div>
+          <p class="item__desc">Pistachio, cracked pepper and warm flatbread for dipping.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Crispy New Potatoes</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£5.50</span>
+          </div>
+          <p class="item__desc">Smashed and fried golden, with a garlic aioli and chives.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg gf">
+          <div class="item__head">
+            <h3 class="item__name">Charred Hispi Cabbage</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£7.00</span>
+          </div>
+          <p class="item__desc">Grilled hard, brushed with miso butter and toasted sesame.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="gf">
+          <div class="item__head">
+            <h3 class="item__name">Buttermilk Chicken</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£8.50</span>
+          </div>
+          <p class="item__desc">Crisp thigh, hot honey and house pickles.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+      </ul>
+      <p class="panel__empty" data-empty hidden>No small plates match those filters.</p>
+    </section>
+
+    <!-- ============ SWEETS ============ -->
+    <section class="panel" id="panel-sweets" data-panel="sweets">
+      <h2 class="panel__title">Sweets</h2>
+      <p class="panel__note">Baked in-house each morning. Ask what has just come out.</p>
+      <ul class="dishes">
+        <li class="item" data-item data-diet="veg gf">
+          <div class="item__head">
+            <h3 class="item__name">Basque Cheesecake</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£6.50</span>
+          </div>
+          <p class="item__desc">Burnt top, soft middle, a pour of single-origin espresso alongside.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg">
+          <div class="item__head">
+            <h3 class="item__name">Salted Chocolate Cookie</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£3.50</span>
+          </div>
+          <p class="item__desc">Served warm, dark chocolate and a flake of sea salt.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg">
+          <div class="item__head">
+            <h3 class="item__name">Sticky Date Pudding</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£7.00</span>
+          </div>
+          <p class="item__desc">Warm toffee sauce and a scoop of Jersey clotted cream.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--v">Veg</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan">
+          <div class="item__head">
+            <h3 class="item__name">Seasonal Fruit Galette</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£6.50</span>
+          </div>
+          <p class="item__desc">Free-form pastry, whatever is ripe, coconut cream on the side.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li></ul>
+        </li>
+      </ul>
+      <p class="panel__empty" data-empty hidden>No sweets match those filters.</p>
+    </section>
+
+    <!-- ============ DRINKS ============ -->
+    <section class="panel" id="panel-drinks" data-panel="drinks">
+      <h2 class="panel__title">Drinks</h2>
+      <p class="panel__note">Beans from Curve, London. Oat milk is on the house.</p>
+      <ul class="dishes">
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Flat White</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£3.20</span>
+          </div>
+          <p class="item__desc">House blend, dense and short. Oat or whole milk.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Filter, Batch Brew</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£3.00</span>
+          </div>
+          <p class="item__desc">A rotating single-origin, brewed light. Free refill before noon.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Matcha Latte</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£4.20</span>
+          </div>
+          <p class="item__desc">Ceremonial grade, whisked, over oat milk and ice if you like.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+        <li class="item" data-item data-diet="veg vegan gf">
+          <div class="item__head">
+            <h3 class="item__name">Blood Orange Soda</h3>
+            <span class="item__leader" aria-hidden="true"></span>
+            <span class="item__price">£3.80</span>
+          </div>
+          <p class="item__desc">Made in-house, gently bitter, not too sweet.</p>
+          <ul class="diet"><li class="diet__tag diet__tag--vg">Vegan</li><li class="diet__tag diet__tag--gf">GF</li></ul>
+        </li>
+      </ul>
+      <p class="panel__empty" data-empty hidden>No drinks match those filters.</p>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <p class="site-footer__note" data-note>14 Larkfield Row, London E17 · Walk-ins only</p>
+    <p class="site-footer__note" data-note>Prices include service. Card and contactless only.</p>
+    <p class="site-footer__note site-footer__note--fine" data-note>Please tell us about any allergies before you order. Dishes marked GF* can be made gluten-free on request; we prepare food in a kitchen that handles gluten and nuts.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

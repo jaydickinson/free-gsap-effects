@@ -1,0 +1,403 @@
+/* ============================================================
+   SORREL, QR TABLE MENU
+   A digital menu opened from a QR code at the table, so it is
+   designed for a 375px phone first and widened from there.
+
+   COLOUR, measured as used (WCAG, composited over the surface
+   the text actually sits on):
+
+     ink       #23291F on ground #E7ECE1  → 12.4:1   body + names
+     ink       #23291F on paper  #F3F6EF  → 13.2:1   header, cards
+     ink-soft  #55604D on ground #E7ECE1  →  5.5:1   descriptions
+     ink-soft  #55604D on paper  #F3F6EF  →  6.1:1   descriptions
+     herb      #3F6B47 on ground #E7ECE1  →  5.1:1   prices, active tab
+     white     #F3F6EF on herb   #3F6B47  →  6.1:1   filled chips / pills
+
+   Tomato #C24B33 is a HIGHLIGHT and a MARK, never small body text:
+   on the ground it measures 4.0:1 and on paper 4.4:1, both below the
+   4.5:1 floor for text under 18.66px bold. It is used only as filled
+   pills (white on tomato → 4.8:1, passes) and for large/bold accents.
+   Do not set tomato as a small text colour on any surface here.
+
+   To reskin: change the six colour tokens below and their matching
+   --*-rgb triples. Every translucent value resolves from a triple, so
+   a single edit carries through rules, tints and the dotted leaders.
+   ============================================================ */
+
+:root {
+    --ground: #E7ECE1;
+    --paper:  #F3F6EF;
+    --ink:    #23291F;
+    --ink-soft: #55604D;
+    --herb:   #3F6B47;
+    --tomato: #C24B33;
+
+    --ground-rgb: 231, 236, 225;
+    --paper-rgb:  243, 246, 239;
+    --ink-rgb:    35, 41, 31;
+    --ink-soft-rgb: 85, 96, 77;
+    --herb-rgb:   63, 107, 71;
+    --tomato-rgb: 194, 75, 51;
+
+    --line: rgba(var(--ink-rgb), 0.14);
+    --line-strong: rgba(var(--ink-rgb), 0.22);
+    --shadow: 0 1px 0 rgba(var(--ink-rgb), 0.04), 0 8px 24px rgba(var(--ink-rgb), 0.06);
+
+    --font-display: 'Yeseva One', Georgia, serif;
+    --font-sans: 'Mukta', system-ui, -apple-system, sans-serif;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --wrap: 40rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Soft grain of two herb washes so the ground is not a flat fill. */
+    background-image:
+        radial-gradient(60rem 40rem at 12% -10%, rgba(var(--herb-rgb), 0.10), transparent 60%),
+        radial-gradient(50rem 40rem at 108% 4%, rgba(var(--tomato-rgb), 0.06), transparent 55%);
+    background-attachment: fixed;
+}
+
+::selection { background: rgba(var(--herb-rgb), 0.24); color: var(--ink); }
+
+.skip-link {
+    position: absolute;
+    left: 0.75rem;
+    top: -3rem;
+    z-index: 60;
+    background: var(--herb);
+    color: var(--paper);
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: top 0.2s var(--ease);
+}
+.skip-link:focus { top: 0.75rem; }
+
+:where(a, button):focus-visible {
+    outline: 2px solid var(--herb);
+    outline-offset: 2px;
+    border-radius: 0.4rem;
+}
+
+/* ============ HEADER ============
+   In normal flow, not sticky: on a phone the pinned category bar below
+   is what needs to stay in view, and a second pinned bar would eat the
+   screen. The header scrolls away and the tabs take the top. */
+.site-header {
+    background: rgba(var(--paper-rgb), 0.9);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top);
+}
+
+.site-header__inner {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+.brand__leaf {
+    color: var(--herb);
+    display: grid;
+    place-items: center;
+    flex: none;
+}
+.brand__text { display: flex; flex-direction: column; min-width: 0; }
+.brand__name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+}
+.brand__tag {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hours {
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+    text-align: right;
+    flex: none;
+}
+.hours dt {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--herb);
+    font-weight: 600;
+}
+.hours dd {
+    margin: 0.1rem 0 0;
+    font-size: 0.78rem;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ============ CONTROLS: TABS + FILTERS ============ */
+.menu { max-width: var(--wrap); margin: 0 auto; padding: 0 1.25rem 2rem; }
+
+.controls {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    margin: 0 -1.25rem;
+    padding: calc(0.6rem + env(safe-area-inset-top)) 1.25rem 0.7rem;
+    background: rgba(var(--ground-rgb), 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+}
+
+.tabs {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.1rem;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+    flex: none;
+    scroll-snap-align: start;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 0.42rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(var(--paper-rgb), 0.7);
+    white-space: nowrap;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+    cursor: pointer;
+}
+.tab:hover { border-color: var(--herb); }
+.tab.is-active {
+    background: var(--herb);
+    color: var(--paper);
+    border-color: var(--herb);
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+.filters__label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+.filters__chips { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.chip {
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.28rem 0.72rem;
+    cursor: pointer;
+    transition: background 0.18s var(--ease), color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+.chip:hover { border-color: var(--herb); }
+.chip.is-on {
+    background: var(--herb);
+    border-color: var(--herb);
+    color: var(--paper);
+}
+
+/* ============ PANELS ============ */
+.panel { padding-top: 1.6rem; }
+.panel + .panel { border-top: 1px solid var(--line); }
+
+.panel__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 7vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.05;
+    margin: 0 0 0.2rem;
+}
+.panel__note {
+    margin: 0 0 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.dishes { list-style: none; margin: 0; padding: 0; }
+
+.item { padding: 0.95rem 0; border-bottom: 1px dashed var(--line); }
+.item:last-child { border-bottom: 0; }
+
+.item__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+.item__name {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.08rem;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--ink);
+}
+.item__leader {
+    flex: 1 1 auto;
+    align-self: flex-end;
+    height: 0.62em;
+    border-bottom: 1.5px dotted var(--line-strong);
+    min-width: 1.5rem;
+}
+.item__price {
+    flex: none;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--herb);
+    font-variant-numeric: tabular-nums;
+}
+.item__desc {
+    margin: 0.3rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    max-width: 34rem;
+}
+
+.diet { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.55rem 0 0; padding: 0; }
+.diet__tag {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper);
+    padding: 0.16rem 0.5rem;
+    border-radius: 999px;
+    line-height: 1.4;
+}
+.diet__tag--v  { background: var(--herb); }
+.diet__tag--vg { background: var(--herb); }
+.diet__tag--vg::before { content: "\2713\00a0"; }
+.diet__tag--gf { background: var(--tomato); }
+
+.panel__empty {
+    margin: 0.5rem 0 0;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* A filtered-out dish leaves the flow entirely so the list closes up.
+   Gated on nothing: the class is only ever added by JS, so with the
+   chips absent every dish shows. */
+.item.is-filtered { display: none; }
+
+/* ============ NO-JS / PROGRESSIVE ENHANCEMENT ============
+   Default (no has-js): every category is stacked and visible, and the
+   tabs are ordinary anchor links that jump to their section. When JS
+   has registered GSAP it adds .has-js, which turns the category bar
+   into a tab set showing one section at a time. Nothing is hidden
+   unless a working tab can bring it back. */
+.has-js .panel { display: none; }
+.has-js .panel.is-active { display: block; }
+.has-js .panel__title {
+    /* The active tab already names the section; keep the heading for
+       structure but let the tab do the shouting. */
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0; border: 0;
+    clip: rect(0 0 0 0); overflow: hidden;
+}
+.has-js .panel { border-top: 0; padding-top: 1.4rem; }
+
+/* "All" view: show every category at once, each broken up by its title and
+   a rule, the same layout a no-JS visitor gets. The tab bar toggles the
+   .menu-all class on <html>. */
+.has-js.menu-all .panel { display: block; }
+.has-js.menu-all .panel + .panel { border-top: 1px solid var(--line); padding-top: 1.6rem; }
+.has-js.menu-all .panel__title {
+    position: static;
+    width: auto; height: auto;
+    margin: 0 0 0.2rem; padding: 0;
+    clip: auto; overflow: visible;
+}
+
+/* ============ FOOTER ============ */
+.site-footer {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+    padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--line);
+    text-align: center;
+}
+.site-footer__note { margin: 0 0 0.5rem; font-size: 0.86rem; color: var(--ink); }
+.site-footer__note--fine { color: var(--ink-soft); font-size: 0.78rem; max-width: 30rem; margin-left: auto; margin-right: auto; }
+
+/* ============ WIDER SCREENS ============ */
+@media (min-width: 34rem) {
+    .brand__name { font-size: 1.85rem; }
+    .brand__tag { font-size: 0.8rem; }
+    .item__name { font-size: 1.18rem; }
+    .item__price { font-size: 1.08rem; }
+    .dishes {
+        /* Two dishes across once there is room; each stays a full row. */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2.5rem;
+    }
+    .item { border-bottom: 1px dashed var(--line); }
+}
+
+@media (min-width: 48rem) {
+    .menu, .site-header__inner, .site-footer { padding-left: 2rem; padding-right: 2rem; }
+    .controls { margin-left: -2rem; margin-right: -2rem; padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* ============ REDUCED MOTION ============
+   The JS matchMedia branch already switches tabs and filters instantly
+   under reduced motion; this mirror covers CSS transitions so nothing
+   eases, slides or fades for a visitor who asked it not to. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}

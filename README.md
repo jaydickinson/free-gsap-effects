@@ -1,8 +1,8 @@
 # Free GSAP Effects
 
-Seven free, production-ready GSAP animation effects and three complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animation effects and 29 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 39 copy-paste GSAP animation effects and 36 complete website templates.
 
 ## The Effects
 
@@ -14,6 +14,7 @@ From [GSAP Vault](https://gsapvault.com), a library of 31 copy-paste GSAP animat
 | [Parallax Hero](./parallax-hero) | A layered hero section where background blobs, headline, and foreground labels scroll at different speeds, creating scrubbed parallax depth. | [Demo](https://gsapvault.com/effects/parallax-hero) |
 | [Image Clip Reveal](./image-clip-reveal) | Images reveal on scroll with an animated clip-path wipe and a Ken Burns settle, the inner image easing from 1.25 scale down to 1 as the mask opens. | [Demo](https://gsapvault.com/effects/image-clip-reveal) |
 | [Hover Underline](./hover-underline) | Animated link underlines with three GSAP variants: an exit-through slide, a marker-style fill sweep, and a hand-drawn SVG wave. One data attribute per link. | [Demo](https://gsapvault.com/effects/hover-underline) |
+| [Scroll Text Highlight](./scroll-text-highlight) | Scroll-linked reading highlight that lights a paragraph word by word as you scroll, with the leading word flashing an accent colour before settling to full foreground. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
 | [CSS Scroll Reveal](./css-scroll-reveal) | Pure CSS scroll-triggered entrance animations. No JavaScript required. Uses native CSS scroll-driven animations for fade, slide, and scale effects. | [Demo](https://gsapvault.com/effects/css-scroll-reveal) |
 
 ## The Templates
@@ -25,6 +26,7 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 | [Coming Soon Template](./coming-soon-template) | A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day. | [Demo](https://gsapvault.com/templates/coming-soon-template) |
 | [Charity Campaign Template](./charity-campaign-template) | A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
 | [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
+| [QR Table Menu Template](./qr-menu-template) | A phone-first digital menu made to open from a QR code at the table, with a sticky category bar that crossfades between sections and dietary chips that filter every dish at once. | [Demo](https://gsapvault.com/templates/qr-menu-template) |
 
 ## Quick Start
 
@@ -58,7 +60,7 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 31 effects and 29 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 39 effects and 36 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
 - All of it, one payment: [Effects & Templates Vault](https://gsapvault.com/effects), a one-time bundle covering every current and future effect and template, unlimited commercial projects. Check the site for current pricing
