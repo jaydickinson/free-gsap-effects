@@ -1,5 +1,7 @@
 # Free GSAP Effects
 
+![GSAP Vault free effects and templates](./og-free-repo.png)
+
 Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
 From [GSAP Vault](https://gsapvault.com), a library of 39 copy-paste GSAP animation effects and 36 complete website templates.
