@@ -12,6 +12,9 @@
 	--accent: #7c4de7;
 	--accent-light: #a78bfa;
 	--border: rgba(255, 255, 255, 0.1);
+
+	/* scrollbars and native controls follow the palette */
+	color-scheme: dark;
 }
 
 html {

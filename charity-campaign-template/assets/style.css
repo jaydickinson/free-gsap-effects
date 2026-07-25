@@ -104,6 +104,9 @@
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --content: 1160px;
+
+    /* scrollbars and native controls follow the palette */
+    color-scheme: dark;
 }
 
 /* ---- Reset and ground ---- */

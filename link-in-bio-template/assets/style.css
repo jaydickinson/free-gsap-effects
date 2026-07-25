@@ -51,6 +51,7 @@
     --font-display: 'Baloo 2', 'Arial Rounded MT Bold', system-ui, sans-serif;
     --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
 
+    /* scrollbars and native controls follow the palette */
     color-scheme: light;
 }
 

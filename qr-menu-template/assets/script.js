@@ -17,7 +17,7 @@
  * delete a whole category or a single dish and the rest still works.
  *
  * @plugins ScrollTrigger
- * @techniques tabs, filter, scroll-reveal, stagger
+ * @techniques tabs, filter, click-toggle, scroll-reveal, stagger
  */
 
 /* Registering the plugin FIRST, inside the guard, is load-bearing: the
@@ -46,9 +46,31 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 })(function initSorrel() {
 
     /* OPTIONAL: Lenis smooth scroll. Remove this block and the CDN tag to drop it. */
+    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
+       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
+    let wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+        || document.documentElement.dataset.smooth) !== 'off'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     let lenis = null;
-    if (typeof Lenis !== 'undefined') {
-        lenis = new Lenis({ autoRaf: true, anchors: true });
+    let lenisTick = null;
+    if (wantsSmooth && typeof Lenis !== 'undefined') {
+        /* Lenis and ScrollTrigger must share ONE clock. Left on its own rAF,
+           Lenis moves the page while ScrollTrigger is still reading the
+           previous frame. See docs/gsap-patterns.md. */
+        const hasST = typeof ScrollTrigger !== 'undefined';
+        lenis = new Lenis({ autoRaf: !hasST, anchors: true });
+        if (hasST) {
+            lenis.on('scroll', ScrollTrigger.update);
+            lenisTick = function (time) { lenis.raf(time * 1000); };
+            gsap.ticker.add(lenisTick);
+            gsap.ticker.lagSmoothing(0);
+            /* A refresh restores the native scroll position while Lenis is
+               still lerping toward its older target. */
+            ScrollTrigger.addEventListener('refresh', function () {
+                lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+            });
+        }
     }
 
     const ctx = gsap.context(function gsapContextCallback() {
@@ -86,9 +108,16 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                ============================================ */
             (function initFilters() {
                 const bar = document.querySelector('[data-filters]');
-                const chips = gsap.utils.toArray('[data-diet]');
+                if (!bar) return;
+                /* Scope the chips to the filter bar. The dishes also carry a
+                   data-diet (that is what the chips test against), so a bare
+                   '[data-diet]' selector would wire a chip toggle onto every
+                   dish - and a tap on a dish would push its whole diet string
+                   ("veg gf") as an active filter that matches nothing, hiding
+                   the entire menu. */
+                const chips = gsap.utils.toArray(bar.querySelectorAll('[data-diet]'));
                 const items = gsap.utils.toArray('[data-item]');
-                if (!bar || !chips.length || !items.length) return;
+                if (!chips.length || !items.length) return;
 
                 const empties = gsap.utils.toArray('[data-empty]');
 
@@ -324,6 +353,84 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             })();
 
             /* ============================================
+               DISH DETAILS
+               Each dish carries a details block (calories + allergens)
+               that shows plainly with no JS. Here the dish name becomes a
+               disclosure button and the block collapses, opening on tap.
+
+               A single handler on the whole row toggles it, so a tap
+               anywhere on the dish opens it (the QR-menu gesture people
+               reach for). The button inside the name carries the keyboard
+               focus, the accessible name and aria-expanded; its Enter or
+               Space fires a click that bubbles to the same handler, so
+               there is one source of truth and no double toggle. The block
+               is pre-collapsed in CSS under .has-js, so nothing flashes.
+               ============================================ */
+            (function initItemDetails() {
+                const items = gsap.utils.toArray('[data-item]');
+                if (!items.length) return;
+
+                items.forEach(function (item, i) {
+                    const toggle = item.querySelector('[data-toggle]');
+                    const more = item.querySelector('[data-more]');
+                    if (!toggle || !more) return;
+
+                    if (!more.id) more.id = 'item-more-' + i;
+                    toggle.setAttribute('aria-controls', more.id);
+                    toggle.setAttribute('aria-expanded', 'false');
+                    /* Marks the dish as having a working disclosure, so the
+                       chevron and pointer cursor only appear where a tap does
+                       something. A dish whose details block was deleted skips
+                       this block entirely and stays a plain, static name. */
+                    item.classList.add('has-details');
+
+                    /* Wrap the details in an inner element so .item__more can be
+                       a padding-free clip container: height:0 then closes it
+                       with no leftover gap. Guarded so a matchMedia re-run
+                       (motion-preference change) does not nest a second wrap. */
+                    if (!more.querySelector('.item__more-inner')) {
+                        const inner = document.createElement('div');
+                        inner.className = 'item__more-inner';
+                        while (more.firstChild) inner.appendChild(more.firstChild);
+                        more.appendChild(inner);
+                    }
+
+                    function setOpen(open) {
+                        item.classList.toggle('is-open', open);
+                        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                        if (isMotion) {
+                            gsap.to(more, {
+                                height: open ? 'auto' : 0,
+                                opacity: open ? 1 : 0,
+                                duration: 0.32,
+                                ease: 'power2.out',
+                                /* Heights below change, so anything sticky or
+                                   pinned needs its positions recomputed. */
+                                onComplete: function () { ScrollTrigger.refresh(); }
+                            });
+                        } else {
+                            gsap.set(more, { height: open ? 'auto' : 0, opacity: open ? 1 : 0 });
+                            ScrollTrigger.refresh();
+                        }
+                    }
+
+                    listen(item, 'click', function () {
+                        setOpen(!item.classList.contains('is-open'));
+                    });
+                });
+
+                resets.push(function () {
+                    items.forEach(function (item) {
+                        const more = item.querySelector('[data-more]');
+                        const toggle = item.querySelector('[data-toggle]');
+                        item.classList.remove('is-open');
+                        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                        if (more) gsap.set(more, { clearProps: 'height,opacity' });
+                    });
+                });
+            })();
+
+            /* ============================================
                FOOTER REVEAL
                The one scroll-reveal on the page, kept for the closing
                notes. Guarded and once-only.
@@ -378,6 +485,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
     window.addEventListener('beforeunload', function () {
         if (ctx) ctx.kill();
+        if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();
     });
 });

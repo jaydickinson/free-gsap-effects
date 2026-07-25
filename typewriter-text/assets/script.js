@@ -172,7 +172,14 @@ gsap.registerPlugin(ScrollTrigger);
 (function initLenis() {
     if (typeof Lenis === 'undefined') return;
 
+    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
+       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
+    if ((new URLSearchParams(location.search).get('smooth')
+         || document.documentElement.dataset.smooth) === 'off') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const lenis = new Lenis({
+        autoRaf: typeof ScrollTrigger === 'undefined',
         duration: 1.2,
         smoothWheel: true
     });
@@ -183,6 +190,13 @@ gsap.registerPlugin(ScrollTrigger);
         lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+    /* A refresh restores the native scroll position while Lenis is still
+       lerping toward its older target, so it must adopt that position. */
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.addEventListener('refresh', function () {
+            lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+        });
+    }
 
     // Store for cleanup
     window.lenis = lenis;

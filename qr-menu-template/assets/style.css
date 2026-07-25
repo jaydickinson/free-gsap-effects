@@ -48,6 +48,9 @@
 
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --wrap: 40rem;
+
+    /* scrollbars and native controls follow the palette */
+    color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -314,6 +317,86 @@ body {
 .diet__tag--vg { background: var(--herb); }
 .diet__tag--vg::before { content: "\2713\00a0"; }
 .diet__tag--gf { background: var(--tomato); }
+
+/* ============ DISH DETAILS (calories + allergens) ============
+   Each dish carries a details block. With no JS it just shows, like
+   everything else on the page. Under .has-js the dish name becomes a
+   disclosure button and the block collapses, opening on tap. */
+.item__toggle {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    /* No JS (or a dish with no details): the button is inert, so it must
+       not look tappable. .has-details is added by the script only where a
+       working disclosure was wired. */
+    cursor: default;
+}
+.has-js .item.has-details .item__toggle { cursor: pointer; }
+
+/* Chevron affordance, only where JS wired a working disclosure. */
+.has-js .item.has-details .item__toggle::after {
+    content: "";
+    display: inline-block;
+    width: 0.4em;
+    height: 0.4em;
+    margin-left: 0.5em;
+    border-right: 1.5px solid var(--ink-soft);
+    border-bottom: 1.5px solid var(--ink-soft);
+    transform: translateY(-0.15em) rotate(45deg);
+    transition: transform 0.25s var(--ease);
+    vertical-align: middle;
+}
+.has-js .item.has-details.is-open .item__toggle::after {
+    transform: translateY(0.05em) rotate(-135deg);
+}
+.item__toggle:focus-visible {
+    outline: 2px solid var(--herb);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* No-JS resting layout: the spans sit directly in .item__more and just
+   show. With JS the script wraps them in .item__more-inner and .item__more
+   becomes a clip container whose height animates. */
+.item__more {
+    padding-top: 0.55rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.85rem;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+}
+.item__kcal {
+    font-weight: 700;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+}
+.item__allergen { font-style: italic; }
+
+/* Under JS: .item__more is the clip container (no padding of its own, so
+   height:0 closes it completely - no stray gap), and the inner wrapper the
+   script inserts carries the spacing and flow. Pre-collapsed here before
+   the script runs (has-js is set in the head, so nothing flashes). GSAP
+   animates the container height/opacity and clears them on reset. */
+.has-js .item__more {
+    display: block;
+    padding: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+.has-js .item__more-inner {
+    padding-top: 0.55rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.85rem;
+}
 
 .panel__empty {
     margin: 0.5rem 0 0;

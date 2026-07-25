@@ -34,9 +34,31 @@
     document.documentElement.classList.add('has-js');
 
     /* Lenis is optional. Remove its script tag and this block skips. */
+    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
+       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
+    var wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+        || document.documentElement.dataset.smooth) !== 'off'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     var lenis = null;
-    if (typeof Lenis !== 'undefined') {
-        lenis = new Lenis({ autoRaf: true });
+    var lenisTick = null;
+    if (wantsSmooth && typeof Lenis !== 'undefined') {
+        /* Lenis and ScrollTrigger must share ONE clock. Left on its own rAF,
+           Lenis moves the page while ScrollTrigger is still reading the
+           previous frame. See docs/gsap-patterns.md. */
+        const hasST = typeof ScrollTrigger !== 'undefined';
+        lenis = new Lenis({ autoRaf: !hasST });
+        if (hasST) {
+            lenis.on('scroll', ScrollTrigger.update);
+            lenisTick = function (time) { lenis.raf(time * 1000); };
+            gsap.ticker.add(lenisTick);
+            gsap.ticker.lagSmoothing(0);
+            /* A refresh restores the native scroll position while Lenis is
+               still lerping toward its older target. */
+            ScrollTrigger.addEventListener('refresh', function () {
+                lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+            });
+        }
     }
 
     /* Per-index pseudo-random in 0..1. Deterministic on purpose: the
@@ -91,6 +113,7 @@
 
     window.addEventListener('beforeunload', function () {
         if (ctx) ctx.kill();
+        if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();
     });
 

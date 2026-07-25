@@ -78,16 +78,29 @@ if (typeof gsap !== 'undefined') {
        from gsap's ticker and pushes every scroll into ScrollTrigger,
        otherwise scrubbed and triggered animations read a scroll
        position a frame behind the one on screen. */
+    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
+       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
+    var wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+        || document.documentElement.dataset.smooth) !== 'off'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     var lenis = null;
     var lenisTick = null;
-    if (typeof Lenis !== 'undefined') {
-        lenis = new Lenis({ autoRaf: false });
+    if (wantsSmooth && typeof Lenis !== 'undefined') {
+        lenis = new Lenis({ autoRaf: typeof ScrollTrigger === 'undefined' });
         if (typeof ScrollTrigger !== 'undefined') {
             lenis.on('scroll', ScrollTrigger.update);
         }
         lenisTick = function (time) { lenis.raf(time * 1000); };
         gsap.ticker.add(lenisTick);
         gsap.ticker.lagSmoothing(0);
+        /* A refresh restores the native scroll position while Lenis is still
+           lerping toward its older target, so it must adopt that position. */
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.addEventListener('refresh', function () {
+                lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+            });
+        }
     }
 
     /* Handlers live in Maps keyed by element so cleanup can remove

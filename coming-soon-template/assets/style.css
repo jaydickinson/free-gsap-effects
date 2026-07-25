@@ -52,6 +52,7 @@
     --font-display: 'Oswald', 'Haettenschweiler', 'Arial Narrow', sans-serif;
     --font-body: 'Cabin', system-ui, sans-serif;
 
+    /* scrollbars and native controls follow the palette */
     color-scheme: dark;
 }
 

@@ -30,6 +30,9 @@
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
     --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+
+    /* scrollbars and native controls follow the palette */
+    color-scheme: dark;
 }
 
 html {

@@ -25,9 +25,16 @@ gsap.registerPlugin(ScrollTrigger);
     // OPTIONAL: Lenis smooth scroll integration
     // Remove this block if you are not using Lenis
     // ============================================
+    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
+       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
+    let wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+        || document.documentElement.dataset.smooth) !== 'off'
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     let lenis = null;
-    if (typeof Lenis !== 'undefined') {
+    if (wantsSmooth && typeof Lenis !== 'undefined') {
         lenis = new Lenis({
+            autoRaf: typeof ScrollTrigger === 'undefined',
             duration: 1.2,
             smoothWheel: true
         });
@@ -38,6 +45,13 @@ gsap.registerPlugin(ScrollTrigger);
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
+        /* A refresh restores the native scroll position while Lenis is still
+           lerping toward its older target, so it must adopt that position. */
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.addEventListener('refresh', function () {
+                lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+            });
+        }
 
         window.lenis = lenis;
     }

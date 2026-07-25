@@ -16,6 +16,9 @@
 	--border-hover: rgba(255, 255, 255, 0.15);
 	--radius: 12px;
 	--radius-lg: 16px;
+
+	/* scrollbars and native controls follow the palette */
+	color-scheme: dark;
 }
 
 html {
