@@ -3,62 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
     <title>Scroll Text Highlight Demo | GSAP Vault</title>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main class="container">
-        <header class="page-header">
-            <h1 class="page-title">Scroll Text Highlight</h1>
-            <p class="page-subtitle">Copy that reads itself: a band of words lights up word by word as you scroll</p>
-        </header>
+    <main class="reading-sequence" data-reading-sequence data-thumbnail-target>
+        <section class="reading-stage" aria-label="Scroll-controlled editorial statement">
+            <header class="stage-meta" aria-hidden="true">
+                <p class="scroll-cue"><span></span>Scroll to read</p>
+                <p>EDIT / 001</p>
+            </header>
 
-        <!-- Example 1: Reading block -->
-        <section class="example" data-thumbnail-target>
-            <div class="example-header">
-                <span class="example-number">01</span>
-                <h2 class="example-title">Reading Block</h2>
-            </div>
-            <div class="example-content">
-                <p class="example-instruction">Scroll slowly: the copy lights up as you read, and dims again if you scroll back.</p>
-                <p class="scroll-highlight reading-block">
-                    We have forgotten how to read slowly. The screen trained us to skim, to hunt for the one line that matters and discard the rest before it can land. But some ideas only give themselves up at reading pace, one word at a time, in the exact order the writer set them. This is what attention feels like when you give it fully: a single lit word, then the next, and the sentence assembling itself in front of you. Nothing on this page moves faster than you do. Slow down, and the meaning arrives.
-                </p>
-            </div>
+            <p class="scroll-highlight manifesto"
+               data-highlight-dim="0.13"
+               data-highlight-lift="8"
+               data-highlight-trigger="[data-reading-sequence]"
+               data-highlight-progress="[data-reading-progress]"
+               data-highlight-current="[data-reading-current]">
+                Attention is not captured. It is chosen. Read deliberately, one word at a time, until the noise falls away and meaning has nowhere left to hide.
+            </p>
+
+            <footer class="reading-coordinate" aria-hidden="true">
+                <span class="coordinate-label">ATTN / SEQUENCE</span>
+                <span class="progress-track"><span class="progress-fill" data-reading-progress></span></span>
+                <span class="coordinate-count" data-reading-current>26 / 26</span>
+            </footer>
         </section>
-
-        <!-- Example 2: Statement heading (same mechanism, different scale) -->
-        <section class="example">
-            <div class="example-header">
-                <span class="example-number">02</span>
-                <h2 class="example-title">Statement Heading</h2>
-            </div>
-            <div class="example-content">
-                <p class="example-instruction">The same scrubbed highlight on display type. Keep scrolling to light the line:</p>
-                <h2 class="scroll-highlight statement">Design is the quiet art of deciding what a reader notices first.</h2>
-            </div>
-        </section>
-
-        <!-- Scroll runway: gives the final block room to finish lighting before
-             the page bottom. Not part of the effect; remove on your own page if
-             the highlighted block already has content scrolling after it. -->
-        <div class="scroll-runway" aria-hidden="true"></div>
     </main>
 
-    <!-- GSAP Core -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
-    <!-- SplitText plugin (free since GSAP 3.12) -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/SplitText.min.js"></script>
-
-    <!-- Optional: Lenis smooth scroll -->
     <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
-
-    <!-- Effect code -->
     <script src="assets/script.js"></script>
 </body>
 </html>

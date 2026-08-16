@@ -1,171 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="robots" content="noindex, nofollow">
-		<title>Scroll Progress Indicator Demo | GSAP Vault</title>
-		<link rel="stylesheet" href="assets/style.css">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-	</head>
-	<body>
-		<!-- Global Progress Bar (top of page) -->
-		<div class="progress-bar" data-progress-style="bar" aria-hidden="true">
-			<div class="progress-bar__fill"></div>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Scroll Progress Indicator Demo | GSAP Vault</title>
+	<link rel="stylesheet" href="assets/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body data-mode="all">
+	<div class="progress-bar" data-progress-style="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+		<div class="progress-bar__fill"></div>
+	</div>
+
+	<header class="showcase-toolbar">
+		<p class="showcase-prompt"><span aria-hidden="true">↓</span> Scroll to read</p>
+		<div class="mode-switcher" role="group" aria-label="Progress display mode">
+			<button type="button" data-mode-button="all" aria-pressed="true">All</button>
+			<button type="button" data-mode-button="bar" aria-pressed="false">Bar</button>
+			<button type="button" data-mode-button="circle" aria-pressed="false">Ring</button>
+			<button type="button" data-mode-button="rail" aria-pressed="false">Rail</button>
+			<button type="button" data-mode-button="counter" aria-pressed="false">%</button>
 		</div>
+	</header>
 
-		<!-- Hero fills viewport to demonstrate scroll animations -->
-		<section class="hero" data-thumbnail-target>
-			<div class="hero-content">
-				<span class="page-badge">ScrollTrigger</span>
-				<h2 class="hero-title">Scroll Progress</h2>
-				<p class="hero-subtitle">Four visualization styles for tracking page scroll position.</p>
-				<div class="scroll-hint">
-					<span>Scroll to see progress</span>
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-						<path d="M12 5v14M5 12l7 7 7-7"/>
+	<main class="field-note" data-thumbnail-target>
+		<div class="field-note__layout">
+			<aside class="instrument" aria-label="Route progress instrument">
+				<div class="instrument__topline">
+					<span>FIELD / 07</span>
+					<span>ALT. 2,140M</span>
+				</div>
+
+				<div class="instrument__dial progress-circle" data-progress-style="circle" role="progressbar" aria-label="Circular reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+					<svg class="progress-circle__svg" viewBox="0 0 120 120" aria-hidden="true">
+						<circle class="progress-circle__bg" cx="60" cy="60" r="52"/>
+						<circle class="progress-circle__fill" cx="60" cy="60" r="52"/>
+						<path class="progress-circle__crosshair" d="M60 0v16M60 104v16M0 60h16M104 60h16"/>
 					</svg>
+					<span class="progress-circle__text">0%</span>
 				</div>
-			</div>
-		</section>
 
-		<main class="container">
-			<!-- Example 1: Linear Bar -->
-			<section class="example">
-				<div class="example-header">
-					<span class="example-number">01</span>
-					<h2 class="example-title">Linear Bar</h2>
-				</div>
-				<div class="example-content">
-					<p class="example-instruction">A horizontal progress bar at the top of the viewport. Uses <code>scaleX</code> for smooth GPU-accelerated animation.</p>
-					<div class="demo-area">
-						<div class="prose">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-							<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-							<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- Example 2: Circular Ring -->
-			<section class="example">
-				<div class="example-header">
-					<span class="example-number">02</span>
-					<h2 class="example-title">Circular Ring</h2>
-				</div>
-				<div class="example-content">
-					<p class="example-instruction">An SVG circle that fills using <code>stroke-dashoffset</code>. Optionally shows percentage text.</p>
-
-					<!-- Circular progress indicator for this section -->
-					<div class="progress-circle" data-progress-style="circle" aria-hidden="true">
-						<svg class="progress-circle__svg" viewBox="0 0 60 60">
-							<circle class="progress-circle__bg" cx="30" cy="30" r="25"/>
-							<circle class="progress-circle__fill" cx="30" cy="30" r="25"/>
-						</svg>
-						<span class="progress-circle__text">0%</span>
-					</div>
-
-					<div class="demo-area">
-						<div class="prose">
-							<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-							<p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- Example 3: Side Rail -->
-			<section class="example">
-				<div class="example-header">
-					<span class="example-number">03</span>
-					<h2 class="example-title">Side Rail</h2>
-				</div>
-				<div class="example-content">
-					<p class="example-instruction">A vertical bar on the left or right edge. Uses <code>scaleY</code> with <code>transform-origin: top</code>.</p>
-
-					<!-- Rail progress indicator -->
-					<div class="progress-rail progress-rail--right" data-progress-style="rail" aria-hidden="true">
+				<div class="route">
+					<div class="progress-rail" data-progress-style="rail" role="progressbar" aria-label="Route progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
 						<div class="progress-rail__fill"></div>
 					</div>
-
-					<div class="demo-area">
-						<div class="prose">
-							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-							<p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
-							<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-						</div>
-					</div>
+					<ol class="route__stops" aria-label="Manifesto chapters">
+						<li data-route-stop class="is-active" aria-current="step"><span>01</span> Depart</li>
+						<li data-route-stop><span>02</span> Observe</li>
+						<li data-route-stop><span>03</span> Traverse</li>
+						<li data-route-stop><span>04</span> Return</li>
+					</ol>
 				</div>
-			</section>
 
-			<!-- Example 4: Percentage Counter -->
-			<section class="example">
-				<div class="example-header">
-					<span class="example-number">04</span>
-					<h2 class="example-title">Percentage Counter</h2>
-				</div>
-				<div class="example-content">
-					<p class="example-instruction">A numeric display using <code>gsap.quickTo()</code> for smooth number interpolation.</p>
-
-					<!-- Counter progress indicator -->
-					<div class="progress-counter" data-progress-style="counter" aria-hidden="true">
-						<span class="progress-counter__value">0</span>
+				<div class="instrument__readout">
+					<p class="instrument__chapter"><span>CHAPTER</span><strong data-current-chapter>DEPART</strong></p>
+					<div class="progress-counter" data-progress-style="counter" role="progressbar" aria-label="Numeric reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+						<span class="progress-counter__prefix">N /</span>
+						<span class="progress-counter__value">000</span>
 						<span class="progress-counter__symbol">%</span>
 					</div>
-
-					<div class="demo-area">
-						<div class="prose">
-							<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-							<p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-						</div>
-					</div>
 				</div>
-			</section>
+			</aside>
 
-			<!-- Use Cases Section -->
-			<section class="example example--info">
-				<div class="example-header">
-					<span class="example-number">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-							<path d="M12 2L2 7l10 5 10-5-10-5z"/>
-							<path d="M2 17l10 5 10-5"/>
-							<path d="M2 12l10 5 10-5"/>
-						</svg>
-					</span>
-					<h2 class="example-title">When to Use Each Style</h2>
-				</div>
-				<div class="example-content">
-					<div class="info-grid">
-						<div class="info-card info-card--positive">
-							<h3>Best Practices</h3>
-							<ul>
-								<li><strong>Bar:</strong> Blog posts, documentation, long-form content</li>
-								<li><strong>Circle:</strong> Landing pages, minimal designs, corner placement</li>
-								<li><strong>Rail:</strong> Editorial sites, vertical emphasis, full-height</li>
-								<li><strong>Counter:</strong> Technical docs, precise feedback, data-driven</li>
-							</ul>
-						</div>
-						<div class="info-card info-card--neutral">
-							<h3>Accessibility Notes</h3>
-							<ul>
-								<li>All indicators use <code>aria-hidden="true"</code> (decorative)</li>
-								<li>CSS provides static 100% state for reduced motion</li>
-								<li>No keyboard interaction required (passive visualization)</li>
-								<li>Works with any smooth scroll library or native scroll</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+			<article class="manifesto" aria-labelledby="manifesto-title">
+				<section class="manifesto__chapter manifesto__chapter--lead" data-chapter="DEPART">
+					<p class="eyebrow">Expedition note / north face</p>
+					<h1 id="manifesto-title">Keep a line<br>through the noise.</h1>
+					<p class="manifesto__standfirst">A short instruction for moving with intent when the terrain refuses certainty.</p>
+				</section>
 
-		<!-- Scripts -->
-		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
-		<script src="assets/script.js"></script>
-	</body>
+				<section class="manifesto__chapter" data-chapter="OBSERVE">
+					<p class="chapter-index">01 — Observe</p>
+					<h2>Read the weather before the map.</h2>
+					<p>Plans are clean. Ground is not. Note the wind, the loose stone and the quiet change in light. Precision begins by looking again.</p>
+				</section>
+
+				<section class="manifesto__chapter" data-chapter="TRAVERSE">
+					<p class="chapter-index">02 — Traverse</p>
+					<h2>Choose the useful line.</h2>
+					<p>The shortest route is rarely the truest. Move across the slope, keep three points steady, and let each deliberate step redraw the way forward.</p>
+				</section>
+
+				<section class="manifesto__chapter manifesto__chapter--final" data-chapter="RETURN">
+					<p class="chapter-index">03 — Return</p>
+					<h2>Finish at the mark.</h2>
+					<p>Carry back only what changed your judgement. A route is complete when the final coordinate is exact—and reversible all the way home.</p>
+					<span class="end-mark">END / 100</span>
+				</section>
+			</article>
+		</div>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+	<script src="assets/script.js"></script>
+</body>
 </html>

@@ -1,6 +1,6 @@
-# 3D Card Flip
+# 3D Card Flip Gallery
 
-Interactive cards with smooth 3D flip animations revealing content on the back.
+A tactile, accessible two-sided card effect with deep perspective, directional face light, edge glow, shadow inversion, and a restrained response from neighbouring cards.
 
 ## Quick Start
 
@@ -10,7 +10,28 @@ Interactive cards with smooth 3D flip animations revealing content on the back.
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+**2. Add a card to your HTML `<body>`:**
+
+```html
+<div data-flip-group="auto-close" data-flip-stagger>
+  <button class="flip-card" type="button" data-flip="hover" aria-pressed="false">
+    <span class="card-shadow" aria-hidden="true"></span>
+    <span class="flip-card-inner">
+      <span class="card-edge" aria-hidden="true"></span>
+      <span class="flip-card-front">
+        <span class="face-light" aria-hidden="true"></span>
+        <strong>Front content</strong>
+      </span>
+      <span class="flip-card-back">
+        <span class="face-light" aria-hidden="true"></span>
+        <strong>Back content</strong>
+      </span>
+    </span>
+  </button>
+</div>
+```
+
+**3. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -18,153 +39,103 @@ Interactive cards with smooth 3D flip animations revealing content on the back.
 <script src="path/to/script.js"></script>
 ```
 
-**3. Add the card HTML anywhere in your `<body>`:**
+## Options
+
+| Attribute / class | Values | Default | Description |
+|---|---|---|---|
+| `data-flip` | `hover`, `click` | `hover` | Hover/focus on fine pointers, or click/tap toggling. Hover cards automatically use tap on coarse pointers. |
+| `data-flip-group` | `auto-close` | none | Put on a shared ancestor to close other open cards when one opens. |
+| `data-flip-stagger` | present | absent | Adds the optional staggered ScrollTrigger entrance to cards inside the container. |
+| `.flipped` | present / absent | absent | Public state class for programmatic control. |
+| `--card-accent` | any CSS color | cyan | Per-card face, edge, and focus color. |
+
+## Trigger Examples
+
+### Hover, focus, and touch fallback
+
+**Add to your HTML `<body>`:**
 
 ```html
-<div class="flip-card" data-flip="hover">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <h3>Front Content</h3>
-    </div>
-    <div class="flip-card-back">
-      <p>Back Content</p>
-    </div>
-  </div>
+<button class="flip-card" type="button" data-flip="hover" aria-pressed="false">
+  <!-- card-shadow, flip-card-inner, edge, and both faces -->
+</button>
+```
+
+A fine pointer opens this card on hover and keyboard focus. On a coarse pointer, tapping toggles it.
+
+### Click/tap toggle
+
+**Add to your HTML `<body>`:**
+
+```html
+<button class="flip-card" type="button" data-flip="click" aria-pressed="false">
+  <!-- card content -->
+</button>
+```
+
+Click, Enter, or Space toggles this card on every device.
+
+### Auto-close roster with entrance
+
+**Add to your HTML `<body>`:**
+
+```html
+<div class="roster" data-flip-group="auto-close" data-flip-stagger>
+  <button class="flip-card" data-flip="hover" type="button">...</button>
+  <button class="flip-card" data-flip="hover" type="button">...</button>
+  <button class="flip-card" data-flip="hover" type="button">...</button>
 </div>
 ```
 
-## Triggers
+## Programmatic API
 
-| Attribute | Value | Behavior |
-|-----------|-------|----------|
-| `data-flip` | `hover` | Flip on mouse hover (desktop), tap (touch) |
-| `data-flip` | `click` | Flip on click/tap (all devices) |
+The `.flipped` class remains the public state API. A `MutationObserver` synchronizes class changes with the full GSAP lighting, shadow, and grid response.
 
-## CSS Classes
+**Add to your JavaScript:**
 
-| Class | Description |
-|-------|-------------|
-| `.flip-card` | Container element with perspective |
-| `.flip-card-inner` | Rotating element with transform-style |
-| `.flip-card-front` | Front face (visible by default) |
-| `.flip-card-back` | Back face (rotated 180deg) |
-| `.flipped` | Added to `.flip-card` when flipped |
-
-## Examples
-
-### Hover Flip (Desktop)
-
-**HTML:**
-```html
-<div class="flip-card" data-flip="hover">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <h3>Name</h3>
-      <p>Role</p>
-    </div>
-    <div class="flip-card-back">
-      <p>Bio text here</p>
-    </div>
-  </div>
-</div>
-```
-
-### Click/Tap Toggle
-
-**HTML:**
-```html
-<div class="flip-card" data-flip="click">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">Click Me</div>
-    <div class="flip-card-back">Back Side</div>
-  </div>
-</div>
-```
-
-### Auto-Close Group
-
-Clicking one card automatically closes others in the group:
-
-**HTML:**
-```html
-<div data-flip-group="auto-close">
-  <div class="flip-card" data-flip="click">...</div>
-  <div class="flip-card" data-flip="click">...</div>
-  <div class="flip-card" data-flip="click">...</div>
-</div>
-```
-
-### Staggered Scroll Entrance
-
-Cards animate in with stagger when scrolled into view:
-
-**HTML:**
-```html
-<div data-flip-stagger>
-  <div class="flip-card" data-flip="hover">...</div>
-  <div class="flip-card" data-flip="hover">...</div>
-  <div class="flip-card" data-flip="hover">...</div>
-</div>
-```
-
-## Device Behavior
-
-| Device | `data-flip="hover"` | `data-flip="click"` |
-|--------|---------------------|---------------------|
-| Desktop (pointer: fine) | Hover or focus to flip | Click/Enter/Space to toggle |
-| Touch (pointer: coarse) | Tap to toggle | Tap to toggle |
-| Keyboard | Tab to focus & flip, Tab away to unflip | Enter/Space to toggle |
-| Reduced motion | Instant toggle on click/Enter/Space | Instant toggle on click/Enter/Space |
-
-## Accessibility
-
-- **Reduced motion**: Respects `prefers-reduced-motion` — animations disabled, instant toggle on interaction
-- **Keyboard navigation**: Cards are focusable with `tabindex="0"` and `role="button"`
-- **Keyboard triggers**: Enter and Space keys trigger flip (same as click)
-- **Focus parity**: Hover cards also flip on keyboard focus (Tab to flip, Tab away to unflip)
-- **Focus visible**: Cards show a visible focus ring when navigated via keyboard
-- **Decorative icons**: SVGs marked with `aria-hidden="true"`
-
-## Programmatic Control
-
-Add this to your own JavaScript file or a `<script>` tag:
-
-**JavaScript:**
 ```javascript
-// Flip a card
-document.querySelector('.flip-card').classList.add('flipped');
+const card = document.querySelector('.flip-card');
 
-// Unflip
-document.querySelector('.flip-card').classList.remove('flipped');
-
-// Toggle
-document.querySelector('.flip-card').classList.toggle('flipped');
+card.classList.add('flipped');    // open
+card.classList.remove('flipped'); // close
+card.classList.toggle('flipped'); // toggle
 ```
+
+Pressing Escape closes every card initialized by the effect. The script also keeps `aria-pressed` synchronized with the open state.
 
 ## Customization
 
-Add these to your own stylesheet or a `<style>` tag to override defaults:
+**Add to your stylesheet after `style.css`:**
 
-**CSS:**
 ```css
-:root {
-  --bg-card: #141414;      /* Card background */
-  --accent: #8b5cf6;       /* Accent color */
-  --border: rgba(255, 255, 255, 0.1);
-}
-
 .flip-card {
-  width: 240px;            /* Card width */
-  height: 300px;           /* Card height */
+  --card-accent: #c7f36b;
+  max-width: 320px;
+  aspect-ratio: 0.76;
 }
 
-.flip-card-inner {
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.roster {
+  perspective: 1800px;
 }
 ```
 
+The core classes are `.flip-card`, `.flip-card-inner`, `.flip-card-front`, and `.flip-card-back`. `.card-edge`, `.card-shadow`, and each `.face-light` provide the layered secondary response and should be retained for the complete effect.
+
+## Accessibility
+
+- Use a semantic `<button>` for each card. Non-semantic `.flip-card` elements receive `role="button"` and `tabindex="0"` as a compatibility fallback.
+- Hover cards mirror their open state on keyboard focus; click cards support Enter and Space.
+- Escape closes open cards.
+- `aria-pressed` is updated whenever the card state changes.
+- `prefers-reduced-motion: reduce` removes interpolation and switches faces instantly while preserving every interaction.
+- The front remains readable without JavaScript. Adding `.flipped` still switches faces through the CSS fallback.
+
+## Cleanup
+
+All GSAP work is wrapped in `gsap.context()` and responsive behavior uses `gsap.matchMedia()`. Event listeners, the class observer, and effect-owned ScrollTriggers are removed when `window.gsapContext.kill()` runs or the page unloads.
+
 ## Dependencies
 
-- GSAP 3.12+
-- ScrollTrigger plugin
-- Lenis (optional — for smooth scrolling; effect works without it)
+- GSAP 3.12+ (demo uses 3.14.2)
+- ScrollTrigger (only required when keeping the `data-flip-stagger` entrance capability)
+- No smooth-scroll library required

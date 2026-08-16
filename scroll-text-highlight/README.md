@@ -1,6 +1,6 @@
 # Scroll Text Highlight
 
-A scroll-linked reading highlight. SplitText breaks a block of copy into words, and one scrubbed ScrollTrigger lights each word from dim to full as you scroll, so a bright band of highlighted words moves through the paragraph: dim text ahead of you, settled text behind. The leading word flashes the accent colour before relaxing to the foreground, and scrolling back up smoothly un-lights the words.
+A reversible, scroll-linked reading front for editorial copy. SplitText breaks a statement into words; unread words stay ghosted, the active word lifts through a brief orange-to-lime flash, and completed words settle to calm white. Optional progress and coordinate elements can follow the same scrubbed ScrollTrigger.
 
 ## Quick Start
 
@@ -10,7 +10,15 @@ A scroll-linked reading highlight. SplitText breaks a block of copy into words, 
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before the closing `</body>` tag:**
+**2. Add the statement to your `<body>`:**
+
+```html
+<p class="scroll-highlight">
+  Attention is chosen. Read deliberately, one word at a time.
+</p>
+```
+
+**3. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -19,103 +27,101 @@ A scroll-linked reading highlight. SplitText breaks a block of copy into words, 
 <script src="path/to/script.js"></script>
 ```
 
-**Note:** GSAP and all plugins (including SplitText) are free for everyone. Lenis is optional; add `<script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>` before `script.js` for smooth scrolling.
-
-**3. Add the `scroll-highlight` class to any block of copy in your `<body>`:**
-
-```html
-<p class="scroll-highlight">
-  Some copy that lights up word by word as the reader scrolls it into view.
-</p>
-```
-
-That is the whole setup. The block starts dimmed and lights up as it scrolls through the viewport. It works the same on a paragraph or a large heading.
+GSAP and SplitText are free. Lenis is optional; load `https://unpkg.com/lenis@1.3.17/dist/lenis.min.js` before `script.js` for the smooth-scroll integration used by the demo.
 
 ## Options
 
-Set these as data attributes on the `.scroll-highlight` element.
+Set these data attributes on `.scroll-highlight`. The original data-attribute API remains supported.
 
 | Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-highlight-dim` | `0` to `1` | `0.18` | Resting opacity of un-read words |
-| `data-highlight-accent` | `true`, `false` | `true` | Whether the leading word flashes the accent colour before settling |
-| `data-highlight-lift` | Any number (px) | `0` | Optional restrained lift each word rises as it lights |
-| `data-highlight-scrub` | `true` or a number | `true` | `true` locks the highlight to scroll; a number (seconds) adds smoothing catch-up |
+|---|---|---:|---|
+| `data-highlight-dim` | `0` to `1` | `0.16` | Opacity of unread words |
+| `data-highlight-accent` | `true`, `false` | `true` | Enables the orange/lime active-word front before white settle |
+| `data-highlight-lift` | Number in px | `7` | Distance the active word lifts |
+| `data-highlight-scrub` | `true` or seconds | `true` | Direct scrub, or a numeric catch-up duration |
+| `data-highlight-trigger` | CSS selector | Current block | Uses another element as the scroll range; ideal for a sticky stage |
+| `data-highlight-progress` | CSS selector | None | Element whose horizontal scale displays reading progress |
+| `data-highlight-current` | CSS selector | None | Element updated with the completed/total word coordinate |
 
-The accent colour comes from the `--accent` CSS variable, so restyle it in one place:
+Set the two front colours with CSS custom properties:
 
 ```css
-.scroll-highlight { --accent: #c8ff00; }
+.scroll-highlight {
+  --accent: #c8ff00;
+  --highlight-edge: #ff6b35;
+}
 ```
 
 ## Examples
 
-### Editorial paragraph (default)
+### Standalone editorial copy
 
-**HTML:**
+**Add to your HTML `<body>`:**
+
 ```html
-<p class="scroll-highlight">
-  We have forgotten how to read slowly. Some ideas only give themselves
-  up at reading pace, one word at a time, in the order the writer set them.
+<p class="scroll-highlight" data-highlight-dim="0.1" data-highlight-lift="5">
+  Some ideas only arrive when every word receives its proper time.
 </p>
 ```
 
-### Statement heading
+The block itself supplies the trigger range, matching the original drop-in behaviour.
 
-**HTML:**
+### Sticky stage with a progress rail
+
+**Add to your HTML `<body>`:**
+
 ```html
-<h2 class="scroll-highlight">
-  Design is the quiet art of deciding what a reader notices first.
-</h2>
+<section class="reading-sequence" data-reading-sequence>
+  <div class="reading-stage">
+    <p class="scroll-highlight"
+       data-highlight-trigger="[data-reading-sequence]"
+       data-highlight-progress="[data-reading-progress]"
+       data-highlight-current="[data-reading-current]">
+      Attention is chosen. Read deliberately, one word at a time.
+    </p>
+    <span class="progress-fill" data-reading-progress></span>
+    <span data-reading-current>10 / 10</span>
+  </div>
+</section>
 ```
 
-### Deeper dim and a subtle word lift
+The external trigger uses `top top` to `bottom bottom`, allowing the text stage to remain sticky while one timeline drives words, rail, and coordinate.
 
-**HTML:**
+### White-only reading front
+
+**Add to your HTML `<body>`:**
+
 ```html
-<p class="scroll-highlight" data-highlight-dim="0.1" data-highlight-lift="6">
-  A stronger contrast between read and unread copy, with each word
-  lifting a few pixels as it brightens.
-</p>
-```
-
-### No accent flash, softer scrub
-
-**HTML:**
-```html
-<p class="scroll-highlight" data-highlight-accent="false" data-highlight-scrub="0.6">
-  Just a clean dim-to-full brightening, with the highlight easing to
-  catch up to the scroll position.
+<p class="scroll-highlight" data-highlight-accent="false" data-highlight-scrub="0.5">
+  The same reversible opacity and lift, without an accent flash.
 </p>
 ```
 
 ## CSS Classes
 
 | Class | Description |
-|-------|-------------|
-| `.scroll-highlight` | The block of copy to highlight on scroll |
-| `.sh-word` | Applied by SplitText to each generated word span |
-| `.is-reading` | Added by the script once the effect is live (CSS hook) |
+|---|---|
+| `.scroll-highlight` | Reusable block selected by the script |
+| `.sh-word` | Word span generated by SplitText |
+| `.is-reading` | Added after a block has been split and initialised |
 
 ## Accessibility
 
-- **Reduced motion**: readers with `prefers-reduced-motion: reduce` see the full copy at full opacity immediately, with no dimming or scrubbing.
-- **No JavaScript / no SplitText**: the dim state is only ever applied by GSAP, so a reader without JavaScript (or without the SplitText plugin) always gets plain, full-opacity, fully legible text.
-- **Native scroll**: the effect is driven purely by scroll position, so it works with keyboard scrolling and on touch with no separate code path.
-- **Readable throughout**: even the dimmed state keeps text on its resting foreground colour, so nothing is hidden or unselectable.
+- Reduced-motion readers receive the complete statement at full opacity with no split animation or extended scroll runway.
+- Without JavaScript, or when a CDN is blocked, the original unsplit statement and complete progress rail remain visible.
+- The effect follows native scroll position, so keyboard, wheel, trackpad, and touch scrolling all operate it.
+- Text remains real, selectable text; SplitText reverts its generated spans during cleanup.
 
-## Performance Notes
+## Performance and Cleanup
 
-- One `SplitText` split and one scrubbed `ScrollTrigger` timeline per block.
-- Word spans are `display: inline-block` with `will-change: opacity, transform` so the lift and fade stay on the compositor.
-- The script waits for `document.fonts.ready` before splitting, so words measure and wrap at their final widths, then calls `ScrollTrigger.refresh()`.
+Each block uses one SplitText instance, one timeline, and one ScrollTrigger. Initialisation waits for `document.fonts.ready` so line wrapping is measured against the loaded display font. Cleanup kills ScrollTriggers, reverts every split, removes the GSAP ticker callback, destroys Lenis, and removes the named Lenis `refresh` listener.
 
 ## Dependencies
 
 **Required:**
 - GSAP 3.12+
-- ScrollTrigger plugin
-- SplitText plugin (free)
+- ScrollTrigger
+- SplitText
 
 **Optional:**
-- Lenis (smooth scroll integration)
+- Lenis 1.3+

@@ -1,193 +1,177 @@
 gsap.registerPlugin(ScrollTrigger);
 
-/* Runs the init straight away if the DOM is already parsed (a script
-   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
-   waits for DOMContentLoaded otherwise. */
+/* Runs immediately when the DOM is ready, including when this file is deferred. */
 (function onReady(init) {
 	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', init);
+		document.addEventListener('DOMContentLoaded', init, { once: true });
 	} else {
 		init();
 	}
-})(function handleDOMLoaded() {
+})(function initScrollProgress() {
+	document.documentElement.classList.add('has-js');
 
-	/* OPTIONAL: Lenis - Remove if not using smooth scroll */
-	/* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
-	   URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
-	let wantsSmooth = (new URLSearchParams(location.search).get('smooth')
-	    || document.documentElement.dataset.smooth) !== 'off'
-	    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const instances = [];
+	const handlers = new Map();
 
-	let lenis = null;
-	let lenisTick = null;
-	if (wantsSmooth && typeof Lenis !== 'undefined') {
-		/* Lenis and ScrollTrigger must share ONE clock. Left on its own rAF,
-		   Lenis moves the page while ScrollTrigger is still reading the
-		   previous frame. See docs/gsap-patterns.md. */
-		const hasST = typeof ScrollTrigger !== 'undefined';
-		lenis = new Lenis({ autoRaf: !hasST });
-		if (hasST) {
-			lenis.on('scroll', ScrollTrigger.update);
-			lenisTick = function (time) { lenis.raf(time * 1000); };
-			gsap.ticker.add(lenisTick);
-			gsap.ticker.lagSmoothing(0);
-			/* A refresh restores the native scroll position while Lenis is
-			   still lerping toward its older target. */
-			ScrollTrigger.addEventListener('refresh', function () {
-				lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-			});
-		}
-	}
-	/* END OPTIONAL: Lenis */
-
-	const progressInstances = [];
-
-	/* CORE: ScrollProgress Class - Required */
+	/* CORE: each style remains independently usable through data attributes or JS. */
 	class ScrollProgress {
 		constructor(element, options = {}) {
 			this.element = element;
 			this.style = options.style || element.dataset.progressStyle || 'bar';
 			this.position = options.position || element.dataset.progressPosition || null;
+			this.triggerElement = options.trigger || document.documentElement;
+			this.start = options.start || 'top top';
+			this.end = options.end || 'bottom bottom';
 			this.trigger = null;
-			this.quickTo = null;
+			this.update = null;
 			this.init();
 		}
 
 		init() {
-			switch (this.style) {
-				case 'bar':
-					this.initBar();
-					break;
-				case 'circle':
-					this.initCircle();
-					break;
-				case 'rail':
-					this.initRail();
-					break;
-				case 'counter':
-					this.initCounter();
-					break;
+			const element = this.element;
+			let render;
+
+			if (this.style === 'bar') {
+				const fill = element.querySelector('.progress-bar__fill');
+				if (fill) render = function(progress) {
+					gsap.set(fill, { scaleX: progress });
+				};
 			}
-		}
 
-		/* STYLE: Linear Bar */
-		initBar() {
-			const fill = this.element.querySelector('.progress-bar__fill');
-			if (!fill) return;
+			if (this.style === 'circle' || this.style === 'ring') {
+				const path = element.querySelector('.progress-circle__fill');
+				const text = element.querySelector('.progress-circle__text');
+				if (path) {
+					const circumference = path.getTotalLength ? path.getTotalLength() : 157;
+					gsap.set(path, { strokeDasharray: circumference });
+					render = function(progress) {
+						gsap.set(path, { strokeDashoffset: circumference * (1 - progress) });
+						if (text && text.isConnected) text.textContent = Math.round(progress * 100) + '%';
+					};
+				}
+			}
 
+			if (this.style === 'rail') {
+				const fill = element.querySelector('.progress-rail__fill');
+				if (fill) render = function(progress) {
+					gsap.set(fill, { scaleY: progress });
+				};
+			}
+
+			if (this.style === 'counter' || this.style === 'percentage') {
+				const value = element.querySelector('.progress-counter__value');
+				if (value) render = function(progress) {
+					if (value.isConnected) value.textContent = String(Math.round(progress * 100)).padStart(3, '0');
+				};
+			}
+
+			if (!render) return;
+
+			this.update = function(rawProgress) {
+				/* Clamp the final fraction so the instrument always lands on exact 100. */
+				const progress = rawProgress >= 0.9995 ? 1 : gsap.utils.clamp(0, 1, rawProgress);
+				render(progress);
+				element.setAttribute('aria-valuenow', Math.round(progress * 100));
+			};
+
+			const update = this.update;
 			this.trigger = ScrollTrigger.create({
-				trigger: document.documentElement,
-				start: 'top top',
-				end: 'bottom bottom',
-				scrub: 0.5,
-				onUpdate: function(self) {
-					gsap.set(fill, { scaleX: self.progress });
-				}
+				trigger: this.triggerElement,
+				start: this.start,
+				end: this.end,
+				onUpdate: function(self) { update(self.progress); },
+				onRefresh: function(self) { update(self.progress); }
 			});
-		}
-
-		/* STYLE: Circular Ring */
-		initCircle() {
-			const fillPath = this.element.querySelector('.progress-circle__fill');
-			const textEl = this.element.querySelector('.progress-circle__text');
-			if (!fillPath) return;
-
-			const circumference = 157; // 2 * PI * 25 (radius)
-
-			this.trigger = ScrollTrigger.create({
-				trigger: document.documentElement,
-				start: 'top top',
-				end: 'bottom bottom',
-				scrub: 0.5,
-				onUpdate: function(self) {
-					const offset = circumference * (1 - self.progress);
-					gsap.set(fillPath, { strokeDashoffset: offset });
-					if (textEl) {
-						textEl.textContent = Math.round(self.progress * 100) + '%';
-					}
-				}
-			});
-		}
-
-		/* STYLE: Side Rail */
-		initRail() {
-			const fill = this.element.querySelector('.progress-rail__fill');
-			if (!fill) return;
-
-			this.trigger = ScrollTrigger.create({
-				trigger: document.documentElement,
-				start: 'top top',
-				end: 'bottom bottom',
-				scrub: 0.5,
-				onUpdate: function(self) {
-					gsap.set(fill, { scaleY: self.progress });
-				}
-			});
-		}
-
-		/* STYLE: Percentage Counter */
-		initCounter() {
-			const valueEl = this.element.querySelector('.progress-counter__value');
-			if (!valueEl) return;
-
-			const obj = { value: 0 };
-			this.quickTo = gsap.quickTo(obj, 'value', {
-				duration: 0.3,
-				ease: 'power2.out',
-				onUpdate: function() {
-					valueEl.textContent = Math.round(obj.value);
-				}
-			});
-
-			const quickTo = this.quickTo;
-			this.trigger = ScrollTrigger.create({
-				trigger: document.documentElement,
-				start: 'top top',
-				end: 'bottom bottom',
-				onUpdate: function(self) {
-					quickTo(self.progress * 100);
-				}
-			});
+			this.update(this.trigger.progress);
 		}
 
 		destroy() {
-			if (this.trigger) {
-				this.trigger.kill();
-			}
+			if (this.trigger) this.trigger.kill();
+			this.trigger = null;
 		}
 	}
-	/* END CORE */
+
+	function mountIndicators() {
+		document.querySelectorAll('[data-progress-style]').forEach(function(element) {
+			instances.push(new ScrollProgress(element));
+		});
+
+		const chapters = Array.from(document.querySelectorAll('[data-chapter]'));
+		const chapterLabel = document.querySelector('[data-current-chapter]');
+		const routeStops = Array.from(document.querySelectorAll('[data-route-stop]'));
+		const stage = document.querySelector('.field-note');
+
+		if (stage && chapters.length) {
+			let activeIndex = -1;
+			const chapterTrigger = ScrollTrigger.create({
+				trigger: document.documentElement,
+				start: 'top top',
+				end: 'bottom bottom',
+				onUpdate: syncFieldNote,
+				onRefresh: syncFieldNote
+			});
+
+			function syncFieldNote(self) {
+				const progress = self.progress >= 0.9995 ? 1 : self.progress;
+				const nextIndex = progress === 1
+					? chapters.length - 1
+					: Math.min(chapters.length - 1, Math.floor(progress * chapters.length));
+				stage.style.setProperty('--route-color', gsap.utils.interpolate('#ff6b1a', '#c8ff00', progress));
+				if (nextIndex === activeIndex) return;
+				activeIndex = nextIndex;
+				if (chapterLabel && chapterLabel.isConnected) {
+					chapterLabel.textContent = chapters[activeIndex].dataset.chapter;
+				}
+				routeStops.forEach(function(stop, index) {
+					stop.classList.toggle('is-active', index === activeIndex);
+					if (index === activeIndex) stop.setAttribute('aria-current', 'step');
+					else stop.removeAttribute('aria-current');
+				});
+			}
+
+			syncFieldNote(chapterTrigger);
+			instances.push({ destroy: function() { chapterTrigger.kill(); } });
+		}
+
+		return function cleanupIndicators() {
+			instances.forEach(function(instance) { instance.destroy(); });
+			instances.length = 0;
+		};
+	}
+
+	function mountModeSwitcher() {
+		const buttons = document.querySelectorAll('[data-mode-button]');
+		buttons.forEach(function(button) {
+			const handleClick = function() {
+				const mode = button.dataset.modeButton;
+				document.body.dataset.mode = mode;
+				buttons.forEach(function(item) {
+					item.setAttribute('aria-pressed', String(item === button));
+				});
+			};
+			button.addEventListener('click', handleClick);
+			handlers.set(button, handleClick);
+		});
+	}
 
 	const ctx = gsap.context(function() {
 		const mm = gsap.matchMedia();
-
-		mm.add('(prefers-reduced-motion: no-preference)', function() {
-
-			/* Initialize all progress indicators */
-			document.querySelectorAll('[data-progress-style]').forEach(function(element) {
-				const progress = new ScrollProgress(element);
-				progressInstances.push(progress);
-			});
-
-			return function() {
-				progressInstances.forEach(function(instance) {
-					instance.destroy();
-				});
-				progressInstances.length = 0;
-			};
-		});
-
-		mm.add('(prefers-reduced-motion: reduce)', function() {
-			// CSS handles showing 100% state
-		});
+		mm.add('(prefers-reduced-motion: no-preference)', mountIndicators);
+		/* Progress remains useful in reduced motion; updates are direct, with no scrub. */
+		mm.add('(prefers-reduced-motion: reduce)', mountIndicators);
+		mountModeSwitcher();
 	});
+
+	function destroy() {
+		handlers.forEach(function(handler, element) {
+			element.removeEventListener('click', handler);
+		});
+		handlers.clear();
+		ctx.kill();
+	}
 
 	window.ScrollProgress = ScrollProgress;
 	window.gsapContext = ctx;
-
-	window.addEventListener('beforeunload', function() {
-		if (ctx) ctx.kill();
-		if (lenisTick) gsap.ticker.remove(lenisTick);
-		if (lenis) lenis.destroy();
-	});
+	window.destroyScrollProgress = destroy;
+	window.addEventListener('beforeunload', destroy, { once: true });
 });

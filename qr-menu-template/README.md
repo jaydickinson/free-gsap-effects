@@ -67,7 +67,7 @@ The menu runs on a sage-tint ground with near-black ink, one herb green and one 
 --ink:    #23291F;   --ink-rgb:    35, 41, 31;       /* names, body */
 --ink-soft: #55604D; --ink-soft-rgb: 85, 96, 77;     /* descriptions */
 --herb:   #3F6B47;   --herb-rgb:   63, 107, 71;      /* prices, active tab, Veg pills */
---tomato: #C24B33;   --tomato-rgb: 194, 75, 51;      /* highlights, GF pills */
+--tomato: #BE4830;   --tomato-rgb: 190, 72, 48;      /* highlights, GF pills */
 ```
 
 **Measured contrast (WCAG, composited over the surface each colour sits on):**
@@ -80,9 +80,9 @@ The menu runs on a sage-tint ground with near-black ink, one herb green and one 
 | ink-soft `#55604D` | paper | 6.1:1 | descriptions |
 | herb `#3F6B47` | ground | 5.1:1 | prices, active tab, footer labels |
 | paper `#F3F6EF` | herb `#3F6B47` | 6.1:1 | text on filled green pills |
-| paper `#F3F6EF` | tomato `#C24B33` | 4.8:1 | text on filled tomato pills |
+| paper `#F3F6EF` | tomato `#BE4830` | 4.6:1 | text on filled tomato pills |
 
-**Tomato is a highlight and a mark, not small body text.** On the ground it measures 4.0:1 and on paper 4.4:1, both below the 4.5:1 floor for normal-size text. It is used only as a filled pill (white text on tomato passes at 4.8:1) and for large or bold accents. If you re-colour, keep tomato-as-text off any surface and check the two pill pairs above still clear 4.5:1.
+**Tomato is a highlight and a mark, not small body text.** On the ground it measures 4.2:1, below the 4.5:1 floor for normal-size text. It is used only as a filled pill (paper text on tomato passes at 4.6:1) and for large or bold accents. If you re-colour, keep tomato-as-text off any surface and check the two pill pairs above still clear 4.5:1.
 
 ## Accessibility
 

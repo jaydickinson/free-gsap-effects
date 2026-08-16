@@ -1,16 +1,37 @@
 # Image Clip Reveal
 
-Images reveal on scroll with an animated clip-path wipe and a Ken Burns settle: the inner image eases from 1.25 scale down to 1 as the mask opens.
+A directional polygon aperture opens while the inner photograph settles from a restrained scale. Optional atmosphere, rule, and caption hooks turn the image wipe into a complete editorial entrance.
 
 ## Quick Start
 
 **1. Add to your HTML `<head>`:**
 
 ```html
+<script>document.documentElement.classList.add('has-js');</script>
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+The small `has-js` gate is important: animated elements are hidden only when JavaScript is available, so the full image and caption remain visible without JavaScript.
+
+**2. Add to your `<body>`:**
+
+```html
+<figure>
+  <div data-clip-reveal data-reveal-direction="right">
+    <img src="architecture.jpg" alt="Glass towers beneath a stormy sky">
+  </div>
+
+  <figcaption data-reveal-caption>
+    <span data-reveal-rule aria-hidden="true"></span>
+    <span class="caption-mask"><span data-reveal-copy>Ottawa, Canada</span></span>
+    <span class="caption-mask"><span data-reveal-copy>Constitution Square</span></span>
+  </figcaption>
+</figure>
+```
+
+`data-reveal-caption`, `data-reveal-rule`, and `data-reveal-copy` are optional. The image reveal works without caption markup.
+
+**3. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -18,122 +39,120 @@ Images reveal on scroll with an animated clip-path wipe and a Ken Burns settle: 
 <script src="path/to/script.js"></script>
 ```
 
-**3. Wrap any image in a `data-clip-reveal` element:**
-
-```html
-<div data-clip-reveal>
-  <img src="photo.jpg" alt="Description of the photo">
-</div>
-```
-
-The stylesheet gives the wrapper `overflow: hidden` and a fully closed `clip-path` as its initial state, so images never flash before the script runs. If you copy only the effect styles into your own stylesheet, make sure you bring the `[data-clip-reveal]` rules with you.
-
 ## Options
 
-All options are data attributes on the `data-clip-reveal` wrapper:
+All image options are data attributes on the `data-clip-reveal` wrapper:
 
 | Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-reveal-direction` | `up`, `down`, `left`, `right` | `up` | Wipe direction of the clip-path inset |
-| `data-reveal-duration` | Seconds | `1.1` | Duration of the wipe and the scale settle |
-| `data-reveal-delay` | Seconds | `0` | Delay before the reveal starts |
-| `data-reveal-once` | `true`, `false` | `true` | Play once, or replay when re-entering the viewport |
+|---|---|---|---|
+| `data-reveal-direction` | `up`, `down`, `left`, `right` | `up` | Edge and travel direction of the polygon aperture |
+| `data-reveal-duration` | Seconds | `1.1` | Duration of the clip-path wipe; the image settle runs slightly longer |
+| `data-reveal-delay` | Seconds | `0` | Delay before the reveal begins |
+| `data-reveal-once` | `true`, `false` | `true` | Play once, or reset and replay when the trigger re-enters |
+
+Optional descendant hooks:
+
+| Attribute | Element | Description |
+|---|---|---|
+| `data-reveal-atmosphere` | Element inside the closest `figure` | Fades and scales subtle ambient color with the image |
+| `data-reveal-caption` | `figcaption` inside the closest `figure` | Locates caption animation targets |
+| `data-reveal-rule` | Element inside the caption | Scales a rule in shortly after the image |
+| `data-reveal-copy` | Elements inside the caption | Reveals caption lines with a short stagger |
+| `data-clip-replay` | `button` | Semantically replays every active reveal timeline |
 
 ## Examples
 
-### Direction Control
+### Direction, Duration, and Replay
 
-**HTML:**
-```html
-<!-- Reveal upward from the bottom edge -->
-<div data-clip-reveal data-reveal-direction="up">
-  <img src="photo-a.jpg" alt="">
-</div>
+**Add to your HTML `<body>`:**
 
-<!-- Reveal from the right edge, travelling left -->
-<div data-clip-reveal data-reveal-direction="left">
-  <img src="photo-b.jpg" alt="">
-</div>
-```
-
-### Slower Reveal That Replays
-
-**HTML:**
 ```html
 <div data-clip-reveal
-     data-reveal-direction="right"
-     data-reveal-duration="1.6"
-     data-reveal-delay="0.2"
+     data-reveal-direction="left"
+     data-reveal-duration="1.45"
+     data-reveal-delay="0.1"
      data-reveal-once="false">
-  <img src="hero.jpg" alt="">
+  <img src="travel.jpg" alt="Mountain lodge at dusk">
 </div>
+
+<button type="button" data-clip-replay>Replay reveal</button>
 ```
 
-### Staggered Groups
+Direction names retain the original API. `right` grows from the left edge toward the right, `left` grows from the right edge, `up` grows from the bottom, and `down` grows from the top.
 
-Wrap multiple reveals in a `data-clip-reveal-group` container. The group gets a single ScrollTrigger and its children reveal in sequence. Children can still set their own direction, duration, and delay; anything they leave out is inherited from the group.
+### Staggered Group
 
-**HTML:**
+The group API remains available when a project needs multiple images, even though the included demo intentionally uses one cinematic composition.
+
+**Add to your HTML `<body>`:**
+
 ```html
-<div class="image-grid" data-clip-reveal-group data-reveal-stagger="0.15">
+<div data-clip-reveal-group
+     data-reveal-stagger="0.15"
+     data-reveal-direction="right"
+     data-reveal-duration="1.2">
+  <div data-clip-reveal><img src="one.jpg" alt="First location"></div>
   <div data-clip-reveal data-reveal-direction="up">
-    <img src="one.jpg" alt="">
-  </div>
-  <div data-clip-reveal data-reveal-direction="down">
-    <img src="two.jpg" alt="">
-  </div>
-  <div data-clip-reveal data-reveal-direction="left">
-    <img src="three.jpg" alt="">
+    <img src="two.jpg" alt="Second location">
   </div>
 </div>
 ```
 
 | Group Attribute | Values | Default | Description |
-|-----------------|--------|---------|-------------|
-| `data-clip-reveal-group` | (presence) | n/a | Marks a container whose child reveals are staggered |
-| `data-reveal-stagger` | Seconds | `0.12` | Delay between each child reveal |
+|---|---|---|---|
+| `data-clip-reveal-group` | Presence | n/a | Builds one ScrollTrigger timeline for all child reveals |
+| `data-reveal-stagger` | Seconds | `0.12` | Timeline offset between child reveals |
 
-Group-level `data-reveal-direction`, `data-reveal-duration`, `data-reveal-delay`, and `data-reveal-once` act as defaults for every child.
+Direction, duration, delay, and once/replay attributes on the group become defaults. A child's own values override them.
+
+## Styling Notes
+
+The supplied demo CSS is intentionally editorial. For integration, preserve these functional rules while adapting the visual design:
+
+- `overflow: hidden` on `[data-clip-reveal]`
+- matching six-point closed polygon states under `.has-js`
+- the `transform: scale(1.14)` image start state under `.has-js`
+- overflow masks around any `data-reveal-copy` elements
+- reduced-motion overrides that clear clip, scale, opacity, and translation
+
+The open and closed polygon strings use the same number of points, which keeps browser interpolation stable.
 
 ## How It Works
 
-Each wrapper (or group) gets a ScrollTrigger that fires at `top 85%`. The timeline tweens the wrapper's `clip-path` from a fully closed `inset()` on the chosen edge to `inset(0%)` while simultaneously scaling the inner `img` from 1.25 to 1, both with `expo.out`, so the wipe and the settle read as a single motion. With `data-reveal-once="false"` the trigger uses `toggleActions: 'restart none none reset'` so the reveal resets when you scroll back above it and plays again on re-entry.
+Each standalone wrapper gets a timeline triggered at `top 85%`. GSAP interpolates the wrapper from a narrow directional six-point polygon to the full frame while scaling the inner image from `1.14` to `1`. The optional atmosphere begins with the image; the caption rule and copy enter at 72% of the configured reveal duration, giving the photograph time to become legible first.
+
+With `data-reveal-once="false"`, ScrollTrigger uses `toggleActions: 'restart none none reset'`. Group wrappers share one timeline and offset child reveals by `data-reveal-stagger`.
+
+## Programmatic API
+
+**Add to your JavaScript after the effect has initialized:**
+
+```javascript
+// Replay every active reveal timeline.
+window.imageClipReveal.replay();
+
+// Kill timelines, ScrollTriggers, listeners, context, and Lenis integration.
+window.imageClipReveal.destroy();
+
+// The original GSAP context handle remains available.
+window.gsapContext.revert();
+```
 
 ## Accessibility
 
-- **Reduced motion**: respects `prefers-reduced-motion` in both CSS and JavaScript. Images display fully with no clip and no scale, and no ScrollTriggers are created
-- **No flash of hidden content**: initial states are set in CSS, so nothing pops or jumps while the script loads
-- **Alt text**: the wrapper is presentation-only; keep meaningful `alt` text on the `img` elements themselves
-- **No pointer requirement**: the effect is scroll-driven only, so keyboard and touch users get the identical experience
-
-### Reduced Motion Behavior
-
-When `prefers-reduced-motion: reduce` is set:
-- The stylesheet clears the clip-path and scale with `!important` overrides
-- The script's reduce branch sets images to their final state and skips all animation
-
-## Programmatic Control
-
-The GSAP context is exposed globally. Add this to your own JavaScript:
-
-**JavaScript:**
-```javascript
-// Revert everything the effect created
-window.gsapContext.revert();
-
-// Kill all ScrollTriggers manually
-ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-```
-
-## Browser Support
-
-Modern browsers (ES6+). `clip-path: inset()` is supported everywhere GSAP 3 runs, except IE11.
+- The full image, rule, and caption are visible when JavaScript is unavailable.
+- CSS and `gsap.matchMedia()` both honor `prefers-reduced-motion`; no ScrollTrigger is created in the reduced branch.
+- The replay control is a native button with a visible keyboard focus state.
+- Keep meaningful image descriptions in `alt`; decorative atmosphere and rules should use `aria-hidden="true"`.
+- The effect is scroll-triggered and does not require a pointer.
 
 ## Dependencies
 
 **Required:**
+
 - GSAP 3.12+
-- ScrollTrigger plugin
+- ScrollTrigger
 
 **Optional:**
-- Lenis (smooth scroll integration; the effect works without it)
+
+- Lenis for smooth scrolling. The included integration is disabled by `data-smooth="off"`, `?smooth=off`, or reduced-motion preference, and the effect works without Lenis.

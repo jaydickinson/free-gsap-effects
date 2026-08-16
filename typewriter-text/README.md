@@ -1,6 +1,6 @@
 # Typewriter Text
 
-Text types out character by character with a blinking cursor when scrolled into view. Supports looping phrases, custom speed, and delay controls.
+A scroll-triggered typewriter sequence that types rapidly, holds, accelerates through deletion, and cycles through optional phrases. Cursor, status, progress, and background hooks can react to every phase.
 
 ## Quick Start
 
@@ -10,7 +10,7 @@ Text types out character by character with a blinking cursor when scrolled into 
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+**2. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -18,112 +18,164 @@ Text types out character by character with a blinking cursor when scrolled into 
 <script src="path/to/script.js"></script>
 ```
 
-**3. Add `data-typewriter` to any text element in your `<body>`:**
+**3. Add `data-typewriter` to text in your `<body>`:**
 
 ```html
-<h1 data-typewriter>Build interfaces that feel alive.</h1>
+<h1 data-typewriter>WE MAKE IDEAS MOVE.</h1>
 ```
 
-That's it. The element's own text is read, cleared, and typed back in when it scrolls into view.
+The element's complete text is the static fallback. When it reaches 85% of the viewport, the script clears it and types it back once.
 
 ## Options
 
 | Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-type-speed` | Seconds per character | `0.045` | Typing speed; lower is faster |
-| `data-type-delay` | Seconds | `0` | Delay before typing starts, after the element enters the viewport |
-| `data-type-cursor` | `true`, `false` | `true` | Show the blinking cursor |
-| `data-type-loop` | Comma-separated phrases | none | Phrases to rotate through after the first: types, pauses, deletes, types the next, and loops forever |
+|---|---:|---:|---|
+| `data-type-speed` | Seconds per character | `0.045` | Typing speed; lower values type faster |
+| `data-type-delay` | Seconds | `0` | Delay after the element enters the viewport |
+| `data-type-cursor` | `true`, `false` | `true` | Adds the generated cursor when no external cursor hook exists |
+| `data-type-loop` | Comma-separated phrases | none | Phrases to rotate through after the element's own text |
+| `data-type-mobile` | Text | element text | Shorter initial phrase below 600px to preserve a single line |
+| `data-type-loop-mobile` | Comma-separated phrases | `data-type-loop` | Shorter looping phrases below 600px |
+| `data-type-hold` | Seconds | `1.8` | Time each looping phrase remains complete |
+| `data-type-delete-speed` | Multiplier | `0.5` | Delete duration relative to typing; lower is faster |
+
+The original `speed`, `delay`, `cursor`, and looping phrase attributes remain compatible. `hold` and `delete-speed` are optional additions.
 
 ## Examples
 
-### Slower Typing With a Delay
+### Looping Creative Commands
 
-**HTML:**
+**Add to your HTML `<body>`:**
+
+```html
+<h1 data-typewriter
+    data-type-speed="0.055"
+    data-type-delay="0.35"
+    data-type-hold="3"
+    data-type-delete-speed="0.75"
+    data-type-mobile="MAKE IT MOVE."
+    data-type-loop="WE DESIGN SYSTEMS WITH INTENT.,WE SHIP MOTION AT FRAME RATE."
+    data-type-loop-mobile="IDEAS IN MOTION.,SYSTEMS THAT MOVE.">
+  WE MAKE DIGITAL IDEAS MOVE.
+</h1>
+```
+
+The element's own text always runs first. Every phrase types linearly, holds, then deletes with `power3.in` acceleration before the next phrase lands.
+
+### Deliberate One-Time Reveal
+
+**Add to your HTML `<body>`:**
+
 ```html
 <h2 data-typewriter data-type-speed="0.08" data-type-delay="0.5">
   Deliberate, dramatic typing.
 </h2>
 ```
 
-### No Cursor
+Omit `data-type-loop` for a one-time scroll-triggered sequence.
 
-**HTML:**
+### Hide the Generated Cursor
+
+**Add to your HTML `<body>`:**
+
 ```html
 <p data-typewriter data-type-cursor="false">Clean typing, no cursor.</p>
 ```
 
-### Looping Phrases
+## Optional System Hooks
 
-The element types its own text first, then rotates through the loop list:
+Wrap the line in `data-typewriter-system` to synchronize your own interface. All hooks are optional.
 
-**HTML:**
+**Add to your HTML `<body>`:**
+
 ```html
-<p>We build
-  <span data-typewriter
-        data-type-loop="smooth animations, bold interfaces, memorable experiences">
-    delightful websites
+<section data-typewriter-system data-phase="ready">
+  <h2 data-typewriter data-type-loop="BUILD BOLDLY,SHIP CLEARLY">
+    DESIGN WITH INTENT
+  </h2>
+
+  <span data-typewriter-cursor aria-hidden="true"></span>
+  <span data-typewriter-status aria-hidden="true">READY</span>
+  <span class="progress" aria-hidden="true">
+    <span data-typewriter-progress></span>
   </span>
-</p>
+  <button type="button" data-typewriter-replay>Replay</button>
+</section>
 ```
 
-## CSS Classes
+During playback, the wrapper's `data-phase` changes between `typing`, `holding`, `deleting`, and `ready`. Use those values in CSS to react without adding more JavaScript:
 
-| Class | Description |
-|-------|-------------|
-| `.typewriter__text` | Span holding the typed characters (created automatically) |
-| `.typewriter__cursor` | Blinking cursor span (created automatically) |
-| `.is-typing` | Applied to the element when typing begins |
-| `.is-complete` | Applied when a non-looping element finishes typing |
+**Add to your CSS:**
 
-The cursor blink is pure CSS. Restyle it by overriding `.typewriter__cursor`:
-
-**CSS:**
 ```css
-.typewriter__cursor {
-  background: #ff3366; /* cursor colour */
-  width: 0.5em;        /* block-style cursor */
+[data-typewriter-system][data-phase="typing"] [data-typewriter-cursor] {
+  background: lime;
+}
+
+[data-typewriter-system][data-phase="deleting"] [data-typewriter-cursor] {
+  background: cyan;
+  transform: scaleY(0.45);
 }
 ```
 
+## Generated CSS Classes
+
+| Class | Description |
+|---|---|
+| `.typewriter__text` | Span containing the animated characters |
+| `.typewriter__cursor` | Generated cursor when `data-type-cursor` is enabled |
+| `.is-typing` | Applied while characters are being added |
+| `.is-deleting` | Applied while characters are being removed |
+| `.is-complete` | Applied after a non-looping sequence settles |
+
 ## Events
 
-The effect dispatches custom events (they bubble). Add this to your own JavaScript:
+Events bubble from the animated element.
 
-**JavaScript:**
+**Add to your JavaScript:**
+
 ```javascript
 const el = document.querySelector('[data-typewriter]');
 
-el.addEventListener('typewriter:start', (e) => {
-  console.log('Typing started:', e.detail.text);
+el.addEventListener('typewriter:start', (event) => {
+  console.log('Sequence started:', event.detail.text);
 });
 
-el.addEventListener('typewriter:complete', (e) => {
-  console.log('Phrase finished:', e.detail.text, 'index:', e.detail.index);
+el.addEventListener('typewriter:complete', (event) => {
+  console.log('Phrase complete:', event.detail.text, event.detail.index);
 });
 ```
 
 | Event | Detail | Description |
-|-------|--------|-------------|
-| `typewriter:start` | `{ text }` | Fired once when typing begins |
-| `typewriter:complete` | `{ text, index }` | Fired each time a phrase finishes typing (once per phrase in loop mode) |
+|---|---|---|
+| `typewriter:start` | `{ text }` | Fires when the timeline first begins |
+| `typewriter:complete` | `{ text, index }` | Fires whenever a phrase finishes typing |
+
+## Cleanup
+
+The effect stores its GSAP context on `window.gsapContext`. In a page transition or component teardown, call:
+
+**Add to your JavaScript teardown:**
+
+```javascript
+window.gsapContext?.revert();
+```
+
+This kills the effect's timelines and ScrollTriggers and removes replay listeners.
 
 ## Accessibility
 
-- **Reduced motion**: with `prefers-reduced-motion: reduce`, the full text is shown instantly and the cursor is hidden; nothing animates
-- **Screen readers**: the complete original text is set as `aria-label` on the element before typing starts, so assistive technology never hears partial words; the animated spans are `aria-hidden`
-- **No layout shift**: reserve space with `min-height` on the element (see the demo CSS) so surrounding content does not jump while typing
-- **Non-interactive**: the effect adds no focusable elements and does not trap keyboard focus
-
-## Browser Support
-
-Modern browsers (ES6+). Not compatible with IE11.
+- The element's original complete phrase is its no-JavaScript fallback and accessible label.
+- Generated character and cursor spans are hidden from assistive technology.
+- `prefers-reduced-motion: reduce` skips typing, deletion, cursor motion, and looping, leaving the strongest complete phrase visible.
+- Replay uses a native `<button>`, so it works with keyboard and touch input.
+- Reserve enough height for the longest phrase if your phrases vary substantially, preventing layout shift.
 
 ## Dependencies
 
 **Required:**
-- GSAP 3.12+
-- ScrollTrigger plugin
 
-**Optional:**
-- Lenis (smooth scroll integration; effect works without it)
+- GSAP 3.12+
+- ScrollTrigger
+
+No SplitText or smooth-scroll library is required.

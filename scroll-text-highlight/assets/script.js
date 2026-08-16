@@ -1,22 +1,15 @@
 /**
  * Scroll Text Highlight
  *
- * Scroll-linked reading highlight: SplitText breaks a block of copy into
- * words, and one scrubbed ScrollTrigger drives a timeline that lights each
- * word from dim to full in sequence. The leading word flashes the accent
- * colour, then relaxes to the foreground, so a bright reading band moves
- * through the paragraph as you scroll. Fully reversible on scroll-up.
+ * SplitText turns each highlighted block into a reversible reading sequence.
+ * A sharp orange-to-lime front lifts the active word, then leaves completed
+ * words calm and white. Optional progress and coordinate elements can follow
+ * the same scrubbed ScrollTrigger.
  *
  * @plugins ScrollTrigger, SplitText
- * @techniques scroll-reveal, scrub, text-animation
+ * @techniques scrub, text-animation, scroll-highlight
  */
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
-
-/* Runs the init straight away if the DOM is already parsed (a script
-   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
-   waits for DOMContentLoaded otherwise. A bare DOMContentLoaded listener
-   silently never fires under deferred execution. */
 (function onReady(init) {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
@@ -26,135 +19,139 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 })(function initScrollTextHighlight() {
     const BLOCKS = '.scroll-highlight';
 
-    /* No-JS / no-plugin readers never reach this file, and if SplitText is
-       missing we must not leave the copy dimmed. The dim state is only ever
-       applied by GSAP below, so simply bailing keeps the text fully legible. */
-    if (typeof SplitText === 'undefined') {
+    /* A blocked CDN must leave the unsplit, fully readable statement alone. */
+    if (typeof gsap === 'undefined'
+        || typeof ScrollTrigger === 'undefined'
+        || typeof SplitText === 'undefined') {
         return;
     }
 
-    /* OPTIONAL: Lenis smooth scroll. A scrubbed reading effect benefits from
-       it; delete this block (and the CDN tag) for native scroll. */
-    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
-       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
-    let wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const wantsSmooth = (new URLSearchParams(location.search).get('smooth')
         || document.documentElement.dataset.smooth) !== 'off'
         && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let lenis = null;
     let lenisTick = null;
+    let syncLenisOnRefresh = null;
+
     if (wantsSmooth && typeof Lenis !== 'undefined') {
-        /* Lenis and ScrollTrigger must share ONE clock. Left on its own rAF,
-           Lenis moves the page while ScrollTrigger is still reading the
-           previous frame. See docs/gsap-patterns.md. */
-        const hasST = typeof ScrollTrigger !== 'undefined';
-        lenis = new Lenis({ autoRaf: !hasST });
-        if (hasST) {
-            lenis.on('scroll', ScrollTrigger.update);
-            lenisTick = function (time) { lenis.raf(time * 1000); };
-            gsap.ticker.add(lenisTick);
-            gsap.ticker.lagSmoothing(0);
-            /* A refresh restores the native scroll position while Lenis is
-               still lerping toward its older target. */
-            ScrollTrigger.addEventListener('refresh', function () {
+        lenis = new Lenis({ autoRaf: false });
+        lenis.on('scroll', ScrollTrigger.update);
+        lenisTick = function (time) { lenis.raf(time * 1000); };
+        syncLenisOnRefresh = function () {
+            if (lenis) {
                 lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-            });
-        }
+            }
+        };
+        gsap.ticker.add(lenisTick);
+        gsap.ticker.lagSmoothing(0);
+        ScrollTrigger.addEventListener('refresh', syncLenisOnRefresh);
     }
-    /* END OPTIONAL: Lenis */
 
     const splits = [];
-
-    // Timeline shape (in abstract units, scrub maps them to scroll distance):
-    // STEP   - spacing between one word lighting and the next
-    // LIGHT  - how long a word takes to reach full accent (the front's sharpness)
-    // SETTLE - how long the accent relaxes back to foreground (the band's tail)
-    // A wider SETTLE lights more words at once; too wide and the "front" blurs.
     const STEP = 1;
-    const LIGHT = 1.4;
-    const SETTLE = 2.6;
+    const EDGE = 0.16;
+    const FLASH = 0.28;
+    const SETTLE = 0.72;
 
-    function resolveColor(el, value) {
-        // Resolve a CSS custom property or keyword to a concrete rgb() string
-        // via a throwaway probe, since GSAP cannot interpolate to var(--x).
+    function numericAttribute(element, name, fallback) {
+        const value = parseFloat(element.dataset[name]);
+        return Number.isFinite(value) ? value : fallback;
+    }
+
+    function resolveColor(element, value) {
         const probe = document.createElement('span');
         probe.style.cssText = 'position:absolute;visibility:hidden;color:' + value;
-        el.appendChild(probe);
+        element.appendChild(probe);
         const color = getComputedStyle(probe).color;
         probe.remove();
         return color;
+    }
+
+    function resolveElement(value, container) {
+        if (!value) return null;
+        try {
+            return document.querySelector(value) || container.closest(value);
+        } catch (error) {
+            return null;
+        }
     }
 
     function buildBlock(container) {
         if (!container.isConnected) return;
 
         const CONFIG = {
-            // Resting opacity of un-read words (ahead of and, briefly, behind the front)
-            dim: parseFloat(container.dataset.highlightDim) || 0.18,
-            // Leading word flashes the accent colour before settling to foreground
+            dim: numericAttribute(container, 'highlightDim', 0.16),
             accent: container.dataset.highlightAccent !== 'false',
-            // Optional restrained secondary channel: px the word lifts as it lights
-            lift: parseFloat(container.dataset.highlightLift) || 0,
-            // Scrub smoothing: true snaps to scroll, a number adds catch-up lag
+            lift: numericAttribute(container, 'highlightLift', 7),
             scrub: container.dataset.highlightScrub === undefined
                 ? true
                 : (container.dataset.highlightScrub === 'true'
                     ? true
-                    : parseFloat(container.dataset.highlightScrub))
+                    : numericAttribute(container, 'highlightScrub', true))
         };
 
-        const split = new SplitText(container, {
-            type: 'words',
-            wordsClass: 'sh-word'
-        });
+        const trigger = resolveElement(container.dataset.highlightTrigger, container) || container;
+        const progress = resolveElement(container.dataset.highlightProgress, container);
+        const current = resolveElement(container.dataset.highlightCurrent, container);
+        const split = new SplitText(container, { type: 'words', wordsClass: 'sh-word' });
         splits.push(split);
 
         const words = split.words;
-        if (!words.length) {
-            split.revert();
-            return;
-        }
+        if (!words.length) return;
 
-        const accentColor = resolveColor(container, 'var(--accent)');
-        const fgColor = getComputedStyle(container).color;
-        const litColor = CONFIG.accent ? accentColor : fgColor;
+        const foreground = getComputedStyle(container).color;
+        const accent = CONFIG.accent ? resolveColor(container, 'var(--accent)') : foreground;
+        const edge = CONFIG.accent ? resolveColor(container, 'var(--highlight-edge, #ff6b35)') : foreground;
+        const usesStageTrigger = trigger !== container;
 
-        // Class is a CSS hook only; the dim state itself is applied by GSAP
-        // below, so a reader without JS keeps full-opacity copy.
         container.classList.add('is-reading');
+        gsap.set(words, { opacity: CONFIG.dim, y: CONFIG.lift, color: foreground });
+        if (progress) gsap.set(progress, { scaleX: 0, transformOrigin: 'left center' });
+        if (current) current.textContent = '00 / ' + String(words.length).padStart(2, '0');
 
-        const tl = gsap.timeline({
-            defaults: { ease: 'none' },
-            scrollTrigger: {
-                trigger: container,
-                // Finish while the block is still comfortably in view (its bottom
-                // at 65% of the viewport) so the last words light before the reader
-                // runs out of scroll. The demo adds a runway spacer after the final
-                // block so this end is always reachable; give any trailing block on
-                // your own page similar room below it.
-                start: 'top 80%',
-                end: 'bottom 65%',
-                scrub: CONFIG.scrub
-            }
+        const timeline = gsap.timeline({ defaults: { ease: 'none' } });
+
+        words.forEach(function (word, index) {
+            const at = index * STEP;
+            timeline
+                .to(word, {
+                    opacity: 1,
+                    y: -CONFIG.lift * 0.45,
+                    color: edge,
+                    duration: EDGE
+                }, at)
+                .to(word, {
+                    y: -CONFIG.lift,
+                    color: accent,
+                    duration: FLASH
+                }, at + EDGE)
+                .to(word, {
+                    y: 0,
+                    color: foreground,
+                    duration: SETTLE
+                }, at + EDGE + FLASH);
         });
 
-        words.forEach(function(word, i) {
-            const at = i * STEP;
-            // Phase A: dim -> full, foreground -> lit (accent). immediateRender
-            // seeds every word to the dim "from" state, so words ahead of the
-            // front sit dimmed before their tween is reached.
-            tl.fromTo(word,
-                { opacity: CONFIG.dim, y: CONFIG.lift },
-                { opacity: 1, y: 0, color: litColor, duration: LIGHT },
-                at
-            );
-            // Phase B: relax the accent back to the settled foreground colour,
-            // leaving read words full and calm behind the moving front.
-            if (CONFIG.accent) {
-                tl.to(word,
-                    { color: fgColor, duration: SETTLE },
-                    at + LIGHT
-                );
+        ScrollTrigger.create({
+            trigger: trigger,
+            animation: timeline,
+            start: usesStageTrigger ? 'top top' : 'top 80%',
+            end: usesStageTrigger ? 'bottom bottom' : 'bottom 65%',
+            scrub: CONFIG.scrub,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) {
+                if (!container.isConnected) return;
+                if (progress && progress.isConnected) {
+                    gsap.set(progress, { scaleX: self.progress });
+                }
+                if (current && current.isConnected) {
+                    const count = Math.min(words.length, Math.floor(self.progress * words.length));
+                    current.textContent = String(count).padStart(2, '0')
+                        + ' / ' + String(words.length).padStart(2, '0');
+                }
             }
         });
     }
@@ -162,38 +159,58 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
     const ctx = gsap.context(function gsapContextCallback() {
         const mm = gsap.matchMedia();
 
-        mm.add('(prefers-reduced-motion: no-preference)', function() {
-            // Wait for fonts so SplitText measures final word widths and wraps
-            // lines correctly; refresh ScrollTrigger once positions are set.
-            document.fonts.ready.then(function() {
+        mm.add({
+            isMotion: '(prefers-reduced-motion: no-preference)',
+            isReduced: '(prefers-reduced-motion: reduce)'
+        }, function (context) {
+            let active = true;
+
+            if (context.conditions.isReduced) {
+                document.querySelectorAll(BLOCKS).forEach(function (block) {
+                    gsap.set(block, { opacity: 1, clearProps: 'transform' });
+                });
+                return function () { active = false; };
+            }
+
+            document.documentElement.classList.add('has-scroll-highlight');
+            document.fonts.ready.then(function () {
+                if (!active) return;
                 document.querySelectorAll(BLOCKS).forEach(buildBlock);
                 ScrollTrigger.refresh();
             });
 
             return function cleanup() {
-                ScrollTrigger.getAll().forEach(function(trigger) {
-                    trigger.kill();
+                active = false;
+                document.documentElement.classList.remove('has-scroll-highlight');
+                ScrollTrigger.getAll().forEach(function (scrollTrigger) {
+                    scrollTrigger.kill();
                 });
-                splits.forEach(function(split) {
+                splits.forEach(function (split) {
                     split.revert();
                 });
                 splits.length = 0;
             };
         });
-
-        mm.add('(prefers-reduced-motion: reduce)', function() {
-            // Never leave copy stuck dim: show every block at full opacity.
-            document.querySelectorAll(BLOCKS).forEach(function(block) {
-                gsap.set(block, { opacity: 1 });
-            });
-        });
     });
 
     window.gsapContext = ctx;
 
-    window.addEventListener('beforeunload', function() {
+    function teardown() {
         if (ctx) ctx.kill();
-        if (lenisTick) gsap.ticker.remove(lenisTick);
-        if (lenis) lenis.destroy();
-    });
+        if (syncLenisOnRefresh) {
+            ScrollTrigger.removeEventListener('refresh', syncLenisOnRefresh);
+            syncLenisOnRefresh = null;
+        }
+        if (lenisTick) {
+            gsap.ticker.remove(lenisTick);
+            lenisTick = null;
+        }
+        if (lenis) {
+            lenis.destroy();
+            lenis = null;
+        }
+        window.removeEventListener('beforeunload', teardown);
+    }
+
+    window.addEventListener('beforeunload', teardown);
 });

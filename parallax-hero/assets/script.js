@@ -1,143 +1,138 @@
 /**
  * Parallax Hero
  *
- * Layered hero section where elements move at different speeds while
- * scrolling. One scrubbed ScrollTrigger per container maps each layer's
- * yPercent to its data-parallax-speed, creating a sense of depth.
+ * A pinned, scrubbed depth scene. Add data-parallax to a hero and give each
+ * moving layer a data-parallax-speed value: values below 1 recede while values
+ * above 1 move into the foreground.
  *
  * @plugins ScrollTrigger
- * @techniques parallax, scrub, scroll-reveal
+ * @techniques parallax, scrub, pinning
  */
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* Runs the init straight away if the DOM is already parsed (a script
-   executed late or deferred, e.g. by Cloudflare Rocket Loader), and
-   waits for DOMContentLoaded otherwise. */
 (function onReady(init) {
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', init, { once: true });
     } else {
         init();
     }
 })(function initParallaxHero() {
-    // ============================================
-    // OPTIONAL: Lenis smooth scroll integration
-    // Remove this block if you are not using Lenis
-    // ============================================
-    /* Smooth scroll is opt-out: data-smooth="off" on <html>, or ?smooth=off in the
-       URL. Also off under prefers-reduced-motion, which Lenis does not do itself. */
-    let wantsSmooth = (new URLSearchParams(location.search).get('smooth')
+    const wantsSmooth = (new URLSearchParams(location.search).get('smooth')
         || document.documentElement.dataset.smooth) !== 'off'
         && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let lenis = null;
+    let lenisTick = null;
+    let refreshLenis = null;
+
     if (wantsSmooth && typeof Lenis !== 'undefined') {
-        lenis = new Lenis({
-            autoRaf: typeof ScrollTrigger === 'undefined',
-            duration: 1.2,
-            smoothWheel: true
-        });
-
+        lenis = new Lenis({ autoRaf: false, duration: 1.05, smoothWheel: true });
         lenis.on('scroll', ScrollTrigger.update);
-
-        gsap.ticker.add(function lenisRaf(time) {
-            lenis.raf(time * 1000);
-        });
+        lenisTick = function tickLenis(time) { lenis.raf(time * 1000); };
+        refreshLenis = function syncLenisAfterRefresh() {
+            lenis.scrollTo(window.scrollY, { immediate: true, force: true });
+        };
+        gsap.ticker.add(lenisTick);
         gsap.ticker.lagSmoothing(0);
-        /* A refresh restores the native scroll position while Lenis is still
-           lerping toward its older target, so it must adopt that position. */
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.addEventListener('refresh', function () {
-                lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-            });
-        }
-
-        window.lenis = lenis;
+        ScrollTrigger.addEventListener('refresh', refreshLenis);
     }
 
-    const ctx = gsap.context(function gsapContextCallback() {
+    const ctx = gsap.context(function effectContext() {
         const mm = gsap.matchMedia();
 
-        // ============================================
-        // MOTION: scrubbed parallax layers
-        // ============================================
-        mm.add('(prefers-reduced-motion: no-preference)', function motionBranch() {
-            const containers = gsap.utils.toArray('[data-parallax]');
+        mm.add({
+            desktop: '(min-width: 769px) and (prefers-reduced-motion: no-preference)',
+            mobile: '(max-width: 768px) and (prefers-reduced-motion: no-preference)',
+            reduced: '(prefers-reduced-motion: reduce)'
+        }, function responsiveBranch(context) {
+            const conditions = context.conditions;
+            const scenes = gsap.utils.toArray('[data-parallax]');
 
-            containers.forEach(function initContainer(container) {
-                const layers = gsap.utils.toArray('[data-parallax-speed]', container);
+            if (conditions.reduced) {
+                gsap.set('[data-parallax-speed]', {
+                    clearProps: 'transform,filter,opacity,visibility'
+                });
+                return;
+            }
+
+            const isMobile = conditions.mobile;
+            const triggers = [];
+
+            scenes.forEach(function createScene(scene) {
+                const layers = gsap.utils.toArray('[data-parallax-speed]', scene);
                 if (!layers.length) return;
 
-                // One scrubbed timeline per container. Timeline progress maps
-                // to the container's full journey through the viewport.
-                // clamp() prevents a visual jump when the container is already
-                // partially in view on page load.
-                const tl = gsap.timeline({
-                    defaults: {
-                        ease: 'none',
-                        duration: 1,
-                        force3D: true
-                    },
+                const distance = parseFloat(isMobile
+                    ? scene.dataset.parallaxMobileDistance
+                    : scene.dataset.parallaxDistance) || (isMobile ? 128 : 236);
+                const runway = parseFloat(isMobile
+                    ? scene.dataset.parallaxMobileRunway
+                    : scene.dataset.parallaxRunway) || (isMobile ? 340 : 560);
+                const progressValue = scene.querySelector('[data-parallax-progress]');
+                const fill = scene.querySelector('[data-parallax-fill]');
+                const state = { progress: 0 };
+
+                const timeline = gsap.timeline({
+                    defaults: { duration: 1, ease: 'none', force3D: true },
                     scrollTrigger: {
-                        trigger: container,
-                        start: 'clamp(top bottom)',
-                        end: 'clamp(bottom top)',
-                        scrub: true,
+                        trigger: scene,
+                        start: 'top top',
+                        end: function endPosition() { return '+=' + runway; },
+                        pin: true,
+                        scrub: isMobile ? 0.35 : 0.5,
                         invalidateOnRefresh: true
                     }
                 });
 
-                layers.forEach(function initLayer(layer) {
-                    const parsed = parseFloat(layer.dataset.parallaxSpeed);
-                    const speed = isNaN(parsed) ? 1 : parsed;
+                layers.forEach(function animateLayer(layer) {
+                    const parsedSpeed = parseFloat(layer.dataset.parallaxSpeed);
+                    const speed = Number.isFinite(parsedSpeed) ? parsedSpeed : 1;
+                    const y = (1 - speed) * distance;
+                    const xTo = parseFloat(layer.dataset.parallaxX);
+                    const rotateTo = parseFloat(layer.dataset.parallaxRotate);
+                    const scaleTo = parseFloat(layer.dataset.parallaxScale);
+                    const blurTo = parseFloat(layer.dataset.parallaxBlur);
+                    const opacityTo = parseFloat(layer.dataset.parallaxOpacity);
+                    const toVars = { y: y };
 
-                    // speed 1 tracks the scroll exactly (no shift).
-                    // speed < 1 lags behind (background depth).
-                    // speed > 1 races ahead (foreground depth).
-                    const shift = (1 - speed) * 50;
-
-                    tl.fromTo(layer,
-                        { yPercent: -shift },
-                        { yPercent: shift },
-                        0
-                    );
-
-                    // Optional: fade the layer out as the container leaves
-                    // the top of the viewport
-                    if (layer.hasAttribute('data-parallax-fade')) {
-                        tl.fromTo(layer,
-                            { autoAlpha: 1 },
-                            { autoAlpha: 0, duration: 0.45 },
-                            0.55
-                        );
-                    }
+                    if (Number.isFinite(xTo)) toVars.x = isMobile ? xTo * 0.58 : xTo;
+                    if (Number.isFinite(rotateTo)) toVars.rotation = isMobile ? rotateTo * 0.62 : rotateTo;
+                    if (Number.isFinite(scaleTo)) toVars.scale = scaleTo;
+                    if (Number.isFinite(blurTo)) toVars.filter = 'blur(' + blurTo + 'px)';
+                    if (Number.isFinite(opacityTo)) toVars.autoAlpha = opacityTo;
+                    timeline.to(layer, toVars, 0);
                 });
+
+                if (fill) timeline.to(fill, { scaleX: 1 }, 0);
+                if (progressValue) {
+                    timeline.to(state, {
+                        progress: 100,
+                        onUpdate: function updateReadout() {
+                            if (progressValue.isConnected) {
+                                progressValue.textContent = String(Math.round(state.progress)).padStart(3, '0');
+                            }
+                        }
+                    }, 0);
+                }
+
+                triggers.push(timeline.scrollTrigger);
             });
 
-            return function cleanup() {
-                ScrollTrigger.getAll().forEach(function killTrigger(trigger) {
-                    trigger.kill();
-                });
+            return function cleanupMotion() {
+                triggers.forEach(function killTrigger(trigger) { trigger.kill(); });
             };
         });
-
-        // ============================================
-        // REDUCED MOTION: layers stay static
-        // ============================================
-        mm.add('(prefers-reduced-motion: reduce)', function reducedBranch() {
-            gsap.set('[data-parallax] [data-parallax-speed]', {
-                yPercent: 0,
-                autoAlpha: 1
-            });
-        });
     });
 
-    // Store context for SPA cleanup
-    window.gsapContext = ctx;
-
-    window.addEventListener('beforeunload', function teardown() {
+    function teardown() {
+        window.removeEventListener('beforeunload', teardown);
         if (ctx) ctx.kill();
+        if (refreshLenis) ScrollTrigger.removeEventListener('refresh', refreshLenis);
+        if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();
-    });
+    }
+
+    window.gsapContext = ctx;
+    window.addEventListener('beforeunload', teardown, { once: true });
 });

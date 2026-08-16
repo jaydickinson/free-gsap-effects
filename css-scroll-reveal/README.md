@@ -1,183 +1,94 @@
 # CSS Scroll Reveal
 
-Pure CSS scroll-triggered entrance animations. No JavaScript required.
-
-## Browser Support
-
-CSS scroll-driven animations work in:
-- Chrome 115+
-- Edge 115+
-- Safari 18+
-
-Check [caniuse.com](https://caniuse.com/css-scroll-driven-animations) for current support.
+Native CSS scroll-driven entrance classes for opacity, translate, and scale. Animation requires no JavaScript; the optional script only adds an unsupported-browser fallback hook.
 
 ## Quick Start
 
-**1. Add the CSS to your stylesheet or `<style>` tag:**
+**1. Copy the reveal classes and keyframes from `assets/style.css` into your stylesheet.**
 
-```css
-.reveal-fade {
-  animation: fade-in auto linear both;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-```
-
-**2. Add the class to any HTML element:**
+**2. Add a reveal class to an element in your `<body>`:**
 
 ```html
-<div class="reveal-fade">This fades in on scroll</div>
+<article class="reveal-slide-up">
+  This fades and rises as it enters the viewport.
+</article>
 ```
 
-## Available Classes
+**3. Optionally tune that element's range in your CSS:**
 
-| Class | Effect |
-|-------|--------|
-| `.reveal-fade` | Fade from transparent to opaque |
-| `.reveal-slide-up` | Fade + slide up from below |
-| `.reveal-scale` | Fade + scale from 0.85 to 1 |
-| `.reveal-slide-left` | Fade + slide in from left |
-| `.reveal-slide-right` | Fade + slide in from right |
+```css
+.feature-card {
+  --reveal-range: entry 10% cover 35%;
+}
+```
+
+No animation script or GSAP CDN tag is required.
+
+## Options
+
+| Class / property | Values | Default | Description |
+|---|---|---|---|
+| `.reveal-fade` | Class | — | Reveals with opacity only |
+| `.reveal-slide-up` | Class | — | Fades and translates upward |
+| `.reveal-scale` | Class | — | Fades and scales from `0.72` |
+| `.reveal-slide-left` | Class | — | Fades while entering from the left |
+| `.reveal-slide-right` | Class | — | Fades while entering from the right |
+| `--reveal-range` | Any valid `animation-range` | `entry 0% cover 40%` | Controls where the reveal starts and settles |
+
+The class names are preserved as the reusable API. The editorial demo binds its three panels to `scroll(root block)` only to make one compact, synchronized sequence; ordinary elements continue to use `view()`.
 
 ## Examples
 
-### Basic Fade
+### A three-item cascade
 
-**HTML:**
+**Add to your HTML `<body>`:**
+
 ```html
-<div class="reveal-fade">
-  Content fades in as it enters the viewport
+<div class="story-grid">
+  <article class="reveal-slide-up">First story</article>
+  <article class="reveal-scale">Second story</article>
+  <article class="reveal-slide-left">Third story</article>
 </div>
 ```
 
-### Slide Up
+**Add to your stylesheet:**
 
-**HTML:**
-```html
-<div class="reveal-slide-up">
-  Content slides up while fading in
-</div>
-```
-
-### Scale In
-
-**HTML:**
-```html
-<div class="reveal-scale">
-  Content grows from 85% to 100% size
-</div>
-```
-
-### Side Slides
-
-**HTML:**
-```html
-<div class="reveal-slide-left">From the left</div>
-<div class="reveal-slide-right">From the right</div>
-```
-
-## Customization
-
-Add these to your stylesheet or `<style>` tag to customize behavior.
-
-### Animation Range
-
-Control when the animation starts and ends:
-
-**CSS:**
 ```css
-.reveal-fade {
-  /* Default: animate during entry */
-  animation-range: entry 0% cover 40%;
-
-  /* Start when 20% visible, complete at 80% */
-  animation-range: entry 20% entry 80%;
-
-  /* Animate through the entire visibility */
-  animation-range: cover 0% cover 100%;
-}
+.story-grid > :nth-child(1) { --reveal-range: entry 0% cover 35%; }
+.story-grid > :nth-child(2) { --reveal-range: entry 8% cover 43%; }
+.story-grid > :nth-child(3) { --reveal-range: entry 16% cover 51%; }
 ```
 
-### Animation Speed
+### Accent-rule growth
 
-The `linear` timing function ties animation directly to scroll. For smoother motion, use easing:
+The poster's secondary response is also CSS-driven:
 
-**CSS:**
 ```css
-.reveal-fade {
-  animation: fade-in auto ease-out both;
-}
-```
-
-### Custom Keyframes
-
-Create your own animations:
-
-**CSS:**
-```css
-.reveal-rotate {
-  animation: rotate-in auto linear both;
+.accent-rule {
+  transform-origin: left;
+  animation: rule-grow auto ease-out both;
   animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+  animation-range: entry 10% cover 35%;
 }
 
-@keyframes rotate-in {
-  from {
-    opacity: 0;
-    transform: rotate(-10deg) translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: rotate(0) translateY(0);
-  }
+@keyframes rule-grow {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
 }
 ```
+
+## Browser Support and Fallback
+
+Native scroll-driven animations are supported in current Chromium-based browsers and Safari releases. Check [Can I Use](https://caniuse.com/css-scroll-driven-animations) for current versions.
+
+The stylesheet includes an `@supports not (animation-timeline: view())` branch that removes animation and shows the final composition. `assets/script.js` is optional: it performs the same support check and adds `.no-scroll-timeline` for older browsers whose CSS feature detection is inconsistent. It never drives animation.
+
+Without JavaScript, supported browsers animate normally and unsupported browsers receive the complete static content through CSS.
 
 ## Accessibility
 
-The effect respects `prefers-reduced-motion`:
-
-**CSS:**
-```css
-@media (prefers-reduced-motion: reduce) {
-  .reveal-fade,
-  .reveal-slide-up,
-  .reveal-scale,
-  .reveal-slide-left,
-  .reveal-slide-right {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-```
-
-## Fallback for Unsupported Browsers
-
-This demo is designed to show pure CSS capabilities. In unsupported browsers, content will simply be visible without animation:
-
-**CSS:**
-```css
-@supports not (animation-timeline: view()) {
-  .reveal-fade,
-  .reveal-slide-up,
-  .reveal-scale,
-  .reveal-slide-left,
-  .reveal-slide-right {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-```
-
-For production sites requiring broad browser support and complex features (pinning, scrubbing, callbacks), we recommend using **GSAP ScrollTrigger**.
+A `prefers-reduced-motion: reduce` media query disables every reveal, removes the extra runway, and presents the settled content immediately. Keep meaningful content in normal HTML rather than pseudo-elements so it remains available to assistive technology and all fallback modes.
 
 ## Dependencies
 
-None. Pure CSS.
+None. The effect uses native CSS only. The demo loads Google Fonts for its poster styling, but the reveal API does not depend on them.

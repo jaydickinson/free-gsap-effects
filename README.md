@@ -4,20 +4,20 @@
 
 Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 44 copy-paste GSAP animation effects and 44 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 61 copy-paste GSAP animation effects and 53 complete website templates.
 
 ## The Effects
 
 | Effect | What it does | Live demo |
 |--------|--------------|-----------|
-| [3D Card Flip Gallery](./3d-card-flip) | Team/portfolio cards with 3D flip animation. Hover flip for desktop, tap for touch. Includes staggered entrance and scroll-triggered reveals. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
-| [Scroll Progress Indicator](./scroll-progress) | Four scroll progress visualization styles using GSAP ScrollTrigger. Includes animated bar, circle, rail track, and percentage counter indicators. | [Demo](https://gsapvault.com/effects/scroll-progress) |
-| [Typewriter Text](./typewriter-text) | Text types out character by character with a blinking cursor when scrolled into view. Supports looping phrases, custom speed, and delay controls. | [Demo](https://gsapvault.com/effects/typewriter-text) |
-| [Parallax Hero](./parallax-hero) | A layered hero section where background blobs, headline, and foreground labels scroll at different speeds, creating scrubbed parallax depth. | [Demo](https://gsapvault.com/effects/parallax-hero) |
-| [Image Clip Reveal](./image-clip-reveal) | Images reveal on scroll with an animated clip-path wipe and a Ken Burns settle, the inner image easing from 1.25 scale down to 1 as the mask opens. | [Demo](https://gsapvault.com/effects/image-clip-reveal) |
-| [Hover Underline](./hover-underline) | Animated link underlines with three GSAP variants: an exit-through slide, a marker-style fill sweep, and a hand-drawn SVG wave. One data attribute per link. | [Demo](https://gsapvault.com/effects/hover-underline) |
-| [Scroll Text Highlight](./scroll-text-highlight) | Scroll-linked reading highlight that lights a paragraph word by word as you scroll, with the leading word flashing an accent colour before settling to full foreground. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
-| [CSS Scroll Reveal](./css-scroll-reveal) | Pure CSS scroll-triggered entrance animations. No JavaScript required. Uses native CSS scroll-driven animations for fade, slide, and scale effects. | [Demo](https://gsapvault.com/effects/css-scroll-reveal) |
+| [3D Card Flip Gallery](./3d-card-flip) | Tactile 3D cards with deep perspective, reactive edge-light, shadow inversion, hover/focus parity, and tap auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
+| [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress instrument with bar, ring, side rail, percentage, and active chapter feedback. | [Demo](https://gsapvault.com/effects/scroll-progress) |
+| [Typewriter Text](./typewriter-text) | A sharp terminal-style typewriter that types, holds, accelerates through deletion, and cycles to the next phrase in sync with cursor and progress signals. | [Demo](https://gsapvault.com/effects/typewriter-text) |
+| [Parallax Hero](./parallax-hero) | A pinned hero that separates its background photograph, copy, and foreground card into distinct scroll depths from a single scrubbed ScrollTrigger. | [Demo](https://gsapvault.com/effects/parallax-hero) |
+| [Image Clip Reveal](./image-clip-reveal) | A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its editorial caption lands. | [Demo](https://gsapvault.com/effects/image-clip-reveal) |
+| [Hover Underline](./hover-underline) | Three material link underlines (an exit-through line, marker sweep, and hand-drawn wave) with coordinated type and active-index responses. | [Demo](https://gsapvault.com/effects/hover-underline) |
+| [Scroll Text Highlight](./scroll-text-highlight) | A scrubbed orange-to-lime reading front lifts each active word before completed copy settles to white and unread copy remains ghosted. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
+| [CSS Scroll Reveal](./css-scroll-reveal) | Native CSS scroll-driven reveals for crisp fade, slide, and scale entrances with accessible static fallbacks and no animation JavaScript. | [Demo](https://gsapvault.com/effects/css-scroll-reveal) |
 
 ## The Templates
 
@@ -62,7 +62,7 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 44 effects and 44 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 61 effects and 53 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
 - All of it, one payment: [Effects & Templates Vault](https://gsapvault.com/effects), a one-time bundle covering every current and future effect and template, unlimited commercial projects. Check the site for current pricing

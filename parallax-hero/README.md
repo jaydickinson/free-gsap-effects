@@ -1,6 +1,6 @@
 # Parallax Hero
 
-A layered hero section where elements move at different speeds while scrolling, creating depth with a single scrubbed ScrollTrigger per container.
+A pinned hero that separates its background image, copy, and foreground card into distinct scroll depths from one scrubbed ScrollTrigger.
 
 ## Quick Start
 
@@ -10,7 +10,30 @@ A layered hero section where elements move at different speeds while scrolling, 
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+**2. Add the hero to your `<body>`:**
+
+```html
+<section class="hero" data-parallax data-parallax-runway="620">
+  <!-- Background image: hangs back -->
+  <div class="layer layer--backdrop" data-parallax-speed="0.2" data-parallax-scale="1.12" aria-hidden="true">
+    <img src="your-photo.jpg" alt="">
+  </div>
+
+  <!-- Your normal hero copy -->
+  <div class="layer layer--copy" data-parallax-speed="0.82">
+    <h1>Wake up to the tide</h1>
+    <p>Your lede.</p>
+    <a class="button" href="#book">Check availability</a>
+  </div>
+
+  <!-- Anything that should come toward the viewer -->
+  <div class="layer layer--front" data-parallax-speed="1.3">
+    <aside class="rate-card">From £180 / night</aside>
+  </div>
+</section>
+```
+
+**3. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -18,123 +41,135 @@ A layered hero section where elements move at different speeds while scrolling, 
 <script src="path/to/script.js"></script>
 ```
 
-**3. Add the effect HTML anywhere in your `<body>`:**
+The script discovers every `[data-parallax]` scene, builds one scrubbed timeline for its layers, pins it for the configured runway, and then releases it.
 
-```html
-<section class="parallax-hero" data-parallax>
-  <div class="parallax-layer" data-parallax-speed="0.2">
-    <!-- Slow background: gradient shapes, textures -->
-  </div>
-  <div class="parallax-layer" data-parallax-speed="0.7" data-parallax-fade>
-    <h1>Your Headline</h1>
-  </div>
-  <div class="parallax-layer" data-parallax-speed="1.3">
-    <!-- Fast foreground: badges, labels -->
-  </div>
-</section>
-```
+## Using It With Your Own Design
 
-That is the whole setup. The script finds every `[data-parallax]` container, collects its `[data-parallax-speed]` layers, and wires up one scrubbed ScrollTrigger per container.
+The effect makes no demands on how the hero looks. It only needs two things:
+
+1. **A positioning context.** The scene is `position: relative; overflow: clip`, and each layer is `position: absolute; inset: 0` inside it so the layers stack.
+2. **A `data-parallax-speed` on anything you want to move.** That is the whole API. The element can be an image wrapper, a `<div>` holding your existing headline markup, a card, an SVG — the script never looks at what is inside it.
+
+To reskin the demo, keep the four `.layer` wrappers and replace their contents. Nothing in `script.js` refers to `.hero`, `.rate-card`, or any other class name in `style.css`.
+
+Two rules worth keeping:
+
+- **Overscan the layers that paint something.** A background image that travels 176px will drag its edge into view unless the layer extends past the scene. The demo gives `.layer--backdrop` and `.layer--glow` `inset: -12%`. Layers that only carry content stay at `inset: 0`, otherwise the padding you lay that content out with starts off-screen.
+- **Put interactive content back in the flow.** `.layer` sets `pointer-events: none` so the stacked layers do not block each other; the demo restores `pointer-events: auto` on `.copy-column` and `.rate-card` so links and buttons still work.
 
 ## Options
 
 | Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-parallax` | (none, marker) | required | Marks a container as a parallax scene. One ScrollTrigger is created per container |
-| `data-parallax-speed` | Any number | `1` | Layer speed relative to the scroll. `1` tracks the scroll exactly, values below `1` lag behind (background), values above `1` race ahead (foreground) |
-| `data-parallax-fade` | (none, marker) | off | Fades the layer out (opacity and visibility) as the container leaves the top of the viewport |
+|---|---:|---:|---|
+| `data-parallax` | marker | required | Identifies a parallax scene |
+| `data-parallax-speed` | number | `1` | Controls relative depth. Below `1` lags into the background; above `1` advances into the foreground |
+| `data-parallax-x` | pixels | unchanged | Optional horizontal travel; automatically reduced on mobile |
+| `data-parallax-rotate` | degrees | unchanged | Optional ending rotation; automatically reduced on mobile |
+| `data-parallax-scale` | number | unchanged | Optional ending scale for a layer |
+| `data-parallax-blur` | pixels | unchanged | Optional ending blur amount, entered without `px` |
+| `data-parallax-opacity` | `0`–`1` | unchanged | Optional ending opacity for a layer |
+| `data-parallax-distance` | pixels | `236` | Desktop translation multiplier for the scene |
+| `data-parallax-mobile-distance` | pixels | `128` | Translation multiplier at `768px` and below |
+| `data-parallax-runway` | pixels | `560` | Desktop pinned scroll distance |
+| `data-parallax-mobile-runway` | pixels | `340` | Mobile pinned scroll distance |
+| `data-parallax-progress` | marker | optional | Displays timeline progress from `000` to `100` |
+| `data-parallax-fill` | marker | optional | Scales a progress line from left to right |
 
-### Choosing speed values
+Invalid or omitted speeds fall back to `1`, which leaves the layer at the page's base speed.
 
-The layer's vertical shift is proportional to `(1 - speed)`, so the further a value sits from `1`, the more the layer separates from the page:
+## Choosing Layer Speeds
 
-- `0.2` deep background, barely moves
-- `0.5` mid background, clearly lags
-- `0.9` near-normal, subtle drift
-- `1` moves with the page (no parallax)
-- `1.3` foreground, moves faster than the scroll
+- `0.15–0.35`: the background image or a large distant field
+- `0.4–0.65`: atmosphere, texture, a light wash
+- `0.7–0.9`: the headline and primary copy
+- `1`: follows the scene without additional y travel
+- `1.1–1.25`: labels and interface details
+- `1.3–1.5`: foreground cards, frames, or objects
+
+Keep the deepest and nearest values far apart so the separation develops clearly across the pinned runway. The demo uses `0.2 / 0.55 / 0.82 / 1.3`.
 
 ## Examples
 
-### Minimal Two-Layer Hero
+### Add a Focus Pull to the Background Image
 
-**HTML:**
+**Add inside your `[data-parallax]` scene:**
+
 ```html
-<section class="parallax-hero" data-parallax>
-  <div class="parallax-layer" data-parallax-speed="0.3">
-    <div class="hero-blob hero-blob--violet"></div>
-  </div>
-  <div class="parallax-layer" data-parallax-speed="0.8">
-    <h1>Depth Without Images</h1>
-  </div>
-</section>
-```
-
-### Headline That Fades On Exit
-
-**HTML:**
-```html
-<div class="parallax-layer" data-parallax-speed="0.7" data-parallax-fade>
-  <h1>Fades as the hero leaves the viewport</h1>
+<div
+  class="layer layer--backdrop"
+  data-parallax-speed="0.2"
+  data-parallax-scale="1.12"
+  data-parallax-blur="5"
+  data-parallax-opacity="0.8"
+  aria-hidden="true"
+>
+  <img src="your-photo.jpg" alt="">
 </div>
 ```
 
-### Multiple Scenes On One Page
+Decorative images should use an empty `alt` attribute. The layer moves, expands, softens, and dims from the same scrubbed progress, so the photograph recedes as the copy travels over it.
 
-Each `data-parallax` container is independent, so you can repeat the pattern for section headers further down the page:
+### Add a Scroll Meter
 
-**HTML:**
+**Add inside your `[data-parallax]` scene:**
+
 ```html
-<section class="parallax-hero" data-parallax>...</section>
-
-<section class="parallax-hero" data-parallax>
-  <div class="parallax-layer" data-parallax-speed="0.4">
-    <div class="hero-grid"></div>
-  </div>
-  <div class="parallax-layer" data-parallax-speed="1.1">
-    <h2>Second Scene</h2>
-  </div>
-</section>
+<div class="scroll-meter" aria-hidden="true">
+  <span class="scroll-meter__track"><span data-parallax-fill></span></span>
+  <span><span data-parallax-progress>000</span>%</span>
+</div>
 ```
 
-## CSS Classes
+`[data-parallax-fill]` is scaled from `scaleX(0)` to `scaleX(1)` and `[data-parallax-progress]` counts `000`–`100`, both on the same timeline. Both are optional; omit them and the script skips them.
 
-| Class | Description |
-|-------|-------------|
-| `.parallax-hero` | The scene container: sets height, `overflow: clip`, and background |
-| `.parallax-layer` | Absolutely positioned layer that fills the hero, with `will-change: transform` |
-| `.hero-blob` | Pure CSS radial-gradient shape for background depth |
-| `.hero-grid` | Faint dot grid layer, masked to the center of the hero |
-| `.hero-strip` | Foreground label strip (JetBrains Mono, pill-shaped) |
+### Disable Lenis
 
-Layers use `inset: -12% 0` so they overscan the container vertically; this hides the edges that would otherwise be revealed as layers shift. If you use aggressive speeds (below `0.2` or above `1.5`), increase the overscan to match.
+If Lenis is loaded but a page should use native scrolling, set the option on `<html>`:
+
+```html
+<html data-smooth="off">
+```
+
+You can also append `?smooth=off` to the URL. The ScrollTrigger effect works with or without Lenis.
 
 ## How It Works
 
-Each container gets one GSAP timeline with `scrub: true`, running from `clamp(top bottom)` to `clamp(bottom top)`, so timeline progress maps to the container's full journey through the viewport. Every layer receives a `fromTo` tween on `yPercent` between `-(1 - speed) * 50` and `(1 - speed) * 50`. The `clamp()` wrapper prevents a visual jump when the hero is already on screen at load, and `invalidateOnRefresh` recalculates on resize.
+A scene gets one GSAP timeline whose ScrollTrigger starts at `top top`, pins the hero, and ends after the selected runway. For each layer, the y destination is calculated as `(1 - speed) × distance`. A `0.2` background therefore drifts down while a `1.3` foreground card travels up, creating visible separation across a deliberate but still self-contained hero sequence.
+
+Horizontal travel, rotation, scale, blur, and opacity attributes are added to the same tween, as are the optional scroll meter responses, so every element stays synchronized, scrubbed, and reversible. `invalidateOnRefresh` recalculates the runway after layout changes.
+
+## Composition Notes
+
+- Give moving layers enough overscan to prevent an edge appearing during travel.
+- Keep semantic content such as the headline in normal heading markup even when it is absolutely layered.
+- Set decorative layers to `aria-hidden="true"`.
+- A page can contain multiple independent `[data-parallax]` scenes, but a hero normally needs only one.
 
 ## Accessibility
 
-- **Reduced motion**: respects `prefers-reduced-motion`. The `gsap.matchMedia` reduce branch pins every layer at `yPercent: 0` with full opacity, and a CSS rule enforces `transform: none` on layers, so all content stays visible and static
-- **No interaction required**: the effect is purely scroll-driven, so there are no hover or keyboard traps
-- **Decorative layers**: mark purely visual layers (blobs, grids) with `aria-hidden="true"` so screen readers skip them, as the demo does
-- **Content order**: keep the headline layer as real heading markup (`<h1>`/`<h2>`) so the document outline survives the visual layering
+- **Reduced motion:** the JavaScript `gsap.matchMedia` branch creates no pin or animation. CSS removes transforms, filters, and transitions so the complete layered hero remains visible as a strong static composition.
+- **No JavaScript:** all layers are visible in their designed starting state; no content depends on JavaScript to be revealed.
+- **Keyboard:** the effect is scroll-driven and introduces no custom controls or keyboard traps. Links inside layers keep their focus styles because only the layer wrapper is `pointer-events: none`.
+- **Semantics:** keep meaningful copy outside `aria-hidden` decorative layers and connect the scene to its heading with `aria-labelledby`.
+
+## Cleanup
+
+The script stores its GSAP context on `window.gsapContext` for SPA use. Calling `window.gsapContext.kill()` removes the scene timelines and ScrollTriggers. On page unload, the script also removes the Lenis ticker callback and ScrollTrigger refresh listener before destroying Lenis.
 
 ## Performance Notes
 
-- Only `yPercent` (a transform) and `autoAlpha` are animated, so all work stays on the compositor
-- `will-change: transform` and `force3D: true` promote layers to their own GPU layers
-- One ScrollTrigger per container, regardless of layer count
-
-## Browser Support
-
-Modern browsers (ES6+). Not compatible with IE11.
+- Translation and scale remain compositor-friendly.
+- Blur is optional because large filtered layers can be expensive on low-power devices.
+- One ScrollTrigger coordinates every layer in a scene.
+- Mobile defaults reduce both travel and pin distance while preserving the same depth order.
 
 ## Dependencies
 
 **Required:**
+
 - GSAP 3.12+
-- ScrollTrigger plugin
+- ScrollTrigger
 
 **Optional:**
-- Lenis (smooth scroll integration; the script auto-detects it and the effect works without it)
+
+- Lenis 1.x for smooth scrolling. If present, the script runs Lenis from GSAP's ticker so both systems share one clock.

@@ -1,6 +1,6 @@
 # Scroll Progress Indicator
 
-Four scroll progress visualization styles using GSAP ScrollTrigger.
+A precise, reversible reading-progress system built with GSAP ScrollTrigger. Use the bar, ring, rail, or percentage independently, or combine them into one navigation instrument.
 
 ## Quick Start
 
@@ -10,7 +10,17 @@ Four scroll progress visualization styles using GSAP ScrollTrigger.
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+**2. Add one indicator inside your `<body>`:**
+
+```html
+<div class="progress-bar" data-progress-style="bar"
+  role="progressbar" aria-label="Reading progress"
+  aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="progress-bar__fill"></div>
+</div>
+```
+
+**3. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
@@ -18,176 +28,137 @@ Four scroll progress visualization styles using GSAP ScrollTrigger.
 <script src="path/to/script.js"></script>
 ```
 
-**3. Add the indicator HTML anywhere in your `<body>`:**
+The default range is the full document, from `top top` to `bottom bottom`. Updates are direct, reversible, and settle on an exact `100` at the endpoint.
 
-```html
-<div class="progress-bar" data-progress-style="bar">
-  <div class="progress-bar__fill"></div>
-</div>
-```
+## Options
 
-## Styles
+### Data attributes
 
-| Style | Description | Best For |
-|-------|-------------|----------|
-| `bar` | Horizontal bar at top/bottom | Blog posts, documentation |
-| `circle` | SVG ring with optional percentage | Landing pages, minimal designs |
-| `rail` | Vertical bar on left/right edge | Editorial sites, vertical emphasis |
-| `counter` | Numeric percentage display | Technical docs, data-driven UIs |
+| Attribute | Values | Default | Description |
+|---|---|---|---|
+| `data-progress-style` | `bar`, `circle`, `ring`, `rail`, `counter`, `percentage` | `bar` | Selects the rendering mode. `ring` and `percentage` are aliases. |
+| `data-progress-position` | Any project-specific value | — | Preserved on the instance for custom positioning logic. CSS position classes are provided below. |
+
+### JavaScript options
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `style` | string | Element data attribute or `bar` | Rendering mode. |
+| `position` | string | Element data attribute or `null` | Optional position metadata. |
+| `trigger` | Element | `document.documentElement` | Element whose scroll range is tracked. |
+| `start` | string | `top top` | ScrollTrigger start expression. |
+| `end` | string | `bottom bottom` | ScrollTrigger end expression. |
 
 ## Style Markup
 
-Each style requires specific HTML. Add one of these anywhere in your `<body>`:
-
 ### Bar
 
-**HTML:**
+**Add inside your `<body>`:**
+
 ```html
 <div class="progress-bar" data-progress-style="bar">
   <div class="progress-bar__fill"></div>
 </div>
 ```
 
-**Variants:** Add `progress-bar--bottom` for bottom position, `progress-bar--thick` for 5px height.
+Add `progress-bar--bottom` for the bottom edge or `progress-bar--thick` for a 5px bar.
 
-### Circle
+### Ring
 
-**HTML:**
+**Add inside your `<body>`:**
+
 ```html
 <div class="progress-circle" data-progress-style="circle">
-  <svg class="progress-circle__svg" viewBox="0 0 60 60">
-    <circle class="progress-circle__bg" cx="30" cy="30" r="25"/>
-    <circle class="progress-circle__fill" cx="30" cy="30" r="25"/>
+  <svg class="progress-circle__svg" viewBox="0 0 60 60" aria-hidden="true">
+    <circle class="progress-circle__bg" cx="30" cy="30" r="25" />
+    <circle class="progress-circle__fill" cx="30" cy="30" r="25" />
   </svg>
   <span class="progress-circle__text">0%</span>
 </div>
 ```
 
-**Variants:** Add position classes:
-- `progress-circle--top-right`
-- `progress-circle--top-left`
-- `progress-circle--bottom-left`
-- Default is bottom-right
+The script reads the path length, so changing the radius does not require a hard-coded dash array. Position classes are `progress-circle--top-right`, `progress-circle--top-left`, and `progress-circle--bottom-left`; bottom-right is the default.
 
 ### Rail
 
-**HTML:**
+**Add inside your `<body>`:**
+
 ```html
 <div class="progress-rail progress-rail--right" data-progress-style="rail">
   <div class="progress-rail__fill"></div>
 </div>
 ```
 
-**Variants:** `progress-rail--left` or `progress-rail--right`
+Use `progress-rail--left` or `progress-rail--right`.
 
-### Counter
+### Percentage
 
-**HTML:**
+**Add inside your `<body>`:**
+
 ```html
 <div class="progress-counter" data-progress-style="counter">
-  <span class="progress-counter__value">0</span>
+  <span class="progress-counter__value">000</span>
   <span class="progress-counter__symbol">%</span>
 </div>
 ```
 
-**Variants:** Add position classes:
-- `progress-counter--top-left`
-- `progress-counter--top-right`
-- `progress-counter--bottom-right`
-- Default is bottom-left
+Position classes are `progress-counter--top-left`, `progress-counter--top-right`, and `progress-counter--bottom-right`; bottom-left is the default.
 
-## Core Pattern
+## Programmatic Example
 
-All styles use the same ScrollTrigger pattern. This is already included in `script.js` — shown here for reference:
+The global `ScrollProgress` class supports custom scroll ranges.
 
-**JavaScript:**
+**Add to your JavaScript after `script.js`:**
+
 ```javascript
-ScrollTrigger.create({
-  trigger: document.documentElement,
+const article = document.querySelector('.article');
+const indicator = document.querySelector('.article-progress');
+
+const progress = new ScrollProgress(indicator, {
+  style: 'bar',
+  trigger: article,
   start: 'top top',
-  end: 'bottom bottom',
-  scrub: 0.5,
-  onUpdate: (self) => {
-    // self.progress = 0 to 1
-    updateProgress(self.progress);
-  }
+  end: 'bottom bottom'
 });
+
+// Remove this instance and its ScrollTrigger when no longer needed.
+progress.destroy();
 ```
 
-## Programmatic Use
+For single-page app teardown, call the included global cleanup:
 
-The `ScrollProgress` class is exposed globally. Add this to your own JavaScript file or a `<script>` tag:
-
-**JavaScript:**
 ```javascript
-const element = document.querySelector('.my-progress');
-const progress = new ScrollProgress(element, {
-  style: 'bar' // 'bar', 'circle', 'rail', 'counter'
-});
-
-// Cleanup
-progress.destroy();
+window.destroyScrollProgress();
 ```
 
 ## Customization
 
-Add these to your own stylesheet or a `<style>` tag to override defaults.
+**Add to your own stylesheet after `style.css`:**
 
-### Colors
-
-**CSS:**
 ```css
 :root {
-  --accent: #ff6b6b;        /* Progress fill color */
-  --border: rgba(255, 255, 255, 0.1); /* Track color */
+  --accent: #c8ff00;
+  --orange: #ff6b1a;
 }
-```
 
-### Bar Height
-
-**CSS:**
-```css
-.progress-bar {
-  height: 5px; /* Default is 3px */
-}
-```
-
-### Circle Size
-
-**CSS:**
-```css
-.progress-circle {
-  width: 80px;
-  height: 80px;
-}
-```
-
-Adjust `stroke-dasharray` when changing circle radius:
-- Formula: `2 * PI * radius`
-- Default (r=25): `157`
-
-### Rail Width
-
-**CSS:**
-```css
-.progress-rail {
-  width: 6px; /* Default is 4px */
-}
+.progress-bar { height: 5px; }
+.progress-circle { width: 88px; }
+.progress-rail { width: 4px; }
 ```
 
 ## Accessibility
 
-- All indicators use `aria-hidden="true"` (decorative, not interactive)
-- Respects `prefers-reduced-motion` — shows static 100% state
-- No keyboard interaction needed (passive visualization)
-- Scroll position remains accessible via native browser UI
+- Add `role="progressbar"`, an accessible label, `aria-valuemin="0"`, and `aria-valuemax="100"`; the script maintains `aria-valuenow`.
+- Progress remains live under `prefers-reduced-motion` because it is useful information, but updates have no scrub, easing, or decorative transition.
+- All controls in the demo are native buttons and keyboard operable.
+- With JavaScript unavailable, article content and the initial instrument remain visible and readable.
 
-## Browser Support
+## Cleanup
 
-Modern browsers (ES6+). Not compatible with IE11.
+Every instance owns one ScrollTrigger and exposes `destroy()`. The demo wraps initialization in `gsap.context()`, uses `gsap.matchMedia()` for both motion preferences, removes mode-switch listeners, and destroys all instances on teardown.
 
 ## Dependencies
 
-- GSAP 3.12+
-- ScrollTrigger plugin
-- Lenis (optional — for smooth scrolling; effect works without it)
+- GSAP 3.14.2+
+- ScrollTrigger 3.14.2+
+- No smooth-scroll library required

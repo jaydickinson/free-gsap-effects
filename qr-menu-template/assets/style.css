@@ -13,11 +13,14 @@
      herb      #3F6B47 on ground #E7ECE1  →  5.1:1   prices, active tab
      white     #F3F6EF on herb   #3F6B47  →  6.1:1   filled chips / pills
 
-   Tomato #C24B33 is a HIGHLIGHT and a MARK, never small body text:
-   on the ground it measures 4.0:1 and on paper 4.4:1, both below the
-   4.5:1 floor for text under 18.66px bold. It is used only as filled
-   pills (white on tomato → 4.8:1, passes) and for large/bold accents.
+   Tomato #BE4830 is a HIGHLIGHT and a MARK, never small body text:
+   on the ground it measures 4.2:1, below the 4.5:1 floor for text
+   under 18.66px bold. It is used only as filled pills (paper on
+   tomato → 4.6:1, passes) and for large/bold accents.
    Do not set tomato as a small text colour on any surface here.
+   It was #C24B33, measured against pure white at 4.8:1 — but the
+   pills are lettered in --paper, not white, and that pair was
+   4.4:1 and failing. Measure the colour that is actually used.
 
    To reskin: change the six colour tokens below and their matching
    --*-rgb triples. Every translucent value resolves from a triple, so
@@ -30,14 +33,14 @@
     --ink:    #23291F;
     --ink-soft: #55604D;
     --herb:   #3F6B47;
-    --tomato: #C24B33;
+    --tomato: #BE4830;
 
     --ground-rgb: 231, 236, 225;
     --paper-rgb:  243, 246, 239;
     --ink-rgb:    35, 41, 31;
     --ink-soft-rgb: 85, 96, 77;
     --herb-rgb:   63, 107, 71;
-    --tomato-rgb: 194, 75, 51;
+    --tomato-rgb: 190, 72, 48;
 
     --line: rgba(var(--ink-rgb), 0.14);
     --line-strong: rgba(var(--ink-rgb), 0.22);

@@ -1,6 +1,6 @@
 # Hover Underline
 
-Animated link underlines with three variants: an exit-through slide, a marker-style fill sweep, and a hand-drawn SVG wave. The script injects all decoration elements, so you only add one data attribute to plain links.
+Three GSAP-powered underline materials for semantic links: an exit-through line, a marker sweep, and a hand-drawn wave. Each activation also coordinates the link colour and horizontal offset; grouped links can update a small active index.
 
 ## Quick Start
 
@@ -10,110 +10,105 @@ Animated link underlines with three variants: an exit-through slide, a marker-st
 <link rel="stylesheet" href="path/to/style.css">
 ```
 
-**2. Add before closing `</body>` tag:**
+**2. Add before the closing `</body>` tag:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script src="path/to/script.js"></script>
 ```
 
-**3. Add `data-underline` to any link:**
+**3. Add `data-underline` to semantic links in your `<body>`:**
 
 ```html
-<!-- Slide (default): grows from the left, exits through the right -->
-<a href="/work" data-underline>Work</a>
-
-<!-- Fill: highlight sweeps up behind the text like a marker -->
-<a href="/about" data-underline="fill">About</a>
-
-<!-- Wave: SVG underline draws in with a springy settle -->
-<a href="/contact" data-underline="wave">Contact</a>
+<a href="/events/night" data-underline="slide">After Dark</a>
+<a href="/events/radio" data-underline="fill">Radio Body</a>
+<a href="/events/riot" data-underline="wave">Soft Riot</a>
 ```
 
-That is all the markup you need. The underline span (or SVG) is injected automatically.
+The script injects all decorative spans and SVG markup automatically.
 
 ## Options
 
 | Attribute | Values | Default | Description |
-|-----------|--------|---------|-------------|
-| `data-underline` | `slide`, `fill`, `wave` | `slide` | Which underline variant to use. An empty value falls back to `slide` |
-| `data-underline-color` | Any CSS colour | Accent colour from CSS | Per-link colour override for the underline, fill, or wave |
+|---|---|---|---|
+| `data-underline` | `slide`, `fill`, `wave` | `slide` | Selects the exit-through line, marker sweep, or hand-drawn wave |
+| `data-underline-color` | Any CSS colour | `--hu-color` / site accent | Sets the underline and active text colour for one link |
+| `data-underline-stage` | Present or absent | Absent | Groups links so a new active item settles the previous one and can drive an index |
+| `data-active-index` | Present or absent | Absent | Marks an optional visual counter inside the nearest underline stage |
+
+All three original `data-underline` values are preserved.
 
 ## Examples
 
-### Navigation Row
+### Standalone Links
 
-**HTML:**
+**Add to your HTML `<body>`:**
+
 ```html
-<nav>
+<nav aria-label="Sections">
   <a href="/work" data-underline>Work</a>
-  <a href="/studio" data-underline>Studio</a>
-  <a href="/journal" data-underline="wave">Journal</a>
+  <a href="/studio" data-underline="fill" data-underline-color="#ff6b2c">Studio</a>
+  <a href="/contact" data-underline="wave" data-underline-color="#22d3ee">Contact</a>
 </nav>
 ```
 
-### Inline Links in Body Copy
+### Chasing Programme Index
 
-**HTML:**
+The stage integration is optional. It lets focus or pointer movement settle the previously active link before playing the next treatment.
+
+**Add to your HTML `<body>`:**
+
 ```html
-<p>
-  Read the <a href="/guide" data-underline>full guide</a> or jump straight to
-  the <a href="/examples" data-underline="fill">examples</a>.
-</p>
+<section data-underline-stage>
+  <nav aria-label="Programme">
+    <a href="/after-dark" data-underline="slide" data-underline-color="#c8ff00">After Dark</a>
+    <a href="/radio-body" data-underline="fill" data-underline-color="#ff6b2c">Radio Body</a>
+    <a href="/soft-riot" data-underline="wave" data-underline-color="#22d3ee">Soft Riot</a>
+  </nav>
+
+  <p aria-hidden="true"><span data-active-index>01</span>/03</p>
+</section>
 ```
 
-### Custom Colour
+Keep the index decorative (`aria-hidden="true"`) when it only repeats the link position. The anchors remain the accessible navigation.
 
-**HTML:**
-```html
-<a href="/pricing" data-underline="wave" data-underline-color="#22d3ee">Pricing</a>
-```
-
-## CSS Classes
-
-These are created by the script; you can restyle them in your own CSS.
+## CSS Hooks
 
 | Class | Description |
-|-------|-------------|
-| `.hu-line` | Injected slide underline (position, thickness, colour) |
-| `.hu-fill` | Injected marker highlight behind the text |
-| `.hu-wave` | Injected SVG wave underline |
+|---|---|
+| `.hu-ready` | Added while the animated enhancement is active |
+| `.hu-line` | Clipped shell for the exit-through line |
+| `.hu-line__track` | Solid line that travels through the shell |
+| `.hu-fill` | Irregular marker underline |
+| `.hu-wave` | Inline SVG wave |
+| `.is-active` | Added to a `data-underline-stage` while one link is active |
 
-The colour of all three reads from the `--hu-color` custom property, falling back to your accent colour. `data-underline-color` sets `--hu-color` on the individual link.
-
-## How the Exit-Through Slide Works
-
-The slide variant never plays the enter animation in reverse. On `mouseenter` the transform-origin is set to the left edge and the line scales from 0 to 1, so it grows out of the left. On `mouseleave` the origin swaps to the right edge before scaling back to 0, so the line appears to continue travelling and exit through the right. The wave variant uses the same idea with `strokeDashoffset`: entering animates the offset to 0, leaving pushes it past zero so the line keeps moving in the same direction.
+Each treatment reads `--hu-color`. A stage also receives `--active-color`, which can style borders, counters, or other small response elements.
 
 ## Accessibility
 
-- **Keyboard parity**: every `mouseenter`/`mouseleave` handler is also bound to `focus`/`blur`, so tabbing through links plays exactly the same animations as hovering
-- **Focus visible**: links get a visible `:focus-visible` outline in the accent colour
-- **Reduced motion**: with `prefers-reduced-motion: reduce`, no decoration is injected and no JavaScript animation runs; links get a plain static CSS underline instead
-- **Semantic HTML**: the effect only targets real `<a>` elements, and injected decorations are marked `aria-hidden="true"` so screen readers ignore them
+- Real `<a>` elements retain native link and keyboard behaviour.
+- `focus` and `blur` mirror `mouseenter` and `mouseleave`.
+- Touch or pen `pointerdown` plays the treatment; focused links remain active until blur.
+- `:focus-visible` should remain clearly styled in your CSS.
+- Injected decoration is marked `aria-hidden="true"`.
+- With `prefers-reduced-motion: reduce`, JavaScript skips animation and CSS shows static coloured underlines.
+- Without JavaScript, ordinary CSS text decoration remains visible; only `.hu-ready` removes it during enhancement.
 
-### Reduced Motion Behavior
+## Cleanup
 
-When `prefers-reduced-motion: reduce` is set:
-- The JavaScript skips setup entirely
-- Links show a plain 2px static underline via CSS
-- `data-underline-color` still applies to the static underline through `--hu-color`
+The GSAP context is exposed for SPA teardown.
 
-## Programmatic Control
+**Add to your JavaScript when unmounting the view:**
 
-The GSAP context is exposed for SPA teardown. Add this to your own JavaScript:
-
-**JavaScript:**
 ```javascript
-// Revert all animations and remove listeners plus injected elements
 window.gsapContext.revert();
 ```
 
-## Browser Support
-
-Modern browsers (ES6+). Not compatible with IE11.
+Reverting removes every pointer and focus listener, clears touch timers, kills active tweens, removes injected decoration, and restores stage/index state.
 
 ## Dependencies
 
-**Required:**
-- GSAP 3.12+ (core only, no plugins)
+- GSAP 3.12+ core
+- No GSAP plugins
+- Modern browser with ES6 support

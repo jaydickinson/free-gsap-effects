@@ -3,65 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typewriter Text</title>
+    <title>Typewriter Text Demo | GSAP Vault</title>
+    <script data-cfasync="false">document.documentElement.classList.add('has-js')</script>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main class="container">
-        <header class="page-header">
-            <h1 class="page-title">Typewriter Text</h1>
-            <p class="page-subtitle">Text types out character by character with a blinking cursor when scrolled into view. Supports looping phrases, custom speed, and delay controls.</p>
-        </header>
+    <main class="showcase-shell">
+        <section class="command-stage" data-typewriter-system data-phase="ready" aria-label="Creative command terminal typewriter demonstration">
+            <div class="terminal-grid" aria-hidden="true"></div>
+            <div class="terminal-glow" aria-hidden="true"></div>
 
-        <div class="demo-spacer">
-            <p>Scroll to trigger</p>
-        </div>
+            <header class="terminal-bar">
+                <div class="terminal-id">
+                    <span class="signal" aria-hidden="true"></span>
+                    <span>CREATIVE.OS / 01</span>
+                </div>
+                <button class="replay-control" type="button" data-typewriter-replay aria-label="Replay typewriter sequence">
+                    Replay sequence
+                    <span aria-hidden="true">↗</span>
+                </button>
+            </header>
 
-        <!-- Example 1: Scroll-triggered headline -->
-        <section class="example">
-            <div class="example-header">
-                <span class="example-number">01</span>
-                <h2 class="example-title">Scroll-Triggered Headline</h2>
+            <div class="command-core">
+                <p class="command-label"><span>EXEC</span> capability --cycle</p>
+                <div class="command-row">
+                    <span class="command-prompt" aria-hidden="true">›</span>
+                    <h1 class="command-line"
+                        data-typewriter
+                        data-type-speed="0.055"
+                        data-type-delay="0.35"
+                        data-type-hold="3"
+                        data-type-delete-speed="0.75"
+                        data-type-mobile="MAKE IT MOVE."
+                        data-type-loop="WE DESIGN SYSTEMS WITH INTENT.,WE SHIP MOTION AT FRAME RATE."
+                        data-type-loop-mobile="IDEAS IN MOTION.,SYSTEMS THAT MOVE.">WE MAKE DIGITAL IDEAS MOVE.</h1>
+                </div>
             </div>
-            <div class="example-content">
-                <p class="example-instruction">The headline types itself out once when it enters the viewport. Defaults: 0.045s per character, blinking cursor on.</p>
-                <h2 class="typewriter-headline" data-typewriter>Build interfaces that feel alive.</h2>
-            </div>
-        </section>
 
-        <div class="demo-spacer">
-            <p>Keep scrolling</p>
-        </div>
-
-        <!-- Example 2: Looping phrases -->
-        <section class="example">
-            <div class="example-header">
-                <span class="example-number">02</span>
-                <h2 class="example-title">Looping Phrases</h2>
-            </div>
-            <div class="example-content">
-                <p class="example-instruction">Add <code>data-type-loop</code> with comma-separated phrases. The element types its own text first, pauses, deletes, then rotates through the list forever.</p>
-                <p class="typewriter-line">We build
-                    <span data-typewriter
-                          data-type-speed="0.06"
-                          data-type-delay="0.3"
-                          data-type-loop="smooth animations, bold interfaces, memorable experiences">delightful websites</span>
-                </p>
-            </div>
+            <footer class="terminal-status" aria-hidden="true">
+                <span class="status-code" data-typewriter-status>READY</span>
+                <span class="status-track"><span data-typewriter-progress></span></span>
+                <span class="status-meta">GSAP / SIGNAL_OK</span>
+            </footer>
         </section>
     </main>
 
-    <!-- GSAP Core -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
-
-    <!-- Optional: Lenis smooth scroll -->
-    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
-
-    <!-- Effect code -->
     <script src="assets/script.js"></script>
 </body>
 </html>
