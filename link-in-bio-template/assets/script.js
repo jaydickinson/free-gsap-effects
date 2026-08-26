@@ -112,7 +112,7 @@
     window.gsapContext = ctx;
 
     window.addEventListener('beforeunload', function () {
-        if (ctx) ctx.kill();
+        if (ctx) ctx.revert();
         if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();
     });

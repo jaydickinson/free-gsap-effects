@@ -544,7 +544,7 @@ if (typeof gsap !== 'undefined') {
         offAll(keyHandlers);
         offAll(inputHandlers);
         offAll(submitHandlers);
-        if (ctx) ctx.kill();
+        if (ctx) ctx.revert();
         if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();
     });

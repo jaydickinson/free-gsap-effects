@@ -167,7 +167,7 @@ gsap.registerPlugin(ScrollTrigger);
 			element.removeEventListener('click', handler);
 		});
 		handlers.clear();
-		ctx.kill();
+		ctx.revert();
 	}
 
 	window.ScrollProgress = ScrollProgress;

@@ -210,5 +210,5 @@ gsap.registerPlugin(ScrollTrigger);
 	});
 
 	window.gsapContext = ctx;
-	window.addEventListener('beforeunload', function cleanupCardFlip() { ctx.kill(); }, { once: true });
+	window.addEventListener('beforeunload', function cleanupCardFlip() { ctx.revert(); }, { once: true });
 });

@@ -4,7 +4,7 @@
 
 Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 61 copy-paste GSAP animation effects and 53 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 71 copy-paste GSAP animation effects and 57 complete website templates.
 
 ## The Effects
 
@@ -49,8 +49,8 @@ effect-name/
 3. Copy the markup pattern and the script into your project. GSAP loads from CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 ```
 
 ## What "production-ready" means here
@@ -62,7 +62,7 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 61 effects and 53 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 71 effects and 57 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
 - All of it, one payment: [Effects & Templates Vault](https://gsapvault.com/effects), a one-time bundle covering every current and future effect and template, unlimited commercial projects. Check the site for current pricing

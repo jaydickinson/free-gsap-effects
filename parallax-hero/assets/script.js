@@ -127,7 +127,7 @@ gsap.registerPlugin(ScrollTrigger);
 
     function teardown() {
         window.removeEventListener('beforeunload', teardown);
-        if (ctx) ctx.kill();
+        if (ctx) ctx.revert();
         if (refreshLenis) ScrollTrigger.removeEventListener('refresh', refreshLenis);
         if (lenisTick) gsap.ticker.remove(lenisTick);
         if (lenis) lenis.destroy();

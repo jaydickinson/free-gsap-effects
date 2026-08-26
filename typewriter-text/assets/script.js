@@ -270,6 +270,6 @@
     window.gsapContext = ctx;
 
     window.addEventListener('beforeunload', function cleanupBeforeUnload() {
-        ctx.kill();
+        ctx.revert();
     }, { once: true });
 });

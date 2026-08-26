@@ -93,7 +93,7 @@ The menu runs on a sage-tint ground with near-black ink, one herb green and one 
 
 ## Dependencies
 
-- [GSAP](https://gsap.com/) 3.14.2 with ScrollTrigger (CDN)
+- [GSAP](https://gsap.com/) 3.15.0 with ScrollTrigger (CDN)
 - [Lenis](https://github.com/darkroomengineering/lenis) 1.3.17 smooth scroll (CDN, optional; remove the block in `script.js` and its `<script>` tag to drop it)
 
 Yeseva One and Mukta load from Google Fonts.

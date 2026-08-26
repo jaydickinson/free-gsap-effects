@@ -23,8 +23,8 @@ A precise, reversible reading-progress system built with GSAP ScrollTrigger. Use
 **3. Add before the closing `</body>` tag:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script src="path/to/script.js"></script>
 ```
 
@@ -159,6 +159,6 @@ Every instance owns one ScrollTrigger and exposes `destroy()`. The demo wraps in
 
 ## Dependencies
 
-- GSAP 3.14.2+
-- ScrollTrigger 3.14.2+
+- GSAP 3.15.0+
+- ScrollTrigger 3.15.0+
 - No smooth-scroll library required

@@ -34,8 +34,8 @@ A tactile, accessible two-sided card effect with deep perspective, directional f
 **3. Add before the closing `</body>` tag:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script src="path/to/script.js"></script>
 ```
 
@@ -132,10 +132,10 @@ The core classes are `.flip-card`, `.flip-card-inner`, `.flip-card-front`, and `
 
 ## Cleanup
 
-All GSAP work is wrapped in `gsap.context()` and responsive behavior uses `gsap.matchMedia()`. Event listeners, the class observer, and effect-owned ScrollTriggers are removed when `window.gsapContext.kill()` runs or the page unloads.
+All GSAP work is wrapped in `gsap.context()` and responsive behavior uses `gsap.matchMedia()`. Event listeners, the class observer, and effect-owned ScrollTriggers are removed when `window.gsapContext.revert()` runs or the page unloads.
 
 ## Dependencies
 
-- GSAP 3.12+ (demo uses 3.14.2)
+- GSAP 3.12+ (demo uses 3.15.0)
 - ScrollTrigger (only required when keeping the `data-flip-stagger` entrance capability)
 - No smooth-scroll library required

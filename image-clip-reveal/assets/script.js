@@ -259,7 +259,7 @@ gsap.registerPlugin(ScrollTrigger);
             timelines.forEach(function restartTimeline(timeline) { timeline.restart(true); });
         },
         destroy: function destroy() {
-            ctx.kill();
+            ctx.revert();
             destroyLenis();
         }
     };

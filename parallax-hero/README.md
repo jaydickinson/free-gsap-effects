@@ -36,8 +36,8 @@ A pinned hero that separates its background image, copy, and foreground card int
 **3. Add before the closing `</body>` tag:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script src="path/to/script.js"></script>
 ```
 
@@ -154,7 +154,7 @@ Horizontal travel, rotation, scale, blur, and opacity attributes are added to th
 
 ## Cleanup
 
-The script stores its GSAP context on `window.gsapContext` for SPA use. Calling `window.gsapContext.kill()` removes the scene timelines and ScrollTriggers. On page unload, the script also removes the Lenis ticker callback and ScrollTrigger refresh listener before destroying Lenis.
+The script stores its GSAP context on `window.gsapContext` for SPA use. Calling `window.gsapContext.revert()` removes the scene timelines and ScrollTriggers. On page unload, the script also removes the Lenis ticker callback and ScrollTrigger refresh listener before destroying Lenis.
 
 ## Performance Notes
 

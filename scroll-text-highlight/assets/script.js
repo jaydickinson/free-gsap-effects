@@ -196,7 +196,7 @@
     window.gsapContext = ctx;
 
     function teardown() {
-        if (ctx) ctx.kill();
+        if (ctx) ctx.revert();
         if (syncLenisOnRefresh) {
             ScrollTrigger.removeEventListener('refresh', syncLenisOnRefresh);
             syncLenisOnRefresh = null;

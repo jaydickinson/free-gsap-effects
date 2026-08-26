@@ -60,7 +60,7 @@ The touch rules are deliberate: a touch press commits nothing, and the drag only
 **Inertia (optional).** Add one script tag next to the others and the board glides to a stop after a flick; without it the board simply stays where it is released:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/InertiaPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
 ```
 
 **Swapping the photographs.** The pair must read as the same kind of subject (same scale, similar horizon) or the wipe reads as two unrelated pictures. Replace `comp-before.webp` and `comp-after.webp` (1600×900), update the `alt` text and the two `figcaption` tags, and keep both `<figure>` blocks: without JavaScript they render stacked with their labels, which is the fallback.
