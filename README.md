@@ -74,6 +74,16 @@ Read ./parallax-hero/START-HERE-AI.md and follow it to integrate the effect into
 
 AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, and the README is the reference either way. How the brief is put together, and what it asks of the assistant: [gsapvault.com/vibe-coding](https://gsapvault.com/vibe-coding).
 
+### Claude Code, Cursor and Codex: install the skill
+
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (176 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+
+```bash
+npx skills add jaydickinson/free-gsap-effects
+```
+
+Then ask your assistant for what you need ("add a parallax hero to the landing page", "which GSAP Vault effect does a scroll-scrubbed image sequence?"). It installs the free products directly and points you to the product page for the rest.
+
 ## What "production-ready" means here
 
 - **Accessibility built in**: every effect respects [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) with a static fallback, and keyboard focus mirrors hover interactions.
