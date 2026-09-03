@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS Toggle Switch &mdash; GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only variant switcher; not part of the component. */
+    .showcase-toolbar { position: fixed; top: 1rem; right: 1rem; display: flex; gap: 4px; z-index: 10; }
+    .variant-btn { font: 500 0.7rem/1 ui-monospace, 'JetBrains Mono', Menlo, monospace; letter-spacing: 0.04em; padding: 6px 9px; border-radius: 6px; cursor: pointer; background: transparent; color: var(--page-fg); border: 1px solid var(--toolbar-border); opacity: 0.6; }
+    .variant-btn:hover, .variant-btn.is-active { opacity: 1; }
+    .variant-btn.is-active { background: var(--toolbar-active); }
+    .variant-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; opacity: 1; }
+  </style>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search).get('variant');
+      var allowed = ['vault', 'glass', 'corporate'];
+      function apply(v) {
+        document.body.setAttribute('data-variant', v);
+        document.querySelectorAll('.variant-btn').forEach(function (b) {
+          b.classList.toggle('is-active', b.dataset.variant === v);
+        });
+        // Track colours and geometry differ per variant, so re-measure.
+        window.dispatchEvent(new Event('resize'));
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        if (allowed.indexOf(q) >= 0) apply(q);
+        document.querySelectorAll('.variant-btn').forEach(function (b) {
+          b.addEventListener('click', function () { apply(b.dataset.variant); });
+        });
+      }, { once: true });
+    })();
+  </script>
+</head>
+<body data-variant="vault">
+  <header class="showcase-toolbar" aria-label="Variant">
+    <button type="button" class="variant-btn is-active" data-variant="vault">vault</button>
+    <button type="button" class="variant-btn" data-variant="glass">glass</button>
+    <button type="button" class="variant-btn" data-variant="corporate">corporate</button>
+  </header>
+
+  <div class="switch-card">
+    <div class="switch-row">
+      <label class="switch-name" for="toggle">Sync over cellular</label>
+      <span class="switch-state" data-switch-label>Off</span>
+      <span class="switch" id="switch1" data-switch data-on="On" data-off="Off">
+        <input type="checkbox" class="switch-input" id="toggle" name="cellular" role="switch">
+        <span class="switch-knob"></span>
+      </span>
+    </div>
+    <div class="switch-row">
+      <label class="switch-name" for="toggle2">Background refresh</label>
+      <span class="switch-state" data-switch-label>On</span>
+      <span class="switch" id="switch2" data-switch data-on="On" data-off="Off">
+        <input type="checkbox" class="switch-input" id="toggle2" name="refresh" role="switch" checked>
+        <span class="switch-knob"></span>
+      </span>
+    </div>
+    <div class="switch-row is-disabled">
+      <label class="switch-name" for="toggle3">Low data mode</label>
+      <span class="switch-state" data-switch-label>Off</span>
+      <span class="switch" id="switch3" data-switch data-on="On" data-off="Off">
+        <input type="checkbox" class="switch-input" id="toggle3" name="lowdata" role="switch" disabled>
+        <span class="switch-knob"></span>
+      </span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
+  <script src="assets/script.js"></script>
+</body>
+</html>

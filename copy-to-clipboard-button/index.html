@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy to Clipboard Button — GSAP Vault</title>
+  <script>document.documentElement.className += ' has-js';</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-variant="vault">
+  <div class="showcase-toolbar" role="group" aria-label="Variant">
+    <button type="button" data-set-variant="vault" aria-pressed="true">vault</button>
+    <button type="button" data-set-variant="glass" aria-pressed="false">glass</button>
+    <button type="button" data-set-variant="paper" aria-pressed="false">paper</button>
+  </div>
+
+  <div class="cp-block" id="cpBlock">
+    <div class="cp-bar">
+      <span class="cp-lang">script.js</span>
+      <span class="cp-copy">
+        <span class="cp-pill" id="cpPill" aria-hidden="true">Copied</span>
+        <button type="button" class="cp-btn" id="cpBtn">
+          <span class="cp-icon" aria-hidden="true">
+            <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
+              <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
+                    stroke="currentColor" stroke-width="1.8"></rect>
+              <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
+                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+            <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
+              <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
+                    stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span class="cp-btn-label" id="cpBtnLabel">Copy</span>
+        </button>
+      </span>
+    </div>
+
+    <pre class="cp-pre" id="cpPre"><code class="cp-code" id="cpCode"><span class="tok-key">import</span> { <span class="tok-fn">gsap</span> } <span class="tok-key">from</span> <span class="tok-str">"gsap"</span>;
+
+<span class="tok-fn">gsap</span>.<span class="tok-fn">to</span>(<span class="tok-str">".card"</span>, {
+  <span class="tok-prop">y</span>: <span class="tok-num">-24</span>,
+  <span class="tok-prop">duration</span>: <span class="tok-num">0.6</span>,
+  <span class="tok-prop">ease</span>: <span class="tok-str">"power3.out"</span>,
+  <span class="tok-prop">stagger</span>: <span class="tok-num">0.08</span>
+});</code></pre>
+  </div>
+
+  <p class="cp-status" id="cpStatus" role="status" aria-live="polite"></p>
+
+  <div class="demo-controls">
+    <button type="button" id="cpFail" aria-pressed="false">Simulate no clipboard</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only variant switcher. The component itself only needs data-variant on <body>.
+    (function () {
+      var buttons = document.querySelectorAll("[data-set-variant]");
+      function setVariant(name) {
+        document.body.setAttribute("data-variant", name);
+        buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setVariant === name)); });
+      }
+      buttons.forEach(function (b) { b.addEventListener("click", function () { setVariant(b.dataset.setVariant); }); });
+      var fromUrl = new URLSearchParams(location.search).get("variant");
+      if (fromUrl && document.querySelector("[data-set-variant=\"" + fromUrl + "\"]")) setVariant(fromUrl);
+    })();
+  </script>
+</body>
+</html>

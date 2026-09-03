@@ -1,0 +1,339 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------------------------------------------------------------------
+   Variants. Every colour, radius, shadow and font the component uses is a
+   custom property, so a look is one block of overrides on [data-variant].
+   Set data-variant on <body> (the ground is part of the look).
+   The script never hard-codes a colour: the snippet flash and the pill
+   backgrounds are read from --code-flash, --code-bg, --pill-ok-bg and
+   --pill-err-bg with getComputedStyle at the moment each tween starts, so a
+   variant swap mid-demo stays correct.
+   --------------------------------------------------------------------- */
+body,
+body[data-variant="vault"] {
+  --ground: #0a0b0e;
+  --ink: #ffffff;
+  --muted: #8d95ab;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --block-radius: 12px;
+  --block-line: #262b3d;
+  --block-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --bar-bg: #14161f;
+  --code-bg: #101219;
+  --code-fg: #d5dae8;
+  --code-flash: #1d2540;
+  --code-size: 0.82rem;
+
+  --tok-key: #c8ff00;
+  --tok-str: #7ee0a8;
+  --tok-num: #ffb570;
+  --tok-fn: #7cc4ff;
+  --tok-prop: #d5dae8;
+
+  --btn-bg: #1c1f2b;
+  --btn-fg: #b9c0d4;
+  --btn-line: #2f3448;
+  --btn-radius: 7px;
+  --btn-ok-fg: #c8ff00;
+  --btn-err-fg: #ff8a7a;
+
+  --sel-bg: #c8ff00;
+  --sel-fg: #05070a;
+  --pill-ok-bg: #c8ff00;
+  --pill-ok-fg: #05070a;
+  --pill-err-bg: #ff5a52;
+  --pill-err-fg: #1a0505;
+  --pill-radius: 999px;
+
+  --lang-transform: none;
+  --lang-spacing: 0.05em;
+  --card-blur: 0px;
+
+  --focus: #c8ff00;
+  --toolbar-bg: #14161f;
+  --toolbar-line: #262b3d;
+  --toolbar-active-bg: #c8ff00;
+  --toolbar-active-fg: #05070a;
+  --ctl-bg: transparent;
+  --ctl-fg: #8d95ab;
+  --ctl-line: #262b3d;
+  --ctl-on-bg: #262b3d;
+  --ctl-on-fg: #ffffff;
+}
+
+/* Glass: frosted panel over a deep gradient ground, everything rounded. */
+body[data-variant="glass"] {
+  --ground: linear-gradient(140deg, #16255e 0%, #4a2f8f 48%, #b4487f 100%);
+  --ink: #ffffff;
+  --muted: rgba(255, 255, 255, 0.75);
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --block-radius: 20px;
+  --block-line: rgba(255, 255, 255, 0.34);
+  --block-shadow: 0 24px 60px rgba(12, 6, 40, 0.45);
+  --bar-bg: rgba(255, 255, 255, 0.16);
+  --code-bg: rgba(14, 10, 40, 0.42);
+  --code-fg: #f2eeff;
+  --code-flash: rgba(255, 255, 255, 0.3);
+  --code-size: 0.82rem;
+
+  --tok-key: #ffd7f4;
+  --tok-str: #b6f3d6;
+  --tok-num: #ffd7a1;
+  --tok-fn: #bcd6ff;
+  --tok-prop: #f2eeff;
+
+  --btn-bg: rgba(255, 255, 255, 0.2);
+  --btn-fg: #ffffff;
+  --btn-line: rgba(255, 255, 255, 0.4);
+  --btn-radius: 999px;
+  --btn-ok-fg: #a9ffd2;
+  --btn-err-fg: #ffc2cc;
+
+  --sel-bg: #ffffff;
+  --sel-fg: #2a1a56;
+  --pill-ok-bg: #ffffff;
+  --pill-ok-fg: #2a1a56;
+  --pill-err-bg: #ff7a90;
+  --pill-err-fg: #35060f;
+  --pill-radius: 999px;
+
+  --lang-transform: none;
+  --lang-spacing: 0.06em;
+  --card-blur: 16px;
+
+  --focus: #ffffff;
+  --toolbar-bg: rgba(255, 255, 255, 0.16);
+  --toolbar-line: rgba(255, 255, 255, 0.35);
+  --toolbar-active-bg: #ffffff;
+  --toolbar-active-fg: #2a1a56;
+  --ctl-bg: rgba(255, 255, 255, 0.14);
+  --ctl-fg: rgba(255, 255, 255, 0.85);
+  --ctl-line: rgba(255, 255, 255, 0.32);
+  --ctl-on-bg: #ffffff;
+  --ctl-on-fg: #2a1a56;
+}
+
+/* Paper: warm stock, ink rules, square corners, a single rust accent. */
+body[data-variant="paper"] {
+  --ground: #f3efe6;
+  --ink: #1b1a17;
+  --muted: #7a7261;
+  --font-body: 'Space Grotesk', Georgia, serif;
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --block-radius: 2px;
+  --block-line: #d0c7b4;
+  --block-shadow: none;
+  --bar-bg: #ede6d6;
+  --code-bg: #fdfaf3;
+  --code-fg: #2a2721;
+  --code-flash: #f6dfd4;
+  --code-size: 0.8rem;
+
+  --tok-key: #a2361a;
+  --tok-str: #3f6b3a;
+  --tok-num: #8a5a12;
+  --tok-fn: #1f4f7a;
+  --tok-prop: #2a2721;
+
+  --btn-bg: #fdfaf3;
+  --btn-fg: #1b1a17;
+  --btn-line: #c9bfa9;
+  --btn-radius: 0px;
+  --btn-ok-fg: #2f6b3d;
+  --btn-err-fg: #a2361a;
+
+  --sel-bg: #c2461e;
+  --sel-fg: #fdfaf3;
+  --pill-ok-bg: #1b1a17;
+  --pill-ok-fg: #f3efe6;
+  --pill-err-bg: #c2461e;
+  --pill-err-fg: #fdfaf3;
+  --pill-radius: 0px;
+
+  --lang-transform: uppercase;
+  --lang-spacing: 0.12em;
+  --card-blur: 0px;
+
+  --focus: #c2461e;
+  --toolbar-bg: #ede6d6;
+  --toolbar-line: #d0c7b4;
+  --toolbar-active-bg: #1b1a17;
+  --toolbar-active-fg: #f3efe6;
+  --ctl-bg: transparent;
+  --ctl-fg: #7a7261;
+  --ctl-line: #d0c7b4;
+  --ctl-on-bg: #1b1a17;
+  --ctl-on-fg: #f3efe6;
+}
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: 1.5rem;
+}
+
+/* ---------- The snippet block ---------- */
+.cp-block {
+  width: min(560px, 100%);
+  border: 1px solid var(--block-line);
+  border-radius: var(--block-radius);
+  box-shadow: var(--block-shadow);
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+}
+
+.cp-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.55rem 0.5rem 0.95rem;
+  background: var(--bar-bg);
+  border-bottom: 1px solid var(--block-line);
+  border-radius: var(--block-radius) var(--block-radius) 0 0;
+}
+.cp-lang {
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  letter-spacing: var(--lang-spacing);
+  text-transform: var(--lang-transform);
+  color: var(--muted);
+}
+
+.cp-copy { position: relative; display: inline-flex; }
+
+/* No CSS transform anywhere on the button, the icons or the pill: GSAP
+   animates scale, y and rotation on those, and a CSS transform would be
+   parsed into the same values and fight them. */
+.cp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.7rem;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-line);
+  border-radius: var(--btn-radius);
+  font: 600 0.76rem/1 var(--font-body);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.cp-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.cp-btn.is-copied { color: var(--btn-ok-fg); border-color: var(--btn-ok-fg); }
+.cp-btn.is-error { color: var(--btn-err-fg); border-color: var(--btn-err-fg); }
+
+.cp-icon { position: relative; width: 17px; height: 17px; flex: 0 0 auto; }
+.cp-clip,
+.cp-check { position: absolute; left: 0; top: 0; color: currentColor; }
+.cp-check { opacity: 0; }
+.cp-btn-label { display: inline-block; }
+
+.cp-pill {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 9px);
+  white-space: nowrap;
+  padding: 0.34rem 0.62rem;
+  font: 600 0.68rem/1 var(--font-body);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--pill-ok-bg);
+  color: var(--pill-ok-fg);
+  border-radius: var(--pill-radius);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cp-pre {
+  margin: 0;
+  padding: 0.95rem 1.05rem;
+  background: var(--code-bg);
+  border-radius: 0 0 var(--block-radius) var(--block-radius);
+  overflow-x: auto;
+}
+.cp-code {
+  display: block;
+  font-family: var(--font-code);
+  font-size: var(--code-size);
+  line-height: 1.65;
+  color: var(--code-fg);
+  white-space: pre;
+}
+.tok-key { color: var(--tok-key); }
+.tok-str { color: var(--tok-str); }
+.tok-num { color: var(--tok-num); }
+.tok-fn { color: var(--tok-fn); }
+.tok-prop { color: var(--tok-prop); }
+.cp-code::selection,
+.cp-code *::selection { background: var(--sel-bg); color: var(--sel-fg); }
+
+.cp-status {
+  min-height: 1.2em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---------- Demo-only controls ---------- */
+.demo-controls { display: flex; gap: 0.4rem; }
+.demo-controls button {
+  font: 500 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.8rem;
+  background: var(--ctl-bg);
+  color: var(--ctl-fg);
+  border: 1px solid var(--ctl-line);
+  border-radius: 7px;
+  cursor: pointer;
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+}
+.demo-controls button[aria-pressed="true"] { background: var(--ctl-on-bg); color: var(--ctl-on-fg); border-color: var(--ctl-on-bg); }
+.demo-controls button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Demo-only variant switcher: mono, top-right. Not part of the component. */
+.showcase-toolbar {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1000;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 8px;
+  background: var(--toolbar-bg);
+  border: 1px solid var(--toolbar-line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+}
+.showcase-toolbar button {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: 0.04em;
+}
+.showcase-toolbar button[aria-pressed="true"] { background: var(--toolbar-active-bg); color: var(--toolbar-active-fg); }
+.showcase-toolbar button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

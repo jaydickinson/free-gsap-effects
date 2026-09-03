@@ -4,7 +4,7 @@
 
 Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 71 copy-paste GSAP animation effects and 57 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 74 copy-paste GSAP animation effects, 37 UI components and 62 complete website templates.
 
 ## The Effects
 
@@ -18,6 +18,16 @@ From [GSAP Vault](https://gsapvault.com), a library of 71 copy-paste GSAP animat
 | [Hover Underline](./hover-underline) | Three material link underlines (an exit-through line, marker sweep, and hand-drawn wave) with coordinated type and active-index responses. | [Demo](https://gsapvault.com/effects/hover-underline) |
 | [Scroll Text Highlight](./scroll-text-highlight) | A scrubbed orange-to-lime reading front lifts each active word before completed copy settles to white and unread copy remains ghosted. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
 | [CSS Scroll Reveal](./css-scroll-reveal) | Native CSS scroll-driven reveals for crisp fade, slide, and scale entrances with accessible static fallbacks and no animation JavaScript. | [Demo](https://gsapvault.com/effects/css-scroll-reveal) |
+
+## The UI Components
+
+Interface components rather than page effects: docks, switches, toasts, dialogs.
+Each one ships its variants, its keyboard model and its ARIA contract.
+
+| Component | What it is | Live demo |
+|--------|--------------|-----------|
+| [iOS Toggle Switch](./ios-toggle-switch) | Native checkbox toggle whose knob can be tapped or dragged, snaps to the nearer side, stretches while pressed and cross-fades the track colour. | [Demo](https://gsapvault.com/ui-elements/ios-toggle-switch) |
+| [Copy to Clipboard Button](./copy-to-clipboard-button) | A snippet block whose copy button morphs its clipboard icon into a stroke-drawn check, floats a Copied pill up beside it and flashes the code it took. | [Demo](https://gsapvault.com/ui-elements/copy-to-clipboard-button) |
 
 ## The Templates
 
@@ -38,6 +48,7 @@ Every folder contains:
 effect-name/
 ├── index.html        # Working demo page, open it in a browser
 ├── README.md         # Full documentation: options, examples, accessibility
+├── START-HERE-AI.md  # Copy-paste integration brief for an AI coding assistant
 └── assets/
     ├── style.css     # Styles
     ├── script.js     # Commented source
@@ -53,6 +64,16 @@ effect-name/
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 ```
 
+## Using with Claude Code, Cursor, ChatGPT or Copilot
+
+Every folder ships a `START-HERE-AI.md`: a product-specific brief that tells a coding assistant to inspect your stack first, read the README and source, keep the design and accessibility intact, scope the selectors, add framework-appropriate GSAP cleanup, and report what it tested. Paste it in, or point the assistant at the folder:
+
+```text
+Read ./parallax-hero/START-HERE-AI.md and follow it to integrate the effect into this project.
+```
+
+AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, and the README is the reference either way. How the brief is put together, and what it asks of the assistant: [gsapvault.com/vibe-coding](https://gsapvault.com/vibe-coding).
+
 ## What "production-ready" means here
 
 - **Accessibility built in**: every effect respects [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) with a static fallback, and keyboard focus mirrors hover interactions.
@@ -62,11 +83,13 @@ effect-name/
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 71 effects and 57 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 74 effects and 62 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
-- Browse everything: [gsapvault.com/effects](https://gsapvault.com/effects) and [gsapvault.com/templates](https://gsapvault.com/templates)
-- All of it, one payment: [Effects & Templates Vault](https://gsapvault.com/effects), a one-time bundle covering every current and future effect and template, unlimited commercial projects. Check the site for current pricing
-- Tutorials and guides: [gsapvault.com/blog](https://gsapvault.com/blog)
+- Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
+- By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)
+- All of it, one payment: [The Vault](https://gsapvault.com/pricing), a one-time purchase covering every current and future effect, template and UI element, unlimited commercial projects. Current prices are on the pricing page
+- Tutorials and guides: [gsapvault.com/blog](https://gsapvault.com/blog), including [GSAP animation examples with code](https://gsapvault.com/blog/gsap-animation-examples)
+- For assistants and agents: [gsapvault.com/llms.txt](https://gsapvault.com/llms.txt)
 
 ## License
 
