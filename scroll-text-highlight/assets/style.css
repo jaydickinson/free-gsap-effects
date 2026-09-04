@@ -5,44 +5,37 @@
 }
 
 :root {
-    --black: #080a08;
-    --surface: #121510;
-    --text: #f5f7ef;
-    --muted: #899080;
-    --lime: #c8ff00;
-    --orange: #ff6b35;
+    /* A page you read, because that is what a reading highlight is for. The
+       word under the reader takes the accent; the word just behind it takes
+       the softer second colour, so the eye can see the sequence move. */
+    --page: #f4f2ec;
+    --surface: #ffffff;
+    --text: #17171a;
+    --muted: rgba(23, 23, 26, 0.55);
+    --lime: #2f5bd7;    /* names kept so the script's data attributes still read */
+    --orange: #b8532a;
     --accent: var(--lime);
     --highlight-edge: var(--orange);
-    color-scheme: dark;
+    color-scheme: light;
 }
 
 html {
     scroll-behavior: auto;
-    background: var(--black);
+    background: var(--page);
 }
 
 body {
     min-width: 320px;
-    background:
-        radial-gradient(circle at 82% 18%, rgba(200, 255, 0, 0.045), transparent 25rem),
-        var(--black);
+    background: var(--page);
     color: var(--text);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
     background: var(--accent);
-    color: var(--black);
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--black);
+    color: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -72,28 +65,6 @@ body {
     isolation: isolate;
 }
 
-.reading-stage::before {
-    content: '';
-    position: absolute;
-    inset: clamp(4.5rem, 10vh, 6.5rem) clamp(1.25rem, 5vw, 5.5rem);
-    border-left: 1px solid rgba(245, 247, 239, 0.12);
-    pointer-events: none;
-}
-
-.reading-stage::after {
-    content: 'R';
-    position: absolute;
-    right: -0.055em;
-    bottom: -0.22em;
-    z-index: -1;
-    color: rgba(245, 247, 239, 0.025);
-    font-family: 'Syne', sans-serif;
-    font-size: min(57vw, 43rem);
-    font-weight: 800;
-    line-height: 0.75;
-    pointer-events: none;
-}
-
 .stage-meta,
 .reading-coordinate {
     display: flex;
@@ -101,11 +72,8 @@ body {
     justify-content: space-between;
     gap: 1rem;
     color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.62rem, 0.82vw, 0.75rem);
-    font-weight: 500;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
+    font-size: clamp(0.75rem, 0.92vw, 0.85rem);
+    font-weight: 400;
 }
 
 .scroll-cue {
@@ -120,7 +88,6 @@ body {
     height: 0.48rem;
     background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 1rem rgba(200, 255, 0, 0.45);
 }
 
 .manifesto {
@@ -130,13 +97,12 @@ body {
     max-width: 15.5ch;
     margin-left: clamp(1rem, 6vw, 7rem);
     color: var(--text);
-    font-family: 'Syne', system-ui, sans-serif;
     /* Cap display type by viewport height as well as width so the complete
        statement still fits inside short, wide product iframes. */
     font-size: clamp(2.9rem, min(6.25vw, 8vh), 6.35rem);
-    font-weight: 750;
-    line-height: 0.94;
-    letter-spacing: -0.055em;
+    font-weight: 600;
+    line-height: 1.0;
+    letter-spacing: -0.035em;
     text-wrap: balance;
 }
 
@@ -157,7 +123,7 @@ body {
     position: relative;
     height: 1px;
     overflow: hidden;
-    background: rgba(245, 247, 239, 0.18);
+    background: rgba(23, 23, 26, 0.18);
 }
 
 .progress-fill {
@@ -196,18 +162,16 @@ body {
     color: var(--orange);
     opacity: 1;
     transform: translateY(-0.18em);
-    text-shadow: 0 0 1rem rgba(255, 107, 53, 0.32);
 }
 
 .thumbnail-page .sh-word.is-active {
     color: var(--lime);
     opacity: 1;
     transform: translateY(-0.28em);
-    text-shadow: 0 0 1.25rem rgba(200, 255, 0, 0.24);
 }
 
 .thumbnail-page .sh-word.is-unread {
-    opacity: 0.13;
+    opacity: 0.22;
 }
 
 .thumbnail-page .progress-fill {
@@ -224,11 +188,6 @@ body {
         padding: 1.8rem 1.1rem 2rem;
     }
 
-    .reading-stage::before {
-        inset: 4.2rem 1.1rem;
-    }
-
-    .stage-meta p:last-child,
     .coordinate-label {
         display: none;
     }

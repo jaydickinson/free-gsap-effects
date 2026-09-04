@@ -5,89 +5,75 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>3D Card Flip Demo | GSAP Vault</title>
 	<link rel="stylesheet" href="assets/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-	<main class="showcase-shell">
-		<header class="showcase-toolbar">
-			<p class="showcase-prompt">
-				<span class="showcase-prompt__dot" aria-hidden="true"></span>
-				<strong>Open a dossier</strong>
-				<span>Hover, focus or tap</span>
-			</p>
-			<span class="showcase-index" aria-hidden="true">NORTH/03</span>
-		</header>
-
-		<section class="showcase-stage" aria-label="Creative collective project roster">
-			<div class="stage-heading" aria-hidden="true">
-				<span>Selected collective</span>
-				<span>2026 roster</span>
-			</div>
-
-			<div class="roster" data-flip-group="auto-close" data-flip-stagger data-thumbnail-target>
-				<button class="flip-card flip-card--cyan" type="button" data-flip="hover" aria-label="Open Aya Ito's Lumen House project dossier" aria-pressed="false">
-					<span class="card-shadow" aria-hidden="true"></span>
-					<span class="flip-card-inner">
-						<span class="card-edge" aria-hidden="true"></span>
-						<span class="flip-card-front">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>01</span><span>Tokyo · Light</span></span>
-							<span class="card-monogram">AI</span>
-							<span class="card-identity"><strong>Aya Ito</strong><span>Spatial artist</span></span>
-						</span>
-						<span class="flip-card-back">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>Dossier 01</span><span>2026</span></span>
-							<span class="project-type">Immersive installation</span>
-							<strong class="project-title">Lumen<br>House</strong>
-							<span class="project-meta"><span>Osaka</span><span>12 rooms</span><span>4.8k m²</span></span>
-						</span>
+	<main class="stage" aria-label="Creative collective project roster">
+		<div class="roster" data-flip-group="auto-close" data-flip-stagger data-thumbnail-target>
+			<button class="flip-card flip-card--cyan" type="button" data-flip="hover" aria-label="Open Aya Ito's Lumen House project dossier" aria-pressed="false">
+				<span class="card-shadow" aria-hidden="true"></span>
+				<span class="flip-card-inner">
+					<span class="card-edge" aria-hidden="true"></span>
+					<span class="flip-card-front">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>01</span><span>Tokyo · Light</span></span>
+						<span class="card-monogram">AI</span>
+						<span class="card-identity"><strong>Aya Ito</strong><span>Spatial artist</span></span>
 					</span>
-				</button>
-
-				<button class="flip-card flip-card--violet" type="button" data-flip="hover" aria-label="Open Niko Vale's Afterimage project dossier" aria-pressed="false">
-					<span class="card-shadow" aria-hidden="true"></span>
-					<span class="flip-card-inner">
-						<span class="card-edge" aria-hidden="true"></span>
-						<span class="flip-card-front">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>02</span><span>Berlin · Motion</span></span>
-							<span class="card-monogram">NV</span>
-							<span class="card-identity"><strong>Niko Vale</strong><span>Motion director</span></span>
-						</span>
-						<span class="flip-card-back">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>Dossier 02</span><span>2026</span></span>
-							<span class="project-type">Kinetic identity</span>
-							<strong class="project-title">After&shy;image</strong>
-							<span class="project-meta"><span>Global</span><span>36 films</span><span>12 markets</span></span>
-						</span>
+					<span class="flip-card-back">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>Dossier 01</span><span>2026</span></span>
+						<span class="project-type">Immersive installation</span>
+						<strong class="project-title">Lumen<br>House</strong>
+						<span class="project-meta"><span>Osaka</span><span>12 rooms</span><span>4.8k m²</span></span>
 					</span>
-				</button>
+				</span>
+			</button>
 
-				<button class="flip-card flip-card--lime" type="button" data-flip="hover" aria-label="Open Sol Mercer’s Wild Signal project dossier" aria-pressed="false">
-					<span class="card-shadow" aria-hidden="true"></span>
-					<span class="flip-card-inner">
-						<span class="card-edge" aria-hidden="true"></span>
-						<span class="flip-card-front">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>03</span><span>London · Sound</span></span>
-							<span class="card-monogram">SM</span>
-							<span class="card-identity"><strong>Sol Mercer</strong><span>Sonic architect</span></span>
-						</span>
-						<span class="flip-card-back">
-							<span class="face-light" aria-hidden="true"></span>
-							<span class="card-topline"><span>Dossier 03</span><span>2026</span></span>
-							<span class="project-type">Generative soundscape</span>
-							<strong class="project-title">Wild<br>Signal</strong>
-							<span class="project-meta"><span>Barbican</span><span>8 channels</span><span>Live</span></span>
-						</span>
+			<button class="flip-card flip-card--violet" type="button" data-flip="hover" aria-label="Open Niko Vale's Afterimage project dossier" aria-pressed="false">
+				<span class="card-shadow" aria-hidden="true"></span>
+				<span class="flip-card-inner">
+					<span class="card-edge" aria-hidden="true"></span>
+					<span class="flip-card-front">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>02</span><span>Berlin · Motion</span></span>
+						<span class="card-monogram">NV</span>
+						<span class="card-identity"><strong>Niko Vale</strong><span>Motion director</span></span>
 					</span>
-				</button>
-			</div>
-		</section>
+					<span class="flip-card-back">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>Dossier 02</span><span>2026</span></span>
+						<span class="project-type">Kinetic identity</span>
+						<strong class="project-title">After&shy;image</strong>
+						<span class="project-meta"><span>Global</span><span>36 films</span><span>12 markets</span></span>
+					</span>
+				</span>
+			</button>
+
+			<button class="flip-card flip-card--lime" type="button" data-flip="hover" aria-label="Open Sol Mercer’s Wild Signal project dossier" aria-pressed="false">
+				<span class="card-shadow" aria-hidden="true"></span>
+				<span class="flip-card-inner">
+					<span class="card-edge" aria-hidden="true"></span>
+					<span class="flip-card-front">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>03</span><span>London · Sound</span></span>
+						<span class="card-monogram">SM</span>
+						<span class="card-identity"><strong>Sol Mercer</strong><span>Sonic architect</span></span>
+					</span>
+					<span class="flip-card-back">
+						<span class="face-light" aria-hidden="true"></span>
+						<span class="card-topline"><span>Dossier 03</span><span>2026</span></span>
+						<span class="project-type">Generative soundscape</span>
+						<strong class="project-title">Wild<br>Signal</strong>
+						<span class="project-meta"><span>Barbican</span><span>8 channels</span><span>Live</span></span>
+					</span>
+				</span>
+			</button>
+		</div>
+
+		<p class="prompt">
+			<strong>Open a dossier</strong>
+			<span>Hover, focus or tap</span>
+		</p>
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>

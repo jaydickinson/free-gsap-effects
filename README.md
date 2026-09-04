@@ -11,11 +11,11 @@ From [GSAP Vault](https://gsapvault.com), a library of 74 copy-paste GSAP animat
 | Effect | What it does | Live demo |
 |--------|--------------|-----------|
 | [3D Card Flip Gallery](./3d-card-flip) | Tactile 3D cards with deep perspective, reactive edge-light, shadow inversion, hover/focus parity, and tap auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
-| [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress instrument with bar, ring, side rail, percentage, and active chapter feedback. | [Demo](https://gsapvault.com/effects/scroll-progress) |
-| [Typewriter Text](./typewriter-text) | A sharp terminal-style typewriter that types, holds, accelerates through deletion, and cycles to the next phrase in sync with cursor and progress signals. | [Demo](https://gsapvault.com/effects/typewriter-text) |
+| [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage. | [Demo](https://gsapvault.com/effects/scroll-progress) |
+| [Typewriter Text](./typewriter-text) | A typewriter that types a line character by character, holds it, accelerates through deletion, and cycles to the next phrase, with optional cursor, status and progress hooks. | [Demo](https://gsapvault.com/effects/typewriter-text) |
 | [Parallax Hero](./parallax-hero) | A pinned hero that separates its background photograph, copy, and foreground card into distinct scroll depths from a single scrubbed ScrollTrigger. | [Demo](https://gsapvault.com/effects/parallax-hero) |
 | [Image Clip Reveal](./image-clip-reveal) | A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its editorial caption lands. | [Demo](https://gsapvault.com/effects/image-clip-reveal) |
-| [Hover Underline](./hover-underline) | Three material link underlines (an exit-through line, marker sweep, and hand-drawn wave) with coordinated type and active-index responses. | [Demo](https://gsapvault.com/effects/hover-underline) |
+| [Hover Underline](./hover-underline) | Four material link underlines (an exit-through line, marker sweep, hand-drawn wave, and an endlessly travelling wave) with coordinated type and active-index responses. | [Demo](https://gsapvault.com/effects/hover-underline) |
 | [Scroll Text Highlight](./scroll-text-highlight) | A scrubbed orange-to-lime reading front lifts each active word before completed copy settles to white and unread copy remains ghosted. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
 | [CSS Scroll Reveal](./css-scroll-reveal) | Native CSS scroll-driven reveals for crisp fade, slide, and scale entrances with accessible static fallbacks and no animation JavaScript. | [Demo](https://gsapvault.com/effects/css-scroll-reveal) |
 

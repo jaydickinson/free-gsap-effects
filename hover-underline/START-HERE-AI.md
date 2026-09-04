@@ -6,9 +6,9 @@ Hover Underline is a production-ready GSAP animation effect from GSAP Vault. Thi
 
 - Product: Hover Underline
 - Type: animation effect
-- Description: Three material link underlines (an exit-through line, marker sweep, and hand-drawn wave) with coordinated type and active-index responses.
+- Description: Four material link underlines (an exit-through line, marker sweep, hand-drawn wave, and an endlessly travelling wave) with coordinated type and active-index responses.
 - GSAP plugins: GSAP core only
-- Techniques: hover-effect, micro-interaction, underline, svg-animation
+- Techniques: hover-effect, micro-interaction, underline, svg-animation, infinite-loop
 - Lenis smooth scrolling: not required
 - Difficulty: beginner
 

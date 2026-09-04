@@ -21,7 +21,7 @@ A scroll-triggered typewriter sequence that types rapidly, holds, accelerates th
 **3. Add `data-typewriter` to text in your `<body>`:**
 
 ```html
-<h1 data-typewriter>WE MAKE IDEAS MOVE.</h1>
+<h1 data-typewriter>Read the docs. Edit the code.</h1>
 ```
 
 The element's complete text is the static fallback. When it reaches 85% of the viewport, the script clears it and types it back once.
@@ -43,7 +43,7 @@ The original `speed`, `delay`, `cursor`, and looping phrase attributes remain co
 
 ## Examples
 
-### Looping Creative Commands
+### Looping Phrases
 
 **Add to your HTML `<body>`:**
 
@@ -53,12 +53,14 @@ The original `speed`, `delay`, `cursor`, and looping phrase attributes remain co
     data-type-delay="0.35"
     data-type-hold="3"
     data-type-delete-speed="0.75"
-    data-type-mobile="MAKE IT MOVE."
-    data-type-loop="WE DESIGN SYSTEMS WITH INTENT.,WE SHIP MOTION AT FRAME RATE."
-    data-type-loop-mobile="IDEAS IN MOTION.,SYSTEMS THAT MOVE.">
-  WE MAKE DIGITAL IDEAS MOVE.
+    data-type-mobile="Read the docs."
+    data-type-loop="Ship it your way.,One line typed on scroll."
+    data-type-loop-mobile="Ship it your way.,Typed on scroll.">
+  Read the docs. Edit the code.
 </h1>
 ```
+
+Phrases are separated by commas, so a phrase cannot contain one.
 
 The element's own text always runs first. Every phrase types linearly, holds, then deletes with `power3.in` acceleration before the next phrase lands.
 
@@ -90,8 +92,8 @@ Wrap the line in `data-typewriter-system` to synchronize your own interface. All
 
 ```html
 <section data-typewriter-system data-phase="ready">
-  <h2 data-typewriter data-type-loop="BUILD BOLDLY,SHIP CLEARLY">
-    DESIGN WITH INTENT
+  <h2 data-typewriter data-type-loop="Edit the code.,Ship it your way.">
+    Read the docs.
   </h2>
 
   <span data-typewriter-cursor aria-hidden="true"></span>

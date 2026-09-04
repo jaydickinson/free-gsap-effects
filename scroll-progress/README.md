@@ -1,6 +1,6 @@
 # Scroll Progress Indicator
 
-A precise, reversible reading-progress system built with GSAP ScrollTrigger. Use the bar, ring, rail, or percentage independently, or combine them into one navigation instrument.
+A precise, reversible reading-progress indicator built with GSAP ScrollTrigger. Use the bar, ring, rail, or percentage on its own, or run several at once.
 
 ## Quick Start
 
@@ -137,8 +137,8 @@ window.destroyScrollProgress();
 
 ```css
 :root {
-  --accent: #c8ff00;
-  --orange: #ff6b1a;
+  --accent: #2f5bd7;   /* the fill colour of every style */
+  --track: rgba(23, 23, 26, 0.1);   /* the unfilled part of the bar, ring and rail */
 }
 
 .progress-bar { height: 5px; }
@@ -151,11 +151,11 @@ window.destroyScrollProgress();
 - Add `role="progressbar"`, an accessible label, `aria-valuemin="0"`, and `aria-valuemax="100"`; the script maintains `aria-valuenow`.
 - Progress remains live under `prefers-reduced-motion` because it is useful information, but updates have no scrub, easing, or decorative transition.
 - All controls in the demo are native buttons and keyboard operable.
-- With JavaScript unavailable, article content and the initial instrument remain visible and readable.
+- With JavaScript unavailable, the page content and the empty indicators remain visible; nothing is hidden waiting for script.
 
 ## Cleanup
 
-Every instance owns one ScrollTrigger and exposes `destroy()`. The demo wraps initialization in `gsap.context()`, uses `gsap.matchMedia()` for both motion preferences, removes mode-switch listeners, and destroys all instances on teardown.
+Every instance owns one ScrollTrigger and exposes `destroy()`. The demo wraps initialization in `gsap.context()`, uses `gsap.matchMedia()` for both motion preferences, removes its mode-switch listeners, and destroys all instances on teardown.
 
 ## Dependencies
 

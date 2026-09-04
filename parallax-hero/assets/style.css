@@ -5,33 +5,40 @@
 }
 
 :root {
-    --deep: #06171c;
-    --shell: #f6f1e7;
-    --text: #fdfbf7;
-    --muted: rgba(253, 251, 247, 0.72);
-    --sand: #e8c39a;
-    --tide: #59c7c3;
-    --mono: 'JetBrains Mono', monospace;
-    color-scheme: dark;
+    --page: #ececeb;
+    --surface: #f7f7f6;
+    --ink: #141412;
+    --muted: rgba(20, 20, 18, 0.72);
+    --rule: rgba(20, 20, 18, 0.14);
+    /* One accent, used for the scroll fill the timeline moves, the link's
+       mark, the focus ring and ::selection. */
+    --accent: #00b8a9;
+    /* The same accent, darkened only where it has to carry TEXT: #00b8a9 sits
+       at 2.1:1 on this ground, #00776e clears 4.5:1 on both page and surface. */
+    --accent-deep: #00776e;
+    /* Text that sits ON the accent. White fails on teal-green; ink does not. */
+    --accent-ink: #141412;
+    color-scheme: light;
 }
 
 html {
-    background: var(--deep);
+    background: var(--page);
     scroll-behavior: auto;
 }
 
 body {
     min-width: 320px;
     overflow-x: hidden;
-    background: var(--deep);
-    color: var(--text);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-    background: var(--sand);
-    color: var(--deep);
+    background: var(--accent);
+    color: var(--accent-ink);
 }
 
 /* ---------------------------------------------------------------
@@ -45,7 +52,7 @@ body {
     height: 100svh;
     min-height: 560px;
     overflow: clip;
-    background: var(--deep);
+    background: var(--page);
 }
 
 .layer {
@@ -55,15 +62,21 @@ body {
     will-change: transform;
 }
 
-/* Layers that paint a background overscan the scene, so travel never
-   drags an edge into view. Layers that only hold content do not, or the
-   padding they lay content out with would start off-screen. */
-.layer--backdrop,
-.layer--glow {
-    inset: -12%;
+/* Layers that paint a background overscan the scene, so travel never drags an
+   edge into view. The backdrop travels furthest, so it needs the most slack:
+   at speed 0.2 and distance 200 it moves 160px, which has to fit inside the
+   overscan plus whatever the ending scale adds. Layers that only hold content
+   stay at inset: 0, or the padding they lay content out with starts
+   off-screen. */
+.layer--backdrop {
+    inset: -18%;
 }
 
-/* --- Layer 1: background image ---------------------------------- */
+.layer--wash {
+    inset: -16%;
+}
+
+/* --- Layer 1: the photograph ------------------------------------ */
 
 .layer--backdrop {
     z-index: 0;
@@ -75,25 +88,19 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 62%;
+    object-position: 50% 58%;
 }
 
-.backdrop-scrim {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(180deg, rgba(4, 18, 22, 0.58) 0%, rgba(4, 18, 22, 0.18) 32%, rgba(4, 18, 22, 0.55) 80%, rgba(4, 18, 22, 0.85) 100%),
-        linear-gradient(90deg, rgba(4, 18, 22, 0.9) 0%, rgba(4, 18, 22, 0.78) 24%, rgba(4, 18, 22, 0.34) 54%, rgba(4, 18, 22, 0) 82%);
-}
+/* --- Layer 2: the wash ------------------------------------------ */
 
-/* --- Layer 2: atmosphere ---------------------------------------- */
-
-.layer--glow {
+/* A soft page-coloured wash, not a decorative flourish: it is what lets ink
+   type sit on a pale photograph. On its own layer it also reads as depth,
+   because it slides against the image behind it. */
+.layer--wash {
     z-index: 1;
     background:
-        radial-gradient(circle at 72% 22%, rgba(232, 195, 154, 0.3), transparent 44%),
-        radial-gradient(circle at 88% 74%, rgba(89, 199, 195, 0.22), transparent 48%);
-    mix-blend-mode: screen;
+        linear-gradient(90deg, rgba(236, 236, 235, 0.94) 0%, rgba(236, 236, 235, 0.86) 26%, rgba(236, 236, 235, 0.4) 56%, rgba(236, 236, 235, 0) 78%),
+        linear-gradient(180deg, rgba(236, 236, 235, 0.5) 0%, rgba(236, 236, 235, 0) 26%, rgba(236, 236, 235, 0) 62%, rgba(236, 236, 235, 0.72) 100%);
 }
 
 /* --- Layer 3: the hero copy ------------------------------------- */
@@ -102,81 +109,50 @@ body {
     z-index: 2;
     display: grid;
     align-items: center;
-    padding: 12% clamp(1.5rem, 7vw, 8.5rem);
+    padding: 0 clamp(1.5rem, 7vw, 7rem);
 }
 
 .copy-column {
-    max-width: 34rem;
+    max-width: 32rem;
     pointer-events: auto;
 }
 
-.eyebrow {
-    margin-bottom: clamp(1rem, 2.4vh, 1.6rem);
-    color: var(--sand);
-    font-family: var(--mono);
-    font-size: clamp(0.62rem, 0.82vw, 0.74rem);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-}
-
 .hero-title {
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: clamp(3rem, 7.2vw, 6rem);
-    font-weight: 700;
+    font-size: clamp(2.75rem, 6.6vw, 5.25rem);
+    font-weight: 600;
     letter-spacing: -0.035em;
-    line-height: 0.92;
-    text-shadow: 0 0.5rem 2.5rem rgba(3, 14, 18, 0.45);
+    line-height: 0.95;
 }
 
 .hero-lede {
-    max-width: 27rem;
-    margin-top: clamp(1.1rem, 2.6vh, 1.75rem);
+    max-width: 25rem;
+    margin-top: clamp(1rem, 2.4vh, 1.5rem);
     color: var(--muted);
-    font-size: clamp(1rem, 1.15vw, 1.12rem);
+    font-size: clamp(1rem, 1.1vw, 1.06rem);
     line-height: 1.6;
 }
 
-.hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: clamp(1.6rem, 3.4vh, 2.4rem);
-}
-
-.button {
+.hero-link {
     display: inline-block;
-    padding: 0.85rem 1.6rem;
-    border: 1px solid transparent;
-    border-radius: 999px;
-    background: var(--shell);
-    color: #08262c;
-    font-size: 0.94rem;
+    margin-top: clamp(1.4rem, 3vh, 2rem);
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--accent);
+    color: var(--accent-deep);
+    font-size: 0.95rem;
     font-weight: 500;
     text-decoration: none;
-    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.button:hover,
-.button:focus-visible {
-    background: var(--sand);
+.hero-link:hover,
+.hero-link:focus-visible {
+    border-color: var(--ink);
+    color: var(--ink);
 }
 
-.button--ghost {
-    border-color: rgba(253, 251, 247, 0.4);
-    background: transparent;
-    color: var(--text);
-}
-
-.button--ghost:hover,
-.button--ghost:focus-visible {
-    border-color: var(--text);
-    background: rgba(253, 251, 247, 0.12);
-    color: var(--text);
-}
-
-.button:focus-visible {
-    outline: 2px solid var(--sand);
-    outline-offset: 3px;
+.hero-link:focus-visible {
+    outline: 2px solid var(--accent-deep);
+    outline-offset: 4px;
 }
 
 /* --- Layer 4: foreground card ----------------------------------- */
@@ -186,158 +162,99 @@ body {
     display: grid;
     align-content: end;
     justify-items: end;
-    padding: 0 clamp(1.5rem, 7vw, 8.5rem) 19%;
+    padding: 0 clamp(1.5rem, 7vw, 7rem) clamp(3.5rem, 11vh, 6rem);
 }
 
 .rate-card {
-    width: min(20rem, 74vw);
-    padding: 1.6rem 1.75rem;
-    border: 1px solid rgba(253, 251, 247, 0.18);
-    border-radius: 1.25rem;
-    backdrop-filter: blur(14px);
-    background: rgba(6, 23, 28, 0.58);
-    box-shadow: 0 2rem 4rem rgba(2, 12, 16, 0.4);
+    width: min(18.75rem, 74vw);
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
     pointer-events: auto;
 }
 
 .rate-card__label {
-    color: var(--tide);
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    color: var(--accent-deep);
+    font-size: 0.8rem;
 }
 
 .rate-card__price {
-    margin: 0.5rem 0 0.75rem;
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: 2.4rem;
-    font-weight: 700;
+    margin: 0.3rem 0 0.5rem;
+    font-size: 1.9rem;
+    font-weight: 600;
     letter-spacing: -0.03em;
+    line-height: 1;
 }
 
 .rate-card__price span {
-    margin-left: 0.4rem;
+    margin-left: 0.45rem;
     color: var(--muted);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 400;
     letter-spacing: 0;
 }
 
 .rate-card__note {
     color: var(--muted);
-    font-size: 0.82rem;
-    line-height: 1.55;
+    text-wrap: pretty;
+    font-size: 0.8rem;
+    line-height: 1.5;
 }
 
-/* --- Chrome (not a parallax layer) ------------------------------ */
+/* --- The one cue, and the line the timeline fills --------------- */
 
-.hero-chrome {
+.scroll-cue {
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
+    bottom: clamp(1.5rem, 3.4vw, 2.4rem);
+    left: clamp(1.5rem, 7vw, 7rem);
     z-index: 6;
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
-    align-items: center;
-    justify-content: space-between;
-    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.5rem, 7vw, 8.5rem);
-}
-
-.brand {
-    color: var(--text);
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    text-decoration: none;
-}
-
-.hero-nav {
-    display: flex;
-    gap: clamp(1rem, 2.4vw, 2rem);
-}
-
-.hero-nav a {
-    color: var(--muted);
-    font-size: 0.88rem;
-    text-decoration: none;
-    transition: color 0.22s ease;
-}
-
-.hero-nav a:hover,
-.hero-nav a:focus-visible {
-    color: var(--text);
-}
-
-.scroll-meter {
-    position: absolute;
-    bottom: clamp(1.4rem, 3.4vw, 2.6rem);
-    left: clamp(1.5rem, 7vw, 8.5rem);
-    z-index: 6;
-    display: flex;
-    gap: 0.9rem;
+    gap: 0.85rem;
     align-items: center;
     color: var(--muted);
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-size: 0.8rem;
     pointer-events: none;
 }
 
-.scroll-meter__track {
+.scroll-cue__track {
     display: block;
-    width: min(180px, 26vw);
+    width: min(140px, 24vw);
     height: 1px;
     overflow: hidden;
-    background: rgba(253, 251, 247, 0.22);
+    background: var(--rule);
 }
 
-.scroll-meter__track span {
+.scroll-cue__track span {
     display: block;
     width: 100%;
     height: 100%;
     transform: scaleX(0);
     transform-origin: left;
-    background: var(--sand);
-}
-
-.scroll-meter__value {
-    color: var(--sand);
+    background: var(--accent);
 }
 
 /* --- What the hero releases into -------------------------------- */
 
 .after {
-    padding: clamp(4rem, 12vh, 8rem) clamp(1.5rem, 7vw, 8.5rem);
-    background: var(--deep);
+    padding: clamp(3.5rem, 11vh, 7rem) clamp(1.5rem, 7vw, 7rem);
+    border-top: 1px solid var(--rule);
+    background: var(--page);
 }
 
 .after h2 {
-    max-width: 22rem;
-    font-family: 'Syne', system-ui, sans-serif;
     font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.025em;
     line-height: 1.15;
 }
 
 .after p {
-    max-width: 38rem;
-    margin-top: 1rem;
+    max-width: 34rem;
+    margin-top: 0.9rem;
     color: var(--muted);
     font-size: 1rem;
     line-height: 1.7;
-}
-
-.after code {
-    color: var(--sand);
-    font-family: var(--mono);
-    font-size: 0.88em;
 }
 
 /* ---------------------------------------------------------------
@@ -346,12 +263,8 @@ body {
 
 @media (max-width: 900px) {
     .layer--copy {
-        padding-top: 18%;
         align-items: start;
-    }
-
-    .layer--front {
-        padding-bottom: 22%;
+        padding-top: 16%;
     }
 }
 
@@ -360,13 +273,18 @@ body {
         min-height: 540px;
     }
 
-    .layer--backdrop,
-    .layer--glow {
+    .layer--backdrop {
+        inset: -14%;
+    }
+
+    .layer--wash {
         inset: -9%;
+        background:
+            linear-gradient(180deg, rgba(236, 236, 235, 0.9) 0%, rgba(236, 236, 235, 0.78) 34%, rgba(236, 236, 235, 0.28) 62%, rgba(236, 236, 235, 0.7) 100%);
     }
 
     .layer--copy {
-        padding: 30% 1.5rem 0;
+        padding: 22% 1.5rem 0;
     }
 
     .hero-lede {
@@ -378,24 +296,8 @@ body {
         padding: 0 1.5rem 20%;
     }
 
-    .rate-card {
-        padding: 1.15rem 1.25rem;
-    }
-
-    .rate-card__price {
-        font-size: 1.9rem;
-    }
-
-    .hero-nav {
-        display: none;
-    }
-
-    .scroll-meter {
+    .scroll-cue {
         left: 1.5rem;
-    }
-
-    .scroll-meter__label {
-        display: none;
     }
 }
 
@@ -435,7 +337,7 @@ body {
         will-change: auto;
     }
 
-    .scroll-meter {
+    .scroll-cue {
         display: none;
     }
 }

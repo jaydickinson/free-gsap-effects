@@ -6,9 +6,9 @@ Scroll Progress Indicator is a production-ready GSAP animation effect from GSAP 
 
 - Product: Scroll Progress Indicator
 - Type: animation effect
-- Description: A precise GSAP reading-progress instrument with bar, ring, side rail, percentage, and active chapter feedback.
+- Description: A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage.
 - GSAP plugins: ScrollTrigger
-- Techniques: scroll-progress, progress-bar, svg-stroke, scroll-linked-color
+- Techniques: scroll-progress, progress-bar, svg-stroke
 - Lenis smooth scrolling: not required
 - Difficulty: beginner
 

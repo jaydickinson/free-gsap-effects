@@ -1,91 +1,58 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-	--black: #070808;
-	--surface: #111313;
-	--paper: #e9ece7;
-	--muted: #8b918e;
-	--cyan: #67e8f9;
-	--violet: #a78bfa;
-	--lime: #c7f36b;
-	--accent: var(--cyan);
-	color-scheme: dark;
+	/* Cool grey ground, the site's ink, one violet accent. The three card
+	   stocks exist only to tell the cards apart: two neutral greys and one
+	   accent face, never a warm/beige stock. */
+	--page: #ececeb;
+	--surface: #f7f7f6;
+	--ink: #141412;
+	--chalk: #f1efea;
+	--muted: rgba(20, 20, 18, 0.66); /* 4.8:1 on the deepest stock */
+	--rule: rgba(20, 20, 18, 0.14);
+	--stock-a: var(--surface); /* light grey stock */
+	--stock-c: #ccced4;    /* deeper cool grey stock */
+	--accent: #6d4cff;
+	--accent-ink: #ffffff; /* 5.0:1 on the accent */
+	--accent-lift: #a48cff; /* accent legible on the ink back face */
+	color-scheme: light;
 }
 
 html, body { min-height: 100%; }
-html { background: var(--black); }
+html { background: var(--page); }
 body {
-	background:
-		radial-gradient(circle at 50% 118%, rgba(103, 232, 249, 0.08), transparent 42%),
-		linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-		var(--black);
-	background-size: auto, 100% 44px, auto;
-	color: var(--paper);
-	font-family: 'Space Grotesk', system-ui, sans-serif;
-	overflow: hidden;
+	background: var(--page);
+	color: var(--ink);
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	overflow-x: hidden;
 	-webkit-font-smoothing: antialiased;
 }
 
-body::before {
-	content: '';
-	position: fixed;
-	inset: 0;
-	pointer-events: none;
-	background: linear-gradient(90deg, transparent 0 7%, rgba(255,255,255,.025) 7% 7.08%, transparent 7.08% 92.92%, rgba(255,255,255,.025) 92.92% 93%, transparent 93%);
-}
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-::selection { background: var(--cyan); color: var(--black); }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: #343838; border-radius: 10px; }
-
-.showcase-shell {
+/* Full-bleed ground. The three cards and the one trigger hint, nothing else. */
+.stage {
 	display: grid;
-	grid-template-rows: 58px minmax(0, 1fr);
+	align-content: center;
+	justify-items: center;
+	gap: clamp(28px, 4vh, 40px);
 	width: 100%;
-	height: 100svh;
-	min-height: 520px;
-	padding: 0 clamp(22px, 4vw, 58px) clamp(22px, 4vh, 34px);
+	min-height: 100svh;
+	padding: clamp(24px, 5vh, 56px) clamp(22px, 4vw, 58px);
 }
 
-.showcase-toolbar {
+.prompt {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	border-bottom: 1px solid rgba(255,255,255,.1);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 10px;
-	letter-spacing: .08em;
-	text-transform: uppercase;
+	align-items: baseline;
+	gap: 8px;
+	/* Clear of the cards: on a tall viewport the row grows until the cue sits
+	   against their bottom edge, which check:composition reads as ink touching
+	   a border. */
+	margin-top: 28px;
+	font-size: 13px;
 }
-
-.showcase-prompt { display: flex; align-items: center; gap: 10px; }
-.showcase-prompt strong { color: var(--paper); font-weight: 600; }
-.showcase-prompt span:not(.showcase-prompt__dot), .showcase-index { color: var(--muted); }
-.showcase-prompt__dot {
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: var(--lime);
-	box-shadow: 0 0 12px rgba(199,243,107,.65);
-}
-
-.showcase-stage {
-	min-height: 0;
-	display: grid;
-	grid-template-rows: auto minmax(0, 1fr);
-	padding-top: clamp(16px, 3vh, 28px);
-}
-
-.stage-heading {
-	display: flex;
-	justify-content: space-between;
-	color: #616764;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 9px;
-	letter-spacing: .13em;
-	text-transform: uppercase;
-}
+.prompt strong { font-weight: 500; }
+.prompt span { color: var(--muted); }
 
 .roster {
 	display: grid;
@@ -93,12 +60,13 @@ body::before {
 	align-items: center;
 	gap: clamp(14px, 2.6vw, 34px);
 	width: min(100%, 1040px);
-	margin: 0 auto;
 	perspective: 1800px;
 }
 
 .flip-card {
-	--card-accent: var(--cyan);
+	--card-accent: var(--stock-a);
+	--card-face-ink: var(--ink);
+	--card-face-muted: var(--muted);
 	position: relative;
 	width: 100%;
 	max-width: 326px;
@@ -107,7 +75,7 @@ body::before {
 	border: 0;
 	border-radius: 18px;
 	background: transparent;
-	color: #080909;
+	color: var(--card-face-ink);
 	font: inherit;
 	text-align: left;
 	cursor: pointer;
@@ -115,8 +83,12 @@ body::before {
 	transform-origin: center bottom;
 	-webkit-tap-highlight-color: transparent;
 }
-.flip-card--violet { --card-accent: var(--violet); }
-.flip-card--lime { --card-accent: var(--lime); }
+.flip-card--violet {
+	--card-accent: var(--accent);
+	--card-face-ink: var(--accent-ink);
+	--card-face-muted: rgba(255, 255, 255, 0.96); /* 4.7:1 on the accent */
+}
+.flip-card--lime { --card-accent: var(--stock-c); }
 
 .card-shadow {
 	position: absolute;
@@ -140,11 +112,11 @@ body::before {
 	position: absolute;
 	z-index: 1;
 	inset: 7px -3px;
-	border: 1px solid color-mix(in srgb, var(--card-accent) 80%, white);
+	border: 1px solid color-mix(in srgb, var(--accent) 70%, white);
 	border-radius: 17px;
 	opacity: .3;
 	transform: translateZ(-9px) translateX(5px);
-	box-shadow: 0 0 16px color-mix(in srgb, var(--card-accent) 32%, transparent);
+	box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 34%, transparent);
 }
 
 .flip-card-front,
@@ -156,30 +128,33 @@ body::before {
 	justify-content: space-between;
 	overflow: hidden;
 	padding: clamp(18px, 2.2vw, 28px);
-	border: 1px solid rgba(255,255,255,.3);
-	border-radius: 18px;
+	border: 1px solid var(--rule);
+	border-radius: 12px;
 	background: var(--card-accent);
+	color: var(--card-face-ink);
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
-	box-shadow: inset 0 1px rgba(255,255,255,.54), inset 0 -18px 38px rgba(0,0,0,.11);
+	box-shadow: 0 1px 2px rgba(20,20,18,.06);
 	transform: rotateY(0deg) translateZ(1px);
 }
 
+/* The dossier side inverts: ink face, chalk type. Deliberate contrast with
+   the stock front, and it makes the flip read at a glance. */
 .flip-card-back {
-	background: #111414;
-	border-color: color-mix(in srgb, var(--card-accent) 46%, transparent);
-	color: var(--paper);
+	background: var(--ink);
+	border-color: rgba(241,239,234,.18);
+	color: var(--chalk);
 	transform: rotateY(180deg) translateZ(1px);
-	box-shadow: inset 0 0 0 1px rgba(255,255,255,.025), inset 26px 0 50px rgba(0,0,0,.55);
+	box-shadow: 0 1px 2px rgba(20,20,18,.14);
 }
 
 .face-light {
 	position: absolute;
 	inset: -25%;
 	pointer-events: none;
-	background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.7) 49%, transparent 67%);
+	background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.9) 49%, transparent 67%);
 	mix-blend-mode: soft-light;
-	opacity: .42;
+	opacity: .3;
 	transform: translateX(25%);
 }
 .flip-card-back .face-light { opacity: .08; }
@@ -190,18 +165,16 @@ body::before {
 	z-index: 1;
 	display: flex;
 	justify-content: space-between;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: clamp(8px, .82vw, 10px);
-	font-weight: 600;
-	letter-spacing: .08em;
-	text-transform: uppercase;
+	font-size: clamp(10px, .95vw, 12px);
+	font-weight: 500;
+	color: var(--card-face-muted);
 }
 
 .card-monogram {
 	position: relative;
 	z-index: 1;
 	align-self: center;
-	font-family: 'Syne', sans-serif;
+	font-weight: 600;
 	font-size: clamp(64px, 8vw, 112px);
 	font-weight: 800;
 	letter-spacing: -.1em;
@@ -211,31 +184,31 @@ body::before {
 
 .card-identity { position: relative; z-index: 1; display: grid; gap: 2px; }
 .card-identity strong {
-	font-family: 'Syne', sans-serif;
+	font-weight: 600;
 	font-size: clamp(22px, 2.35vw, 34px);
 	line-height: 1;
 	letter-spacing: -.055em;
 }
 .card-identity span, .project-type {
-	font-family: 'JetBrains Mono', monospace;
-	font-size: clamp(8px, .8vw, 10px);
-	letter-spacing: .09em;
-	text-transform: uppercase;
+	font-size: clamp(10px, .95vw, 12px);
+	color: var(--card-face-muted);
 }
 
-.project-type { position: relative; z-index: 1; color: var(--card-accent); }
+.project-type { position: relative; z-index: 1; color: var(--accent-lift); }
 .project-title {
 	position: relative;
 	z-index: 1;
-	font-family: 'Syne', sans-serif;
+	font-weight: 600;
 	font-size: clamp(38px, 4.3vw, 60px);
 	font-weight: 700;
 	line-height: .86;
 	letter-spacing: -.07em;
 }
-.project-meta { gap: 8px; color: #8d9692; font-size: clamp(7px, .68vw, 9px); }
+.project-meta { gap: 8px; color: rgba(241, 239, 234, 0.6); font-size: clamp(7px, .68vw, 9px); }
 
-.flip-card:focus-visible { outline: 2px solid var(--card-accent); outline-offset: 6px; }
+.flip-card-back .card-topline { color: rgba(241, 239, 234, 0.62); }
+
+.flip-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
 /* No-JS and programmatic class fallback; GSAP takes over these transforms when available. */
 .flip-card-inner { transition: transform .82s cubic-bezier(.77, 0, .175, 1); }
@@ -243,21 +216,14 @@ body::before {
 .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
 
 @media (max-width: 640px) {
-	body { overflow-y: auto; }
-	.showcase-shell {
-		height: auto;
-		min-height: 100svh;
-		grid-template-rows: 54px auto;
-		padding: 0 18px 22px;
-	}
-	.showcase-index { display: none; }
-	.showcase-stage { padding-top: 14px; }
-	.roster {
-		align-self: start;
+	.stage {
 		align-content: start;
+		gap: 18px;
+		padding: 22px 18px;
+	}
+	.roster {
 		grid-template-columns: 1fr;
 		gap: 11px;
-		padding: 16px 0 2px;
 	}
 	.flip-card {
 		max-width: none;
@@ -275,10 +241,8 @@ body::before {
 }
 
 @media (max-width: 640px) and (max-height: 700px) {
-	body { overflow-y: hidden; }
-	.showcase-shell { height: 100svh; min-height: 0; padding-bottom: 10px; }
-	.showcase-stage { padding-top: 9px; min-height: 0; }
-	.roster { gap: 8px; padding-top: 9px; min-height: 0; }
+	.stage { gap: 14px; padding: 16px 18px; }
+	.roster { gap: 8px; min-height: 0; }
 	.flip-card { height: 132px; min-height: 0; aspect-ratio: auto; }
 	.flip-card-front, .flip-card-back { padding: 12px 16px; }
 	.card-identity strong { font-size: 21px; }
@@ -286,8 +250,7 @@ body::before {
 }
 
 @media (max-height: 700px) and (min-width: 641px) {
-	.showcase-shell { grid-template-rows: 52px minmax(0, 1fr); padding-bottom: 18px; }
-	.showcase-stage { padding-top: 14px; }
+	.stage { gap: 18px; padding: 20px clamp(22px, 4vw, 58px); }
 	.roster { width: min(86%, 920px); gap: 24px; }
 }
 

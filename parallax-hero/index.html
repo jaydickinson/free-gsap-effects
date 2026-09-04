@@ -5,72 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parallax Hero Demo | GSAP Vault</title>
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <main>
         <section
             class="hero"
             data-parallax
-            data-parallax-distance="220"
-            data-parallax-mobile-distance="118"
+            data-parallax-distance="200"
+            data-parallax-mobile-distance="110"
             data-parallax-runway="620"
             data-parallax-mobile-runway="380"
             aria-labelledby="hero-title">
 
-            <!-- Layer 1 · speed 0.20 — the background image. Swap the <img> for yours. -->
-            <div class="layer layer--backdrop" data-parallax-speed="0.2" data-parallax-scale="1.12" data-parallax-blur="5" aria-hidden="true">
+            <!-- Layer 1 · speed 0.20 — the photograph. Swap the <img> for yours. -->
+            <div class="layer layer--backdrop" data-parallax-speed="0.2" data-parallax-scale="1.12" data-parallax-blur="4" aria-hidden="true">
                 <img src="assets/backdrop.webp" alt="" width="1600" height="1000" decoding="async">
-                <div class="backdrop-scrim"></div>
             </div>
 
-            <!-- Layer 2 · speed 0.55 — atmosphere sitting between the image and the copy. -->
-            <div class="layer layer--glow" data-parallax-speed="0.55" data-parallax-opacity="0.75" aria-hidden="true"></div>
+            <!-- Layer 2 · speed 0.55 — the wash that keeps the copy legible over the photograph. -->
+            <div class="layer layer--wash" data-parallax-speed="0.55" aria-hidden="true"></div>
 
             <!-- Layer 3 · speed 0.82 — the hero copy. Ordinary markup, just placed on a layer. -->
             <div class="layer layer--copy" data-parallax-speed="0.82">
                 <div class="copy-column">
-                    <p class="eyebrow">Northshore · Six rooms on the water</p>
                     <h1 class="hero-title" id="hero-title">Wake up<br>to the tide</h1>
                     <p class="hero-lede">A small house at the quiet end of the bay. Breakfast on the sand, boats at eight, nothing else scheduled.</p>
-                    <div class="hero-actions">
-                        <a class="button" href="#stay">Check availability</a>
-                        <a class="button button--ghost" href="#stay">See the rooms</a>
-                    </div>
+                    <a class="hero-link" href="#stay">Check availability</a>
                 </div>
             </div>
 
             <!-- Layer 4 · speed 1.30 — foreground card, moves toward the viewer. -->
-            <div class="layer layer--front" data-parallax-speed="1.3" data-parallax-x="26">
+            <div class="layer layer--front" data-parallax-speed="1.3" data-parallax-x="22">
                 <aside class="rate-card">
                     <p class="rate-card__label">From</p>
-                    <p class="rate-card__price">£180<span>/ night</span></p>
-                    <p class="rate-card__note">Two-night minimum · Sea view in every room</p>
+                    <p class="rate-card__price">£180<span>a night</span></p>
+                    <p class="rate-card__note">Two-night minimum. Every room sees the water.</p>
                 </aside>
             </div>
 
-            <!-- Not a layer: page chrome stays put while the layers separate behind it. -->
-            <header class="hero-chrome">
-                <a class="brand" href="#top">Northshore</a>
-                <nav class="hero-nav" aria-label="Primary">
-                    <a href="#stay">Rooms</a>
-                    <a href="#stay">The bay</a>
-                    <a href="#stay">Contact</a>
-                </nav>
-            </header>
-
-            <div class="scroll-meter" aria-hidden="true">
-                <span class="scroll-meter__label">Scroll</span>
-                <span class="scroll-meter__track"><span data-parallax-fill></span></span>
-                <span class="scroll-meter__value"><span data-parallax-progress>000</span>%</span>
+            <!-- Not a layer: the cue stays put while the layers separate behind it. -->
+            <div class="scroll-cue" aria-hidden="true">
+                <span>Scroll</span>
+                <span class="scroll-cue__track"><span data-parallax-fill></span></span>
             </div>
         </section>
 
         <section class="after" id="stay">
-            <h2>The pin releases and the page carries on</h2>
-            <p>Everything above is one <code>[data-parallax]</code> section. The four layers inside it each carry a <code>data-parallax-speed</code>, and nothing else about the markup is special.</p>
+            <h2>Six rooms, one bay</h2>
+            <p>Two on the sand, four above the boathouse. Every room opens onto the water, breakfast runs until eleven, and the last boat back is at six.</p>
         </section>
     </main>
 

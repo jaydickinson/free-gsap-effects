@@ -68,7 +68,7 @@ gsap.registerPlugin(ScrollTrigger);
 			if (!render) return;
 
 			this.update = function(rawProgress) {
-				/* Clamp the final fraction so the instrument always lands on exact 100. */
+				/* Clamp the final fraction so the indicator lands on an exact 100. */
 				const progress = rawProgress >= 0.9995 ? 1 : gsap.utils.clamp(0, 1, rawProgress);
 				render(progress);
 				element.setAttribute('aria-valuenow', Math.round(progress * 100));
@@ -95,43 +95,6 @@ gsap.registerPlugin(ScrollTrigger);
 		document.querySelectorAll('[data-progress-style]').forEach(function(element) {
 			instances.push(new ScrollProgress(element));
 		});
-
-		const chapters = Array.from(document.querySelectorAll('[data-chapter]'));
-		const chapterLabel = document.querySelector('[data-current-chapter]');
-		const routeStops = Array.from(document.querySelectorAll('[data-route-stop]'));
-		const stage = document.querySelector('.field-note');
-
-		if (stage && chapters.length) {
-			let activeIndex = -1;
-			const chapterTrigger = ScrollTrigger.create({
-				trigger: document.documentElement,
-				start: 'top top',
-				end: 'bottom bottom',
-				onUpdate: syncFieldNote,
-				onRefresh: syncFieldNote
-			});
-
-			function syncFieldNote(self) {
-				const progress = self.progress >= 0.9995 ? 1 : self.progress;
-				const nextIndex = progress === 1
-					? chapters.length - 1
-					: Math.min(chapters.length - 1, Math.floor(progress * chapters.length));
-				stage.style.setProperty('--route-color', gsap.utils.interpolate('#ff6b1a', '#c8ff00', progress));
-				if (nextIndex === activeIndex) return;
-				activeIndex = nextIndex;
-				if (chapterLabel && chapterLabel.isConnected) {
-					chapterLabel.textContent = chapters[activeIndex].dataset.chapter;
-				}
-				routeStops.forEach(function(stop, index) {
-					stop.classList.toggle('is-active', index === activeIndex);
-					if (index === activeIndex) stop.setAttribute('aria-current', 'step');
-					else stop.removeAttribute('aria-current');
-				});
-			}
-
-			syncFieldNote(chapterTrigger);
-			instances.push({ destroy: function() { chapterTrigger.kill(); } });
-		}
 
 		return function cleanupIndicators() {
 			instances.forEach(function(instance) { instance.destroy(); });

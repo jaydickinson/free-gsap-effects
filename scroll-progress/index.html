@@ -5,18 +5,34 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Scroll Progress Indicator Demo | GSAP Vault</title>
 	<link rel="stylesheet" href="assets/style.css">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body data-mode="all">
-	<div class="progress-bar" data-progress-style="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+	<!-- The four indicators. Each one is independent: keep the ones you want,
+	     delete the rest. -->
+	<div class="progress-bar" data-progress-style="bar" data-progress-position="top" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
 		<div class="progress-bar__fill"></div>
 	</div>
 
+	<div class="progress-rail progress-rail--left" data-progress-style="rail" data-progress-position="left" role="progressbar" aria-label="Reading progress rail" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+		<div class="progress-rail__fill"></div>
+	</div>
+
+	<div class="progress-circle" data-progress-style="circle" data-progress-position="bottom-right" role="progressbar" aria-label="Circular reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+		<svg class="progress-circle__svg" viewBox="0 0 120 120" aria-hidden="true">
+			<circle class="progress-circle__bg" cx="60" cy="60" r="52"/>
+			<circle class="progress-circle__fill" cx="60" cy="60" r="52"/>
+		</svg>
+		<span class="progress-circle__text">0%</span>
+	</div>
+
+	<div class="progress-counter" data-progress-style="counter" data-progress-position="bottom-left" role="progressbar" aria-label="Numeric reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+		<span class="progress-counter__value">000</span>
+		<span class="progress-counter__symbol">%</span>
+	</div>
+
 	<header class="showcase-toolbar">
-		<p class="showcase-prompt"><span aria-hidden="true">↓</span> Scroll to read</p>
-		<div class="mode-switcher" role="group" aria-label="Progress display mode">
+		<p class="showcase-prompt"><span aria-hidden="true">&darr;</span> Scroll to read</p>
+		<div class="mode-switcher" role="group" aria-label="Progress indicator shown">
 			<button type="button" data-mode-button="all" aria-pressed="true">All</button>
 			<button type="button" data-mode-button="bar" aria-pressed="false">Bar</button>
 			<button type="button" data-mode-button="circle" aria-pressed="false">Ring</button>
@@ -25,72 +41,38 @@
 		</div>
 	</header>
 
-	<main class="field-note" data-thumbnail-target>
-		<div class="field-note__layout">
-			<aside class="instrument" aria-label="Route progress instrument">
-				<div class="instrument__topline">
-					<span>FIELD / 07</span>
-					<span>ALT. 2,140M</span>
-				</div>
+	<main class="page">
+		<article class="article" data-thumbnail-target>
+			<p class="eyebrow">Typography &middot; 6 min read</p>
+			<h1>Writing pages that people finish</h1>
+			<p class="standfirst">Most long articles are abandoned in the first screen and a half. Very little of that is the writing. Most of it is the page.</p>
 
-				<div class="instrument__dial progress-circle" data-progress-style="circle" role="progressbar" aria-label="Circular reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-					<svg class="progress-circle__svg" viewBox="0 0 120 120" aria-hidden="true">
-						<circle class="progress-circle__bg" cx="60" cy="60" r="52"/>
-						<circle class="progress-circle__fill" cx="60" cy="60" r="52"/>
-						<path class="progress-circle__crosshair" d="M60 0v16M60 104v16M0 60h16M104 60h16"/>
-					</svg>
-					<span class="progress-circle__text">0%</span>
-				</div>
+			<p>A reader arriving on a long page makes one decision before they make any other: is this worth the next few minutes? They answer it without reading a word, from the shape of the thing. Line length, the size of the gaps, how far the scrollbar suggests they have to go. Design the page badly and the best paragraph you have ever written never gets looked at.</p>
 
-				<div class="route">
-					<div class="progress-rail" data-progress-style="rail" role="progressbar" aria-label="Route progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-						<div class="progress-rail__fill"></div>
-					</div>
-					<ol class="route__stops" aria-label="Manifesto chapters">
-						<li data-route-stop class="is-active" aria-current="step"><span>01</span> Depart</li>
-						<li data-route-stop><span>02</span> Observe</li>
-						<li data-route-stop><span>03</span> Traverse</li>
-						<li data-route-stop><span>04</span> Return</li>
-					</ol>
-				</div>
+			<h2>Give the reader a sense of distance</h2>
+			<p>People are happy to commit to a long walk if they can see where it ends. The same is true of an article. A reading-progress indicator is the cheapest way to answer the question, and it keeps answering it as they go: a quarter of the way, halfway, nearly there.</p>
+			<p>It works because it is honest. The bar moves with the scroll position and nothing else, so it never promises a short read and then delivers a long one. If your page has a comment thread or a footer full of related links, end the measured range at the end of the article rather than the end of the document, or the last paragraph will sit at seventy per cent and feel like a lie.</p>
 
-				<div class="instrument__readout">
-					<p class="instrument__chapter"><span>CHAPTER</span><strong data-current-chapter>DEPART</strong></p>
-					<div class="progress-counter" data-progress-style="counter" role="progressbar" aria-label="Numeric reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-						<span class="progress-counter__prefix">N /</span>
-						<span class="progress-counter__value">000</span>
-						<span class="progress-counter__symbol">%</span>
-					</div>
-				</div>
-			</aside>
+			<h2>Set the measure before the typeface</h2>
+			<p>Line length does more work than the font choice. Somewhere between sixty and seventy-five characters, the eye finds the start of the next line without effort. Push past ninety and readers start losing their place; drop below forty-five and they get seasick from the return sweep.</p>
+			<p>Once the measure is right, the leading follows from it. Longer lines need more space between them. On a phone, where the measure is short by force, tight leading reads fine and saves the reader a great deal of scrolling.</p>
 
-			<article class="manifesto" aria-labelledby="manifesto-title">
-				<section class="manifesto__chapter manifesto__chapter--lead" data-chapter="DEPART">
-					<p class="eyebrow">Expedition note / north face</p>
-					<h1 id="manifesto-title">Keep a line<br>through the noise.</h1>
-					<p class="manifesto__standfirst">A short instruction for moving with intent when the terrain refuses certainty.</p>
-				</section>
+			<h2>Break the wall</h2>
+			<p>A subheading every three or four paragraphs is not a stylistic flourish. It is a resting point, and it gives the skimmer a way to decide whether the next section is for them. Readers who skim and then come back are worth more than readers who bounce.</p>
+			<p>The same goes for paragraph length. Four lines is comfortable, eight is a wall. When a paragraph runs long, it is almost always because it is doing two jobs; splitting it usually improves the argument as well as the page.</p>
 
-				<section class="manifesto__chapter" data-chapter="OBSERVE">
-					<p class="chapter-index">01 — Observe</p>
-					<h2>Read the weather before the map.</h2>
-					<p>Plans are clean. Ground is not. Note the wind, the loose stone and the quiet change in light. Precision begins by looking again.</p>
-				</section>
+			<h2>Let the page be quiet</h2>
+			<p>Everything that moves competes with the sentence being read. This is the argument against most of what gets bolted onto article pages: the sticky share bar that eats a fifth of a phone screen, the newsletter modal at thirty per cent, the related-posts carousel that autoplays in the margin.</p>
+			<p>A progress indicator survives that test because it is peripheral. Three pixels along the top edge, or a small ring in a corner, is legible at a glance and invisible the rest of the time. If yours needs a label to explain it, it is too loud.</p>
 
-				<section class="manifesto__chapter" data-chapter="TRAVERSE">
-					<p class="chapter-index">02 — Traverse</p>
-					<h2>Choose the useful line.</h2>
-					<p>The shortest route is rarely the truest. Move across the slope, keep three points steady, and let each deliberate step redraw the way forward.</p>
-				</section>
+			<h2>Respect the reader's settings</h2>
+			<p>Some readers have asked their operating system for less motion, and a progress indicator is a good example of a thing that should still work for them. The information is useful; only the easing is decorative. Keep the number accurate and drop the smoothing.</p>
+			<p>The same applies to screen readers. A progress element with a role, a label and a value that updates is a small amount of markup and it turns an ornament into something that actually reports position.</p>
 
-				<section class="manifesto__chapter manifesto__chapter--final" data-chapter="RETURN">
-					<p class="chapter-index">03 — Return</p>
-					<h2>Finish at the mark.</h2>
-					<p>Carry back only what changed your judgement. A route is complete when the final coordinate is exact—and reversible all the way home.</p>
-					<span class="end-mark">END / 100</span>
-				</section>
-			</article>
-		</div>
+			<h2>Finish at the end</h2>
+			<p>An indicator that stops at ninety-seven per cent is worse than none at all, because the reader notices and stops trusting it. Clamp the last fraction so the page lands on an exact hundred at the bottom, and let the final paragraph have the room to be the last thing on the screen.</p>
+			<p>That is the whole trick, really. Tell the reader how far they have come, tell them the truth, and then get out of the way.</p>
+		</article>
 	</main>
 
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>

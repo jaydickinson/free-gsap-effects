@@ -5,43 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hover Underline Demo | GSAP Vault</title>
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main class="showcase-shell">
-        <header class="showcase-toolbar">
-            <p class="showcase-prompt">
-                <span class="showcase-prompt__dot" aria-hidden="true"></span>
-                <strong>Sweep or tab down</strong>
-                <span>Three links, three materials</span>
-            </p>
-        </header>
+    <main class="stage">
+        <p class="cue">Hover a link, or tab through them</p>
 
-        <section class="programme" data-underline-stage aria-label="Night Shift cultural programme navigation">
-            <div class="programme__masthead">
-                <p>Night Shift <span>/</span> Cultural programme</p>
-                <p>Oct—Dec <span>/</span> Citywide</p>
-            </div>
-
-            <nav class="programme__nav" aria-label="Programme">
-                <a id="programme-01" href="#programme-01" data-underline="slide" data-underline-color="#c8ff00">
-                    After Dark
-                </a>
-                <a id="programme-02" href="#programme-02" data-underline="fill" data-underline-color="#ff6b2c">
-                    Radio Body
-                </a>
-                <a id="programme-03" href="#programme-03" data-underline="wave" data-underline-color="#22d3ee">
-                    Soft Riot
-                </a>
-            </nav>
-
-            <div class="programme__footer" aria-hidden="true">
-                <p>Live art · sound · moving image</p>
-                <p class="programme-index"><span data-active-index>01</span><span>/03</span></p>
-            </div>
-        </section>
+        <nav class="links" data-underline-stage aria-label="Sections">
+            <a href="#after-dark" data-underline="slide" data-underline-color="#2f5bd7">After Dark</a>
+            <a href="#radio-body" data-underline="fill" data-underline-color="#b8532a">Radio Body</a>
+            <a href="#soft-riot" data-underline="wave" data-underline-color="#37675a">Soft Riot</a>
+            <a href="#long-wave" data-underline="travel" data-underline-color="#6d4a7e">Long Wave</a>
+        </nav>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>

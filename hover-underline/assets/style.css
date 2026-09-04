@@ -5,15 +5,17 @@
 }
 
 :root {
-    --black: #0a0a0a;
-    --paper: #f4f1e8;
-    --muted: #aaa79f;
-    --line: #353535;
-    --lime: #c8ff00;
-    --orange: #ff6b2c;
-    --cyan: #22d3ee;
-    --accent: var(--lime);
-    color-scheme: dark;
+    /* Paper and ink, plus three printer's colours. The three exist only so the
+       three underline materials can be told apart at a glance. */
+    --page: #f4f2ec;
+    --ink: #17171a;
+    --muted: rgba(23, 23, 26, 0.55);
+    --ink-blue: #2f5bd7;
+    --terracotta: #b8532a;
+    --moss: #37675a;
+    --plum: #6d4a7e;
+    --accent: var(--ink-blue);
+    color-scheme: light;
 }
 
 html,
@@ -22,191 +24,91 @@ body {
 }
 
 html {
-    background: var(--black);
+    background: var(--page);
     scroll-behavior: auto;
 }
 
 body {
     min-height: 100svh;
     overflow-x: hidden;
-    background: var(--black);
-    color: var(--paper);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
     background: var(--accent);
-    color: var(--black);
+    color: #fff;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-    border: 2px solid var(--black);
-    border-radius: 999px;
-    background: #454545;
-}
-
-.showcase-shell {
-    width: 100%;
+/* Full-bleed ground, three links, one cue line. */
+.stage {
+    display: grid;
+    align-content: center;
+    justify-items: start;
     min-height: 100svh;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    padding: clamp(0.75rem, 2vw, 1.5rem);
+    padding: clamp(1.5rem, 7vw, 5rem);
 }
 
-.showcase-toolbar {
-    display: flex;
-    align-items: center;
-    min-height: 2rem;
-    padding-bottom: clamp(0.65rem, 1.5vw, 1rem);
-}
-
-.showcase-prompt {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
+.cue {
+    margin-bottom: clamp(1.4rem, 4vh, 2.6rem);
     color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.58rem, 0.85vw, 0.7rem);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
 }
 
-.showcase-prompt strong {
-    color: var(--paper);
-    font-weight: 600;
-}
-
-.showcase-prompt__dot {
-    width: 0.45rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(--lime);
-    box-shadow: 0 0 0 4px rgb(200 255 0 / 12%);
-}
-
-.programme {
-    --active-color: var(--line);
-    min-height: 0;
+.links {
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    border: 1px solid var(--line);
-    background:
-        linear-gradient(90deg, transparent 49.9%, rgb(255 255 255 / 3%) 50%, transparent 50.1%),
-        var(--black);
-    transition: border-color 0.3s ease;
+    justify-items: start;
+    gap: clamp(0.9rem, 3.2vh, 2rem);
 }
 
-.programme.is-active {
-    border-color: var(--active-color);
-}
-
-.programme__masthead,
-.programme__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: clamp(0.7rem, 1.5vw, 1rem) clamp(0.85rem, 2.2vw, 1.75rem);
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.56rem, 0.85vw, 0.72rem);
-    letter-spacing: 0.08em;
-    line-height: 1.3;
-    text-transform: uppercase;
-}
-
-.programme__masthead {
-    border-bottom: 1px solid var(--line);
-}
-
-.programme__footer {
-    border-top: 1px solid var(--line);
-}
-
-.programme__masthead span {
-    margin-inline: 0.35rem;
-    color: var(--paper);
-}
-
-.programme__nav {
-    min-height: 0;
-    display: grid;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
-    background:
-        linear-gradient(var(--line), var(--line)) 0 33.333% / 100% 1px no-repeat,
-        linear-gradient(var(--line), var(--line)) 0 66.666% / 100% 1px no-repeat;
-}
-
-.programme__nav > a {
-    --hu-color: var(--lime);
+.links > a {
+    --hu-color: var(--ink-blue);
     position: relative;
-    min-width: 0;
-    align-self: center;
     display: inline-block;
-    width: fit-content;
-    max-width: calc(100% - clamp(1.7rem, 4.4vw, 3.5rem));
-    margin-left: clamp(0.85rem, 2.2vw, 1.75rem);
-    color: var(--paper);
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: clamp(2.8rem, 8.3vw, 6.6rem);
-    font-weight: 700;
-    line-height: 0.88;
-    letter-spacing: -0.065em;
+    max-width: 100%;
+    color: var(--ink);
+    font-size: clamp(2.6rem, 8.6vw, 6.5rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    /* The static underline is the no-JS state; the script removes it via
+       .hu-ready once the animated decoration is in place. */
     text-decoration-color: var(--hu-color);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.12em;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.14em;
     white-space: nowrap;
     isolation: isolate;
 }
 
-.programme__nav > a:nth-child(2) {
-    --hu-color: var(--orange);
+.links > a:nth-child(2) {
+    --hu-color: var(--terracotta);
 }
 
-.programme__nav > a:nth-child(3) {
-    --hu-color: var(--cyan);
+.links > a:nth-child(3) {
+    --hu-color: var(--moss);
 }
 
-.programme__nav > a::after {
-    content: '0' counter(programme-link);
-    counter-increment: programme-link;
-    position: absolute;
-    left: calc(100% + 0.7rem);
-    top: 50%;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.52rem, 0.8vw, 0.68rem);
-    font-weight: 500;
-    letter-spacing: 0;
-    opacity: 0.65;
-    transform: translateY(-50%);
+.links > a:nth-child(4) {
+    --hu-color: var(--plum);
 }
 
-.programme__nav {
-    counter-reset: programme-link;
-}
-
-.programme__nav > a.hu-ready {
+.links > a.hu-ready {
     text-decoration: none;
 }
 
-.programme__nav > a:focus-visible {
+.links > a:focus-visible {
     outline: 2px solid var(--hu-color);
-    outline-offset: 0.22em;
+    outline-offset: 0.2em;
 }
 
+/* Injected decoration. Each sits on the link's own box, so the three
+   materials share one geometry and differ only in how they animate. */
 .hu-line,
 .hu-fill,
-.hu-wave {
+.hu-wave,
+.hu-travel {
     position: absolute;
     left: 0;
     width: 100%;
@@ -242,61 +144,23 @@ body {
     overflow: visible;
 }
 
-.programme-index {
-    display: flex;
-    align-items: baseline;
-    min-width: 4.3em;
-    justify-content: flex-end;
-    color: var(--muted);
-    font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+/* The travelling wave is drawn wider than the link and slides sideways
+   forever, so the rail has to clip it: that clip is what hides the seam. */
+.hu-travel {
+    bottom: -0.115em;
+    height: 0.15em;
+    min-height: 9px;
     overflow: hidden;
 }
 
-.programme-index [data-active-index] {
-    display: inline-block;
-    color: var(--active-color);
-    font-size: 1.55em;
-    font-weight: 700;
-    transition: color 0.25s ease;
+.hu-travel svg {
+    display: block;
+    overflow: visible;
 }
 
 @media (max-width: 600px) {
-    .showcase-shell {
-        padding: 0.65rem;
-    }
-
-    .showcase-prompt span:last-child {
-        display: none;
-    }
-
-    .programme {
-        background: var(--black);
-    }
-
-    .programme__masthead p:last-child {
-        display: none;
-    }
-
-    .programme__nav > a {
-        max-width: calc(100% - 1.5rem);
-        margin-left: 0.75rem;
-        font-size: clamp(2.35rem, 12vw, 3.35rem);
-        white-space: normal;
-    }
-
-    .programme__nav > a::after {
-        left: auto;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    .programme__footer {
-        padding-inline: 0.75rem;
-    }
-
-    .programme__footer > p:first-child {
-        max-width: 12rem;
+    .links > a {
+        font-size: clamp(2.4rem, 13vw, 3.6rem);
     }
 }
 
@@ -311,17 +175,18 @@ body {
     }
 
     a[data-underline] {
-        color: var(--paper);
+        color: var(--ink);
         text-decoration-line: underline;
-        text-decoration-color: var(--hu-color, var(--lime));
-        text-decoration-thickness: 0.08em;
-        text-underline-offset: 0.12em;
+        text-decoration-color: var(--hu-color, var(--ink-blue));
+        text-decoration-thickness: 0.07em;
+        text-underline-offset: 0.14em;
         transform: none !important;
     }
 
     .hu-line,
     .hu-fill,
-    .hu-wave {
+    .hu-wave,
+    .hu-travel {
         display: none !important;
     }
 }

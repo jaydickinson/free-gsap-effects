@@ -23,7 +23,7 @@ A pinned hero that separates its background image, copy, and foreground card int
   <div class="layer layer--copy" data-parallax-speed="0.82">
     <h1>Wake up to the tide</h1>
     <p>Your lede.</p>
-    <a class="button" href="#book">Check availability</a>
+    <a class="hero-link" href="#book">Check availability</a>
   </div>
 
   <!-- Anything that should come toward the viewer -->
@@ -54,8 +54,8 @@ To reskin the demo, keep the four `.layer` wrappers and replace their contents. 
 
 Two rules worth keeping:
 
-- **Overscan the layers that paint something.** A background image that travels 176px will drag its edge into view unless the layer extends past the scene. The demo gives `.layer--backdrop` and `.layer--glow` `inset: -12%`. Layers that only carry content stay at `inset: 0`, otherwise the padding you lay that content out with starts off-screen.
-- **Put interactive content back in the flow.** `.layer` sets `pointer-events: none` so the stacked layers do not block each other; the demo restores `pointer-events: auto` on `.copy-column` and `.rate-card` so links and buttons still work.
+- **Overscan the layers that paint something.** A background image that travels 160px will drag its edge into view unless the layer extends past the scene, and it needs slack for its ending scale too. The demo gives `.layer--backdrop` `inset: -18%` and the wash behind the copy `inset: -16%`. Layers that only carry content stay at `inset: 0`, otherwise the padding you lay that content out with starts off-screen.
+- **Put interactive content back in the flow.** `.layer` sets `pointer-events: none` so the stacked layers do not block each other; the demo restores `pointer-events: auto` on `.copy-column` and `.rate-card` so links inside them still work.
 
 ## Options
 
@@ -109,18 +109,19 @@ Keep the deepest and nearest values far apart so the separation develops clearly
 
 Decorative images should use an empty `alt` attribute. The layer moves, expands, softens, and dims from the same scrubbed progress, so the photograph recedes as the copy travels over it.
 
-### Add a Scroll Meter
+### Add a Scroll Progress Cue
 
 **Add inside your `[data-parallax]` scene:**
 
 ```html
-<div class="scroll-meter" aria-hidden="true">
-  <span class="scroll-meter__track"><span data-parallax-fill></span></span>
+<div class="scroll-cue" aria-hidden="true">
+  <span>Scroll</span>
+  <span class="scroll-cue__track"><span data-parallax-fill></span></span>
   <span><span data-parallax-progress>000</span>%</span>
 </div>
 ```
 
-`[data-parallax-fill]` is scaled from `scaleX(0)` to `scaleX(1)` and `[data-parallax-progress]` counts `000`–`100`, both on the same timeline. Both are optional; omit them and the script skips them.
+`[data-parallax-fill]` is scaled from `scaleX(0)` to `scaleX(1)` and `[data-parallax-progress]` counts `000`–`100`, both on the same timeline. Both are optional; omit them and the script skips them. The demo ships the filling line only, without the numeric readout.
 
 ### Disable Lenis
 
@@ -136,7 +137,7 @@ You can also append `?smooth=off` to the URL. The ScrollTrigger effect works wit
 
 A scene gets one GSAP timeline whose ScrollTrigger starts at `top top`, pins the hero, and ends after the selected runway. For each layer, the y destination is calculated as `(1 - speed) × distance`. A `0.2` background therefore drifts down while a `1.3` foreground card travels up, creating visible separation across a deliberate but still self-contained hero sequence.
 
-Horizontal travel, rotation, scale, blur, and opacity attributes are added to the same tween, as are the optional scroll meter responses, so every element stays synchronized, scrubbed, and reversible. `invalidateOnRefresh` recalculates the runway after layout changes.
+Horizontal travel, rotation, scale, blur, and opacity attributes are added to the same tween, as are the optional scroll cue responses, so every element stays synchronized, scrubbed, and reversible. `invalidateOnRefresh` recalculates the runway after layout changes.
 
 ## Composition Notes
 

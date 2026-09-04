@@ -6,7 +6,7 @@ Typewriter Text is a production-ready GSAP animation effect from GSAP Vault. Thi
 
 - Product: Typewriter Text
 - Type: animation effect
-- Description: A sharp terminal-style typewriter that types, holds, accelerates through deletion, and cycles to the next phrase in sync with cursor and progress signals.
+- Description: A typewriter that types a line character by character, holds it, accelerates through deletion, and cycles to the next phrase, with optional cursor, status and progress hooks.
 - GSAP plugins: ScrollTrigger
 - Techniques: text-animation, typewriter, scroll-reveal, infinite-loop
 - Lenis smooth scrolling: not required

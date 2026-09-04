@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scroll Text Highlight Demo | GSAP Vault</title>
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <main class="reading-sequence" data-reading-sequence data-thumbnail-target>
         <section class="reading-stage" aria-label="Scroll-controlled editorial statement">
             <header class="stage-meta" aria-hidden="true">
                 <p class="scroll-cue"><span></span>Scroll to read</p>
-                <p>EDIT / 001</p>
             </header>
 
             <p class="scroll-highlight manifesto"
-               data-highlight-dim="0.13"
+               data-highlight-dim="0.3"
                data-highlight-lift="8"
                data-highlight-trigger="[data-reading-sequence]"
                data-highlight-progress="[data-reading-progress]"
@@ -27,7 +23,7 @@
             </p>
 
             <footer class="reading-coordinate" aria-hidden="true">
-                <span class="coordinate-label">ATTN / SEQUENCE</span>
+                <span class="coordinate-label">Reading sequence</span>
                 <span class="progress-track"><span class="progress-fill" data-reading-progress></span></span>
                 <span class="coordinate-count" data-reading-current>26 / 26</span>
             </footer>

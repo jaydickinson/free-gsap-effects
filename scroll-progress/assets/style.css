@@ -5,312 +5,143 @@
 }
 
 :root {
-	--black: #080908;
-	--surface: #10120f;
-	--paper: #dedfd5;
-	--ink: #171914;
-	--muted: #8d9185;
-	--border: rgba(222, 223, 213, 0.18);
-	--line: var(--border);
-	--accent: #c8ff00;
-	--orange: #ff6b1a;
-	color-scheme: dark;
+	/* A reading page, because that is where a reading-progress indicator
+	   lives. One accent, used only by the indicators. */
+	--page: #f5f4f0;
+	--ink: #17171a;
+	--muted: rgba(23, 23, 26, 0.62);
+	--line: rgba(23, 23, 26, 0.14);
+	--accent: #2f5f6b;
+	--track: rgba(23, 23, 26, 0.1);
+	color-scheme: light;
 }
 
 html {
 	scroll-behavior: auto;
-	scrollbar-color: var(--accent) var(--black);
+	scrollbar-color: rgba(23, 23, 26, 0.28) var(--page);
 	scrollbar-width: thin;
 }
 
 body {
 	min-width: 320px;
-	background: var(--black);
-	color: var(--paper);
-	font-family: 'Space Grotesk', system-ui, sans-serif;
+	background: var(--page);
+	color: var(--ink);
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	overflow-x: clip;
 }
 
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--accent); }
+::-webkit-scrollbar-track { background: var(--page); }
+::-webkit-scrollbar-thumb { background: rgba(23, 23, 26, 0.28); }
 
 ::selection {
 	background: var(--accent);
-	color: var(--black);
+	color: #fff;
 }
 
 button { font: inherit; }
 
-/* Compact stage controls */
+/* Page furniture: one prompt line and the switcher that shows the four styles. */
 .showcase-toolbar {
 	position: sticky;
 	top: 0;
 	z-index: 40;
-	height: 48px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
-	padding: 0 2.25rem;
+	height: 48px;
+	padding: 0 clamp(1rem, 4vw, 2.25rem);
 	border-bottom: 1px solid var(--line);
-	background: rgba(8, 9, 8, 0.94);
+	background: rgba(245, 244, 240, 0.94);
 	backdrop-filter: blur(14px);
 }
 
 .showcase-prompt {
 	display: flex;
-	gap: 0.65rem;
 	align-items: center;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.65rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
+	gap: 0.5rem;
+	color: var(--muted);
+	font-size: 0.8rem;
 	white-space: nowrap;
 }
 
-.showcase-prompt span { color: var(--orange); }
+.showcase-prompt span { color: var(--accent); }
 
 .mode-switcher {
 	display: flex;
-	gap: 0.2rem;
+	gap: 0.15rem;
 	padding: 0.2rem;
 	border: 1px solid var(--line);
+	border-radius: 6px;
 }
 
 .mode-switcher button {
-	min-width: 2.8rem;
+	min-width: 2.6rem;
+	padding: 0.3rem 0.6rem;
 	border: 0;
-	padding: 0.3rem 0.58rem;
+	border-radius: 4px;
 	background: transparent;
 	color: var(--muted);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.62rem;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
+	font-size: 0.78rem;
 	cursor: pointer;
 }
 
-.mode-switcher button:hover,
-.mode-switcher button:focus-visible {
-	color: var(--paper);
-	outline: 1px solid var(--accent);
-	outline-offset: -1px;
-}
+.mode-switcher button:hover { color: var(--ink); }
+.mode-switcher button:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
 
 .mode-switcher button[aria-pressed='true'] {
 	background: var(--accent);
-	color: var(--black);
+	color: #fff;
 }
 
-/* Field note composition */
-.field-note {
-	--route-color: var(--orange);
-	position: relative;
-	background:
-		radial-gradient(circle at 12% 26%, color-mix(in srgb, var(--route-color) 10%, transparent), transparent 30rem),
-		var(--black);
-	transition: background-color 180ms linear;
+/* Plausible page content: the article the indicators are measuring. */
+.page {
+	padding: clamp(2.5rem, 7vw, 5rem) clamp(1.15rem, 5vw, 2.5rem) clamp(5rem, 12vh, 9rem);
 }
 
-.field-note__layout {
-	width: min(1160px, 100%);
+.article {
+	width: min(100%, 40rem);
 	margin: 0 auto;
-	display: grid;
-	grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr);
-	gap: clamp(3rem, 8vw, 8rem);
-	padding: 0 clamp(2rem, 5vw, 4rem);
 }
 
-.instrument {
-	position: sticky;
-	top: 48px;
-	height: calc(100vh - 48px);
-	height: calc(100svh - 48px);
-	align-self: start;
-	display: grid;
-	grid-template-columns: 1fr 0.68fr;
-	grid-template-rows: auto 1fr auto;
-	gap: 1.25rem 2rem;
-	padding: clamp(1.5rem, 4vh, 3rem) 0;
-	border-right: 1px solid var(--line);
-}
-
-.instrument::before,
-.instrument::after {
-	content: '';
-	position: absolute;
-	right: -4px;
-	width: 7px;
-	height: 1px;
-	background: var(--route-color);
-}
-
-.instrument::before { top: 12%; }
-.instrument::after { bottom: 12%; }
-
-.instrument__topline {
-	grid-column: 1 / -1;
-	display: flex;
-	justify-content: space-between;
-	padding-right: 2rem;
+.eyebrow {
 	color: var(--muted);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.61rem;
-	letter-spacing: 0.14em;
+	font-size: 0.82rem;
 }
 
-.instrument__dial {
-	align-self: center;
-	justify-self: start;
-}
-
-.route {
-	position: relative;
-	align-self: stretch;
-	min-height: 230px;
-}
-
-.route__stops {
-	height: 100%;
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: 0.2rem 1.35rem;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.58rem;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-	color: #5f635a;
-}
-
-.route__stops li {
-	position: relative;
-	transition: color 160ms linear, transform 160ms linear;
-}
-
-.route__stops li::before {
-	content: '';
-	position: absolute;
-	left: -1.55rem;
-	top: 50%;
-	width: 7px;
-	height: 7px;
-	border: 1px solid #55594f;
-	background: var(--black);
-	transform: translateY(-50%);
-}
-
-.route__stops li.is-active {
-	color: var(--route-color);
-	transform: translateX(4px);
-}
-
-.route__stops li.is-active::before {
-	border-color: var(--route-color);
-	background: var(--route-color);
-	box-shadow: 0 0 14px color-mix(in srgb, var(--route-color) 50%, transparent);
-}
-
-.route__stops span { margin-right: 0.45rem; }
-
-.instrument__readout {
-	grid-column: 1 / -1;
-	display:flex;
-	align-items: end;
-	justify-content: space-between;
-	gap: 1rem;
-	padding-right: 2rem;
-}
-
-.instrument__chapter span {
-	display: block;
-	margin-bottom: 0.35rem;
-	color: var(--muted);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.58rem;
-	letter-spacing: 0.15em;
-}
-
-.instrument__chapter strong {
-	font-family: 'Syne', sans-serif;
-	font-size: clamp(1.3rem, 3vw, 2.4rem);
-	line-height: 1;
-	color: var(--route-color);
-}
-
-/* Editorial content */
-.manifesto { width: min(100%, 560px); }
-
-.manifesto__chapter {
-	min-height: 68vh;
-	min-height: 68svh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: clamp(3rem, 8vh, 6rem) 0;
-	border-bottom: 1px solid var(--line);
-}
-
-.manifesto__chapter--lead {
-	min-height: calc(100vh - 48px);
-	min-height: calc(100svh - 48px);
-}
-
-.manifesto__chapter--final {
-	min-height: calc(100vh - 48px);
-	min-height: calc(100svh - 48px);
-	border-bottom: 0;
-}
-
-.eyebrow,
-.chapter-index,
-.end-mark {
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.66rem;
-	line-height: 1.4;
-	letter-spacing: 0.15em;
-	text-transform: uppercase;
-	color: var(--route-color);
-}
-
-.manifesto h1,
-.manifesto h2 {
-	font-family: 'Syne', sans-serif;
-	letter-spacing: -0.045em;
-}
-
-.manifesto h1 {
-	max-width: 10ch;
-	margin: 1.2rem 0 1.5rem;
-	font-size: clamp(3rem, 6.5vw, 6.2rem);
-	font-weight: 700;
-	line-height: 0.88;
-}
-
-.manifesto h2 {
-	max-width: 12ch;
-	margin: 1rem 0 1.25rem;
-	font-size: clamp(2.1rem, 4.5vw, 4.6rem);
+.article h1 {
+	margin: 0.75rem 0 1.1rem;
+	font-size: clamp(2.1rem, 6vw, 3.4rem);
 	font-weight: 650;
-	line-height: 0.95;
+	line-height: 1.04;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
 }
 
-.manifesto__standfirst,
-.manifesto__chapter > p:last-of-type {
-	max-width: 34rem;
-	color: #a8ab9f;
-	font-size: clamp(1rem, 1.5vw, 1.2rem);
-	line-height: 1.65;
+.standfirst {
+	margin-bottom: 2.4rem;
+	padding-bottom: 2.4rem;
+	border-bottom: 1px solid var(--line);
+	color: var(--muted);
+	font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+	line-height: 1.55;
 }
 
-.end-mark {
-	align-self: flex-end;
-	margin-top: 3rem;
-	padding: 0.55rem 0.7rem;
-	border: 1px solid var(--route-color);
+.article h2 {
+	margin: 2.9rem 0 1rem;
+	font-size: clamp(1.35rem, 3vw, 1.75rem);
+	font-weight: 620;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.article p + p { margin-top: 1.15rem; }
+
+.article > p {
+	font-size: clamp(1rem, 1.4vw, 1.09rem);
+	line-height: 1.68;
 }
 
 /* Buyer API: top/bottom bar */
@@ -321,7 +152,7 @@ button { font: inherit; }
 	z-index: 100;
 	width: 100%;
 	height: 3px;
-	background: rgba(255, 255, 255, 0.1);
+	background: var(--track);
 	transition: opacity 160ms linear;
 }
 
@@ -330,7 +161,7 @@ button { font: inherit; }
 .progress-bar__fill {
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(90deg, var(--orange), var(--accent));
+	background: var(--accent);
 	transform: scaleX(0);
 	transform-origin: left center;
 	will-change: transform;
@@ -339,58 +170,52 @@ button { font: inherit; }
 /* Buyer API: circular ring */
 .progress-circle {
 	position: fixed;
-	right: 2rem;
-	bottom: 2rem;
+	right: 1.5rem;
+	bottom: 1.5rem;
 	z-index: 30;
-	width: 76px;
+	width: 74px;
 	aspect-ratio: 1;
+	border-radius: 50%;
+	background: var(--page);
 	transition: opacity 160ms linear;
 }
 
-.progress-circle--top-right { top: 2rem; bottom: auto; }
-.progress-circle--top-left { top: 2rem; right: auto; bottom: auto; left: 2rem; }
-.progress-circle--bottom-left { right: auto; left: 2rem; }
+.progress-circle--top-right { top: 1.5rem; bottom: auto; }
+.progress-circle--top-left { top: 1.5rem; right: auto; bottom: auto; left: 1.5rem; }
+.progress-circle--bottom-left { right: auto; left: 1.5rem; }
 .progress-circle__svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .progress-circle__bg,
-.progress-circle__fill,
-.progress-circle__crosshair { fill: none; }
-.progress-circle__bg { stroke: var(--line); stroke-width: 1.5; }
+.progress-circle__fill { fill: none; }
+.progress-circle__bg { stroke: var(--track); stroke-width: 3; }
 .progress-circle__fill {
-	stroke: var(--route-color, var(--accent));
+	stroke: var(--accent);
 	stroke-width: 3;
-	stroke-linecap: square;
+	stroke-linecap: butt;
 	stroke-dashoffset: 327;
 	will-change: stroke-dashoffset;
 }
-.progress-circle__crosshair { stroke: rgba(222, 223, 213, 0.32); stroke-width: 1; }
 .progress-circle__text {
 	position: absolute;
 	inset: 0;
 	display: grid;
 	place-items: center;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.68rem;
-	color: var(--route-color, var(--accent));
-}
-
-.instrument__dial.progress-circle {
-	position: relative;
-	right: auto;
-	bottom: auto;
-	z-index: auto;
-	width: min(16vw, 172px);
-	min-width: 126px;
+	/* Mono keeps the digits from shuffling sideways as the number changes. */
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	font-size: 0.78rem;
+	color: var(--ink);
 }
 
 /* Buyer API: side rail */
 .progress-rail {
 	position: fixed;
 	top: 0;
-	right: 0;
-	z-index: 30;
-	width: 3px;
+	left: 0;
+	/* Above the demo's sticky toolbar, so the rail reads full height. */
+	z-index: 50;
+	width: 4px;
 	height: 100vh;
-	background: var(--line);
+	height: 100svh;
+	background: var(--track);
 	transition: opacity 160ms linear;
 }
 .progress-rail--left { right: auto; left: 0; }
@@ -398,117 +223,67 @@ button { font: inherit; }
 .progress-rail__fill {
 	width: 100%;
 	height: 100%;
-	background: var(--route-color, var(--accent));
+	background: var(--accent);
 	transform: scaleY(0);
 	transform-origin: center top;
 	will-change: transform;
-}
-.route > .progress-rail {
-	position: absolute;
-	left: 0;
-	right: auto;
-	z-index: 0;
-	height: 100%;
 }
 
 /* Buyer API: percentage counter */
 .progress-counter {
 	position: fixed;
-	bottom: 2rem;
-	left: 2rem;
+	bottom: 1.5rem;
+	left: 1.5rem;
 	z-index: 30;
 	display: flex;
 	align-items: baseline;
-	gap: 0.18em;
-	font-family: 'JetBrains Mono', monospace;
+	gap: 0.08em;
+	/* A paper chip so the number stays legible over the text it floats above. */
+	padding: 0.35rem 0.6rem;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: var(--page);
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 	transition: opacity 160ms linear;
 }
-.progress-counter--top-left { top: 2rem; bottom: auto; }
-.progress-counter--top-right { top: 2rem; right: 2rem; bottom: auto; left: auto; }
-.progress-counter--bottom-right { right: 2rem; left: auto; }
-.progress-counter__prefix,
-.progress-counter__symbol { color: var(--muted); font-size: 0.65rem; }
+.progress-counter--top-left { top: 1.5rem; bottom: auto; }
+.progress-counter--top-right { top: 1.5rem; right: 1.5rem; bottom: auto; left: auto; }
+.progress-counter--bottom-right { right: 1.5rem; left: auto; }
+.progress-counter__symbol { color: var(--muted); font-size: 1rem; line-height: 1; }
 .progress-counter__value {
 	min-width: 3ch;
-	color: var(--route-color, var(--accent));
-	font-size: 2rem;
+	color: var(--accent);
+	font-size: 1.6rem;
 	font-weight: 600;
 	line-height: 1;
 	text-align: right;
 }
-.instrument__readout .progress-counter {
-	position: static;
-	z-index: auto;
-}
 
-/* The semantic switcher isolates a channel without changing the stage. */
-body:not([data-mode='all']) .instrument__dial,
-body:not([data-mode='all']) .route,
-body:not([data-mode='all']) .progress-counter,
-body:not([data-mode='all']) > .progress-bar { opacity: 0.12; }
-body[data-mode='bar'] > .progress-bar,
-body[data-mode='circle'] .instrument__dial,
-body[data-mode='rail'] .route,
+/* The switcher fades the other three back rather than removing them, so their
+   placement on the page stays visible while one is being looked at. */
+body:not([data-mode='all']) .progress-bar,
+body:not([data-mode='all']) .progress-rail,
+body:not([data-mode='all']) .progress-circle,
+body:not([data-mode='all']) .progress-counter { opacity: 0.12; }
+body[data-mode='bar'] .progress-bar,
+body[data-mode='circle'] .progress-circle,
+body[data-mode='rail'] .progress-rail,
 body[data-mode='counter'] .progress-counter { opacity: 1; }
 
 @media (max-width: 760px) {
-	.showcase-toolbar {
-		height: 44px;
-		padding: 0 0.75rem;
-		gap: 0.5rem;
-	}
-	.showcase-prompt { font-size: 0.55rem; }
-	.mode-switcher button { min-width: 2rem; padding-inline: 0.35rem; font-size: 0.55rem; }
-	.field-note__layout { display: block; padding: 0 1.1rem; }
-	.instrument {
-		top: 44px;
-		z-index: 20;
-		height: 174px;
-		grid-template-columns: 76px 1fr auto;
-		grid-template-rows: auto 1fr;
-		gap: 0.65rem 1rem;
-		padding: 0.8rem 0;
-		border-right: 0;
-		border-bottom: 1px solid var(--line);
-		background: rgba(8, 9, 8, 0.96);
-		backdrop-filter: blur(12px);
-	}
-	.instrument::before,
-	.instrument::after { display: none; }
-	.instrument__topline { grid-column: 1 / -1; padding-right: 0; }
-	.instrument__dial.progress-circle { grid-column: 1; width: 70px; min-width: 0; align-self: center; }
-	.route { grid-column: 2; min-height: 92px; }
-	.route__stops { padding-right: 0; font-size: 0; }
-	.route__stops span { font-size: 0.52rem; }
-	.instrument__readout {
-		grid-column: 3;
-		align-self: center;
-		flex-direction: column;
-		align-items: flex-end;
-		justify-content: center;
-		padding-right: 0;
-	}
-	.instrument__chapter strong { font-size: 0.92rem; }
-	.instrument__chapter span { font-size: 0.48rem; }
-	.progress-counter__value { font-size: 1.35rem; }
-	.manifesto { width: 100%; }
-	.manifesto__chapter,
-	.manifesto__chapter--lead,
-	.manifesto__chapter--final {
-		min-height: 54svh;
-		padding: 3.5rem 0;
-	}
-	.manifesto__chapter--lead { min-height: 68svh; padding-top: 5rem; }
-	.manifesto h1 { font-size: clamp(2.8rem, 14vw, 4.5rem); }
-	.manifesto h2 { font-size: clamp(2rem, 10vw, 3.4rem); }
-	.manifesto__standfirst,
-	.manifesto__chapter > p:last-of-type { font-size: 1rem; line-height: 1.55; }
+	.showcase-toolbar { height: 44px; gap: 0.5rem; padding: 0 0.75rem; }
+	.showcase-prompt { font-size: 0.72rem; }
+	.mode-switcher button { min-width: 2rem; padding-inline: 0.4rem; font-size: 0.72rem; }
+	.progress-circle { right: 1rem; bottom: 1rem; width: 62px; }
+	.progress-counter { bottom: 1rem; left: 1rem; }
+	.progress-counter__value { font-size: 1.3rem; }
+	/* The article ends above the fixed corner indicators. */
+	.page { padding-bottom: 7rem; }
 }
 
-@media (max-width: 420px) {
-	.showcase-prompt { max-width: none; white-space: nowrap; line-height: 1.15; }
+@media (max-width: 400px) {
 	.mode-switcher { gap: 0; }
-	.mode-switcher button { min-width: 1.75rem; }
+	.mode-switcher button { min-width: 1.7rem; padding-inline: 0.3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

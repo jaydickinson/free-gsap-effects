@@ -5,433 +5,98 @@
 }
 
 :root {
-    --black: #050706;
-    --ink: #f2f7f3;
-    --muted: #8d9b92;
-    --line: #253128;
-    --lime: #b7ff37;
-    --cyan: #27e6f2;
-    --accent: var(--lime);
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    color-scheme: dark;
+    --page: #ececeb;
+    --surface: #f7f7f6;
+    --ink: #141412;
+    --ink-dim: rgba(20, 20, 18, 0.72);
+    --rule: rgba(20, 20, 18, 0.14);
+    --rule-strong: rgba(20, 20, 18, 0.3);
+
+    /* The caret is the thing the effect moves: it carries the accent. */
+    --accent: #e5322d;
+    --accent-ink: #ffffff;
+
+    color-scheme: light;
 }
 
-html,
-body {
-    min-height: 100%;
+html {
+    background: var(--page);
 }
 
 body {
-    min-width: 0;
-    background: var(--black);
+    min-width: 320px;
+    background: var(--page);
     color: var(--ink);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    overflow-x: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.4;
 }
 
-button,
-input,
-textarea,
-select {
-    font: inherit;
-}
-
-button {
-    color: inherit;
-}
-
 ::selection {
-    background: var(--lime);
-    color: var(--black);
+    background: var(--accent);
+    color: var(--accent-ink);
 }
 
-::-webkit-scrollbar {
-    width: 8px;
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--line);
-    border: 2px solid var(--black);
-}
-
-.showcase-shell {
-    min-height: 100svh;
-    padding: clamp(0.65rem, 1.6vw, 1.25rem);
-}
-
-.command-stage {
-    position: relative;
-    isolation: isolate;
+/* Full-bleed ground, one line, nothing else. */
+.stage {
     display: grid;
-    grid-template-rows: auto 1fr auto;
-    width: 100%;
-    min-height: calc(100svh - clamp(1.3rem, 3.2vw, 2.5rem));
-    overflow: hidden;
-    border: 1px solid var(--line);
-    background:
-        radial-gradient(circle at 78% 48%, rgba(39, 230, 242, 0.045), transparent 34%),
-        var(--black);
+    place-items: center;
+    min-height: 100svh;
+    padding: clamp(1.25rem, 6vw, 5rem);
 }
 
-.command-stage::before,
-.command-stage::after {
-    content: '';
-    position: absolute;
-    z-index: 3;
-    pointer-events: none;
-}
-
-.command-stage::before {
-    inset: 0;
-    background: linear-gradient(90deg, rgba(183, 255, 55, 0.018), transparent 28%, transparent 72%, rgba(39, 230, 242, 0.018));
-}
-
-.command-stage::after {
-    top: 0;
-    right: clamp(1rem, 3vw, 2.5rem);
-    width: 1px;
-    height: 2.5rem;
-    background: var(--cyan);
-    box-shadow: 0 0 18px rgba(39, 230, 242, 0.75);
-    opacity: 0.55;
-}
-
-.terminal-grid {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background-image:
-        linear-gradient(rgba(183, 255, 55, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(183, 255, 55, 0.035) 1px, transparent 1px);
-    background-size: 4.5rem 4.5rem;
-    mask-image: linear-gradient(to bottom, transparent, #000 28%, #000 72%, transparent);
-    opacity: 0.35;
-    transform: scale(1.02);
-    transition: opacity 500ms ease, transform 800ms var(--ease-out-expo);
-}
-
-.terminal-glow {
-    position: absolute;
-    z-index: -1;
-    left: 20%;
-    top: 50%;
-    width: min(58rem, 82vw);
-    height: 15rem;
-    border-radius: 50%;
-    background: rgba(183, 255, 55, 0.1);
-    filter: blur(90px);
-    opacity: 0.15;
-    transform: translate(-18%, -50%) scale(0.82);
-    transition: background-color 250ms ease, opacity 500ms ease, transform 700ms var(--ease-out-expo);
-}
-
-.command-stage[data-phase='typing'] .terminal-grid {
-    opacity: 0.52;
-    transform: scale(1);
-}
-
-.command-stage[data-phase='typing'] .terminal-glow {
-    opacity: 0.3;
-    transform: translate(-10%, -50%) scale(1);
-}
-
-.command-stage[data-phase='holding'] .terminal-glow {
-    background: rgba(39, 230, 242, 0.11);
-    opacity: 0.27;
-    transform: translate(8%, -50%) scale(0.9);
-}
-
-.command-stage[data-phase='deleting'] .terminal-grid {
-    opacity: 0.2;
-    transform: scale(0.985);
-}
-
-.command-stage[data-phase='deleting'] .terminal-glow {
-    background: rgba(39, 230, 242, 0.13);
-    opacity: 0.18;
-    transform: translate(18%, -50%) scale(0.68);
-}
-
-.terminal-bar,
-.terminal-status {
-    position: relative;
-    z-index: 4;
+.line {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: clamp(0.85rem, 2vw, 1.35rem) clamp(1rem, 3vw, 2.5rem);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.62rem, 0.8vw, 0.72rem);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-.terminal-bar {
-    border-bottom: 1px solid var(--line);
-}
-
-.terminal-id {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    color: var(--muted);
-}
-
-.signal {
-    position: relative;
-    width: 0.48rem;
-    height: 0.48rem;
-    border-radius: 50%;
-    background: var(--lime);
-    box-shadow: 0 0 12px rgba(183, 255, 55, 0.65);
-}
-
-.command-stage[data-phase='holding'] .signal::after {
-    content: '';
-    position: absolute;
-    inset: -0.3rem;
-    border: 1px solid var(--cyan);
-    border-radius: inherit;
-    animation: signal-pulse 650ms var(--ease-out-expo) 1 both;
-}
-
-@keyframes signal-pulse {
-    from { opacity: 0.8; transform: scale(0.45); }
-    to { opacity: 0; transform: scale(1.45); }
-}
-
-html:not(.typewriter-ready) .replay-control {
-    visibility: hidden;
-}
-
-.replay-control {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.55rem 0.75rem;
-    border: 1px solid var(--line);
-    background: transparent;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: inherit;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
-.replay-control:hover,
-.replay-control:focus-visible {
-    color: var(--black);
-    border-color: var(--lime);
-    background: var(--lime);
-    outline: none;
-}
-
-.command-core {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
+    width: min(64rem, 100%);
     min-width: 0;
-    padding: clamp(2rem, 6vw, 5.5rem) clamp(1rem, 4vw, 4rem);
-}
-
-.command-label {
-    margin-bottom: clamp(1.1rem, 2.5vw, 1.8rem);
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(0.65rem, 0.9vw, 0.78rem);
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-}
-
-.command-label span {
-    margin-right: 0.75rem;
-    color: var(--cyan);
-}
-
-.command-row {
-    display: flex;
-    align-items: flex-start;
-    min-width: 0;
-}
-
-.command-prompt {
-    flex: 0 0 auto;
-    margin-right: clamp(0.65rem, 1.5vw, 1.2rem);
-    color: var(--cyan);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 400;
-}
-
-.command-line {
-    flex: 1 1 auto;
-    min-width: 0;
-    color: var(--ink);
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: clamp(2.15rem, 5.2vw, 3rem);
-    font-weight: 800;
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+    font-size: clamp(1.75rem, 5.5vw, 3.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
     white-space: nowrap;
 }
 
-.has-js:not(.typewriter-ready) .command-line {
+/* The script measures every phrase before it types, so the line stays hidden
+   until it is fitted rather than flashing at its unfitted size. */
+.has-js:not(.typewriter-ready) .line {
     visibility: hidden;
 }
 
-.command-cursor,
 .typewriter__cursor {
     display: inline-block;
     flex: 0 0 auto;
-    width: clamp(0.32rem, 0.7vw, 0.55rem);
-    height: clamp(2.05rem, 5vw, 3.85rem);
-    margin-left: clamp(0.45rem, 0.9vw, 0.75rem);
-    background: var(--lime);
-    box-shadow: 0 0 20px rgba(183, 255, 55, 0.35);
-    transform: translateY(0.16em) scaleY(1);
-    transform-origin: bottom;
-    transition: background-color 160ms ease, box-shadow 160ms ease, transform 240ms var(--ease-out-expo), opacity 160ms ease;
+    width: 0.08em;
+    height: 1em;
+    margin-left: 0.14em;
+    background: var(--accent);
+    animation: type-cursor 0.75s steps(1) infinite;
 }
 
-.command-stage[data-phase='holding'] .command-cursor,
-.command-stage[data-phase='holding'] .typewriter__cursor {
-    background: var(--cyan);
-    box-shadow: 0 0 24px rgba(39, 230, 242, 0.55);
-    transform: translateY(0.16em) scaleY(0.72);
-}
-
-.command-stage[data-phase='deleting'] .command-cursor,
-.command-stage[data-phase='deleting'] .typewriter__cursor {
-    background: var(--cyan);
-    box-shadow: 0 0 14px rgba(39, 230, 242, 0.45);
-    transform: translateY(0.16em) scaleY(0.42);
-}
-
-.terminal-status {
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-}
-
-.status-code {
-    width: 5.4rem;
-    color: var(--lime);
-}
-
-.command-stage[data-phase='holding'] .status-code,
-.command-stage[data-phase='deleting'] .status-code {
-    color: var(--cyan);
-}
-
-.status-track {
-    position: relative;
-    flex: 1;
-    max-width: 18rem;
-    height: 1px;
-    overflow: hidden;
-    background: var(--line);
-}
-
-.status-track span {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, var(--lime), var(--cyan));
-    box-shadow: 0 0 12px rgba(39, 230, 242, 0.7);
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.status-meta {
-    text-align: right;
-}
-
-@media (max-width: 600px) {
-    .showcase-shell {
-        padding: 0.5rem;
-    }
-
-    .command-stage {
-        min-height: calc(100svh - 1rem);
-    }
-
-    .terminal-bar,
-    .terminal-status {
-        padding: 0.85rem;
-    }
-
-    .terminal-id span:last-child {
-        display: none;
-    }
-
-    .replay-control {
-        min-height: 2.65rem;
-    }
-
-    .command-core {
-        padding: 2.5rem 0.9rem;
-    }
-
-    .command-row {
-        align-items: flex-start;
-    }
-
-    .command-prompt {
-        margin-right: 0.5rem;
-        line-height: 1;
-    }
-
-    .command-line {
-        font-size: clamp(2.05rem, 10.5vw, 3.1rem);
-        line-height: 1.02;
-        white-space: nowrap;
-    }
-
-    .command-cursor,
-    .typewriter__cursor {
-        height: 2.2rem;
-        margin-left: 0.35rem;
-    }
-
-    .status-track {
-        max-width: none;
-    }
-
-    .status-meta {
-        display: none;
-    }
+@keyframes type-cursor {
+    50% { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
-        scroll-behavior: auto !important;
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
 
-    .has-js .command-line {
+    .has-js .line {
         visibility: visible;
     }
 
-    .replay-control,
-    .command-cursor,
     .typewriter__cursor {
         display: none;
-    }
-
-    .terminal-grid,
-    .terminal-glow {
-        transform: none;
     }
 }

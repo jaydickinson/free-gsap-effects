@@ -47,7 +47,7 @@ A tactile, accessible two-sided card effect with deep perspective, directional f
 | `data-flip-group` | `auto-close` | none | Put on a shared ancestor to close other open cards when one opens. |
 | `data-flip-stagger` | present | absent | Adds the optional staggered ScrollTrigger entrance to cards inside the container. |
 | `.flipped` | present / absent | absent | Public state class for programmatic control. |
-| `--card-accent` | any CSS color | cyan | Per-card face, edge, and focus color. |
+| `--card-accent` | any CSS color | light grey stock | Per-card front-face colour. The edge-light and focus ring follow `--accent`. |
 
 ## Trigger Examples
 
@@ -109,7 +109,7 @@ Pressing Escape closes every card initialized by the effect. The script also kee
 
 ```css
 .flip-card {
-  --card-accent: #c7f36b;
+  --card-accent: #ccced4;
   max-width: 320px;
   aspect-ratio: 0.76;
 }

@@ -5,43 +5,42 @@
 }
 
 :root {
-	--black: #050505;
-	--paper: #f4f1e8;
-	--lime: #c8ff00;
-	--orange: #ff5a1f;
-	--cyan: #20d9ff;
-	--muted: #969696;
-	--line: rgba(244, 241, 232, 0.2);
-	color-scheme: dark;
+	/* Ordinary page content revealing on scroll, so it looks like ordinary
+	   page content: paper, ink, and three muted markers to tell the three
+	   reveal directions apart. */
+	--page: #f4f2ec;
+	--ink: #17171a;
+	--blue: #2f5bd7;
+	--terracotta: #b8532a;
+	--moss: #37675a;
+	--muted: rgba(23, 23, 26, 0.58);
+	--line: rgba(23, 23, 26, 0.12);
+	color-scheme: light;
 }
 
 html {
-	background: var(--black);
-	scrollbar-color: var(--lime) #111;
+	background: var(--page);
+	scrollbar-color: var(--blue) var(--page);
 	scrollbar-width: thin;
 }
-
-html::-webkit-scrollbar { width: 8px; }
-html::-webkit-scrollbar-track { background: #111; }
-html::-webkit-scrollbar-thumb { background: var(--lime); }
 
 body {
 	min-width: 320px;
 	background:
 		linear-gradient(var(--line) 1px, transparent 1px),
 		linear-gradient(90deg, var(--line) 1px, transparent 1px),
-		var(--black);
+		var(--page);
 	background-size: 12.5vw 12.5vw;
-	color: var(--paper);
-	font-family: 'Space Grotesk', system-ui, sans-serif;
+	color: var(--ink);
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	line-height: 1.2;
 	overflow-x: clip;
 	-webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-	background: var(--lime);
-	color: var(--black);
+	background: var(--blue);
+	color: #fff;
 }
 
 .poster-runway {
@@ -78,13 +77,13 @@ body {
 	z-index: 10;
 }
 
-.scroll-cue strong { color: var(--paper); font-weight: 600; }
+.scroll-cue strong { color: var(--ink); font-weight: 600; }
 .scroll-cue > span:last-child { color: var(--muted); }
 
 .scroll-cue__mark {
 	width: 0.5rem;
 	height: 0.5rem;
-	background: var(--lime);
+	background: var(--blue);
 	box-shadow: 0 0 0 4px rgba(200, 255, 0, 0.12);
 	animation: cue-pulse 1.5s ease-in-out infinite;
 }
@@ -93,7 +92,7 @@ body {
 	position: absolute;
 	top: clamp(1rem, 3vw, 2rem);
 	right: clamp(1rem, 3vw, 2rem);
-	font-family: 'Syne', sans-serif;
+	font-weight: 600;
 	font-size: clamp(1.1rem, 2vw, 1.65rem);
 	font-weight: 800;
 	letter-spacing: -0.04em;
@@ -134,9 +133,9 @@ body {
 	width: 62%;
 	height: 82%;
 	padding: clamp(1rem, 2vw, 1.45rem);
-	border: 1px solid rgba(5, 5, 5, 0.8);
-	box-shadow: 12px 14px 0 rgba(0, 0, 0, 0.58);
-	color: var(--black);
+	border: 1px solid rgba(23, 23, 26, 0.8);
+	box-shadow: 12px 14px 0 rgba(23, 23, 26, 0.18);
+	color: var(--ink);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -146,7 +145,7 @@ body {
 .poster-panel--lime {
 	left: 0;
 	top: 0;
-	background: var(--lime);
+	background: var(--blue);
 	z-index: 1;
 	--demo-range: 3% 53%;
 }
@@ -154,7 +153,7 @@ body {
 .poster-panel--orange {
 	left: 18%;
 	top: 9%;
-	background: var(--orange);
+	background: var(--terracotta);
 	z-index: 2;
 	--demo-range: 10% 60%;
 }
@@ -162,7 +161,7 @@ body {
 .poster-panel--cyan {
 	left: 36%;
 	top: 18%;
-	background: var(--cyan);
+	background: var(--moss);
 	z-index: 3;
 	--demo-range: 17% 67%;
 }
@@ -189,7 +188,7 @@ body {
 
 .poster-panel h1,
 .poster-panel h2 {
-	font-family: 'Syne', sans-serif;
+	font-weight: 600;
 	font-size: clamp(2.4rem, 6.2vw, 5.35rem);
 	font-weight: 800;
 	letter-spacing: -0.085em;
@@ -200,7 +199,7 @@ body {
 .poster-rule {
 	width: 100%;
 	height: clamp(0.35rem, 0.8vw, 0.65rem);
-	background: var(--black);
+	background: var(--ink);
 	transform-origin: left center;
 	animation: rule-grow auto cubic-bezier(0.16, 1, 0.3, 1) both;
 	animation-timeline: scroll(root block);
