@@ -6,7 +6,7 @@ Copy to Clipboard Button is a production-ready GSAP UI component from GSAP Vault
 
 - Product: Copy to Clipboard Button
 - Type: UI component
-- Description: A snippet block whose copy button morphs its clipboard icon into a stroke-drawn check, floats a Copied pill up beside it and flashes the code it took.
+- Description: A copy control whose clipboard icon morphs into a stroke-drawn check, floats a Copied pill up above it and flashes the value it took.
 - GSAP plugins: GSAP core only
 - Techniques: micro-interaction, clipboard, morphing, svg-stroke
 - Lenis smooth scrolling: not required

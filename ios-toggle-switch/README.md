@@ -33,7 +33,7 @@ Native checkbox toggle whose knob can be tapped or dragged, snaps to the nearer 
 </span>
 ```
 
-Every element carrying `data-switch` is wired up, so a page can hold as many as it likes. An optional state label is any element with `data-switch-label` inside the same `.switch-row`. Add `disabled` to the input for a disabled switch and `is-disabled` to the row for the dimmed styling.
+Every element carrying `data-switch` is wired up, so a page can hold as many as it likes. An optional state label is any element with `data-switch-label` inside the same `.switch-row`, and its text follows the switch's `data-on` / `data-off` values. Add `disabled` to the input for a disabled switch and `is-disabled` to the row for the muted styling.
 
 **3. Add before the closing `</body>` tag:**
 
@@ -53,7 +53,7 @@ Every element carrying `data-switch` is wired up, so a page can hold as many as 
 
 ## Using It With Your Own Design
 
-What the component actually needs from your markup: the `.switch` wrapper with `data-switch`, a checkbox with class `switch-input` inside it, and a `.switch-knob` sibling after that input. Everything else, the card, the rows, the rules and the name labels, is demo styling you can delete.
+What the component actually needs from your markup: the `.switch` wrapper with `data-switch`, a checkbox with class `switch-input` inside it, and a `.switch-knob` sibling after that input. Everything else, the `.switch-list` card, the row layout, the descriptions and the state text, is styling you can keep, change or delete.
 
 The non-obvious CSS the effect depends on:
 
@@ -62,29 +62,62 @@ The non-obvious CSS the effect depends on:
 - The input is `position: absolute; inset: 0; opacity: 0` and sits **below** the knob in stacking order, so the knob receives the drag and the rest of the track receives the click.
 - `.has-js` is added by the script. Without it, `:checked ~ .switch-knob` and `:has(.switch-input:checked)` move and colour the switch in plain CSS, so a no-JavaScript visitor still gets a working, legible control.
 
-## Variants
+## Themes
 
-The switch ships in three looks: `vault` (the default), `glass` and `corporate`. Pick one by setting the attribute on `<body>`:
+The switch ships in two themes, `light` (the default) and `dark`. They are one
+design at two sets of token values, not two designs. Pick one with an attribute:
 
 ```html
-<body data-variant="glass">
+<body data-variant="dark">
 ```
 
-Nothing else changes: same markup, same script. The demo's top-right switcher and the `?variant=glass` URL parameter only set that attribute, and dispatch `resize` so the geometry re-measures.
+The attribute can sit on `<body>`, as it does in the demo, or on any wrapper
+around the switch in your own page. Nothing else changes: same markup, same
+script, and no theme name is ever read in JavaScript.
 
-To add your own look, copy any `body[data-variant="..."]` block in `assets/style.css`, rename the attribute value and change the custom properties. The script never hard-codes a colour: both track colours are read with `getComputedStyle` at the moment they are needed.
+Each `body[data-variant="..."]` block in `assets/style.css` sets the whole
+token list:
+
+| Token | What it colours |
+|-------|-----------------|
+| `--accent` | the on state, and the focus ring |
+| `--accent-ink` | text drawn on the accent |
+| `--track-off` / `--track-on` | the track in each state; the script interpolates between these two |
+| `--track-disabled` / `--knob-disabled` | the disabled switch |
+| `--track-border`, `--track-radius`, `--track-pad`, `--track-w`, `--track-h` | the track's hairline, shape and size |
+| `--knob-bg`, `--knob-radius`, `--knob-shadow` | the knob |
+| `--focus` | the focus ring on the track |
+| `--ink`, `--ink-3`, `--line`, `--raised`, `--radius` | the row text, the hairlines and the list surface |
+
+To wear your own brand, re-value `--accent` and the two track colours in both
+blocks; the script reads `--track-off` and `--track-on` with `getComputedStyle`
+at the moment a gesture starts, so it follows whatever you set. The demo's
+toolbar toggle and the `?variant=dark` URL parameter only set that attribute,
+then dispatch `resize` so the Draggable bounds re-measure.
+
+The `--ground*` tokens in the same blocks belong to the demo page, not to the
+switch. See the note below.
+
+## The demo page is furniture
+
+The demo is the component and nothing else: five switch rows on the grey
+ground, at the width a settings list would really get. The toolbar strip across
+the top (`.showcase-toolbar`) and the centring `.stage` wrapper are demo-only
+and are not part of what you bought; the script never reads either. Delete them
+and the switch is unaffected. The `.switch-list` card is the one piece worth
+keeping: a switch reads as a setting when it has siblings.
 
 ## Customisation
 
-- Colours, radii and shadows live in `assets/style.css` as custom properties per variant; the vault accent is `#c8ff00`.
+- Colours, radii and shadows live in `assets/style.css` as custom properties per theme; the accent is `#00b8a9`.
 - `SNAP` and `TAP` at the top of `assets/script.js` are the knob travel time and the movement threshold below which a drag counts as a tap. Raise `TAP` for a more forgiving nudge.
 - The snap easing is `back.out(1.7)`. Drop the overshoot to `power3.out` for a flatter, more system-like feel.
 - The press stretch is `scaleX: 1.16` with the transform origin set to whichever side the knob is heading for.
-- Switch size is `.switch` width and height plus `--track-pad`; the knob sizes itself from the track height, so one number changes the whole control.
+- Switch size is `--track-w`, `--track-h` and `--track-pad`; the knob sizes itself from the track height, so one number changes the whole control.
 
-## Accessibility
+## Keyboard and screen readers
 
-- The control is a native `<input type="checkbox">` with `role="switch"`, so Tab, Space, form submission and the announced on/off state all come from the browser.
+- The control is a native `<input type="checkbox">` with `role="switch"`, so the browser owns the whole contract: **Tab** moves to it, **Space** toggles it, it submits with the form, and a screen reader announces the accessible name followed by "on" or "off" from the real `checked` state.
 - The visible name is a `<label for="...">`, so clicking the text toggles the switch too.
 - A focus ring is drawn on the track with `:has(.switch-input:focus-visible)`.
 - The disabled switch uses the real `disabled` attribute; Draggable is not created for it, so the knob cannot be dragged either.

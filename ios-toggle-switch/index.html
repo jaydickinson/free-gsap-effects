@@ -3,76 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>iOS Toggle Switch &mdash; GSAP Vault</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <style>
-    /* Demo-only variant switcher; not part of the component. */
-    .showcase-toolbar { position: fixed; top: 1rem; right: 1rem; display: flex; gap: 4px; z-index: 10; }
-    .variant-btn { font: 500 0.7rem/1 ui-monospace, 'JetBrains Mono', Menlo, monospace; letter-spacing: 0.04em; padding: 6px 9px; border-radius: 6px; cursor: pointer; background: transparent; color: var(--page-fg); border: 1px solid var(--toolbar-border); opacity: 0.6; }
-    .variant-btn:hover, .variant-btn.is-active { opacity: 1; }
-    .variant-btn.is-active { background: var(--toolbar-active); }
-    .variant-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; opacity: 1; }
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    /* One row on a phone: the strip stays 44px, so the prompt goes rather
+       than wrapping and breaking the body's reserved padding. */
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+    /* Demo-only: the "State labels" control hides the optional [data-switch-label]. */
+    body[data-labels="off"] .switch-state { display: none; }
   </style>
-  <script>
-    (function () {
-      var q = new URLSearchParams(location.search).get('variant');
-      var allowed = ['vault', 'glass', 'corporate'];
-      function apply(v) {
-        document.body.setAttribute('data-variant', v);
-        document.querySelectorAll('.variant-btn').forEach(function (b) {
-          b.classList.toggle('is-active', b.dataset.variant === v);
-        });
-        // Track colours and geometry differ per variant, so re-measure.
-        window.dispatchEvent(new Event('resize'));
-      }
-      document.addEventListener('DOMContentLoaded', function () {
-        if (allowed.indexOf(q) >= 0) apply(q);
-        document.querySelectorAll('.variant-btn').forEach(function (b) {
-          b.addEventListener('click', function () { apply(b.dataset.variant); });
-        });
-      }, { once: true });
-    })();
-  </script>
 </head>
-<body data-variant="vault">
-  <header class="showcase-toolbar" aria-label="Variant">
-    <button type="button" class="variant-btn is-active" data-variant="vault">vault</button>
-    <button type="button" class="variant-btn" data-variant="glass">glass</button>
-    <button type="button" class="variant-btn" data-variant="corporate">corporate</button>
-  </header>
+<body data-variant="light" data-labels="on">
 
-  <div class="switch-card">
-    <div class="switch-row">
-      <label class="switch-name" for="toggle">Sync over cellular</label>
-      <span class="switch-state" data-switch-label>Off</span>
-      <span class="switch" id="switch1" data-switch data-on="On" data-off="Off">
-        <input type="checkbox" class="switch-input" id="toggle" name="cellular" role="switch">
-        <span class="switch-knob"></span>
-      </span>
+  <div class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Tap a switch, or take hold of its knob and push it across.</span>
+    <div class="showcase-toolbar__group">
+      <button type="button" id="labels-btn" aria-pressed="true">State labels</button>
     </div>
-    <div class="switch-row">
-      <label class="switch-name" for="toggle2">Background refresh</label>
-      <span class="switch-state" data-switch-label>On</span>
-      <span class="switch" id="switch2" data-switch data-on="On" data-off="Off">
-        <input type="checkbox" class="switch-input" id="toggle2" name="refresh" role="switch" checked>
-        <span class="switch-knob"></span>
-      </span>
+    <div class="showcase-toolbar__group">
+      <button type="button" id="reset-btn">Reset</button>
     </div>
-    <div class="switch-row is-disabled">
-      <label class="switch-name" for="toggle3">Low data mode</label>
-      <span class="switch-state" data-switch-label>Off</span>
-      <span class="switch" id="switch3" data-switch data-on="On" data-off="Off">
-        <input type="checkbox" class="switch-input" id="toggle3" name="lowdata" role="switch" disabled>
-        <span class="switch-knob"></span>
-      </span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
     </div>
   </div>
+
+  <main class="stage">
+    <div class="stage__inner">
+      <ul class="switch-list">
+        <li class="switch-row">
+          <span class="switch-text">
+            <label class="switch-name" for="notify-mentions">Mentions</label>
+            <small class="switch-note">Someone names you in a comment or a task.</small>
+          </span>
+          <span class="switch-state" data-switch-label>On</span>
+          <span class="switch" data-switch data-on="On" data-off="Off">
+            <input type="checkbox" class="switch-input" id="notify-mentions" name="mentions" role="switch" checked data-default="on">
+            <span class="switch-knob"></span>
+          </span>
+        </li>
+        <li class="switch-row">
+          <span class="switch-text">
+            <label class="switch-name" for="notify-assignments">Assignments</label>
+            <small class="switch-note">Work is handed to you, or handed on.</small>
+          </span>
+          <span class="switch-state" data-switch-label>On</span>
+          <span class="switch" data-switch data-on="On" data-off="Off">
+            <input type="checkbox" class="switch-input" id="notify-assignments" name="assignments" role="switch" checked data-default="on">
+            <span class="switch-knob"></span>
+          </span>
+        </li>
+        <li class="switch-row">
+          <span class="switch-text">
+            <label class="switch-name" for="notify-digest">Daily digest</label>
+            <small class="switch-note">One summary each morning instead of alerts.</small>
+          </span>
+          <span class="switch-state" data-switch-label>Off</span>
+          <span class="switch" data-switch data-on="On" data-off="Off">
+            <input type="checkbox" class="switch-input" id="notify-digest" name="digest" role="switch" data-default="off">
+            <span class="switch-knob"></span>
+          </span>
+        </li>
+        <li class="switch-row">
+          <span class="switch-text">
+            <label class="switch-name" for="notify-product">Product updates</label>
+            <small class="switch-note">Release notes when something you use changes.</small>
+          </span>
+          <span class="switch-state" data-switch-label>Off</span>
+          <span class="switch" data-switch data-on="On" data-off="Off">
+            <input type="checkbox" class="switch-input" id="notify-product" name="product" role="switch" data-default="off">
+            <span class="switch-knob"></span>
+          </span>
+        </li>
+        <li class="switch-row is-disabled">
+          <span class="switch-text">
+            <label class="switch-name" for="notify-marketing">Marketing emails</label>
+            <small class="switch-note">Turned off for the whole workspace by an admin.</small>
+          </span>
+          <span class="switch-state" data-switch-label>Off</span>
+          <span class="switch" data-switch data-on="On" data-off="Off">
+            <input type="checkbox" class="switch-input" id="notify-marketing" name="marketing" role="switch" disabled data-default="off">
+            <span class="switch-knob"></span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
   <script src="assets/script.js"></script>
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        // Draggable bounds and the track colours are measured, and a theme can
+        // move padding, so tell the component to re-measure.
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+
+      // Demo-only: the optional state label, and a reset back to the defaults.
+      var labelsBtn = document.getElementById('labels-btn');
+      labelsBtn.addEventListener('click', function () {
+        var on = document.body.getAttribute('data-labels') !== 'off';
+        document.body.setAttribute('data-labels', on ? 'off' : 'on');
+        labelsBtn.setAttribute('aria-pressed', String(!on));
+      });
+      document.getElementById('reset-btn').addEventListener('click', function () {
+        document.querySelectorAll('.switch-input').forEach(function (input) {
+          var want = input.dataset.default === 'on';
+          if (input.checked === want) return;
+          input.checked = want;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

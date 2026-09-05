@@ -3,73 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Copy to Clipboard Button — GSAP Vault</title>
+  <meta name="robots" content="noindex, nofollow">
+  <title>Copy to Clipboard Button &mdash; GSAP Vault</title>
   <script>document.documentElement.className += ' has-js';</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    /* One row on a phone: the strip stays 44px, so the prompt goes rather
+       than wrapping and breaking the body's reserved padding. */
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+  </style>
 </head>
-<body data-variant="vault">
-  <div class="showcase-toolbar" role="group" aria-label="Variant">
-    <button type="button" data-set-variant="vault" aria-pressed="true">vault</button>
-    <button type="button" data-set-variant="glass" aria-pressed="false">glass</button>
-    <button type="button" data-set-variant="paper" aria-pressed="false">paper</button>
-  </div>
+<body data-variant="dark">
 
-  <div class="cp-block" id="cpBlock">
-    <div class="cp-bar">
-      <span class="cp-lang">script.js</span>
-      <span class="cp-copy">
-        <span class="cp-pill" id="cpPill" aria-hidden="true">Copied</span>
-        <button type="button" class="cp-btn" id="cpBtn">
-          <span class="cp-icon" aria-hidden="true">
-            <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
-              <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
-                    stroke="currentColor" stroke-width="1.8"></rect>
-              <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
-                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-            </svg>
-            <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
-              <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
-                    stroke="currentColor" stroke-width="2.4"
-                    stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </span>
-          <span class="cp-btn-label" id="cpBtnLabel">Copy</span>
-        </button>
-      </span>
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Copy a key, or the share link, and watch the button answer.</span>
+    <div class="showcase-toolbar__group">
+      <button type="button" id="cpFail" aria-pressed="false">Simulate no clipboard</button>
     </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="false">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="true">Dark</button>
+    </div>
+  </header>
 
-    <pre class="cp-pre" id="cpPre"><code class="cp-code" id="cpCode"><span class="tok-key">import</span> { <span class="tok-fn">gsap</span> } <span class="tok-key">from</span> <span class="tok-str">"gsap"</span>;
+  <main class="stage">
+    <div class="stage__inner">
+      <h1 class="cp-sr-only">Copy to clipboard button</h1>
 
-<span class="tok-fn">gsap</span>.<span class="tok-fn">to</span>(<span class="tok-str">".card"</span>, {
-  <span class="tok-prop">y</span>: <span class="tok-num">-24</span>,
-  <span class="tok-prop">duration</span>: <span class="tok-num">0.6</span>,
-  <span class="tok-prop">ease</span>: <span class="tok-str">"power3.out"</span>,
-  <span class="tok-prop">stagger</span>: <span class="tok-num">0.08</span>
-});</code></pre>
-  </div>
+      <section class="cp-panel" aria-labelledby="cp-keys-title">
+        <div class="cp-panel__head">
+          <h2 class="cp-panel__title" id="cp-keys-title">API keys</h2>
+          <p class="cp-panel__note">Secret keys are shown once. Copy a value to use it.</p>
+        </div>
+        <ul class="cp-list">
+          <li class="cp-block" id="cpBlock">
+            <span class="cp-name">Production<small class="cp-meta">Created 4 Aug</small></span>
+            <pre class="cp-pre"><code class="cp-code" id="cpCode" data-cp-value="sk_live_7Qa8xR2mVn41bZk9fD2pT6">sk_live_7Qa8&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;pT6</code></pre>
+            <span class="cp-copy">
+              <span class="cp-pill" id="cpPill" aria-hidden="true">Copied</span>
+              <button type="button" class="cp-btn" id="cpBtn">
+                <span class="cp-icon" aria-hidden="true">
+                  <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
+                          stroke="currentColor" stroke-width="1.8"></rect>
+                    <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
+                          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                  <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
+                          stroke="currentColor" stroke-width="2.4"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+                <span class="cp-btn-label">Copy</span><span class="cp-sr-only">&nbsp;production key</span>
+              </button>
+            </span>
+          </li>
 
-  <p class="cp-status" id="cpStatus" role="status" aria-live="polite"></p>
+          <li class="cp-block">
+            <span class="cp-name">Staging<small class="cp-meta">Created 4 Aug</small></span>
+            <pre class="cp-pre"><code class="cp-code" data-cp-value="sk_test_3Hb6yL9wQd57rMv2kC8sN4">sk_test_3Hb6&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;sN4</code></pre>
+            <span class="cp-copy">
+              <span class="cp-pill" aria-hidden="true">Copied</span>
+              <button type="button" class="cp-btn">
+                <span class="cp-icon" aria-hidden="true">
+                  <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
+                          stroke="currentColor" stroke-width="1.8"></rect>
+                    <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
+                          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                  <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
+                          stroke="currentColor" stroke-width="2.4"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+                <span class="cp-btn-label">Copy</span><span class="cp-sr-only">&nbsp;staging key</span>
+              </button>
+            </span>
+          </li>
 
-  <div class="demo-controls">
-    <button type="button" id="cpFail" aria-pressed="false">Simulate no clipboard</button>
-  </div>
+          <li class="cp-block">
+            <span class="cp-name">Webhook secret<small class="cp-meta">Created 21 Jul</small></span>
+            <pre class="cp-pre"><code class="cp-code" data-cp-value="whsec_5Kd1tP8jZx36gWq7nB4uH9">whsec_5Kd1&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;uH9</code></pre>
+            <span class="cp-copy">
+              <span class="cp-pill" aria-hidden="true">Copied</span>
+              <button type="button" class="cp-btn">
+                <span class="cp-icon" aria-hidden="true">
+                  <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
+                          stroke="currentColor" stroke-width="1.8"></rect>
+                    <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
+                          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                  </svg>
+                  <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
+                          stroke="currentColor" stroke-width="2.4"
+                          stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+                <span class="cp-btn-label">Copy</span><span class="cp-sr-only">&nbsp;webhook secret</span>
+              </button>
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="cp-panel" aria-labelledby="cp-link-title">
+        <div class="cp-panel__head">
+          <h2 class="cp-panel__title" id="cp-link-title">Share link</h2>
+          <p class="cp-panel__note">Anyone with this link can view the project.</p>
+        </div>
+        <div class="cp-block cp-field">
+          <pre class="cp-pre"><code class="cp-code">https://app.example.com/p/atlas/invite/r7m2-4kqx</code></pre>
+          <span class="cp-copy">
+            <span class="cp-pill" aria-hidden="true">Copied</span>
+            <button type="button" class="cp-btn cp-btn--primary">
+              <span class="cp-icon" aria-hidden="true">
+                <svg class="cp-clip" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                  <rect x="8.5" y="3.2" width="11.3" height="14.6" rx="2.2"
+                        stroke="currentColor" stroke-width="1.8"></rect>
+                  <path d="M15.5 20.8H6.4a2.2 2.2 0 0 1-2.2-2.2V7.6"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+                </svg>
+                <svg class="cp-check" viewBox="0 0 24 24" width="17" height="17" fill="none">
+                  <path class="cp-check-path" d="M4.5 12.6 L9.6 17.7 L19.5 6.6"
+                        stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              <span class="cp-btn-label">Copy</span><span class="cp-sr-only">&nbsp;share link</span>
+            </button>
+          </span>
+        </div>
+      </section>
+
+      <p class="cp-status" id="cpStatus" role="status" aria-live="polite"></p>
+    </div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
   <script src="assets/script.js"></script>
   <script>
-    // Demo-only variant switcher. The component itself only needs data-variant on <body>.
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
     (function () {
-      var buttons = document.querySelectorAll("[data-set-variant]");
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
       function setVariant(name) {
-        document.body.setAttribute("data-variant", name);
-        buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.setVariant === name)); });
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
       }
-      buttons.forEach(function (b) { b.addEventListener("click", function () { setVariant(b.dataset.setVariant); }); });
-      var fromUrl = new URLSearchParams(location.search).get("variant");
-      if (fromUrl && document.querySelector("[data-set-variant=\"" + fromUrl + "\"]")) setVariant(fromUrl);
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
     })();
   </script>
 </body>

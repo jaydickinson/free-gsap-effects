@@ -14,7 +14,7 @@ description: >-
 # GSAP Vault
 
 A library of 75 GSAP effects, 62 complete website templates and
-40 UI components, all plain HTML, CSS and JavaScript on the same folder
+42 UI components, all plain HTML, CSS and JavaScript on the same folder
 contract. 14 are free and MIT licensed in https://github.com/jaydickinson/free-gsap-effects.
 The rest are sold at https://gsapvault.com; the buyer downloads a zip with the same contract.
 

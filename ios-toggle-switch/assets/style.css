@@ -1,123 +1,106 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ---------- Variant tokens ----------
-   Every colour, radius, border and shadow the component uses is a custom
-   property on <body>, keyed by data-variant. The script reads --track-off
-   and --track-on with getComputedStyle when a gesture starts and
-   interpolates between them, so a new variant needs no JavaScript change.
-   To add your own look: copy one block and rename the attribute value. */
+/* ---------- Theme tokens ----------
+   Two themes, one design: `light` and `dark`, selected with data-variant on
+   <body> in this demo, or on any wrapper around the switch in your page.
+
+   Every colour the component uses is a custom property here, and so is every
+   colour the demo's ground uses, so one attribute flips both. The script reads
+   --track-off and --track-on with getComputedStyle at the moment a gesture
+   starts and interpolates between them, so re-valuing a theme, or adding one,
+   needs no JavaScript change. */
 body,
-body[data-variant="vault"] {
-  --page-bg: #0a0b0e;
-  --page-fg: #fff;
-  --font-ui: 'Space Grotesk', system-ui, sans-serif;
-  --muted: #8d95ab;
-  --card-bg: #14161f;
-  --card-border: 1px solid #262b3d;
-  --card-radius: 20px;
-  --card-shadow: none;
-  --card-backdrop: none;
-  --rule: #1f2434;
-  --track-off: #2a3145;
-  --track-on: #c8ff00;
+body[data-variant="light"] {
+  color-scheme: light;
+
+  /* the ground */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* the switch */
+  --accent: #00b8a9;
+  --accent-ink: #141412;
+  --track-off: #d2d2ce;
+  --track-on: var(--accent);
+  --track-disabled: #e2e2df;
   --track-radius: 9999px;
-  --track-border: 1px solid #313a52;
+  --track-border: 1px solid rgba(20, 20, 18, 0.12);
   --track-pad: 3px;
+  --track-w: 44px;
+  --track-h: 26px;
   --knob-bg: #ffffff;
+  --knob-disabled: #f4f4f2;
   --knob-radius: 9999px;
-  --knob-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
-  --focus: #c8ff00;
-  --toolbar-border: #262b3d;
-  --toolbar-active: #1d2130;
+  --knob-shadow: 0 1px 2px rgba(20, 20, 18, 0.28);
+  --focus: var(--accent);
 }
 
-/* Glass: colour-field ground, frosted translucent card, hairline highlights. */
-body[data-variant="glass"] {
-  --page-bg: radial-gradient(120% 120% at 12% 8%, #6d28d9 0%, #2563eb 42%, #0f172a 100%);
-  --page-fg: #f8fafc;
-  --font-ui: 'Space Grotesk', system-ui, sans-serif;
-  --muted: rgba(248, 250, 252, 0.68);
-  --card-bg: rgba(255, 255, 255, 0.1);
-  --card-border: 1px solid rgba(255, 255, 255, 0.28);
-  --card-radius: 24px;
-  --card-shadow: 0 24px 60px rgba(2, 6, 23, 0.45);
-  --card-backdrop: blur(18px) saturate(140%);
-  --rule: rgba(255, 255, 255, 0.16);
-  --track-off: rgba(255, 255, 255, 0.22);
-  --track-on: #34d399;
-  --track-radius: 9999px;
-  --track-border: 1px solid rgba(255, 255, 255, 0.4);
-  --track-pad: 3px;
-  --knob-bg: #ffffff;
-  --knob-radius: 9999px;
-  --knob-shadow: 0 4px 12px rgba(2, 6, 23, 0.35);
-  --focus: #ffffff;
-  --toolbar-border: rgba(255, 255, 255, 0.4);
-  --toolbar-active: rgba(255, 255, 255, 0.22);
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --accent: #00b8a9;
+  --accent-ink: #141412;
+  --track-off: #3a3a38;
+  --track-on: var(--accent);
+  --track-disabled: #262626;
+  --track-border: 1px solid rgba(241, 239, 234, 0.14);
+  --knob-bg: #f1efea;
+  --knob-disabled: #4a4a47;
+  --knob-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
 }
 
-/* Corporate: white ground, blue-600 accent, small radius, system sans. */
-body[data-variant="corporate"] {
-  --page-bg: #f8fafc;
-  --page-fg: #0f172a;
-  --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --muted: #64748b;
-  --card-bg: #ffffff;
-  --card-border: 1px solid #e2e8f0;
-  --card-radius: 8px;
-  --card-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.06);
-  --card-backdrop: none;
-  --rule: #e2e8f0;
-  --track-off: #cbd5e1;
-  --track-on: #2563eb;
-  --track-radius: 6px;
-  --track-border: 1px solid transparent;
-  --track-pad: 3px;
-  --knob-bg: #ffffff;
-  --knob-radius: 4px;
-  --knob-shadow: 0 1px 3px rgba(15, 23, 42, 0.3);
-  --focus: #2563eb;
-  --toolbar-border: #cbd5e1;
-  --toolbar-active: #dbeafe;
-}
+::selection { background: var(--accent); color: var(--accent-ink); }
 
-body {
-  background: var(--page-bg);
-  color: var(--page-fg);
-  font-family: var(--font-ui);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-}
+/* ---------- The component ---------- */
 
-.switch-card {
-  width: 100%;
-  max-width: 420px;
-  background: var(--card-bg);
-  border: var(--card-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--card-shadow);
-  -webkit-backdrop-filter: var(--card-backdrop);
-  backdrop-filter: var(--card-backdrop);
-  padding: 0.4rem 1.25rem;
-}
+/* The row is the only markup around the switch the script knows about: it
+   scopes the optional [data-switch-label]. Layout is yours; this is a flex
+   row so a name, a description and the switch sit on one line. */
 .switch-row {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
-  padding: 1.05rem 0;
+  gap: 12px;
 }
-.switch-row + .switch-row { border-top: 1px solid var(--rule); }
-.switch-row.is-disabled { opacity: 0.45; }
-.switch-name { flex: 1 1 auto; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
-.switch-row.is-disabled .switch-name { cursor: not-allowed; }
+.switch-text { flex: 1 1 auto; min-width: 0; }
+.switch-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+}
+.switch-note {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  margin-top: 1px;
+}
+.switch-row.is-disabled .switch-name { color: var(--ink-3); cursor: not-allowed; }
 .switch-state {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
   min-width: 3ch;
   text-align: right;
 }
@@ -126,8 +109,8 @@ body {
   position: relative;
   flex: none;
   display: inline-block;
-  width: 62px;
-  height: 34px;
+  width: var(--track-w);
+  height: var(--track-h);
   background: var(--track-off);
   border: var(--track-border);
   border-radius: var(--track-radius);
@@ -148,6 +131,7 @@ body {
 }
 .switch-input:disabled { cursor: not-allowed; }
 .switch:has(.switch-input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 3px; }
+.switch:has(.switch-input:disabled) { background: var(--track-disabled); }
 
 /* No CSS transform here, ever: GSAP owns the knob's x and scaleX. Its
    resting position is the track padding, expressed with left and top. */
@@ -155,8 +139,8 @@ body {
   position: absolute;
   top: var(--track-pad);
   left: var(--track-pad);
-  width: calc(34px - 2 * var(--track-pad) - 2px);
-  height: calc(34px - 2 * var(--track-pad) - 2px);
+  width: calc(var(--track-h) - 2 * var(--track-pad) - 2px);
+  height: calc(var(--track-h) - 2 * var(--track-pad) - 2px);
   background: var(--knob-bg);
   border-radius: var(--knob-radius);
   box-shadow: var(--knob-shadow);
@@ -165,7 +149,7 @@ body {
   touch-action: pan-y;
 }
 .switch-knob:active { cursor: grabbing; }
-.switch-input:disabled ~ .switch-knob { cursor: not-allowed; }
+.switch-input:disabled ~ .switch-knob { cursor: not-allowed; background: var(--knob-disabled); box-shadow: none; }
 
 /* Without JavaScript the checkbox is still the control: :checked moves the
    knob and colours the track with plain CSS. With JavaScript running, GSAP
@@ -174,6 +158,42 @@ body {
 .switch:has(.switch-input:checked) { background: var(--track-on); }
 .has-js .switch-input:checked ~ .switch-knob { left: var(--track-pad); right: auto; }
 
+/* A list of switch rows: the neighbours a settings switch needs to read as
+   one. Hairline between rows, one raised surface under them. */
+.switch-list {
+  list-style: none;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.switch-list > .switch-row { padding: 13px 16px; border-top: 1px solid var(--line); }
+.switch-list > .switch-row:first-child { border-top: 0; }
+
+/* ---- demo furniture: the ground ------------------------------------------
+   The centred stage below is the demo page, not part of the component. It is
+   `.stage-*` only, the script never reads a stage class, and it lives here so
+   thumbnail.html can reuse it. Delete it in your own project. */
+html { overflow-x: clip; }
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px; /* the demo toolbar strip */
+}
+.stage { min-height: calc(100svh - 44px); display: grid; place-items: center; padding: 32px 20px; }
+.stage__inner { width: 100%; max-width: 520px; }
+
+@media (max-width: 480px) {
+  .stage { padding: 20px 14px; }
+  .switch-list > .switch-row { padding: 12px 14px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .stage * { transition: none !important; }
   * { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
 }

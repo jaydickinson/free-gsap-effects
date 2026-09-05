@@ -27,7 +27,7 @@ Each one ships its variants, its keyboard model and its ARIA contract.
 | Component | What it is | Live demo |
 |--------|--------------|-----------|
 | [iOS Toggle Switch](./ios-toggle-switch) | Native checkbox toggle whose knob can be tapped or dragged, snaps to the nearer side, stretches while pressed and cross-fades the track colour. | [Demo](https://gsapvault.com/ui-elements/ios-toggle-switch) |
-| [Copy to Clipboard Button](./copy-to-clipboard-button) | A snippet block whose copy button morphs its clipboard icon into a stroke-drawn check, floats a Copied pill up beside it and flashes the code it took. | [Demo](https://gsapvault.com/ui-elements/copy-to-clipboard-button) |
+| [Copy to Clipboard Button](./copy-to-clipboard-button) | A copy control whose clipboard icon morphs into a stroke-drawn check, floats a Copied pill up above it and flashes the value it took. | [Demo](https://gsapvault.com/ui-elements/copy-to-clipboard-button) |
 
 ## The Templates
 
@@ -76,7 +76,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (177 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (179 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects

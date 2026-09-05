@@ -1,239 +1,213 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ---------------------------------------------------------------------
-   Variants. Every colour, radius, shadow and font the component uses is a
-   custom property, so a look is one block of overrides on [data-variant].
-   Set data-variant on <body> (the ground is part of the look).
-   The script never hard-codes a colour: the snippet flash and the pill
-   backgrounds are read from --code-flash, --code-bg, --pill-ok-bg and
-   --pill-err-bg with getComputedStyle at the moment each tween starts, so a
-   variant swap mid-demo stays correct.
+   Themes. One design at two token values: `light` and `dark`, selected
+   with data-variant on <body> in this demo, or on any wrapper around the
+   component in your own page.
+
+   Every colour, radius and font the component uses is a custom property
+   here, and so is every colour the demo's ground uses, so one attribute
+   flips both. The script never hard-codes a colour: the value flash and
+   the pill backgrounds are read from --code-flash, --code-bg, --pill-ok-bg
+   and --pill-err-bg with getComputedStyle at the moment each tween starts,
+   so a theme swap mid-demo stays correct.
    --------------------------------------------------------------------- */
 body,
-body[data-variant="vault"] {
-  --ground: #0a0b0e;
-  --ink: #ffffff;
-  --muted: #8d95ab;
-  --font-body: 'Space Grotesk', system-ui, sans-serif;
+body[data-variant="light"] {
+  color-scheme: light;
+
+  /* the ground */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
   --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
 
-  --block-radius: 12px;
-  --block-line: #262b3d;
-  --block-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-  --bar-bg: #14161f;
-  --code-bg: #101219;
-  --code-fg: #d5dae8;
-  --code-flash: #1d2540;
-  --code-size: 0.82rem;
+  --accent: #6d4cff;
+  --accent-ink: #ffffff;
 
-  --tok-key: #c8ff00;
-  --tok-str: #7ee0a8;
-  --tok-num: #ffb570;
-  --tok-fn: #7cc4ff;
-  --tok-prop: #d5dae8;
+  /* the copyable value */
+  --code-bg: #f0f0ee;
+  --code-fg: #2b2b28;
+  --code-flash: #d2e0d9;
+  --code-size: 0.8125rem;
 
-  --btn-bg: #1c1f2b;
-  --btn-fg: #b9c0d4;
-  --btn-line: #2f3448;
-  --btn-radius: 7px;
-  --btn-ok-fg: #c8ff00;
-  --btn-err-fg: #ff8a7a;
+  /* the button */
+  --btn-bg: #f0f0ee;
+  --btn-hover: #e5e5e2;
+  --btn-fg: #4b4b47;
+  --btn-line: var(--line-strong);
+  --btn-ok-fg: #1a7f5a;
+  --btn-err-fg: #b4231f;
 
-  --sel-bg: #c8ff00;
-  --sel-fg: #05070a;
-  --pill-ok-bg: #c8ff00;
-  --pill-ok-fg: #05070a;
-  --pill-err-bg: #ff5a52;
-  --pill-err-fg: #1a0505;
-  --pill-radius: 999px;
+  /* the pill */
+  --pill-ok-bg: #1a7f5a;
+  --pill-ok-fg: #ffffff;
+  --pill-err-bg: #b4231f;
+  --pill-err-fg: #ffffff;
 
-  --lang-transform: none;
-  --lang-spacing: 0.05em;
-  --card-blur: 0px;
-
-  --focus: #c8ff00;
-  --toolbar-bg: #14161f;
-  --toolbar-line: #262b3d;
-  --toolbar-active-bg: #c8ff00;
-  --toolbar-active-fg: #05070a;
-  --ctl-bg: transparent;
-  --ctl-fg: #8d95ab;
-  --ctl-line: #262b3d;
-  --ctl-on-bg: #262b3d;
-  --ctl-on-fg: #ffffff;
+  --sel-bg: var(--accent);
+  --sel-fg: var(--accent-ink);
+  --focus: var(--accent);
 }
 
-/* Glass: frosted panel over a deep gradient ground, everything rounded. */
-body[data-variant="glass"] {
-  --ground: linear-gradient(140deg, #16255e 0%, #4a2f8f 48%, #b4487f 100%);
-  --ink: #ffffff;
-  --muted: rgba(255, 255, 255, 0.75);
-  --font-body: 'Space Grotesk', system-ui, sans-serif;
-  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+body[data-variant="dark"] {
+  color-scheme: dark;
 
-  --block-radius: 20px;
-  --block-line: rgba(255, 255, 255, 0.34);
-  --block-shadow: 0 24px 60px rgba(12, 6, 40, 0.45);
-  --bar-bg: rgba(255, 255, 255, 0.16);
-  --code-bg: rgba(14, 10, 40, 0.42);
-  --code-fg: #f2eeff;
-  --code-flash: rgba(255, 255, 255, 0.3);
-  --code-size: 0.82rem;
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
 
-  --tok-key: #ffd7f4;
-  --tok-str: #b6f3d6;
-  --tok-num: #ffd7a1;
-  --tok-fn: #bcd6ff;
-  --tok-prop: #f2eeff;
+  --accent: #6d4cff;
+  --accent-ink: #ffffff;
 
-  --btn-bg: rgba(255, 255, 255, 0.2);
-  --btn-fg: #ffffff;
-  --btn-line: rgba(255, 255, 255, 0.4);
-  --btn-radius: 999px;
-  --btn-ok-fg: #a9ffd2;
-  --btn-err-fg: #ffc2cc;
+  --code-bg: #232323;
+  --code-fg: #d8d6d0;
+  --code-flash: #24382f;
 
-  --sel-bg: #ffffff;
-  --sel-fg: #2a1a56;
-  --pill-ok-bg: #ffffff;
-  --pill-ok-fg: #2a1a56;
-  --pill-err-bg: #ff7a90;
-  --pill-err-fg: #35060f;
-  --pill-radius: 999px;
+  --btn-bg: #262626;
+  --btn-hover: #303030;
+  --btn-fg: #c9c7c1;
+  --btn-ok-fg: #55c08c;
+  --btn-err-fg: #f08b84;
 
-  --lang-transform: none;
-  --lang-spacing: 0.06em;
-  --card-blur: 16px;
-
-  --focus: #ffffff;
-  --toolbar-bg: rgba(255, 255, 255, 0.16);
-  --toolbar-line: rgba(255, 255, 255, 0.35);
-  --toolbar-active-bg: #ffffff;
-  --toolbar-active-fg: #2a1a56;
-  --ctl-bg: rgba(255, 255, 255, 0.14);
-  --ctl-fg: rgba(255, 255, 255, 0.85);
-  --ctl-line: rgba(255, 255, 255, 0.32);
-  --ctl-on-bg: #ffffff;
-  --ctl-on-fg: #2a1a56;
+  --pill-ok-bg: #2a5c45;
+  --pill-ok-fg: #d8f3e5;
+  --pill-err-bg: #5c2a27;
+  --pill-err-fg: #ffd9d5;
 }
 
-/* Paper: warm stock, ink rules, square corners, a single rust accent. */
-body[data-variant="paper"] {
-  --ground: #f3efe6;
-  --ink: #1b1a17;
-  --muted: #7a7261;
-  --font-body: 'Space Grotesk', Georgia, serif;
-  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-
-  --block-radius: 2px;
-  --block-line: #d0c7b4;
-  --block-shadow: none;
-  --bar-bg: #ede6d6;
-  --code-bg: #fdfaf3;
-  --code-fg: #2a2721;
-  --code-flash: #f6dfd4;
-  --code-size: 0.8rem;
-
-  --tok-key: #a2361a;
-  --tok-str: #3f6b3a;
-  --tok-num: #8a5a12;
-  --tok-fn: #1f4f7a;
-  --tok-prop: #2a2721;
-
-  --btn-bg: #fdfaf3;
-  --btn-fg: #1b1a17;
-  --btn-line: #c9bfa9;
-  --btn-radius: 0px;
-  --btn-ok-fg: #2f6b3d;
-  --btn-err-fg: #a2361a;
-
-  --sel-bg: #c2461e;
-  --sel-fg: #fdfaf3;
-  --pill-ok-bg: #1b1a17;
-  --pill-ok-fg: #f3efe6;
-  --pill-err-bg: #c2461e;
-  --pill-err-fg: #fdfaf3;
-  --pill-radius: 0px;
-
-  --lang-transform: uppercase;
-  --lang-spacing: 0.12em;
-  --card-blur: 0px;
-
-  --focus: #c2461e;
-  --toolbar-bg: #ede6d6;
-  --toolbar-line: #d0c7b4;
-  --toolbar-active-bg: #1b1a17;
-  --toolbar-active-fg: #f3efe6;
-  --ctl-bg: transparent;
-  --ctl-fg: #7a7261;
-  --ctl-line: #d0c7b4;
-  --ctl-on-bg: #1b1a17;
-  --ctl-on-fg: #f3efe6;
-}
+html { overflow-x: clip; }
 
 body {
+  min-height: 100svh;
   background: var(--ground);
   color: var(--ink);
-  font-family: var(--font-body);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  padding: 1.5rem;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;                 /* the demo toolbar strip */
 }
 
-/* ---------- The snippet block ---------- */
+::selection { background: var(--sel-bg); color: var(--sel-fg); }
+
+/* ---------- Demo furniture: the ground the component sits on ---------- */
+.stage { min-height: calc(100svh - 44px); display: grid; place-items: center; padding: 32px 20px; }
+.stage__inner { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 16px; }
+
+.cp-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- The component ----------
+   .cp-block is the unit the script initialises: one name, one copyable
+   value, one button. Everything around it (the panel, the heading, the
+   list) is layout you own. */
+.cp-panel {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.cp-panel__head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); }
+.cp-panel__title { font-size: 0.875rem; font-weight: 600; letter-spacing: -0.006em; color: var(--ink); }
+.cp-panel__note { margin-top: 3px; font-size: 0.75rem; color: var(--ink-3); }
+
+.cp-list { list-style: none; }
+.cp-list > li + li { border-top: 1px solid var(--line); }
+
 .cp-block {
-  width: min(560px, 100%);
-  border: 1px solid var(--block-line);
-  border-radius: var(--block-radius);
-  box-shadow: var(--block-shadow);
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr) auto;
+  grid-template-areas: "name value copy";
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 16px;
 }
 
-.cp-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.5rem 0.55rem 0.5rem 0.95rem;
-  background: var(--bar-bg);
-  border-bottom: 1px solid var(--block-line);
-  border-radius: var(--block-radius) var(--block-radius) 0 0;
+.cp-field { padding: 14px 16px; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "value copy"; }
+
+.cp-name { grid-area: name; font-size: 0.8125rem; font-weight: 500; color: var(--ink); }
+.cp-meta { display: block; font-size: 0.6875rem; font-weight: 400; color: var(--ink-3); }
+
+/* The value. A <pre><code> because it is code: a key, a token, a URL. */
+.cp-pre {
+  grid-area: value;
+  min-width: 0;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  overflow: hidden;
 }
-.cp-lang {
+
+.cp-code {
+  display: block;
   font-family: var(--font-code);
-  font-size: 0.7rem;
-  letter-spacing: var(--lang-spacing);
-  text-transform: var(--lang-transform);
-  color: var(--muted);
+  font-size: var(--code-size);
+  line-height: 1.4;
+  color: var(--code-fg);
+  white-space: pre;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-font-smoothing: auto;
 }
+.cp-code::-webkit-scrollbar { display: none; }
+.cp-code::selection { background: var(--sel-bg); color: var(--sel-fg); }
 
-.cp-copy { position: relative; display: inline-flex; }
+/* The button, and the pill pinned above it. .cp-copy must stay positioned:
+   the pill is absolute inside it. */
+.cp-copy { grid-area: copy; position: relative; display: inline-flex; }
 
-/* No CSS transform anywhere on the button, the icons or the pill: GSAP
-   animates scale, y and rotation on those, and a CSS transform would be
-   parsed into the same values and fight them. */
 .cp-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.4rem 0.7rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 34px; min-width: 104px; padding: 0 12px;
+  border: 1px solid var(--btn-line);
+  border-radius: var(--radius-sm);
   background: var(--btn-bg);
   color: var(--btn-fg);
-  border: 1px solid var(--btn-line);
-  border-radius: var(--btn-radius);
-  font: 600 0.76rem/1 var(--font-body);
-  letter-spacing: 0.02em;
+  font: inherit; font-size: 0.8125rem; font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
-.cp-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+@media (hover: hover) {
+  .cp-btn:hover { background: var(--btn-hover); color: var(--ink); }
+}
+.cp-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 .cp-btn.is-copied { color: var(--btn-ok-fg); border-color: var(--btn-ok-fg); }
 .cp-btn.is-error { color: var(--btn-err-fg); border-color: var(--btn-err-fg); }
 
+/* The one primary action on the page wears the accent. */
+.cp-btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+@media (hover: hover) {
+  .cp-btn--primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); filter: brightness(1.08); }
+}
+.cp-btn--primary.is-copied { background: var(--pill-ok-bg); border-color: var(--pill-ok-bg); color: var(--pill-ok-fg); }
+.cp-btn--primary.is-error { background: var(--pill-err-bg); border-color: var(--pill-err-bg); color: var(--pill-err-fg); }
+
+/* Both icons are stacked in one 17px box: that is what makes the swap read
+   as one object changing rather than two elements toggling. */
 .cp-icon { position: relative; width: 17px; height: 17px; flex: 0 0 auto; }
 .cp-clip,
 .cp-check { position: absolute; left: 0; top: 0; color: currentColor; }
@@ -241,99 +215,31 @@ body {
 .cp-btn-label { display: inline-block; }
 
 .cp-pill {
-  position: absolute;
-  right: 0;
-  bottom: calc(100% + 9px);
-  white-space: nowrap;
-  padding: 0.34rem 0.62rem;
-  font: 600 0.68rem/1 var(--font-body);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: var(--pill-ok-bg);
-  color: var(--pill-ok-fg);
-  border-radius: var(--pill-radius);
-  opacity: 0;
-  pointer-events: none;
+  position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 3;
+  padding: 3px 8px; border-radius: var(--radius-xs);
+  font-size: 0.6875rem; font-weight: 500; line-height: 1.4;
+  white-space: nowrap; pointer-events: none; opacity: 0;
+  background: var(--pill-ok-bg); color: var(--pill-ok-fg);
+  box-shadow: var(--shadow);
 }
 
-.cp-pre {
-  margin: 0;
-  padding: 0.95rem 1.05rem;
-  background: var(--code-bg);
-  border-radius: 0 0 var(--block-radius) var(--block-radius);
-  overflow-x: auto;
-}
-.cp-code {
-  display: block;
-  font-family: var(--font-code);
-  font-size: var(--code-size);
-  line-height: 1.65;
-  color: var(--code-fg);
-  white-space: pre;
-}
-.tok-key { color: var(--tok-key); }
-.tok-str { color: var(--tok-str); }
-.tok-num { color: var(--tok-num); }
-.tok-fn { color: var(--tok-fn); }
-.tok-prop { color: var(--tok-prop); }
-.cp-code::selection,
-.cp-code *::selection { background: var(--sel-bg); color: var(--sel-fg); }
+.cp-status { font-size: 0.75rem; color: var(--ink-3); min-height: 1.2em; padding: 0 2px; }
 
-.cp-status {
-  min-height: 1.2em;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--muted);
-  text-align: center;
+/* ---------- Phone ---------- */
+@media (max-width: 560px) {
+  .cp-block {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name copy"
+      "value value";
+    row-gap: 8px;
+    align-items: center;
+  }
+  .cp-field { grid-template-areas: "value value" "copy copy"; }
+  .cp-field .cp-copy { justify-self: stretch; }
+  .cp-field .cp-btn { width: 100%; }
 }
-
-/* ---------- Demo-only controls ---------- */
-.demo-controls { display: flex; gap: 0.4rem; }
-.demo-controls button {
-  font: 500 0.72rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: 0.04em;
-  padding: 0.5rem 0.8rem;
-  background: var(--ctl-bg);
-  color: var(--ctl-fg);
-  border: 1px solid var(--ctl-line);
-  border-radius: 7px;
-  cursor: pointer;
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
-}
-.demo-controls button[aria-pressed="true"] { background: var(--ctl-on-bg); color: var(--ctl-on-fg); border-color: var(--ctl-on-bg); }
-.demo-controls button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-
-/* Demo-only variant switcher: mono, top-right. Not part of the component. */
-.showcase-toolbar {
-  position: fixed;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 1000;
-  display: flex;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border-radius: 8px;
-  background: var(--toolbar-bg);
-  border: 1px solid var(--toolbar-line);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.7rem;
-  backdrop-filter: blur(var(--card-blur));
-  -webkit-backdrop-filter: blur(var(--card-blur));
-}
-.showcase-toolbar button {
-  background: transparent;
-  border: 0;
-  color: var(--muted);
-  padding: 0.3rem 0.55rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font: inherit;
-  letter-spacing: 0.04em;
-}
-.showcase-toolbar button[aria-pressed="true"] { background: var(--toolbar-active-bg); color: var(--toolbar-active-fg); }
-.showcase-toolbar button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  .cp-btn { transition: none; }
 }
