@@ -4,7 +4,7 @@
 
 Eight free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 74 copy-paste GSAP animation effects, 37 UI components and 62 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 75 copy-paste GSAP animation effects, 37 UI components and 62 complete website templates.
 
 ## The Effects
 
@@ -13,7 +13,7 @@ From [GSAP Vault](https://gsapvault.com), a library of 74 copy-paste GSAP animat
 | [3D Card Flip Gallery](./3d-card-flip) | Tactile 3D cards with deep perspective, reactive edge-light, shadow inversion, hover/focus parity, and tap auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
 | [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage. | [Demo](https://gsapvault.com/effects/scroll-progress) |
 | [Typewriter Text](./typewriter-text) | A typewriter that types a line character by character, holds it, accelerates through deletion, and cycles to the next phrase, with optional cursor, status and progress hooks. | [Demo](https://gsapvault.com/effects/typewriter-text) |
-| [Parallax Hero](./parallax-hero) | A pinned hero that separates its background photograph, copy, and foreground card into distinct scroll depths from a single scrubbed ScrollTrigger. | [Demo](https://gsapvault.com/effects/parallax-hero) |
+| [Parallax Hero](./parallax-hero) | A pinned hero that pulls its layers into depth from one scrubbed ScrollTrigger: a headline sandwiched inside the stack, ridges or photographs climbing over it, and a sun that sets behind the far layer. | [Demo](https://gsapvault.com/effects/parallax-hero) |
 | [Image Clip Reveal](./image-clip-reveal) | A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its editorial caption lands. | [Demo](https://gsapvault.com/effects/image-clip-reveal) |
 | [Hover Underline](./hover-underline) | Four material link underlines (an exit-through line, marker sweep, hand-drawn wave, and an endlessly travelling wave) with coordinated type and active-index responses. | [Demo](https://gsapvault.com/effects/hover-underline) |
 | [Scroll Text Highlight](./scroll-text-highlight) | A scrubbed orange-to-lime reading front lifts each active word before completed copy settles to white and unread copy remains ghosted. | [Demo](https://gsapvault.com/effects/scroll-text-highlight) |
@@ -76,7 +76,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (176 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (177 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -93,7 +93,7 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 74 effects and 62 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 75 effects and 62 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)

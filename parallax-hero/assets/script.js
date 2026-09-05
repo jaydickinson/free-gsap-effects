@@ -3,7 +3,8 @@
  *
  * A pinned, scrubbed depth scene. Add data-parallax to a hero and give each
  * moving layer a data-parallax-speed value: values below 1 recede while values
- * above 1 move into the foreground.
+ * above 1 move into the foreground. On a fine pointer the same depth values
+ * also drive an optional cursor drift (data-parallax-pointer on the scene).
  *
  * @plugins ScrollTrigger
  * @techniques parallax, scrub, pinning
@@ -38,12 +39,20 @@ gsap.registerPlugin(ScrollTrigger);
         ScrollTrigger.addEventListener('refresh', refreshLenis);
     }
 
+    // A layer's depth is its distance from speed 1: negative recedes, positive
+    // advances. Both the scroll travel and the pointer drift read it.
+    function layerSpeed(layer) {
+        const parsed = parseFloat(layer.dataset.parallaxSpeed);
+        return Number.isFinite(parsed) ? parsed : 1;
+    }
+
     const ctx = gsap.context(function effectContext() {
         const mm = gsap.matchMedia();
 
         mm.add({
             desktop: '(min-width: 769px) and (prefers-reduced-motion: no-preference)',
             mobile: '(max-width: 768px) and (prefers-reduced-motion: no-preference)',
+            pointer: '(hover: hover) and (pointer: fine)',
             reduced: '(prefers-reduced-motion: reduce)'
         }, function responsiveBranch(context) {
             const conditions = context.conditions;
@@ -58,6 +67,7 @@ gsap.registerPlugin(ScrollTrigger);
 
             const isMobile = conditions.mobile;
             const triggers = [];
+            const pointerHandlers = new Map();
 
             scenes.forEach(function createScene(scene) {
                 const layers = gsap.utils.toArray('[data-parallax-speed]', scene);
@@ -86,8 +96,7 @@ gsap.registerPlugin(ScrollTrigger);
                 });
 
                 layers.forEach(function animateLayer(layer) {
-                    const parsedSpeed = parseFloat(layer.dataset.parallaxSpeed);
-                    const speed = Number.isFinite(parsedSpeed) ? parsedSpeed : 1;
+                    const speed = layerSpeed(layer);
                     const y = (1 - speed) * distance;
                     const xTo = parseFloat(layer.dataset.parallaxX);
                     const rotateTo = parseFloat(layer.dataset.parallaxRotate);
@@ -117,10 +126,53 @@ gsap.registerPlugin(ScrollTrigger);
                 }
 
                 triggers.push(timeline.scrollTrigger);
+
+                // Pointer drift. The scroll timeline owns x and y in pixels, so
+                // the drift tweens xPercent and yPercent instead: separate
+                // transform components, no fight over one property. Strength
+                // is the percentage a layer at depth 1 travels for a cursor at
+                // the scene's edge; deeper and nearer layers scale with depth,
+                // and move against each other, which is what reads as a window.
+                const drift = parseFloat(scene.dataset.parallaxPointer);
+                if (!conditions.pointer || !(drift > 0)) return;
+
+                const setters = layers.map(function makeSetter(layer) {
+                    return {
+                        depth: layerSpeed(layer) - 1,
+                        x: gsap.quickTo(layer, 'xPercent', { duration: 1.1, ease: 'power3' }),
+                        y: gsap.quickTo(layer, 'yPercent', { duration: 1.1, ease: 'power3' })
+                    };
+                });
+
+                function onPointerMove(event) {
+                    const rect = scene.getBoundingClientRect();
+                    const nx = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    const ny = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+                    setters.forEach(function driftLayer(setter) {
+                        setter.x(-nx * setter.depth * drift);
+                        setter.y(-ny * setter.depth * drift * 0.6);
+                    });
+                }
+
+                function onPointerLeave() {
+                    setters.forEach(function settleLayer(setter) {
+                        setter.x(0);
+                        setter.y(0);
+                    });
+                }
+
+                scene.addEventListener('pointermove', onPointerMove);
+                scene.addEventListener('pointerleave', onPointerLeave);
+                pointerHandlers.set(scene, { move: onPointerMove, leave: onPointerLeave });
             });
 
             return function cleanupMotion() {
                 triggers.forEach(function killTrigger(trigger) { trigger.kill(); });
+                pointerHandlers.forEach(function removeHandlers(handlers, scene) {
+                    scene.removeEventListener('pointermove', handlers.move);
+                    scene.removeEventListener('pointerleave', handlers.leave);
+                });
+                pointerHandlers.clear();
             };
         });
     });

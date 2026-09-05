@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parallax Hero Demo | GSAP Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@500;600;700&display=swap">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -11,48 +14,86 @@
         <section
             class="hero"
             data-parallax
-            data-parallax-distance="200"
-            data-parallax-mobile-distance="110"
-            data-parallax-runway="620"
-            data-parallax-mobile-runway="380"
+            data-parallax-distance="260"
+            data-parallax-mobile-distance="150"
+            data-parallax-runway="720"
+            data-parallax-mobile-runway="440"
+            data-parallax-pointer="1.6"
+            data-mode="illustration"
             aria-labelledby="hero-title">
 
-            <!-- Layer 1 · speed 0.20 — the photograph. Swap the <img> for yours. -->
-            <div class="layer layer--backdrop" data-parallax-speed="0.2" data-parallax-scale="1.12" data-parallax-blur="4" aria-hidden="true">
-                <img src="assets/backdrop.webp" alt="" width="1600" height="1000" decoding="async">
+            <!-- Photo mode, speed 0.5: a full-bleed photograph that recedes,
+                 grows and softens. Hidden while the scene is in illustration mode. -->
+            <div class="layer layer--photo" data-parallax-speed="0.5" data-parallax-scale="1.12" data-parallax-blur="3" aria-hidden="true">
+                <img src="assets/img/backdrop.webp" alt="" width="1800" height="1125" decoding="async">
             </div>
 
-            <!-- Layer 2 · speed 0.55 — the wash that keeps the copy legible over the photograph. -->
-            <div class="layer layer--wash" data-parallax-speed="0.55" aria-hidden="true"></div>
+            <!-- Photo mode, speed 0.6: the page-coloured wash that lets ink type sit on the photograph. -->
+            <div class="layer layer--wash" data-parallax-speed="0.6" aria-hidden="true"></div>
 
-            <!-- Layer 3 · speed 0.82 — the hero copy. Ordinary markup, just placed on a layer. -->
-            <div class="layer layer--copy" data-parallax-speed="0.82">
-                <div class="copy-column">
-                    <h1 class="hero-title" id="hero-title">Wake up<br>to the tide</h1>
-                    <p class="hero-lede">A small house at the quiet end of the bay. Breakfast on the sand, boats at eight, nothing else scheduled.</p>
-                    <a class="hero-link" href="#stay">Check availability</a>
+            <!-- Speed -0.15: the sun moves against the scroll, so it sets behind the far ridge. -->
+            <div class="layer layer--sun" data-parallax-speed="-0.15" aria-hidden="true">
+                <span class="sun"></span>
+            </div>
+
+            <!-- Speed 0.5: the far ridge, lightest, drifts down and softens. -->
+            <div class="layer layer--far" data-parallax-speed="0.5" data-parallax-blur="3" aria-hidden="true">
+                <svg class="ridge" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice" focusable="false"><path d="M0 700 L0 318.6 L66.7 307.3 L133.3 284.7 L200.0 267.7 L266.7 276.1 L333.3 299.8 L400.0 313.2 L466.7 306.1 L533.3 290.7 L600.0 277.4 L666.7 277.2 L733.3 278.1 L800.0 276.1 L866.7 294.2 L933.3 317.0 L1000.0 318.8 L1066.7 300.8 L1133.3 263.3 L1200.0 238.2 L1266.7 251.1 L1333.3 275.4 L1400.0 295.5 L1466.7 313.9 L1533.3 338.2 L1600.0 352.7 L1600 1400 L0 1400 Z"/></svg>
+            </div>
+
+            <!-- Speed 0.7: the mid ridge. -->
+            <div class="layer layer--mid" data-parallax-speed="0.7" aria-hidden="true">
+                <svg class="ridge" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice" focusable="false"><path d="M0 700 L0 421.3 L50.0 416.4 L100.0 406.1 L150.0 396.7 L200.0 394.0 L250.0 400.8 L300.0 414.5 L350.0 432.3 L400.0 441.3 L450.0 433.7 L500.0 419.6 L550.0 411.0 L600.0 407.8 L650.0 415.9 L700.0 435.7 L750.0 458.8 L800.0 469.9 L850.0 464.0 L900.0 450.6 L950.0 436.6 L1000.0 433.7 L1050.0 439.5 L1100.0 444.7 L1150.0 450.6 L1200.0 453.5 L1250.0 448.9 L1300.0 440.3 L1350.0 434.4 L1400.0 430.9 L1450.0 437.8 L1500.0 457.1 L1550.0 479.4 L1600.0 490.2 L1600 1400 L0 1400 Z"/></svg>
+            </div>
+
+            <!-- Speed 0.8: a band of mist over the valley, thinning as the scene compresses. -->
+            <div class="layer layer--mist" data-parallax-speed="0.8" data-parallax-opacity="0.35" aria-hidden="true"></div>
+
+            <!-- Speed 0.9: the headline sits INSIDE the depth stack, behind the near ridge. -->
+            <div class="layer layer--headline" data-parallax-speed="0.9">
+                <h1 class="hero-title" id="hero-title">Higher<br>ground.</h1>
+            </div>
+
+            <!-- Speed 1.7: the near ridge and its trees climb over the headline. -->
+            <div class="layer layer--near" data-parallax-speed="1.7" data-parallax-scale="1.06" aria-hidden="true">
+                <svg class="ridge" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice" focusable="false">
+                    <path d="M0 700 L0 535.8 C40.0 535.8 40.0 538.6 80.0 538.6 C120.0 538.6 120.0 545.1 160.0 545.1 C200.0 545.1 200.0 553.8 240.0 553.8 C280.0 553.8 280.0 564.8 320.0 564.8 C360.0 564.8 360.0 570.4 400.0 570.4 C440.0 570.4 440.0 564.6 480.0 564.6 C520.0 564.6 520.0 552.6 560.0 552.6 C600.0 552.6 600.0 543.5 640.0 543.5 C680.0 543.5 680.0 542.4 720.0 542.4 C760.0 542.4 760.0 543.5 800.0 543.5 C840.0 543.5 840.0 541.2 880.0 541.2 C920.0 541.2 920.0 537.0 960.0 537.0 C1000.0 537.0 1000.0 532.4 1040.0 532.4 C1080.0 532.4 1080.0 521.0 1120.0 521.0 C1160.0 521.0 1160.0 514.1 1200.0 514.1 C1240.0 514.1 1240.0 522.3 1280.0 522.3 C1320.0 522.3 1320.0 535.0 1360.0 535.0 C1400.0 535.0 1400.0 535.3 1440.0 535.3 C1480.0 535.3 1480.0 523.2 1520.0 523.2 C1560.0 523.2 1560.0 515.4 1600.0 515.4 L1600 1400 L0 1400 Z"/>
+                    <path class="pines" d="M439.2 572.6 L452.6 540.5 L466.1 572.6 Z M442.1 554.4 L452.6 527.2 L463.1 554.4 Z M445.1 536.3 L452.6 513.8 L460.2 536.3 Z M948.2 542.8 L962.7 508.2 L977.3 542.8 Z M951.4 523.2 L962.7 493.8 L974.1 523.2 Z M954.6 503.6 L962.7 479.3 L970.9 503.6 Z M571.8 555.1 L590.9 509.5 L610.1 555.1 Z M576.0 529.3 L590.9 490.5 L605.9 529.3 Z M580.2 503.4 L590.9 471.5 L601.6 503.4 Z M40.6 543.7 L55.2 508.8 L69.9 543.7 Z M43.8 523.9 L55.2 494.3 L66.7 523.9 Z M47.0 504.2 L55.2 479.8 L63.4 504.2 Z M1357.1 541.1 L1370.7 508.6 L1384.3 541.1 Z M1360.1 522.7 L1370.7 495.1 L1381.3 522.7 Z M1363.1 504.3 L1370.7 481.6 L1378.3 504.3 Z M1114.5 526.0 L1132.0 484.3 L1149.5 526.0 Z M1118.3 502.4 L1132.0 466.9 L1145.6 502.4 Z M1122.2 478.8 L1132.0 449.6 L1141.8 478.8 Z M516.2 563.4 L527.6 536.4 L538.9 563.4 Z M518.7 548.1 L527.6 525.2 L536.4 548.1 Z M521.2 532.8 L527.6 513.9 L533.9 532.8 Z M951.7 542.3 L971.1 496.3 L990.4 542.3 Z M956.0 516.3 L971.1 477.1 L986.2 516.3 Z M960.3 490.2 L971.1 457.9 L981.9 490.2 Z M1348.1 541.1 L1369.8 489.5 L1391.5 541.1 Z M1352.9 511.8 L1369.8 468.0 L1386.7 511.8 Z M1357.7 482.6 L1369.8 446.5 L1381.9 482.6 Z M1467.5 534.7 L1483.5 496.4 L1499.6 534.7 Z M1471.0 513.0 L1483.5 480.5 L1496.1 513.0 Z M1474.5 491.3 L1483.5 464.6 L1492.5 491.3 Z M1467.9 535.0 L1481.4 502.9 L1494.9 535.0 Z M1470.9 516.8 L1481.4 489.5 L1491.9 516.8 Z M1473.8 498.6 L1481.4 476.1 L1489.0 498.6 Z M1175.4 521.0 L1190.2 485.8 L1204.9 521.0 Z M1178.7 501.1 L1190.2 471.2 L1201.7 501.1 Z M1181.9 481.2 L1190.2 456.6 L1198.4 481.2 Z M997.8 540.3 L1007.6 517.1 L1017.3 540.3 Z M1000.0 527.1 L1007.6 507.4 L1015.2 527.1 Z M1002.1 514.0 L1007.6 497.8 L1013.0 514.0 Z M500.3 564.9 L518.1 522.5 L535.9 564.9 Z M504.2 540.9 L518.1 504.9 L531.9 540.9 Z M508.1 516.9 L518.1 487.2 L528.0 516.9 Z M984.7 540.8 L998.0 509.1 L1011.3 540.8 Z M987.6 522.9 L998.0 496.0 L1008.3 522.9 Z M990.5 504.9 L998.0 482.8 L1005.4 504.9 Z M809.2 548.8 L824.4 512.5 L839.7 548.8 Z M812.6 528.3 L824.4 497.4 L836.3 528.3 Z M815.9 507.7 L824.4 482.3 L833.0 507.7 Z M1152.0 522.9 L1167.7 485.6 L1183.4 522.9 Z M1155.5 501.8 L1167.7 470.0 L1179.9 501.8 Z M1158.9 480.6 L1167.7 454.5 L1176.5 480.6 Z M516.1 561.6 L540.1 504.4 L564.1 561.6 Z M521.4 529.2 L540.1 480.5 L558.8 529.2 Z M526.6 496.7 L540.1 456.7 L553.6 496.7 Z M644.2 549.2 L662.0 506.9 L679.7 549.2 Z M648.1 525.3 L662.0 489.3 L675.8 525.3 Z M652.0 501.3 L662.0 471.7 L671.9 501.3 Z M1440.5 539.6 L1451.2 514.1 L1461.9 539.6 Z M1442.8 525.1 L1451.2 503.5 L1459.5 525.1 Z M1445.2 510.7 L1451.2 492.9 L1457.1 510.7 Z M1162.0 522.4 L1174.0 493.8 L1186.0 522.4 Z M1164.7 506.2 L1174.0 481.9 L1183.4 506.2 Z M1167.3 490.0 L1174.0 470.0 L1180.7 490.0 Z M1538.0 525.2 L1561.1 470.2 L1584.3 525.2 Z M1543.1 494.0 L1561.1 447.2 L1579.2 494.0 Z M1548.2 462.8 L1561.1 424.3 L1574.1 462.8 Z M1361.3 541.1 L1372.1 515.4 L1382.9 541.1 Z M1363.7 526.5 L1372.1 504.7 L1380.5 526.5 Z M1366.1 512.0 L1372.1 494.0 L1378.2 512.0 Z M619.0 549.5 L641.6 495.5 L664.3 549.5 Z M623.9 518.9 L641.6 473.1 L659.3 518.9 Z M628.9 488.3 L641.6 450.6 L654.3 488.3 Z M1217.8 523.8 L1235.9 480.8 L1254.0 523.8 Z M1221.8 499.4 L1235.9 462.8 L1250.0 499.4 Z M1225.8 475.0 L1235.9 444.9 L1246.0 475.0 Z M290.3 568.6 L304.2 535.7 L318.0 568.6 Z M293.4 550.0 L304.2 522.0 L314.9 550.0 Z M296.4 531.3 L304.2 508.3 L311.9 531.3 Z"/>
+                </svg>
+            </div>
+
+            <!-- Photo mode, speeds 1.4 and 1.8: two photographs climb over the headline. -->
+            <div class="layer layer--tile layer--tile-a" data-parallax-speed="1.4" data-parallax-rotate="-5" aria-hidden="true">
+                <figure class="tile"><img src="assets/img/tile-1.webp" alt="" width="560" height="720" decoding="async"></figure>
+            </div>
+            <div class="layer layer--tile layer--tile-b" data-parallax-speed="1.8" data-parallax-x="28" data-parallax-rotate="4" aria-hidden="true">
+                <figure class="tile"><img src="assets/img/tile-2.webp" alt="" width="560" height="720" decoding="async"></figure>
+            </div>
+
+            <!-- Speed 1.15: the lede and link ride in front of everything. -->
+            <div class="layer layer--deck" data-parallax-speed="1.15">
+                <div class="deck">
+                    <p class="hero-lede">Four days over the Kintail ridge in a group of eight. Next departure in May.</p>
+                    <a class="hero-link" href="#routes">See the route</a>
                 </div>
             </div>
 
-            <!-- Layer 4 · speed 1.30 — foreground card, moves toward the viewer. -->
-            <div class="layer layer--front" data-parallax-speed="1.3" data-parallax-x="22">
-                <aside class="rate-card">
-                    <p class="rate-card__label">From</p>
-                    <p class="rate-card__price">£180<span>a night</span></p>
-                    <p class="rate-card__note">Two-night minimum. Every room sees the water.</p>
-                </aside>
+            <!-- Not a layer: the demo's own switch between the two layer sets. -->
+            <div class="mode-switch" role="group" aria-label="Demo layers">
+                <button type="button" data-mode-control="illustration" aria-pressed="true">Illustration</button>
+                <button type="button" data-mode-control="photo" aria-pressed="false">Photo</button>
             </div>
 
-            <!-- Not a layer: the cue stays put while the layers separate behind it. -->
+            <!-- Not a layer: the cue stays put while the scene compresses behind it. -->
             <div class="scroll-cue" aria-hidden="true">
                 <span>Scroll</span>
                 <span class="scroll-cue__track"><span data-parallax-fill></span></span>
             </div>
         </section>
 
-        <section class="after" id="stay">
-            <h2>Six rooms, one bay</h2>
-            <p>Two on the sand, four above the boathouse. Every room opens onto the water, breakfast runs until eleven, and the last boat back is at six.</p>
+        <section class="after" id="routes">
+            <h2>Six routes, one valley</h2>
+            <p>Every walk starts and ends at the lodge. Boots dry by the stove overnight, breakfast is at seven, and the last thing you hear before sleep is the river.</p>
         </section>
     </main>
 
@@ -60,5 +101,24 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
     <script src="assets/script.js"></script>
+    <script>
+        // Demo chrome, not the effect: the switch swaps which layer set is
+        // shown. Every layer is always animated; the hidden set just does not
+        // paint, so nothing has to be rebuilt.
+        (function () {
+            var scene = document.querySelector('[data-parallax]');
+            var controls = document.querySelectorAll('[data-mode-control]');
+            if (!scene || !controls.length) return;
+            controls.forEach(function (control) {
+                control.addEventListener('click', function () {
+                    var mode = control.getAttribute('data-mode-control');
+                    scene.setAttribute('data-mode', mode);
+                    controls.forEach(function (other) {
+                        other.setAttribute('aria-pressed', String(other === control));
+                    });
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

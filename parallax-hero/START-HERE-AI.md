@@ -6,7 +6,7 @@ Parallax Hero is a production-ready GSAP animation effect from GSAP Vault. This 
 
 - Product: Parallax Hero
 - Type: animation effect
-- Description: A pinned hero that separates its background photograph, copy, and foreground card into distinct scroll depths from a single scrubbed ScrollTrigger.
+- Description: A pinned hero that pulls its layers into depth from one scrubbed ScrollTrigger: a headline sandwiched inside the stack, ridges or photographs climbing over it, and a sun that sets behind the far layer.
 - GSAP plugins: ScrollTrigger
 - Techniques: parallax, scrub, pinning, scroll-progress
 - Lenis smooth scrolling: included

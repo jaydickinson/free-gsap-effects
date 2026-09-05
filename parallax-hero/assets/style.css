@@ -8,16 +8,20 @@
     --page: #ececeb;
     --surface: #f7f7f6;
     --ink: #141412;
+    --chalk: #f1efea;
     --muted: rgba(20, 20, 18, 0.72);
+    --chalk-muted: rgba(241, 239, 234, 0.72);
     --rule: rgba(20, 20, 18, 0.14);
-    /* One accent, used for the scroll fill the timeline moves, the link's
-       mark, the focus ring and ::selection. */
-    --accent: #00b8a9;
-    /* The same accent, darkened only where it has to carry TEXT: #00b8a9 sits
-       at 2.1:1 on this ground, #00776e clears 4.5:1 on both page and surface. */
-    --accent-deep: #00776e;
-    /* Text that sits ON the accent. White fails on teal-green; ink does not. */
-    --accent-ink: #141412;
+    --chalk-rule: rgba(241, 239, 234, 0.22);
+    /* Atmospheric perspective: each ridge nearer the viewer is darker, until
+       the nearest is the page's ink. */
+    --ridge-far: #c6c6c3;
+    --ridge-mid: #7a7a76;
+    --ridge-near: #141412;
+    /* One accent: the sun the scene sets, the link's mark, the focus ring,
+       the scroll fill and ::selection. */
+    --accent: #e5322d;
+    --accent-ink: #ffffff;
     color-scheme: light;
 }
 
@@ -31,7 +35,7 @@ body {
     overflow-x: hidden;
     background: var(--page);
     color: var(--ink);
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Mona Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -52,7 +56,9 @@ body {
     height: 100svh;
     min-height: 560px;
     overflow: clip;
-    background: var(--page);
+    /* The sky: the page, lifting slightly toward the horizon. It is the
+       section's own background, so it is the one thing that never moves. */
+    background: linear-gradient(180deg, var(--page) 0%, var(--page) 34%, var(--surface) 62%, #dcdcda 100%);
 }
 
 .layer {
@@ -62,158 +68,257 @@ body {
     will-change: transform;
 }
 
-/* Layers that paint a background overscan the scene, so travel never drags an
-   edge into view. The backdrop travels furthest, so it needs the most slack:
-   at speed 0.2 and distance 200 it moves 160px, which has to fit inside the
-   overscan plus whatever the ending scale adds. Layers that only hold content
-   stay at inset: 0, or the padding they lay content out with starts
-   off-screen. */
-.layer--backdrop {
-    inset: -18%;
+/* --- The ridges ------------------------------------------------- */
+
+/* Each ridge is an SVG whose fill runs on to twice the viewBox height, and
+   overflow is visible, so a ridge that rises 180px never exposes the sky
+   beneath its own foot. The viewBox is sliced to the layer's width, so the
+   silhouette keeps its shape on any aspect ratio. */
+.ridge {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
-.layer--wash {
-    inset: -16%;
+.layer--far {
+    z-index: 1;
+    transform-origin: 50% 100%;
 }
 
-/* --- Layer 1: the photograph ------------------------------------ */
+.layer--far .ridge {
+    fill: var(--ridge-far);
+}
 
-.layer--backdrop {
+.layer--mid {
+    z-index: 2;
+}
+
+.layer--mid .ridge {
+    fill: var(--ridge-mid);
+}
+
+.layer--near {
+    z-index: 5;
+    /* Scaling from the foot pushes the ridge up as well as out. */
+    transform-origin: 50% 100%;
+}
+
+.layer--near .ridge {
+    fill: var(--ridge-near);
+}
+
+/* --- Photo mode: the photograph, its wash, and two tiles ------------ */
+
+/* A photograph that recedes and grows needs slack past the scene, or its
+   travel and its ending scale drag an edge into view. */
+.layer--photo {
+    inset: -24%;
     z-index: 0;
     transform-origin: 50% 55%;
 }
 
-.layer--backdrop img {
+.layer--photo img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 58%;
+    object-position: 50% 50%;
 }
 
-/* --- Layer 2: the wash ------------------------------------------ */
-
-/* A soft page-coloured wash, not a decorative flourish: it is what lets ink
-   type sit on a pale photograph. On its own layer it also reads as depth,
-   because it slides against the image behind it. */
 .layer--wash {
+    inset: -22%;
     z-index: 1;
     background:
-        linear-gradient(90deg, rgba(236, 236, 235, 0.94) 0%, rgba(236, 236, 235, 0.86) 26%, rgba(236, 236, 235, 0.4) 56%, rgba(236, 236, 235, 0) 78%),
-        linear-gradient(180deg, rgba(236, 236, 235, 0.5) 0%, rgba(236, 236, 235, 0) 26%, rgba(236, 236, 235, 0) 62%, rgba(236, 236, 235, 0.72) 100%);
+        linear-gradient(0deg, rgba(20, 20, 18, 0.78) 0%, rgba(20, 20, 18, 0.5) 22%, rgba(20, 20, 18, 0) 44%),
+        linear-gradient(90deg, rgba(236, 236, 235, 0.9) 0%, rgba(236, 236, 235, 0.72) 30%, rgba(236, 236, 235, 0.2) 58%, rgba(236, 236, 235, 0) 78%),
+        linear-gradient(180deg, rgba(236, 236, 235, 0.55) 0%, rgba(236, 236, 235, 0) 30%);
 }
 
-/* --- Layer 3: the hero copy ------------------------------------- */
-
-.layer--copy {
-    z-index: 2;
-    display: grid;
-    align-items: center;
-    padding: 0 clamp(1.5rem, 7vw, 7rem);
+.layer--tile {
+    z-index: 5;
 }
 
-.copy-column {
-    max-width: 32rem;
-    pointer-events: auto;
+.tile {
+    position: absolute;
+    width: clamp(150px, 19vw, 250px);
+    aspect-ratio: 7 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 rgba(20, 20, 18, 0.12), 0 24px 48px -20px rgba(20, 20, 18, 0.45);
+}
+
+.tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.layer--tile-a .tile {
+    top: 44%;
+    left: 67%;
+}
+
+.layer--tile-b .tile {
+    top: 58%;
+    left: 42%;
+}
+
+/* Which set paints. Both sets are always in the scene and always animated;
+   the switch only decides which one is visible. */
+.hero[data-mode="illustration"] .layer--photo,
+.hero[data-mode="illustration"] .layer--wash,
+.hero[data-mode="illustration"] .layer--tile,
+.hero[data-mode="photo"] .layer--sun,
+.hero[data-mode="photo"] .layer--far,
+.hero[data-mode="photo"] .layer--mid,
+.hero[data-mode="photo"] .layer--mist,
+.hero[data-mode="photo"] .layer--near {
+    display: none;
+}
+
+/* --- The sun ---------------------------------------------------- */
+
+.layer--sun {
+    z-index: 0;
+}
+
+.sun {
+    position: absolute;
+    top: 12%;
+    left: 61%;
+    width: clamp(88px, 12vw, 168px);
+    height: clamp(88px, 12vw, 168px);
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+/* --- The mist --------------------------------------------------- */
+
+/* A page-coloured band across the valley floor. It is a gradient, not a
+   filter, so it composites for free while it travels. */
+.layer--mist {
+    top: 48%;
+    bottom: 14%;
+    z-index: 3;
+    background: linear-gradient(180deg, rgba(236, 236, 235, 0) 0%, rgba(236, 236, 235, 0.85) 38%, rgba(236, 236, 235, 0.85) 62%, rgba(236, 236, 235, 0) 100%);
+}
+
+/* --- The headline, inside the stack ------------------------------ */
+
+.layer--headline {
+    z-index: 4;
+    padding: clamp(4.5rem, 12vh, 7.5rem) clamp(1.5rem, 6vw, 6rem) 0;
 }
 
 .hero-title {
-    font-size: clamp(2.75rem, 6.6vw, 5.25rem);
-    font-weight: 600;
-    letter-spacing: -0.035em;
-    line-height: 0.95;
+    font-size: clamp(4.4rem, 11.4vw, 10.5rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.88;
+    text-wrap: balance;
+}
+
+/* --- The deck, in front of the stack ------------------------------ */
+
+/* The deck stands on the near ridge, so it is set in chalk. */
+.layer--deck {
+    z-index: 6;
+    display: grid;
+    align-content: end;
+    padding: 0 clamp(1.5rem, 6vw, 6rem) clamp(2.75rem, 7vh, 4rem);
+    color: var(--chalk);
+}
+
+.deck {
+    max-width: 22rem;
+    pointer-events: auto;
 }
 
 .hero-lede {
-    max-width: 25rem;
-    margin-top: clamp(1rem, 2.4vh, 1.5rem);
-    color: var(--muted);
-    font-size: clamp(1rem, 1.1vw, 1.06rem);
-    line-height: 1.6;
+    color: var(--chalk-muted);
+    font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+    font-weight: 500;
+    line-height: 1.55;
+    text-wrap: pretty;
 }
 
 .hero-link {
     display: inline-block;
-    margin-top: clamp(1.4rem, 3vh, 2rem);
+    margin-top: 1.1rem;
     padding-bottom: 2px;
     border-bottom: 1px solid var(--accent);
-    color: var(--accent-deep);
+    color: var(--chalk);
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
-    transition: color 0.2s ease, border-color 0.2s ease;
+    transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .hero-link:hover,
 .hero-link:focus-visible {
-    border-color: var(--ink);
-    color: var(--ink);
+    border-color: var(--chalk);
 }
 
 .hero-link:focus-visible {
-    outline: 2px solid var(--accent-deep);
+    outline: 2px solid var(--accent);
     outline-offset: 4px;
 }
 
-/* --- Layer 4: foreground card ----------------------------------- */
+/* --- The switch ------------------------------------------------- */
 
-.layer--front {
-    z-index: 3;
-    display: grid;
-    align-content: end;
-    justify-items: end;
-    padding: 0 clamp(1.5rem, 7vw, 7rem) clamp(3.5rem, 11vh, 6rem);
-}
-
-.rate-card {
-    width: min(18.75rem, 74vw);
-    padding: 1.15rem 1.25rem;
+.mode-switch {
+    position: absolute;
+    top: clamp(1.25rem, 3vw, 2rem);
+    right: clamp(1.5rem, 6vw, 6rem);
+    z-index: 8;
+    display: inline-flex;
+    padding: 3px;
     border: 1px solid var(--rule);
-    border-radius: 10px;
-    background: var(--surface);
-    pointer-events: auto;
+    border-radius: 999px;
+    background: rgba(247, 247, 246, 0.82);
+    backdrop-filter: blur(8px);
 }
 
-.rate-card__label {
-    color: var(--accent-deep);
+.mode-switch button {
+    padding: 0.4rem 0.9rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
     font-size: 0.8rem;
-}
-
-.rate-card__price {
-    margin: 0.3rem 0 0.5rem;
-    font-size: 1.9rem;
     font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.rate-card__price span {
-    margin-left: 0.45rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-    font-weight: 400;
-    letter-spacing: 0;
+.mode-switch button[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--chalk);
 }
 
-.rate-card__note {
-    color: var(--muted);
-    text-wrap: pretty;
-    font-size: 0.8rem;
-    line-height: 1.5;
+.mode-switch button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 /* --- The one cue, and the line the timeline fills --------------- */
 
 .scroll-cue {
     position: absolute;
+    right: clamp(1.5rem, 6vw, 6rem);
     bottom: clamp(1.5rem, 3.4vw, 2.4rem);
-    left: clamp(1.5rem, 7vw, 7rem);
-    z-index: 6;
+    z-index: 7;
     display: flex;
     gap: 0.85rem;
     align-items: center;
-    color: var(--muted);
+    color: var(--chalk-muted);
     font-size: 0.8rem;
+    font-weight: 500;
     pointer-events: none;
 }
 
@@ -222,7 +327,7 @@ body {
     width: min(140px, 24vw);
     height: 1px;
     overflow: hidden;
-    background: var(--rule);
+    background: var(--chalk-rule);
 }
 
 .scroll-cue__track span {
@@ -237,9 +342,9 @@ body {
 /* --- What the hero releases into -------------------------------- */
 
 .after {
-    padding: clamp(3.5rem, 11vh, 7rem) clamp(1.5rem, 7vw, 7rem);
-    border-top: 1px solid var(--rule);
-    background: var(--page);
+    padding: clamp(3.5rem, 11vh, 7rem) clamp(1.5rem, 6vw, 6rem);
+    background: var(--ridge-near);
+    color: var(--chalk);
 }
 
 .after h2 {
@@ -252,7 +357,7 @@ body {
 .after p {
     max-width: 34rem;
     margin-top: 0.9rem;
-    color: var(--muted);
+    color: var(--chalk-muted);
     font-size: 1rem;
     line-height: 1.7;
 }
@@ -261,43 +366,49 @@ body {
    Responsive
    --------------------------------------------------------------- */
 
-@media (max-width: 900px) {
-    .layer--copy {
-        align-items: start;
-        padding-top: 16%;
-    }
-}
-
 @media (max-width: 768px) {
     .hero {
-        min-height: 540px;
+        min-height: 600px;
     }
 
-    .layer--backdrop {
-        inset: -14%;
+    .sun {
+        top: 27%;
+        left: 60%;
     }
 
-    .layer--wash {
-        inset: -9%;
-        background:
-            linear-gradient(180deg, rgba(236, 236, 235, 0.9) 0%, rgba(236, 236, 235, 0.78) 34%, rgba(236, 236, 235, 0.28) 62%, rgba(236, 236, 235, 0.7) 100%);
+    .layer--headline {
+        padding-top: 20%;
     }
 
-    .layer--copy {
-        padding: 22% 1.5rem 0;
+    .hero-title {
+        font-size: clamp(4.2rem, 19vw, 5.6rem);
     }
 
-    .hero-lede {
-        font-size: 0.98rem;
+    .layer--mist {
+        top: 54%;
+        bottom: 18%;
     }
 
-    .layer--front {
-        justify-items: start;
-        padding: 0 1.5rem 20%;
+    .layer--deck {
+        padding-bottom: 5rem;
+    }
+
+    .layer--tile-a .tile {
+        top: 40%;
+        left: 54%;
+    }
+
+    .layer--tile-b .tile {
+        top: 50%;
+        left: 18%;
+    }
+
+    .mode-switch {
+        right: 1.5rem;
     }
 
     .scroll-cue {
-        left: 1.5rem;
+        right: 1.5rem;
     }
 }
 
@@ -307,11 +418,7 @@ body {
     }
 
     .hero-title {
-        font-size: clamp(2.4rem, 5.4vw, 3.6rem);
-    }
-
-    .layer--front {
-        padding-bottom: 12%;
+        font-size: clamp(3.6rem, 9.5vw, 7rem);
     }
 }
 
