@@ -10,7 +10,7 @@ From [GSAP Vault](https://gsapvault.com), a library of 75 copy-paste GSAP animat
 
 | Effect | What it does | Live demo |
 |--------|--------------|-----------|
-| [3D Card Flip Gallery](./3d-card-flip) | Tactile 3D cards with deep perspective, reactive edge-light, shadow inversion, hover/focus parity, and tap auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
+| [3D Card Flip Gallery](./3d-card-flip) | Tactile GSAP 3D cards with deep perspective, reactive edge lighting and shifting shadows. Flip on hover, keyboard focus or tap, with grouped auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
 | [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage. | [Demo](https://gsapvault.com/effects/scroll-progress) |
 | [Typewriter Text](./typewriter-text) | A typewriter that types a line character by character, holds it, accelerates through deletion, and cycles to the next phrase, with optional cursor, status and progress hooks. | [Demo](https://gsapvault.com/effects/typewriter-text) |
 | [Parallax Hero](./parallax-hero) | A pinned hero that pulls its layers into depth from one scrubbed ScrollTrigger: a headline sandwiched inside the stack, ridges or photographs climbing over it, and a sun that sets behind the far layer. | [Demo](https://gsapvault.com/effects/parallax-hero) |
