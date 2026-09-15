@@ -6,7 +6,7 @@
 
 - Product: 3D Card Flip Gallery
 - Type: animation effect
-- Description: Tactile 3D cards with deep perspective, reactive edge-light, shadow inversion, hover/focus parity, and tap auto-close.
+- Description: Tactile GSAP 3D cards with deep perspective, reactive edge lighting and shifting shadows. Flip on hover, keyboard focus or tap, with grouped auto-close.
 - GSAP plugins: ScrollTrigger
 - Techniques: 3d-transforms, hover-effect, click-toggle, stagger, scroll-reveal, matchMedia
 - Lenis smooth scrolling: not required

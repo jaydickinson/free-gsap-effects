@@ -17,7 +17,7 @@
 	--surface-sunk: #e2e2e0;
 	--ink: #141412;
 	--ink-dim: rgba(20, 20, 18, 0.72);
-	--ink-faint: rgba(20, 20, 18, 0.58);
+	--ink-faint: rgba(20, 20, 18, 0.64);
 	--rule: rgba(20, 20, 18, 0.14);
 	--rule-strong: rgba(20, 20, 18, 0.3);
 
@@ -176,7 +176,11 @@ body {
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	column-gap: clamp(24px, 4vw, 64px);
 	row-gap: clamp(20px, 3vh, 32px);
-	padding-top: clamp(64px, 12vh, 120px);
+	/* Each block gets most of a screen to itself. A scroll-driven reveal is
+	   only legible when the visitor scrolls it into view; with the sections
+	   packed tight the whole page was 750px of runway inside the product
+	   frame, so one wheel flick finished the demo and the page took over. */
+	padding-top: clamp(96px, 52svh, 420px);
 }
 
 .section-title {
@@ -222,7 +226,7 @@ body {
 	justify-content: space-between;
 	gap: 1.5rem;
 	flex-wrap: wrap;
-	margin-top: clamp(64px, 12vh, 120px);
+	margin-top: clamp(96px, 48svh, 400px);
 	padding: clamp(24px, 3vw, 40px);
 	background: var(--surface);
 	border: 1px solid var(--rule);
@@ -271,7 +275,7 @@ body {
 }
 
 .colophon {
-	margin-top: clamp(40px, 8vh, 80px);
+	margin-top: clamp(64px, 34svh, 300px);
 	padding-top: 1rem;
 	border-top: 1px solid var(--rule);
 }

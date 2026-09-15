@@ -107,8 +107,30 @@ body {
 }
 
 .sh-word {
+    position: relative;
     display: inline-block;
-    will-change: opacity, color, transform;
+    will-change: transform;
+}
+
+/* An unread word shows a ghost preview and hides its real text. The ghost is
+   generated content painted from data-mark, so there is only ever one text
+   node per word; the real text sits in the same box and becomes visible at
+   full ink as the reading front arrives. Both rules are gated on the class
+   the script adds, so without JavaScript the statement reads plainly. */
+.has-scroll-highlight .sh-word[data-mark]::before {
+    content: attr(data-mark);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--text);
+    opacity: var(--sh-ghost, var(--sh-dim, 0.16));
+    white-space: pre;
+    pointer-events: none;
+}
+
+.has-scroll-highlight .sh-word__text {
+    visibility: hidden;
+    will-change: opacity, color;
 }
 
 .reading-coordinate {
@@ -232,10 +254,16 @@ body {
     }
 
     .scroll-highlight,
-    .sh-word {
+    .sh-word,
+    .sh-word__text {
         color: var(--text) !important;
         opacity: 1 !important;
+        visibility: visible !important;
         transform: none !important;
+    }
+
+    .sh-word::before {
+        content: none !important;
     }
 
     .progress-fill {
