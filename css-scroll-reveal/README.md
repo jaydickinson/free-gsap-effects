@@ -4,7 +4,7 @@ Native CSS scroll-driven entrance classes for opacity, translate, and scale. Ani
 
 ## Quick Start
 
-**1. Copy the reveal classes and keyframes from `assets/style.css` into your stylesheet.**
+**1. Copy the reveal classes and keyframes from `assets/style.css` into your stylesheet.** They sit under the `THE REVEAL API` heading, together with the reduced-motion and `@supports` fallback blocks below it.
 
 **2. Add a reveal class to an element in your `<body>`:**
 
@@ -24,44 +24,59 @@ Native CSS scroll-driven entrance classes for opacity, translate, and scale. Ani
 
 No animation script or GSAP CDN tag is required.
 
+## Using It With Your Own Design
+
+**What the effect requires of your markup:** one of the five `.reveal-*` classes on any block-level element. Nothing else: no wrapper, no data attributes, no particular parent. The element animates against its own position in the nearest scroll container (`view()`), so it works inside any layout.
+
+**What is only the demo's CSS:** everything above the `THE REVEAL API` heading in `assets/style.css` (the studio page, its cards, the `.about` grid, the button, the colours and Mona Sans) is the demo and can be deleted. The `.projects .card:nth-child()` ranges and the `.closing` and `.colophon` ranges are examples of tuning `--reveal-range`, not part of the API.
+
+**Non-obvious CSS the effect depends on:**
+
+- `overflow-x: clip` on `html` and `body`. The side slides translate an element 4rem off the page for a moment; without the clip a phone gains a horizontal scroll area.
+- `--ease-reveal` (or any timing function you set on the classes). Scroll-scrubbed reveals want a gentler curve than a timed tween: with an expo ease the element is 90% settled a third of the way in and any stagger between neighbours disappears.
+- **Blocks at the very end of a page never reach `cover 40%`**, because the document stops scrolling first, so they stay partly transparent. Give them a shorter range: the demo uses `entry 0% cover 28%` on its closing block and `entry 0% entry 100%` on the footer line.
+- Keep the `@media (prefers-reduced-motion: reduce)` and `@supports not (animation-timeline: view())` blocks, and the `.no-scroll-timeline` rules if you ship the optional script. Together they are what makes an unsupported or reduced-motion browser show the settled page instead of a blank one.
+
 ## Options
 
 | Class / property | Values | Default | Description |
 |---|---|---|---|
 | `.reveal-fade` | Class | — | Reveals with opacity only |
-| `.reveal-slide-up` | Class | — | Fades and translates upward |
+| `.reveal-slide-up` | Class | — | Fades and translates upward from `4rem` below |
 | `.reveal-scale` | Class | — | Fades and scales from `0.72` |
 | `.reveal-slide-left` | Class | — | Fades while entering from the left |
 | `.reveal-slide-right` | Class | — | Fades while entering from the right |
 | `--reveal-range` | Any valid `animation-range` | `entry 0% cover 40%` | Controls where the reveal starts and settles |
 
-The class names are preserved as the reusable API. The editorial demo binds its three panels to `scroll(root block)` only to make one compact, synchronized sequence; ordinary elements continue to use `view()`.
+Every element in the demo uses `view()`, its own progress through the viewport. Nothing is bound to the root scroll.
 
 ## Examples
 
-### A three-item cascade
+### A staggered row of cards
+
+Three cards in one row enter the viewport together, so give each a later range and they arrive one after another:
 
 **Add to your HTML `<body>`:**
 
 ```html
-<div class="story-grid">
-  <article class="reveal-slide-up">First story</article>
-  <article class="reveal-scale">Second story</article>
-  <article class="reveal-slide-left">Third story</article>
+<div class="card-row">
+  <article class="reveal-slide-up">First</article>
+  <article class="reveal-slide-up">Second</article>
+  <article class="reveal-slide-up">Third</article>
 </div>
 ```
 
 **Add to your stylesheet:**
 
 ```css
-.story-grid > :nth-child(1) { --reveal-range: entry 0% cover 35%; }
-.story-grid > :nth-child(2) { --reveal-range: entry 8% cover 43%; }
-.story-grid > :nth-child(3) { --reveal-range: entry 16% cover 51%; }
+.card-row > :nth-child(1) { --reveal-range: entry 0% cover 34%; }
+.card-row > :nth-child(2) { --reveal-range: entry 6% cover 40%; }
+.card-row > :nth-child(3) { --reveal-range: entry 12% cover 46%; }
 ```
 
 ### Accent-rule growth
 
-The poster's secondary response is also CSS-driven:
+The demo's secondary response, a rule that draws itself under a heading, is also CSS-driven:
 
 ```css
 .accent-rule {
@@ -87,8 +102,8 @@ Without JavaScript, supported browsers animate normally and unsupported browsers
 
 ## Accessibility
 
-A `prefers-reduced-motion: reduce` media query disables every reveal, removes the extra runway, and presents the settled content immediately. Keep meaningful content in normal HTML rather than pseudo-elements so it remains available to assistive technology and all fallback modes.
+A `prefers-reduced-motion: reduce` media query disables every reveal and presents the settled content immediately. Keep meaningful content in normal HTML rather than pseudo-elements so it remains available to assistive technology and all fallback modes.
 
 ## Dependencies
 
-None. The effect uses native CSS only. The demo loads Google Fonts for its poster styling, but the reveal API does not depend on them.
+None. The effect uses native CSS only. The demo loads Mona Sans from Google Fonts for its page styling, but the reveal API does not depend on it.

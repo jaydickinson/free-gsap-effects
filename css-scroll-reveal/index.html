@@ -7,48 +7,56 @@
 	<link rel="stylesheet" href="assets/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-	<main class="poster-runway">
-		<section class="poster-stage" aria-label="Native CSS scroll reveal poster sequence">
-			<header class="scroll-cue">
-				<span class="scroll-cue__mark" aria-hidden="true"></span>
-				<strong>Scroll / reveal</strong>
-				<span>CSS only</span>
-			</header>
-
-			<div class="stage-index" aria-hidden="true">NO. 01</div>
-			<div class="threshold" aria-hidden="true"><span>entry threshold</span></div>
-
-			<div class="poster-stack" data-thumbnail-target>
-				<article class="poster-panel poster-panel--lime reveal-slide-up">
-					<div class="poster-panel__meta"><span>Independent voices</span><span>24—26</span></div>
-					<p class="poster-panel__kicker">Night print / live type</p>
-					<h1>MAKE<br>NOISE</h1>
-					<div class="poster-rule" aria-hidden="true"></div>
-					<p class="poster-panel__foot">Three nights. One city.<br>No quiet conclusions.</p>
-				</article>
-
-				<article class="poster-panel poster-panel--orange reveal-scale">
-					<div class="poster-panel__meta"><span>Field notes</span><span>02:00</span></div>
-					<p class="poster-panel__kicker">Culture after closing</p>
-					<h2>STAY<br>OUT</h2>
-					<div class="poster-rule" aria-hidden="true"></div>
-					<p class="poster-panel__foot">Talks / sound / moving image<br>Doors refuse to close.</p>
-				</article>
-
-				<article class="poster-panel poster-panel--cyan reveal-slide-left">
-					<div class="poster-panel__meta"><span>Open frequency</span><span>FM 88.6</span></div>
-					<p class="poster-panel__kicker">Transmit the margins</p>
-					<h2>NEW<br>WAVE</h2>
-					<div class="poster-rule" aria-hidden="true"></div>
-					<p class="poster-panel__foot">Broadcast live from nowhere<br>Signal over silence.</p>
-				</article>
-			</div>
-
-			<p class="stage-note">Opacity / translate / scale</p>
+	<main class="page">
+		<!-- Opening: plain content, no reveal class, so the page is never blank on load. -->
+		<section class="intro">
+			<p class="masthead"><span>Marrow Studio</span><span>Bristol</span></p>
+			<h1 class="headline">Print, identity and the occasional website.</h1>
+			<p class="prompt">
+				<span class="prompt-dot" aria-hidden="true"></span>
+				<strong>Scroll</strong>
+				<span>each block reveals as it enters the viewport, in CSS alone</span>
+			</p>
 		</section>
+
+		<!-- Project index: three cards, each .reveal-slide-up with its own --reveal-range so they arrive in sequence. -->
+		<section class="projects" aria-label="Selected projects">
+			<article class="card reveal-slide-up">
+				<p class="card-index">01</p>
+				<h2 class="card-title">Fold Bakery</h2>
+				<p class="card-meta">Identity, packaging, signage</p>
+			</article>
+			<article class="card reveal-slide-up">
+				<p class="card-index">02</p>
+				<h2 class="card-title">Harbour Quarterly</h2>
+				<p class="card-meta">Editorial design, four issues a year</p>
+			</article>
+			<article class="card reveal-slide-up">
+				<p class="card-index">03</p>
+				<h2 class="card-title">Tern Cycles</h2>
+				<p class="card-meta">Identity and a small website</p>
+			</article>
+		</section>
+
+		<!-- About: a heading, a CSS-only rule that grows underneath it, and two columns sliding in from either side. -->
+		<section class="about" aria-label="About the studio">
+			<h2 class="section-title reveal-fade">Four people, one room, no account managers.</h2>
+			<div class="accent-rule" aria-hidden="true"></div>
+			<p class="about-lead reveal-slide-left">We take on eight or nine projects a year and give each one the same two designers from the first meeting to the final proof.</p>
+			<p class="about-body reveal-slide-right">Most of our work is printed. The websites we do build are small, fast and hand-coded, which is also why this page animates without a line of JavaScript.</p>
+		</section>
+
+		<!-- Closing: one .reveal-scale block with the only button on the page. -->
+		<section class="closing reveal-scale" aria-label="Start a project">
+			<p class="closing-text">Starting something this year?</p>
+			<a class="btn btn--filled" href="#">Talk to us</a>
+		</section>
+
+		<!-- Footer line, .reveal-fade. -->
+		<p class="colophon reveal-fade">Marrow Studio, 14 Wapping Wharf, Bristol. Est. 2017.</p>
 	</main>
 
 	<script src="assets/script.js"></script>

@@ -6,7 +6,7 @@ Image Clip Reveal is a production-ready GSAP animation effect from GSAP Vault. T
 
 - Product: Image Clip Reveal
 - Type: animation effect
-- Description: A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its editorial caption lands.
+- Description: A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its caption lands.
 - GSAP plugins: ScrollTrigger
 - Techniques: scroll-reveal, clip-path, ken-burns, stagger
 - Lenis smooth scrolling: included

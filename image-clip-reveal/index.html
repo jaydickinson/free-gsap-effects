@@ -3,60 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Image Clip Reveal Demo | GSAP Vault</title>
+    <!-- The has-js gate: reveal start states only apply when JavaScript is
+         running, so the photograph and caption stay visible without it. -->
     <script>document.documentElement.classList.add('has-js');</script>
     <link rel="stylesheet" href="assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=Syne:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <main class="showcase-shell">
-        <header class="showcase-toolbar">
-            <p class="showcase-prompt">
-                <span class="showcase-prompt__dot" aria-hidden="true"></span>
-                <strong>Directional aperture</strong>
-                <span>Image and caption settle in sequence</span>
+    <main class="feature">
+        <!-- Toolbar: the one prompt line and the documented replay button. -->
+        <header class="feature-bar">
+            <p class="prompt">
+                <span class="prompt-dot" aria-hidden="true"></span>
+                <strong>Watch the aperture open</strong>
+                <span>then scroll for the second photograph</span>
             </p>
-            <button class="replay-button" type="button" data-clip-replay aria-label="Replay image clip reveal">
-                <span aria-hidden="true">↻</span>
-                Replay
-            </button>
+            <button class="btn" type="button" data-clip-replay>Replay</button>
         </header>
 
-        <section class="showcase-stage" aria-label="Cinematic image clip reveal demonstration">
-            <figure class="editorial-frame">
-                <div class="frame-atmosphere" data-reveal-atmosphere aria-hidden="true"></div>
-                <span class="frame-coordinate frame-coordinate--top" aria-hidden="true">45.4215° N</span>
-                <span class="frame-coordinate frame-coordinate--side" aria-hidden="true">75.6972° W</span>
+        <!-- Photograph one. data-clip-reveal is the effect; the polygon
+             aperture opens from the left edge, then the caption lands. -->
+        <figure class="photo">
+            <div class="photo-media"
+                 data-clip-reveal
+                 data-reveal-direction="right"
+                 data-reveal-duration="1.45"
+                 data-reveal-once="true">
+                <img src="assets/img/feature.webp"
+                     alt="Corner of a concrete brutalist building, its stacked window bays lit by low sun against a clear sky"
+                     width="1600"
+                     height="1067"
+                     decoding="async">
+            </div>
 
-                <div class="clip-media"
-                     data-clip-reveal
-                     data-reveal-direction="right"
-                     data-reveal-duration="1.45"
-                     data-reveal-once="true">
-                    <img src="assets/brutalist-architecture.jpg"
-                         alt="Glass towers of Constitution Square rising into a stormy sky in Ottawa"
-                         width="1800"
-                         height="1200">
-                    <span class="image-wash" aria-hidden="true"></span>
-                    <span class="image-index" aria-hidden="true">ARCH / 01</span>
-                </div>
+            <!-- Caption: an accent mark, then three lines that rise through
+                 their masks in sequence. All three hooks are optional. -->
+            <figcaption class="photo-caption" data-reveal-caption>
+                <span class="caption-mark" data-reveal-rule aria-hidden="true"></span>
+                <span class="caption-mask caption-place"><span data-reveal-copy>Ottawa, Canada</span></span>
+                <span class="caption-mask caption-title"><span data-reveal-copy>The library that turned its back on the street.</span></span>
+                <span class="caption-mask caption-note"><span data-reveal-copy>Photograph by Ana Ferreira</span></span>
+            </figcaption>
+        </figure>
 
-                <figcaption class="editorial-caption" data-reveal-caption>
-                    <span class="caption-rule" data-reveal-rule aria-hidden="true"></span>
-                    <span class="caption-mask caption-location">
-                        <span data-reveal-copy>Ottawa, Canada</span>
-                    </span>
-                    <span class="caption-mask caption-title">
-                        <span data-reveal-copy>Constitution Square<br>under weather.</span>
-                    </span>
-                    <span class="caption-mask caption-note">
-                        <span data-reveal-copy>Glass, steel &amp; a northern sky.</span>
-                    </span>
-                </figcaption>
-            </figure>
+        <!-- Body copy: plain page content between the two photographs. -->
+        <section class="passage" aria-label="Feature text">
+            <p>Built in 1971 and threatened with demolition twice since, the building keeps its windows in deep concrete bays that shade the reading rooms from the afternoon. Critics called it hostile. The librarians, who have never needed blinds, call it sensible.</p>
         </section>
+
+        <!-- Photograph two. Same effect, opening from the bottom, and it
+             replays every time it scrolls back into view. -->
+        <figure class="photo photo--second">
+            <div class="photo-media"
+                 data-clip-reveal
+                 data-reveal-direction="up"
+                 data-reveal-duration="1.3"
+                 data-reveal-once="false">
+                <img src="assets/img/second.webp"
+                     alt="A woven metal facade sweeping in a curve against a blue sky"
+                     width="1600"
+                     height="1067"
+                     decoding="async"
+                     loading="lazy">
+            </div>
+            <figcaption class="photo-caption" data-reveal-caption>
+                <span class="caption-mark" data-reveal-rule aria-hidden="true"></span>
+                <span class="caption-mask caption-place"><span data-reveal-copy>Basel, Switzerland</span></span>
+                <span class="caption-mask caption-title"><span data-reveal-copy>Across the river, the newer answer.</span></span>
+                <span class="caption-mask caption-note"><span data-reveal-copy>Photograph by Ana Ferreira</span></span>
+            </figcaption>
+        </figure>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>

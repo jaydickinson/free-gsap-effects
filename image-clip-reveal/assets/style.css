@@ -1,3 +1,14 @@
+/* ============================================
+   IMAGE CLIP REVEAL: DEMO STYLES
+
+   An editorial photo feature on a light grey ground: one ink, hairlines,
+   Mona Sans, and one red accent for the caption mark, the prompt dot, the
+   focus ring and selection. The photographs supply the rest of the colour.
+
+   Rules the effect depends on are marked "contract" below. Everything else
+   is the demo's page and can be replaced with your own design.
+   ============================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,201 +16,150 @@
 }
 
 :root {
-    --black: #07090a;
-    --surface: #111517;
-    --border: #283036;
-    --text: #f4f1e9;
-    --text-secondary: #aeb5b4;
-    --text-muted: #737d80;
-    --orange: #ff7a1a;
-    --cyan: #42d9e8;
-    --accent: var(--orange);
+    color-scheme: light;
+
+    --page: #ececeb;
+    --surface: #f7f7f6;
+    --surface-sunk: #e2e2e0;
+    --ink: #141412;
+    --ink-dim: rgba(20, 20, 18, 0.72);
+    --ink-faint: rgba(20, 20, 18, 0.58);
+    --rule: rgba(20, 20, 18, 0.14);
+    --rule-strong: rgba(20, 20, 18, 0.3);
+
+    --font-sans: 'Mona Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+    --accent: #e5322d;          /* red: the caption mark, the focus ring, ::selection */
+    --accent-ink: #ffffff;
+
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    color-scheme: dark;
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 html,
 body {
     min-height: 100%;
+    background: var(--page);
 }
 
 html {
     scroll-behavior: auto;
-    background: var(--black);
+    overflow-x: clip;
 }
 
 body {
     min-height: 100svh;
     overflow-x: clip;
-    background:
-        radial-gradient(circle at 78% 18%, rgba(66, 217, 232, 0.07), transparent 28rem),
-        linear-gradient(145deg, #050708 0%, #0b0e10 58%, #07090a 100%);
-    color: var(--text);
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    line-height: 1.4;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-body::before {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-    background-size: 100% 5rem;
-    content: '';
-    pointer-events: none;
+img {
+    display: block;
 }
 
 ::selection {
     background: var(--accent);
-    color: var(--black);
+    color: var(--accent-ink);
 }
 
-::-webkit-scrollbar {
-    width: 10px;
+/* ============================================
+   PAGE SHELL
+   ============================================ */
+.feature {
+    width: min(100%, 1120px);
+    margin: 0 auto;
+    padding: clamp(0.9rem, 2vw, 1.25rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 6vw, 4rem);
 }
 
-::-webkit-scrollbar-track {
-    background: var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-    border: 2px solid var(--black);
-    border-radius: 5px;
-    background: #293136;
-}
-
-.showcase-shell {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    min-height: 100svh;
-    padding: clamp(1rem, 2.5vw, 1.75rem) clamp(1rem, 4vw, 3.5rem) clamp(1.25rem, 3vw, 2.25rem);
-}
-
-.showcase-toolbar {
-    position: relative;
-    z-index: 5;
+.feature-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    min-height: 2.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    min-height: 2.25rem;
+    margin-bottom: clamp(0.75rem, 1.6vw, 1rem);
 }
 
-.showcase-prompt {
+.prompt {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 0.5rem;
+    color: var(--ink-faint);
+    font-size: 0.8125rem;
+    line-height: 1.35;
 }
 
-.showcase-prompt strong {
-    color: var(--text);
+.prompt strong {
+    color: var(--ink);
     font-weight: 500;
 }
 
-.showcase-prompt__dot {
-    width: 0.42rem;
-    height: 0.42rem;
+.prompt-dot {
     flex: 0 0 auto;
+    width: 0.4rem;
+    height: 0.4rem;
     border-radius: 50%;
-    background: var(--orange);
-    box-shadow: 0 0 1rem rgba(255, 122, 26, 0.7);
+    background: var(--accent);
 }
 
-.replay-button {
+.btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    border: 1px solid rgba(66, 217, 232, 0.38);
-    border-radius: 100vmax;
-    padding: 0.48rem 0.78rem;
-    background: rgba(8, 12, 14, 0.72);
-    color: var(--cyan);
-    font: 500 0.65rem/1 'JetBrains Mono', monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    justify-content: center;
+    padding: 0.45rem 0.9rem;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    border: 1px solid var(--rule-strong);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ink);
     cursor: pointer;
-    transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    transition: background-color 0.2s var(--ease-out-quart);
 }
 
-.replay-button:hover,
-.replay-button:focus-visible {
-    border-color: var(--cyan);
-    outline: none;
-    background: rgba(66, 217, 232, 0.1);
-    color: #dffcff;
+.btn:hover {
+    background: var(--surface-sunk);
 }
 
-.showcase-stage {
-    display: grid;
-    min-height: 0;
-    place-items: center;
-    padding-top: clamp(1rem, 2.8vh, 1.5rem);
+.btn:focus-visible {
+    background: var(--surface-sunk);
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
-.editorial-frame {
-    position: relative;
-    width: min(74vw, 61rem);
+/* ============================================
+   PHOTOGRAPH
+   ============================================ */
+.photo {
     margin: 0;
 }
 
-.frame-atmosphere {
-    position: absolute;
-    right: -8%;
-    bottom: 10%;
-    width: 42%;
-    aspect-ratio: 1;
-    z-index: -1;
-    border-radius: 50%;
-    opacity: 0.45;
-    background: radial-gradient(circle, rgba(66, 217, 232, 0.24), rgba(255, 122, 26, 0.08) 42%, transparent 70%);
-    filter: blur(38px);
-    pointer-events: none;
+.photo--second {
+    margin-top: clamp(2rem, 6vw, 4rem);
 }
 
-.has-js .frame-atmosphere {
-    opacity: 0;
-}
-
-.frame-coordinate {
-    position: absolute;
-    z-index: 3;
-    color: rgba(255, 255, 255, 0.43);
-    font: 500 0.55rem/1 'JetBrains Mono', monospace;
-    letter-spacing: 0.14em;
-}
-
-.frame-coordinate--top {
-    top: 0;
-    left: 0;
-    transform: translateY(-1.35rem);
-}
-
-.frame-coordinate--side {
-    right: 0;
-    top: 0;
-    writing-mode: vertical-rl;
-    transform: translateX(1.35rem);
-}
-
-.clip-media {
+/* CONTRACT: the wrapper must clip. The polygon reveals the wrapper, and the
+   inner image starts scaled up, so anything that overflows would show
+   around the aperture. The neutral plate shows until the image has loaded. */
+.photo-media {
     position: relative;
     width: 100%;
-    aspect-ratio: 2.05 / 1;
+    height: min(62svh, 620px);
+    min-height: 260px;
     overflow: hidden;
-    background: #121719;
-    clip-path: none;
+    background: var(--surface-sunk);
     isolation: isolate;
 }
 
+/* CONTRACT: the closed aperture, one per direction, gated under .has-js so
+   the photograph is visible without JavaScript. The six points match the
+   open polygon in script.js point for point, which keeps the interpolation
+   stable. */
 .has-js [data-clip-reveal] {
     clip-path: polygon(0% 100%, 42% 100%, 50% 94%, 58% 100%, 100% 100%, 0% 100%);
 }
@@ -216,64 +176,49 @@ body::before {
     clip-path: polygon(0% 0%, 0% 42%, 6% 50%, 0% 58%, 0% 100%, 0% 0%);
 }
 
-.clip-media img {
-    display: block;
+.photo-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 57%;
-    transform: none;
-    transform-origin: center 58%;
+    object-position: center 45%;
+    transform-origin: center 55%;
 }
 
+/* CONTRACT: the Ken Burns start state. script.js tweens scale from 1.14 to
+   1; without this the first frame would paint at 1 and jump. */
 .has-js [data-clip-reveal] img {
     transform: scale(1.14);
     will-change: transform;
 }
 
-.image-wash {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-        linear-gradient(180deg, rgba(5, 9, 11, 0.05) 45%, rgba(5, 8, 9, 0.42) 100%),
-        linear-gradient(90deg, rgba(255, 122, 26, 0.08), transparent 25%, transparent 72%, rgba(66, 217, 232, 0.1));
-    pointer-events: none;
-}
-
-.image-index {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    z-index: 2;
-    border-top: 1px solid var(--orange);
-    padding-top: 0.4rem;
-    color: rgba(255, 255, 255, 0.8);
-    font: 500 0.55rem/1 'JetBrains Mono', monospace;
-    letter-spacing: 0.15em;
-}
-
-.editorial-caption {
+/* ============================================
+   CAPTION
+   ============================================ */
+.photo-caption {
     display: grid;
-    grid-template-columns: minmax(4.75rem, 0.8fr) minmax(13rem, 2.1fr) minmax(9rem, 1fr);
-    gap: clamp(0.8rem, 2.5vw, 2rem);
+    grid-template-columns: minmax(7rem, 0.9fr) minmax(14rem, 2.4fr) minmax(9rem, 1fr);
+    gap: 0.35rem clamp(1rem, 3vw, 2.5rem);
     align-items: start;
-    padding-top: 0.85rem;
+    padding-top: 0.9rem;
 }
 
-.caption-rule {
+/* The accent mark: a short bar that draws in ahead of the caption copy. */
+.caption-mark {
     grid-column: 1 / -1;
     display: block;
-    height: 1px;
-    margin-bottom: 0.05rem;
-    background: linear-gradient(90deg, var(--orange) 0 13%, rgba(255, 255, 255, 0.24) 13% 78%, var(--cyan) 78% 100%);
+    width: 2.5rem;
+    height: 3px;
+    margin-bottom: 0.35rem;
+    background: var(--accent);
 }
 
-.has-js .caption-rule {
+.has-js .caption-mark {
     transform: scaleX(0);
     transform-origin: left center;
 }
 
+/* CONTRACT: each caption line rises through an overflow mask, so the mask
+   must clip and the inner span must be a block. */
 .caption-mask {
     display: block;
     overflow: hidden;
@@ -288,100 +233,76 @@ body::before {
     transform: translateY(115%);
 }
 
-.caption-location,
+.caption-place,
 .caption-note {
-    color: var(--text-muted);
-    font: 500 0.58rem/1.35 'JetBrains Mono', monospace;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    padding-top: 0.2rem;
 }
 
 .caption-title {
-    color: var(--text);
-    font-family: 'Syne', system-ui, sans-serif;
-    font-size: clamp(1.05rem, 2.2vw, 1.65rem);
+    font-size: clamp(1.05rem, 1.9vw, 1.5rem);
     font-weight: 600;
-    line-height: 1.02;
-    letter-spacing: -0.035em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
 }
 
 .caption-note {
     justify-self: end;
-    color: var(--cyan);
     text-align: right;
 }
 
+/* ============================================
+   BODY COPY
+   ============================================ */
+.passage {
+    width: min(100%, 40rem);
+    margin: clamp(2rem, 6vw, 4rem) auto 0;
+    color: var(--ink-dim);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 700px) {
-    .showcase-shell {
-        padding: 0.9rem 1rem 1.2rem;
-    }
-
-    .showcase-toolbar {
+    .feature-bar {
         align-items: flex-start;
     }
 
-    .showcase-prompt {
-        align-items: flex-start;
-        max-width: 12rem;
-        line-height: 1.35;
-    }
-
-    .showcase-prompt span:last-child {
+    .prompt span:last-child {
         display: none;
     }
 
-    .showcase-stage {
-        place-items: start center;
-        padding-top: 3.75rem;
-    }
-
-    .editorial-frame {
-        width: min(100%, 27rem);
-    }
-
-    .clip-media {
+    .photo-media {
+        height: auto;
         aspect-ratio: 4 / 5;
-        max-height: 58svh;
+        max-height: 60svh;
     }
 
-    .clip-media img {
-        object-position: 50% 52%;
-    }
-
-    .frame-atmosphere {
-        right: 0;
-    }
-
-    .frame-coordinate--side {
-        display: none;
-    }
-
-    .editorial-caption {
-        grid-template-columns: 0.7fr 1.7fr;
-        gap: 0.65rem 1rem;
+    .photo-caption {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
     }
 
     .caption-title {
-        font-size: clamp(1.1rem, 6vw, 1.45rem);
+        font-size: clamp(1.1rem, 5.5vw, 1.4rem);
     }
 
     .caption-note {
-        grid-column: 2;
         justify-self: start;
         text-align: left;
     }
 }
 
-@media (max-height: 690px) and (min-width: 701px) {
-    .clip-media {
-        max-height: 62svh;
-    }
-
-    .editorial-frame {
-        width: min(70vw, 55rem);
-    }
-}
-
+/* ============================================
+   REDUCED MOTION
+   CONTRACT: every start state above is undone here, so the page is complete
+   without a single tween. script.js also skips the timelines.
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -403,10 +324,5 @@ body::before {
         opacity: 1 !important;
         transform: none !important;
         will-change: auto !important;
-    }
-
-    .frame-atmosphere {
-        opacity: 0.45 !important;
-        transform: none !important;
     }
 }

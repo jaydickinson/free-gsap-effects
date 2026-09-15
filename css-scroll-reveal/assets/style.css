@@ -1,3 +1,8 @@
+/* CSS Scroll Reveal - demo styles.
+   A small studio page on a neutral grey ground, one ink, one accent, Mona
+   Sans. The reveal classes at the bottom of this file are the reusable API;
+   everything above them is only the demo's page and can be replaced. */
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -5,236 +10,284 @@
 }
 
 :root {
-	/* Ordinary page content revealing on scroll, so it looks like ordinary
-	   page content: paper, ink, and three muted markers to tell the three
-	   reveal directions apart. */
-	--page: #f4f2ec;
-	--ink: #17171a;
-	--blue: #2f5bd7;
-	--terracotta: #b8532a;
-	--moss: #37675a;
-	--muted: rgba(23, 23, 26, 0.58);
-	--line: rgba(23, 23, 26, 0.12);
 	color-scheme: light;
+
+	--page: #ececeb;
+	--surface: #f7f7f6;
+	--surface-sunk: #e2e2e0;
+	--ink: #141412;
+	--ink-dim: rgba(20, 20, 18, 0.72);
+	--ink-faint: rgba(20, 20, 18, 0.58);
+	--rule: rgba(20, 20, 18, 0.14);
+	--rule-strong: rgba(20, 20, 18, 0.3);
+
+	/* One accent: the growing rule, the prompt mark, the one button, the
+	   focus ring and ::selection. */
+	--accent: #2563eb;
+	--accent-ink: #ffffff;
+
+	--font-sans: 'Mona Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+	/* Scroll-scrubbed reveals want a gentler curve than a timed tween: with an
+	   expo ease the element is 90% settled a third of the way in and the
+	   stagger between neighbours vanishes. */
+	--ease-reveal: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+	--gutter: clamp(20px, 5vw, 72px);
 }
 
 html {
 	background: var(--page);
-	scrollbar-color: var(--blue) var(--page);
-	scrollbar-width: thin;
+	/* Side slides translate off the page for a moment; clip so they never
+	   widen the scroll area on a phone. */
+	overflow-x: clip;
 }
 
 body {
 	min-width: 320px;
-	background:
-		linear-gradient(var(--line) 1px, transparent 1px),
-		linear-gradient(90deg, var(--line) 1px, transparent 1px),
-		var(--page);
-	background-size: 12.5vw 12.5vw;
+	background: var(--page);
 	color: var(--ink);
-	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-	line-height: 1.2;
+	font-family: var(--font-sans);
+	line-height: 1.5;
 	overflow-x: clip;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-	background: var(--blue);
-	color: #fff;
+	background: var(--accent);
+	color: var(--accent-ink);
 }
 
-.poster-runway {
-	min-height: 164svh;
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
 }
 
-.poster-stage {
-	position: sticky;
-	top: 0;
-	min-height: 100svh;
-	overflow: hidden;
-	isolation: isolate;
+/* ============================================
+   PAGE
+   ============================================ */
+.page {
+	width: min(100%, 1120px);
+	margin: 0 auto;
+	padding: 0 var(--gutter) var(--gutter);
 }
 
-.poster-stage::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.055), transparent 48%);
-	pointer-events: none;
+/* Opening. Sized so the first card row straddles the fold of the product
+   iframe and is caught mid-reveal in the very first frame. */
+.intro {
+	display: grid;
+	grid-template-rows: auto minmax(0, 1fr) auto;
+	gap: clamp(16px, 3vh, 32px);
+	min-height: 79svh;
+	padding-top: var(--gutter);
+	padding-bottom: clamp(20px, 4vh, 40px);
 }
 
-.scroll-cue {
-	position: absolute;
-	top: clamp(1rem, 3vw, 2rem);
-	left: clamp(1rem, 3vw, 2rem);
-	display: flex;
-	align-items: center;
-	gap: 0.65rem;
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.65rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	z-index: 10;
+.masthead,
+.card-index,
+.card-meta,
+.colophon {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1.4;
+	color: var(--ink-faint);
 }
 
-.scroll-cue strong { color: var(--ink); font-weight: 600; }
-.scroll-cue > span:last-child { color: var(--muted); }
-
-.scroll-cue__mark {
-	width: 0.5rem;
-	height: 0.5rem;
-	background: var(--blue);
-	box-shadow: 0 0 0 4px rgba(200, 255, 0, 0.12);
-	animation: cue-pulse 1.5s ease-in-out infinite;
-}
-
-.stage-index {
-	position: absolute;
-	top: clamp(1rem, 3vw, 2rem);
-	right: clamp(1rem, 3vw, 2rem);
-	font-weight: 600;
-	font-size: clamp(1.1rem, 2vw, 1.65rem);
-	font-weight: 800;
-	letter-spacing: -0.04em;
-}
-
-.threshold {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 73%;
-	border-top: 1px dashed rgba(244, 241, 232, 0.32);
-	z-index: 0;
-}
-
-.threshold span {
-	position: absolute;
-	right: clamp(1rem, 3vw, 2rem);
-	top: -1.5rem;
-	color: var(--muted);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.58rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-}
-
-.poster-stack {
-	position: absolute;
-	left: 50%;
-	top: 17%;
-	width: min(74vw, 820px);
-	height: min(66svh, 440px);
-	transform: translateX(-50%);
-	z-index: 2;
-}
-
-.poster-panel {
-	position: absolute;
-	width: 62%;
-	height: 82%;
-	padding: clamp(1rem, 2vw, 1.45rem);
-	border: 1px solid rgba(23, 23, 26, 0.8);
-	box-shadow: 12px 14px 0 rgba(23, 23, 26, 0.18);
-	color: var(--ink);
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	transform-origin: 50% 100%;
-}
-
-.poster-panel--lime {
-	left: 0;
-	top: 0;
-	background: var(--blue);
-	z-index: 1;
-	--demo-range: 3% 53%;
-}
-
-.poster-panel--orange {
-	left: 18%;
-	top: 9%;
-	background: var(--terracotta);
-	z-index: 2;
-	--demo-range: 10% 60%;
-}
-
-.poster-panel--cyan {
-	left: 36%;
-	top: 18%;
-	background: var(--moss);
-	z-index: 3;
-	--demo-range: 17% 67%;
-}
-
-.poster-panel__meta,
-.poster-panel__foot,
-.poster-panel__kicker {
-	font-family: 'JetBrains Mono', monospace;
-	font-size: clamp(0.52rem, 0.85vw, 0.68rem);
-	font-weight: 600;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-.poster-panel__meta {
+.masthead {
 	display: flex;
 	justify-content: space-between;
 	gap: 1rem;
-	border-bottom: 1px solid currentColor;
-	padding-bottom: 0.55rem;
 }
 
-.poster-panel__kicker { margin-top: auto; }
+.masthead span:first-child {
+	color: var(--ink);
+}
 
-.poster-panel h1,
-.poster-panel h2 {
+.headline {
+	align-self: center;
+	max-width: 14ch;
+	font-size: clamp(2.25rem, 6.4vw, 5rem);
 	font-weight: 600;
-	font-size: clamp(2.4rem, 6.2vw, 5.35rem);
-	font-weight: 800;
-	letter-spacing: -0.085em;
-	line-height: 0.72;
-	margin: 0.6rem 0 0.75rem;
+	line-height: 1;
+	letter-spacing: -0.04em;
 }
 
-.poster-rule {
-	width: 100%;
-	height: clamp(0.35rem, 0.8vw, 0.65rem);
-	background: var(--ink);
+/* The one prompt line. */
+.prompt {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.8125rem;
+	line-height: 1.35;
+	color: var(--ink-faint);
+}
+
+.prompt strong {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.prompt-dot {
+	flex: 0 0 auto;
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	background: var(--accent);
+}
+
+/* ============================================
+   PROJECT INDEX
+   ============================================ */
+.projects {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(12px, 1.6vw, 20px);
+}
+
+.card {
+	display: grid;
+	gap: 0.5rem;
+	padding: clamp(18px, 2vw, 28px);
+	background: var(--surface);
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+}
+
+.card-title {
+	margin-top: clamp(14px, 2.4vh, 28px);
+	font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+	font-weight: 600;
+	line-height: 1.05;
+	letter-spacing: -0.03em;
+}
+
+/* Three ranges so the cards arrive one after another instead of as a block.
+   These only tune where each reveal starts and settles. */
+.projects .card:nth-child(1) { --reveal-range: entry 0% cover 34%; }
+.projects .card:nth-child(2) { --reveal-range: entry 6% cover 40%; }
+.projects .card:nth-child(3) { --reveal-range: entry 12% cover 46%; }
+
+/* ============================================
+   ABOUT
+   ============================================ */
+.about {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: clamp(24px, 4vw, 64px);
+	row-gap: clamp(20px, 3vh, 32px);
+	padding-top: clamp(64px, 12vh, 120px);
+}
+
+.section-title {
+	grid-column: 1 / -1;
+	max-width: 20ch;
+	font-size: clamp(1.75rem, 4vw, 3rem);
+	font-weight: 600;
+	line-height: 1.05;
+	letter-spacing: -0.035em;
+}
+
+/* The secondary channel: a rule that draws itself as it enters. Pure CSS,
+   documented in the README. */
+.accent-rule {
+	grid-column: 1 / -1;
+	height: 3px;
+	background: var(--accent);
 	transform-origin: left center;
-	animation: rule-grow auto cubic-bezier(0.16, 1, 0.3, 1) both;
-	animation-timeline: scroll(root block);
-	animation-range: var(--demo-range);
+	animation: rule-grow auto var(--ease-reveal) both;
+	animation-timeline: view();
+	animation-range: entry 10% cover 35%;
 }
 
-.poster-panel__foot {
-	align-self: flex-end;
-	margin-top: 0.75rem;
-	text-align: right;
+.about-lead {
+	font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
 }
 
-.stage-note {
-	position: absolute;
-	left: clamp(1rem, 3vw, 2rem);
-	bottom: clamp(1rem, 3vw, 2rem);
-	color: var(--muted);
-	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.6rem;
-	letter-spacing: 0.13em;
-	text-transform: uppercase;
+.about-body {
+	max-width: 42ch;
+	font-size: clamp(1rem, 1.3vw, 1.125rem);
+	color: var(--ink-dim);
 }
 
-@keyframes cue-pulse {
-	50% { opacity: 0.35; transform: translateY(3px); }
+/* ============================================
+   CLOSING + COLOPHON
+   ============================================ */
+.closing {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	margin-top: clamp(64px, 12vh, 120px);
+	padding: clamp(24px, 3vw, 40px);
+	background: var(--surface);
+	border: 1px solid var(--rule);
+	border-radius: 10px;
 }
 
-/* Reusable API: set --reveal-range on an element to tune its viewport window. */
+/* The last blocks on a page can never travel 40% of the viewport before the
+   scroll runs out, so their ranges finish sooner. */
+.closing { --reveal-range: entry 0% cover 28%; }
+.colophon { --reveal-range: entry 0% entry 100%; }
+
+.closing-text {
+	font-size: clamp(1.375rem, 2.6vw, 2rem);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.03em;
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.7rem 1.25rem;
+	font: inherit;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	color: var(--ink);
+	text-decoration: none;
+	background: transparent;
+	border: 1px solid var(--rule-strong);
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.2s var(--ease-out-expo), border-color 0.2s var(--ease-out-expo);
+}
+
+.btn--filled {
+	color: var(--accent-ink);
+	background: var(--accent);
+	border-color: var(--accent);
+}
+
+.btn--filled:hover,
+.btn--filled:focus-visible {
+	background: color-mix(in srgb, var(--accent) 85%, #000);
+	border-color: color-mix(in srgb, var(--accent) 85%, #000);
+}
+
+.colophon {
+	margin-top: clamp(40px, 8vh, 80px);
+	padding-top: 1rem;
+	border-top: 1px solid var(--rule);
+}
+
+/* ============================================
+   THE REVEAL API
+   Copy from here down into your own stylesheet. Add one class to any element;
+   set --reveal-range on it to change where the reveal starts and settles.
+   ============================================ */
 .reveal-fade,
 .reveal-slide-up,
 .reveal-scale,
 .reveal-slide-left,
 .reveal-slide-right {
 	animation-duration: auto;
-	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+	animation-timing-function: var(--ease-reveal, cubic-bezier(0.22, 0.61, 0.36, 1));
 	animation-fill-mode: both;
 	animation-timeline: view();
 	animation-range: var(--reveal-range, entry 0% cover 40%);
@@ -247,39 +300,29 @@ body {
 .reveal-slide-left { animation-name: slide-left; }
 .reveal-slide-right { animation-name: slide-right; }
 
-/* The showcase reuses the same classes against one short root-scroll sequence. */
-.poster-panel.reveal-fade,
-.poster-panel.reveal-slide-up,
-.poster-panel.reveal-scale,
-.poster-panel.reveal-slide-left,
-.poster-panel.reveal-slide-right {
-	animation-timeline: scroll(root block);
-	animation-range: var(--demo-range);
-}
-
 @keyframes fade-in {
 	from { opacity: 0; }
 	to { opacity: 1; }
 }
 
 @keyframes slide-up {
-	from { opacity: 0; transform: translateY(42svh); }
+	from { opacity: 0; transform: translateY(4rem); }
 	to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scale-in {
-	from { opacity: 0; transform: translateY(26svh) scale(0.72); }
-	to { opacity: 1; transform: translateY(0) scale(1); }
+	from { opacity: 0; transform: scale(0.72); }
+	to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes slide-left {
-	from { opacity: 0; transform: translate(-38vw, 18svh); }
-	to { opacity: 1; transform: translate(0, 0); }
+	from { opacity: 0; transform: translateX(-4rem); }
+	to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slide-right {
-	from { opacity: 0; transform: translate(38vw, 18svh); }
-	to { opacity: 1; transform: translate(0, 0); }
+	from { opacity: 0; transform: translateX(4rem); }
+	to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes rule-grow {
@@ -287,40 +330,45 @@ body {
 	to { opacity: 1; transform: scaleX(1); }
 }
 
-@media (max-width: 700px) {
-	body { background-size: 25vw 25vw; }
-	.poster-runway { min-height: 138svh; }
-	.poster-stack {
-		top: 18%;
-		width: calc(100vw - 2rem);
-		height: min(69svh, 560px);
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 720px) {
+	.intro {
+		grid-template-rows: auto auto auto;
+		gap: 28px;
+		min-height: 0;
+		padding-bottom: 28px;
 	}
-	.poster-panel {
-		width: 84%;
-		height: 74%;
-		padding: 0.9rem;
-		box-shadow: 7px 8px 0 rgba(0, 0, 0, 0.58);
+
+	.projects,
+	.about {
+		grid-template-columns: minmax(0, 1fr);
 	}
-	.poster-panel--orange { left: 8%; top: 10%; }
-	.poster-panel--cyan { left: 16%; top: 20%; }
-	.poster-panel h1,
-	.poster-panel h2 { font-size: clamp(2.65rem, 15vw, 4.2rem); }
-	.threshold { top: 78%; }
-	.stage-note { display: none; }
-	.poster-panel--lime { --demo-range: 2% 48%; }
-	.poster-panel--orange { --demo-range: 8% 56%; }
-	.poster-panel--cyan { --demo-range: 14% 64%; }
+
+	.projects .card:nth-child(n) { --reveal-range: entry 0% cover 34%; }
+
+	.prompt span:last-child {
+		display: none;
+	}
 }
 
+/* ============================================
+   REDUCED MOTION + FALLBACK
+   Reduced motion and browsers without scroll-driven animations both get the
+   settled page: every reveal visible, nothing moving.
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
-	*, *::before, *::after {
+	*,
+	*::before,
+	*::after {
 		animation-duration: 0.01ms !important;
 		animation-delay: 0ms !important;
+		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
 	}
-	.poster-runway { min-height: 100svh; }
-	.poster-panel,
-	.poster-rule,
+
+	.accent-rule,
 	.reveal-fade,
 	.reveal-slide-up,
 	.reveal-scale,
@@ -330,13 +378,10 @@ body {
 		opacity: 1 !important;
 		transform: none !important;
 	}
-	.scroll-cue__mark { animation: none; }
 }
 
 @supports not (animation-timeline: view()) {
-	.poster-runway { min-height: 100svh; }
-	.poster-panel,
-	.poster-rule,
+	.accent-rule,
 	.reveal-fade,
 	.reveal-slide-up,
 	.reveal-scale,
@@ -348,9 +393,9 @@ body {
 	}
 }
 
-.no-scroll-timeline .poster-runway { min-height: 100svh; }
-.no-scroll-timeline .poster-panel,
-.no-scroll-timeline .poster-rule,
+/* Same fallback, applied by the optional script for browsers whose @supports
+   answer is wrong. */
+.no-scroll-timeline .accent-rule,
 .no-scroll-timeline .reveal-fade,
 .no-scroll-timeline .reveal-slide-up,
 .no-scroll-timeline .reveal-scale,
