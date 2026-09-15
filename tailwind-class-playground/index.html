@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Tailwind Component Remixer Demo | GSAP Vault</title>
+    <script data-cfasync="false">document.documentElement.classList.add('has-js')</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Compiled Tailwind v4 utilities for every recipe; no browser compiler required. -->
+    <link rel="stylesheet" href="assets/tailwind.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <main class="showcase-shell" data-tailwind-playground>
+        <header class="showcase-toolbar">
+            <p class="showcase-prompt">
+                <span class="showcase-prompt__dot" aria-hidden="true"></span>
+                <strong>Generate a Tailwind remix</strong>
+                <span>Every click builds a fresh component recipe.</span>
+            </p>
+            <div class="showcase-actions">
+                <button class="toolbar-button" type="button" data-tw-remix>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4.25h2.1c1.4 0 2.2.7 3.1 2.05l2.1 3.15c.9 1.35 1.7 2.05 3.7 2.05M11 2l2.5 2.25L11 6.5M2.5 11.5h2c1.25 0 2.05-.55 2.8-1.55M11 9.25l2.5 2.25L11 13.75"/></svg>
+                    Random remix
+                </button>
+                <button class="toolbar-button" type="button" data-tw-copy>
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5.25" y="5.25" width="7.25" height="7.25" rx="1.3"/><path d="M10.5 5.25V4.5a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1.75"/></svg>
+                    <span data-copy-label>Copy markup</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="tw-playground" aria-label="Interactive Tailwind class playground">
+            <aside class="tw-controls" aria-label="Component utility controls">
+                <div class="control-heading">
+                    <span>Class recipe</span>
+                    <span data-active-count>3 active groups</span>
+                </div>
+
+                <fieldset class="control-group" data-control-group="layout">
+                    <legend>Layout</legend>
+                    <div>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="layout" data-tw-apply="card|max-w-sm grid-cols-1;media|min-h-28 sm:min-h-32 order-first;body|p-5 sm:p-6 gap-4">Stack</button>
+                        <button type="button" aria-pressed="true" data-tw-choice data-tw-group="layout" data-tw-apply="card|max-w-2xl grid-cols-[0.75fr_1.25fr];media|min-h-full order-first;body|p-4 sm:p-6 gap-4">Split</button>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="layout" data-tw-apply="card|max-w-2xl grid-cols-[1.25fr_0.75fr];media|min-h-full order-last;body|p-4 sm:p-6 gap-4">Reverse</button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="control-group" data-control-group="surface">
+                    <legend>Surface</legend>
+                    <div>
+                        <button type="button" aria-pressed="true" data-tw-choice data-tw-group="surface" data-tw-apply="card|bg-white text-slate-950 border-slate-200">Paper</button>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="surface" data-tw-apply="card|bg-slate-950 text-white border-slate-800">Midnight</button>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="surface" data-tw-apply="card|bg-slate-100 text-slate-950 border-slate-300">Mist</button>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="surface" data-tw-apply="card|bg-zinc-900 text-white border-zinc-700">Ink</button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="control-group" data-control-group="shape">
+                    <legend>Shape</legend>
+                    <div>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="shape" data-tw-apply="card|rounded-none shadow-none">Sharp</button>
+                        <button type="button" aria-pressed="false" data-tw-choice data-tw-group="shape" data-tw-apply="card|rounded-xl shadow-lg">Round</button>
+                        <button type="button" aria-pressed="true" data-tw-choice data-tw-group="shape" data-tw-apply="card|rounded-3xl shadow-2xl">Soft</button>
+                    </div>
+                </fieldset>
+
+                <section class="recipe-output" aria-label="Generated Tailwind recipe">
+                    <header>
+                        <span>Generated recipe</span>
+                        <i>Tailwind v4 · live</i>
+                    </header>
+                    <pre tabindex="0" aria-label="Current generated Tailwind classes"><code data-tw-code-output></code></pre>
+                    <footer>
+                        <span data-tw-recipe-status>Choose a recipe or generate a remix</span>
+                        <span>Copy markup above</span>
+                    </footer>
+                </section>
+            </aside>
+
+            <div class="tw-preview" data-tw-preview aria-label="Live Tailwind component preview">
+                <p class="preview-label"><span aria-hidden="true"></span> Live preview</p>
+
+                <article data-tw-node="card" class="w-full max-w-2xl grid grid-cols-[0.75fr_1.25fr] overflow-hidden border bg-white text-slate-950 border-slate-200 rounded-3xl shadow-2xl">
+                    <figure data-tw-node="media" class="relative m-0 min-h-full order-first overflow-hidden bg-indigo-950">
+                        <svg data-tw-art data-art-family="Orbits" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" class="absolute inset-0 h-full w-full" role="img" aria-label="Orbits: a generative network illustration">
+                            <rect width="400" height="400" fill="#24205b"/>
+                            <g fill="none" stroke="#a5b4fc" stroke-width="1.5" opacity="0.8" transform="rotate(-25 200 200)">
+                                <ellipse cx="200" cy="200" rx="165" ry="62"/><ellipse cx="200" cy="200" rx="165" ry="110"/><ellipse cx="200" cy="200" rx="165" ry="158"/>
+                                <ellipse cx="200" cy="200" rx="70" ry="166"/><ellipse cx="200" cy="200" rx="117" ry="166"/>
+                            </g>
+                            <circle cx="200" cy="200" r="44" fill="#c7d2fe"/><circle cx="302" cy="113" r="13" fill="#fb923c"/><circle cx="70" cy="268" r="7" fill="#fb923c"/>
+                        </svg>
+                        <figcaption class="absolute left-3 bottom-3 rounded-full bg-black/60 px-2 py-1 text-xs font-medium text-white">Realtime coverage</figcaption>
+                    </figure>
+
+                    <div data-tw-node="body" class="flex min-w-0 flex-col p-4 sm:p-6 gap-4">
+                        <div>
+                            <p data-tw-node="eyebrow" class="text-xs font-semibold uppercase tracking-widest text-slate-600">Edge network</p>
+                            <h2 data-tw-node="title" class="mt-2 text-xl sm:text-2xl font-semibold tracking-tight">See every request arrive.</h2>
+                        </div>
+                        <p data-tw-node="description" class="text-sm leading-5 sm:leading-6 text-slate-600">Route events through 34 regions and inspect the path without leaving your release.</p>
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex pl-1" aria-label="Used by North, Clove and Arc">
+                                <span class="grid h-6 w-6 -ml-1 place-items-center rounded-full border-2 border-white bg-slate-200 text-[9px] font-bold text-slate-800">N</span><span class="grid h-6 w-6 -ml-1 place-items-center rounded-full border-2 border-white bg-slate-200 text-[9px] font-bold text-slate-800">C</span><span class="grid h-6 w-6 -ml-1 place-items-center rounded-full border-2 border-white bg-slate-200 text-[9px] font-bold text-slate-800">A</span>
+                            </div>
+                            <a data-tw-node="action" class="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-xs font-semibold text-white" href="#preview-note">Explore network <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </div>
+                </article>
+
+                <p class="preview-note" id="preview-note">The preview element receives the classes shown on the left.</p>
+            </div>
+
+            <p class="sr-only" data-tw-status role="status">Split layout, paper surface, soft corners.</p>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>
