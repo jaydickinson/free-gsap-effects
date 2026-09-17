@@ -1,0 +1,221 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- Theme tokens ----------
+   Every colour, radius and shadow the component uses is a custom property on
+   <body>, keyed by data-variant. Two values of one design: `light` and
+   `dark`. Nothing in assets/script.js reads the theme name; it only reads two
+   colour tokens (--card-flash and --card-line) with getComputedStyle at the
+   moment the landing flash starts, so re-valuing a block is the whole of a
+   rebrand. */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+
+  --ground: #f2f2f1;          /* the page: grey paper, not white */
+  --ground-2: #e9e9e7;        /* the demo toolbar strip */
+  --raised: #fbfbfa;          /* tiles and rows */
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;           /* row titles, values */
+  --ink-3: #676762;           /* labels, meta, the change line */
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+
+  --accent: #00b8a9;
+  --accent-ink: #10201e;      /* ink on teal: white on it is only 2.3:1 */
+
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.05), 0 3px 8px rgba(20, 20, 18, 0.05);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* the card the component draws */
+  --card-bg: var(--raised);
+  --card-line: rgba(20, 20, 18, 0.12);
+  --card-flash: #00b8a9;      /* flashed once as a card lands; the accent */
+  --card-radius: 10px;
+  --card-pad: 14px;
+
+  /* the placeholder: two greys off the same ground scale, nothing louder */
+  --sk-block: #e6e6e3;
+  --sk-shine: #f0f0ed;
+  --sk-radius: 4px;
+
+  /* the avatar chip on a resolved row */
+  --avatar-bg: #e4e4e1;
+  --avatar-fg: #141412;
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+
+  --accent: #00b8a9;
+  --accent-ink: #10201e;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.4);
+
+  --card-bg: var(--raised);
+  --card-line: rgba(241, 239, 234, 0.12);
+  --card-flash: #00b8a9;
+
+  --sk-block: #242424;
+  --sk-shine: #2e2e2e;
+
+  --avatar-bg: #2c2c2c;
+  --avatar-fg: #f1efea;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- The component ---------- */
+.sk-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+.sk-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  /* start, not stretch: a stretched tile is taller than its own placeholder,
+     and the height morph measures the card it is given. */
+  align-items: start;
+}
+
+.sk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sk-card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--card-pad);
+  background: var(--card-bg);
+  border: 1px solid var(--card-line);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+}
+
+.sk-card--tile { --card-pad: 16px; }
+
+/* ---------- Placeholders ---------- */
+/* The sweep runs on background-position, never a transform, so nothing here
+   can collide with a GSAP transform later. */
+.sk-skeleton { display: flex; flex-direction: column; gap: 10px; }
+.sk-block {
+  background-color: var(--sk-block);
+  background-image: linear-gradient(90deg, var(--sk-block) 0%, var(--sk-shine) 50%, var(--sk-block) 100%);
+  background-size: 300% 100%;
+  border-radius: var(--sk-radius);
+  animation: sk-shimmer 1.6s linear infinite;
+}
+@keyframes sk-shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -150% 0; }
+}
+
+.sk-line { height: 10px; }
+.sk-line-label { width: 58%; }
+.sk-line-value { height: 22px; width: 44%; }
+.sk-line-change { width: 72%; }
+
+.sk-row-skeleton { flex-direction: row; align-items: center; gap: 12px; }
+.sk-avatar-block { flex: 0 0 auto; width: 32px; height: 32px; border-radius: 999px; }
+.sk-lines { flex: 1 1 auto; display: flex; flex-direction: column; gap: 8px; }
+.sk-line-title { width: 42%; height: 11px; }
+.sk-line-meta { width: 62%; }
+
+/* ---------- Real content ---------- */
+/* Pre-hidden only when JavaScript is present. With JS off the placeholders are
+   never shown and this block is the page, in flow, fully visible. */
+.sk-skeleton { display: none; }
+.has-js .sk-skeleton { display: flex; }
+.has-js .sk-content { position: absolute; left: var(--card-pad); right: var(--card-pad); top: var(--card-pad); opacity: 0; }
+.has-js .sk-content.is-live { position: static; opacity: 1; }
+
+.sk-content { display: flex; flex-direction: column; gap: 6px; }
+
+/* a stat tile */
+.sk-stat-label { font-size: 0.75rem; color: var(--ink-2); }
+.sk-stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+.sk-stat-change { font-size: 0.75rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* a list row */
+.sk-row-content { flex-direction: row; align-items: center; gap: 12px; }
+.sk-avatar {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--avatar-bg);
+  color: var(--avatar-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.sk-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sk-title { font-size: 0.875rem; font-weight: 500; color: var(--ink); line-height: 1.3; }
+.sk-meta { font-size: 0.75rem; color: var(--ink-2); line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+.sk-status {
+  min-height: 1.2em;
+  font-size: 0.75rem;
+  color: var(--ink-3);
+  padding-top: 12px;
+}
+
+@media (max-width: 560px) {
+  .sk-tiles { grid-template-columns: minmax(0, 1fr); }
+  .sk-stat-value { font-size: 1.375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-block { animation: none; background-image: none; }
+}
+
+/* ---- demo furniture: the ground the component sits on ----------------
+   `.stage` is the demo page only, never part of what a buyer drops in.
+   assets/script.js reads none of it. */
+html { overflow-x: clip; }
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px; /* the demo toolbar strip */
+}
+.stage { min-height: calc(100svh - 44px); display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: 32px 20px; }
+.stage__inner { width: 100%; max-width: 720px; }
+
+@media (max-width: 720px) { .stage { padding: 16px 12px; } }
+@media (prefers-reduced-motion: reduce) { .stage * { transition: none !important; } }

@@ -1,0 +1,260 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- Theme tokens ----------
+   Two themes, one design: `light` and `dark`, selected with data-variant on
+   <body> in this demo, or on the [data-accordion] root itself in your page.
+   Every colour, radius and shadow the component and the demo ground use is a
+   property here, so one attribute flips both. Text colours are solid on
+   purpose: a translucent text colour cannot be contrast-checked. */
+body,
+body[data-variant="light"],
+[data-accordion][data-variant="light"] {
+  color-scheme: light;
+
+  /* the ground */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Mona Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* the accordion */
+  --accent: #2563eb;          /* focus ring, the open item's icon */
+  --accent-ink: #ffffff;      /* text on the accent */
+  --accent-text: #1d4fd7;     /* the accent as text: links (5.9:1 on --raised) */
+  --item-hover: #f3f3f1;      /* soft row hover, one step off --raised */
+  --icon: #676762;            /* a closed item's plus */
+  --faq-scroll-offset: 64px;  /* space kept above an item a deep link scrolls to */
+}
+
+body[data-variant="dark"],
+[data-accordion][data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --accent: #2563eb;
+  --accent-ink: #ffffff;
+  --accent-text: #7ea6ff;     /* 7.0:1 on the dark --raised */
+  --item-hover: #212121;
+  --icon: #9a988f;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- The component ---------- */
+
+.faq {
+  width: 100%;
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+/* The block owns its heading: an FAQ section is a heading, a line of context
+   and the questions. Set the heading level to fit your page (h2 here with
+   h3 questions is the usual choice inside an article). */
+.faq-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.faq-head__text { flex: 1 1 320px; min-width: 0; }
+.faq-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.faq-sub {
+  margin-top: 4px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.faq-bulk { display: flex; gap: 6px; flex: none; }
+.faq-bulk__btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+.faq-bulk__btn[aria-disabled="true"] { color: var(--ink-3); cursor: default; }
+.faq-bulk__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (hover: hover) {
+  .faq-bulk__btn:not([aria-disabled="true"]):hover { background: var(--hover); }
+}
+/* Without the script the bulk buttons have nothing to drive. */
+html:not(.has-js) .faq-bulk { display: none; }
+
+/* The list: one raised surface, hairlines between questions. */
+.faq-list {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.faq-item {
+  border-top: 1px solid var(--line);
+  scroll-margin-top: var(--faq-scroll-offset);
+  transition: background-color 0.18s ease-out;
+}
+.faq-item:first-child { border-top: 0; }
+@media (hover: hover) {
+  .faq-item:hover { background: var(--item-hover); }
+}
+
+/* The heading only carries the level; the button inside it is the control. */
+.faq-q { font: inherit; margin: 0; }
+
+.faq-trigger {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 18px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+.faq-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--radius-sm);
+}
+.faq-trigger__text { flex: 1 1 auto; min-width: 0; }
+
+/* Plus to minus: two strokes, the vertical one rotates flat onto the other.
+   No CSS transform on either bar: GSAP owns the vertical bar's rotation, and
+   a transform here would be read back as its starting angle. */
+.faq-icon {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--icon);
+  transition: color 0.2s ease-out;
+}
+.faq-item.is-open .faq-icon { color: var(--accent); }
+.faq-icon__bar {
+  position: absolute;
+  top: 7.25px;
+  left: 2px;
+  width: 12px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+}
+.faq-icon__bar--v {
+  top: 2px;
+  left: 7.25px;
+  width: 1.5px;
+  height: 12px;
+}
+/* Without the script every answer is shown, so every icon reads as a minus. */
+html:not(.has-js) .faq-icon__bar--v { opacity: 0; }
+
+/* The panel is only a height clip: no padding or border of its own, so a
+   closed panel under hidden="until-found" (which keeps a box) is zero tall.
+   The spacing lives on the answer inside it. */
+.faq-panel { overflow: hidden; }
+
+/* Before the script has read the markup, closed answers are held shut so
+   they never paint open for a frame. Without JavaScript (no .has-js) every
+   answer stays readable. */
+.has-js [data-accordion]:not([data-accordion-ready]) .faq-item:not(.is-open) .faq-panel { display: none; }
+
+.faq-answer {
+  padding: 0 52px 18px 18px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.faq-answer > * + * { margin-top: 10px; }
+.faq-answer p { max-width: 62ch; }
+.faq-answer ul { padding-left: 18px; max-width: 62ch; }
+.faq-answer li + li { margin-top: 6px; }
+.faq-answer li::marker { color: var(--ink-3); }
+.faq-answer strong { color: var(--ink); font-weight: 500; }
+.faq-answer a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.faq-answer a:hover { text-decoration-thickness: 2px; }
+.faq-answer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+@media (max-width: 480px) {
+  .faq-trigger { padding: 14px 16px; gap: 12px; }
+  .faq-answer { padding: 0 16px 16px; }
+}
+
+/* ---- demo furniture: the ground ------------------------------------------
+   The page below is the demo, not part of the component. It is `.stage-*`
+   only, the script never reads a stage class, and it lives here so
+   thumbnail.html can reuse it. Delete it in your own project. The stage is
+   top-aligned rather than centred on purpose: a vertically centred block
+   moves its own top every time an answer changes height. */
+html { overflow-x: clip; }
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px; /* the demo toolbar strip */
+}
+.stage { display: grid; justify-items: center; padding: 48px 20px 72px; }
+.stage__inner { width: 100%; max-width: 720px; }
+
+@media (max-width: 480px) {
+  .stage { padding: 24px 14px 48px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.001s !important; animation-duration: 0.001s !important; }
+}

@@ -1,0 +1,255 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------------------------------------------------------------------
+   Themes. Two of them, `light` and `dark`: one design at two sets of token
+   values. Set data-variant on <body> in the demo, or on the component's
+   root wrapper in your own page. Every colour, radius, border weight and
+   font the bar, the button and the overlay use is a custom property here,
+   so a rebrand is a token edit and never a selector override. Nothing in
+   assets/script.js ever reads the theme name; the two colours a tween
+   touches are read from --burger-ink / --burger-ink-open at the moment the
+   tween runs.
+   --------------------------------------------------------------------- */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+
+  /* ground scale */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --accent: #e5322d;
+  --accent-strong: #c42621;   /* the accent darkened enough to carry white text */
+  --accent-ink: #ffffff;
+  --accent-wash: #fbe3e1;     /* solid, so contrast can be measured */
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Mona Sans', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+
+  /* component */
+  --bar-line: var(--line);
+  --bar-h: 60px;
+  --burger-ink: var(--ink);
+  --burger-ink-open: var(--accent);
+  --burger-h: 2px;
+  --menu-bg: var(--raised);
+  --menu-ink: var(--ink);
+  --menu-index: var(--ink-3);
+  --menu-hover: var(--accent);
+  --menu-line: var(--line);
+  --menu-foot-ink: var(--ink-3);
+  --cta-bg: var(--accent-strong);
+  --cta-ink: var(--accent-ink);
+  --radius-btn: var(--radius-sm);
+  --border-w: 1px;
+  --focus-ring: var(--accent);
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --accent: #e5322d;
+  --accent-strong: #c42621;
+  --accent-ink: #ffffff;
+  --accent-wash: #3a1a18;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------------------------------------------------------------------
+   The ground. Demo furniture: the page the bar sits on.
+   --------------------------------------------------------------------- */
+html { overflow-x: clip; }
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;                /* the demo toolbar strip */
+}
+::selection { background: var(--accent-strong); color: var(--accent-ink); }
+
+.stage {
+  min-height: calc(100svh - 44px);
+  display: flex;
+  flex-direction: column;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   The bar the button lives in. Slim, transparent, one hairline: the menu
+   shows through it while it is open, so the button stays the X.
+   --------------------------------------------------------------------- */
+.site-bar {
+  position: relative;
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--bar-h);
+  padding: 0 clamp(16px, 4vw, 32px);
+  border-bottom: var(--border-w) solid var(--bar-line);
+}
+
+.site-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--radius-btn);
+  background: var(--cta-bg);
+  color: var(--cta-ink);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+.site-cta:hover { filter: brightness(1.08); }
+
+/* The bar's own button steps aside while the menu is open: it is not part
+   of the panel's focus cycle, so it must not be reachable behind it. */
+body:has(.menu-overlay.is-open) .site-cta { opacity: 0; visibility: hidden; }
+
+/* ---------------------------------------------------------------------
+   The button. No CSS transform on .burger-line: GSAP owns rotation,
+   y and scaleX outright, and a transform here would fight the tween.
+   --------------------------------------------------------------------- */
+.burger {
+  position: relative;
+  width: 40px;
+  height: 34px;
+  display: block;
+  background: transparent;
+  border: var(--border-w) solid var(--line-strong);
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  padding: 0;
+}
+.burger:hover { background: var(--hover); }
+.burger-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -9px;
+  width: 18px;
+  height: var(--burger-h);
+  background: var(--burger-ink);
+  border-radius: 1px;
+}
+.burger-line[data-line="top"] { margin-top: -6px; }
+.burger-line[data-line="mid"] { margin-top: calc(var(--burger-h) / -2); }
+.burger-line[data-line="bot"] { margin-top: 4px; }
+
+/* While the menu is open the button sits on the panel, so it keeps the
+   panel's ground behind it rather than the bar's. */
+body:has(.menu-overlay.is-open) .burger { border-color: var(--line-strong); }
+
+/* ---------------------------------------------------------------------
+   The overlay. Closed is the correct no-JS state: the links stay in the
+   DOM, the panel is simply not shown until the script opens it.
+   --------------------------------------------------------------------- */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--menu-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(44px + var(--bar-h) + 40px) clamp(16px, 4vw, 32px) 48px;
+  visibility: hidden;
+  pointer-events: none;
+  overflow-y: auto;
+}
+.menu-overlay.is-open { visibility: visible; pointer-events: auto; }
+
+.menu-body {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px 64px;
+}
+
+.menu-list { list-style: none; }
+.menu-item + .menu-item { border-top: var(--border-w) solid var(--menu-line); }
+.menu-item a {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(14px, 2.5vw, 28px);
+  padding: clamp(8px, 1.4vh, 14px) 0;
+  font-size: clamp(1.6rem, 4.4vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--menu-ink);
+  text-decoration: none;
+}
+.menu-index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--menu-index);
+}
+@media (hover: hover) {
+  .menu-item a:hover { color: var(--menu-hover); }
+}
+.menu-item a:focus-visible { color: var(--menu-hover); }
+
+/* The small secondary column beside the list. */
+.menu-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding-bottom: 10px;
+  font-size: 0.8125rem;
+  color: var(--menu-foot-ink);
+}
+.menu-foot a { color: inherit; text-decoration: none; }
+@media (hover: hover) {
+  .menu-foot a:hover { color: var(--menu-hover); }
+}
+.menu-foot a:focus-visible { color: var(--menu-hover); }
+
+@media (max-width: 720px) {
+  .menu-body {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+  }
+  .menu-foot { flex-direction: row; flex-wrap: wrap; gap: 8px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Announcement Bar — GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar: the theme toggle and the bar's real controls, in a
+       44px strip across the top. The body reserves it with padding-top (in
+       assets/style.css). None of this is part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+
+    /* Demo-only: in your own page the sticky bar pins to the top of the
+       viewport. Here it has to clear the toolbar strip. */
+    .ann-bar.is-sticky { top: 44px; }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">The bar rotates on its own; step it, pin it or dismiss it.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Type">
+      <button type="button" data-set-type="info" aria-pressed="true">Info</button>
+      <button type="button" data-set-type="promo" aria-pressed="false">Promo</button>
+      <button type="button" data-set-type="warning" aria-pressed="false">Warning</button>
+      <button type="button" data-set-type="danger" aria-pressed="false">Danger</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Position">
+      <button type="button" data-set-sticky="false" aria-pressed="true">Static</button>
+      <button type="button" data-set-sticky="true" aria-pressed="false">Sticky</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Demo controls">
+      <button type="button" data-demo="replay">Replay</button>
+      <button type="button" data-demo="reset">Reset</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Component starts here -->
+    <div class="ann-bar" data-announcement-bar data-type="info" data-interval="5000" data-storage-key="gsap-vault-announcement-demo" role="region" aria-label="Announcements">
+      <div class="ann-bar__inner" data-inner>
+        <button class="ann-bar__btn ann-bar__prev" type="button" data-prev aria-label="Previous announcement">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+
+        <div class="ann-bar__viewport" data-messages>
+          <ul class="ann-bar__list">
+            <li class="ann-bar__msg">
+              <span class="ann-bar__pip" aria-hidden="true"></span>
+              <span class="ann-bar__text" data-text>Free delivery on every order over £60 until Sunday</span>
+              <a class="ann-bar__cta" href="#delivery">See details</a>
+            </li>
+            <li class="ann-bar__msg">
+              <span class="ann-bar__pip" aria-hidden="true"></span>
+              <span class="ann-bar__text" data-text>Version 2.4 is out: faster exports and a new audit log</span>
+              <a class="ann-bar__cta" href="#release">Read the notes</a>
+            </li>
+            <li class="ann-bar__msg">
+              <span class="ann-bar__pip" aria-hidden="true"></span>
+              <span class="ann-bar__text" data-text>Scheduled maintenance Thursday 02:00–03:00 UTC, checkout will be paused</span>
+            </li>
+            <li class="ann-bar__msg">
+              <span class="ann-bar__pip" aria-hidden="true"></span>
+              <span class="ann-bar__text" data-text>Members get early access to the sale from Friday 9am</span>
+              <a class="ann-bar__cta" href="#access">Join free</a>
+            </li>
+            <li class="ann-bar__msg">
+              <span class="ann-bar__pip" aria-hidden="true"></span>
+              <span class="ann-bar__text" data-text>Now shipping to 14 more countries, duties included</span>
+            </li>
+          </ul>
+        </div>
+
+        <button class="ann-bar__btn ann-bar__next" type="button" data-next aria-label="Next announcement">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <button class="ann-bar__btn ann-bar__close" type="button" data-close aria-label="Dismiss announcement">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="ann-bar__progress" aria-hidden="true"><span data-progress></span></div>
+    </div>
+    <!-- Component ends here -->
+
+    <!-- Demo furniture: a short page for the bar to sit on and push down.
+         Not part of the component; delete it in your own page. -->
+    <div class="stage-doc">
+      <h1>Delivery and returns</h1>
+      <p>Orders placed before 3pm on a working day are picked the same afternoon. Anything after that goes out the next morning. You get a tracking link as soon as the parcel is scanned, and a second message when it is out for delivery.</p>
+
+      <h2>Delivery times</h2>
+      <p>Standard delivery is two to four working days. Express is next working day if the order is placed before 3pm. Remote postcodes can take an extra day, and we say so at checkout rather than after you have paid.</p>
+      <p>If a parcel has not moved for three days, reply to the dispatch email and we will open a claim with the carrier. You do not need to chase it yourself.</p>
+
+      <h2>Returns</h2>
+      <p>You have 30 days from delivery to send anything back, for any reason. Items should be unworn and in their original packaging, with the tags still attached. Print the label from your order page, or ask for one to be posted to you.</p>
+      <p>Refunds are issued to the original payment method within five working days of the return arriving. Exchanges are shipped as soon as the return is scanned, so you are not waiting twice.</p>
+
+      <h2>Duties and taxes</h2>
+      <p>Prices include duties for every country we ship to, so there is nothing to pay on arrival. If a carrier asks you for a fee anyway, send us the paperwork and we will refund it.</p>
+      <p>VAT is shown separately on your invoice. Business customers can add a VAT number to their account and it will appear on every invoice from then on.</p>
+
+      <h2>Changing an order</h2>
+      <p>An order can be changed or cancelled until it is picked, which is usually within a couple of hours. After that, the fastest route is to accept the delivery and return it, which keeps the refund on the same timeline as everything else.</p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script>
+    // Demo-only: the product page embeds this demo, so a choice remembered
+    // from an earlier visit must never leave the iframe empty. Clear the demo
+    // key before the component reads it. A buyer's page keeps the memory.
+    try { localStorage.removeItem('gsap-vault-announcement-demo'); } catch (e) {}
+  </script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only theme switcher; also honours ?variant=name. The component
+    // itself only needs data-variant on an ancestor of the bar (here, <body>).
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        // A theme can move padding, so anything measured re-measures.
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+    })();
+
+    // Demo-only: drives the component's documented options and public API.
+    (function () {
+      var bar = document.querySelector('[data-announcement-bar]');
+      if (!bar) return;
+
+      // Type: data-type on the bar, via the API so the live region follows.
+      var typeButtons = Array.prototype.slice.call(document.querySelectorAll('[data-set-type]'));
+      typeButtons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (!window.announcementBar) return;
+          window.announcementBar.setType(b.dataset.setType);
+          typeButtons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        });
+      });
+
+      // Position: data-sticky on the bar. The script adds .is-sticky after a
+      // push-in when the attribute was set at init, so the demo re-applies it
+      // on every show as well as immediately.
+      var stickyButtons = Array.prototype.slice.call(document.querySelectorAll('[data-set-sticky]'));
+      var wantSticky = false;
+      function applySticky() {
+        bar.setAttribute('data-sticky', String(wantSticky));
+        bar.classList.toggle('is-sticky', wantSticky && bar.classList.contains('is-open'));
+      }
+      stickyButtons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          wantSticky = b.dataset.setSticky === 'true';
+          stickyButtons.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+          applySticky();
+        });
+      });
+      bar.addEventListener('announcement:show', applySticky);
+
+      var demos = {
+        // Dismiss, then push back in once the collapse has finished.
+        replay: function () {
+          var api = window.announcementBar;
+          if (!api.isOpen()) { api.forget(); api.show(); return; }
+          bar.addEventListener('announcement:dismiss', function () { api.forget(); api.show(); }, { once: true });
+          api.dismiss();
+        },
+        // Clear the remembered dismissal (data-storage-key) and show the bar.
+        reset: function () {
+          var api = window.announcementBar;
+          api.forget();
+          if (!api.isOpen()) api.show();
+        }
+      };
+      document.querySelectorAll('[data-demo]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var run = demos[button.dataset.demo];
+          if (run && window.announcementBar) run();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- Theme tokens ----------
+   Every colour, radius and shadow the component and the demo ground use is a
+   custom property on <body>, keyed by data-variant. Two values of one design:
+   `light` and `dark`. Nothing in assets/script.js reads the theme name, so
+   re-valuing one block is the whole of a rebrand. */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+
+  --ground: #f2f2f1;          /* the page: grey paper, not white */
+  --ground-2: #e9e9e7;        /* the pill track, the toolbar strip */
+  --raised: #fbfbfa;          /* the tabs card */
+  --hover: #e2e2df;           /* the hover pill */
+  --ink: #141412;
+  --ink-2: #4b4b47;           /* body copy, values */
+  --ink-3: #676762;           /* labels, resting tab text */
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+
+  --accent: #635bff;          /* the indicator, the badge, the focus ring */
+  --accent-ink: #ffffff;      /* text on the accent: 4.7:1 */
+  --accent-wash: #e1e0f3;     /* solid: the accent at ~12% over --ground */
+
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;          /* the site's deep */
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #262626;
+  --ink: #f1efea;             /* the site's chalk */
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+
+  --accent: #635bff;
+  --accent-ink: #ffffff;
+  --accent-wash: #22213e;     /* solid: the accent at ~18% over the dark ground */
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- The ground (demo furniture) ----------
+   The .stage rules centre the component at the width a product would give it.
+   They are not part of the component; assets/script.js never reads a .stage
+   class, and nothing here is needed to drop the tabs into a page. */
+html { overflow-x: clip; }
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;                 /* the demo toolbar strip */
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+.stage {
+  min-height: calc(100svh - 44px);
+  display: grid;
+  /* minmax(0, 1fr), not a bare auto column: the tab list is min-width:
+     max-content, so an auto-sized grid column grows to the full width of the
+     tabs and pushes the card past a narrow viewport. */
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  justify-items: center;
+  padding: 32px 20px;
+}
+
+.stage__inner { width: 100%; max-width: 720px; min-width: 0; }
+
+/* ---------- The component ---------- */
+.tabs {
+  max-width: 100%;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* The scroller is horizontal only, so it carries NO data-lenis-prevent: that
+   attribute has no axis check and would hand the vertical wheel back to the
+   browser for as long as the pointer sits over the strip. */
+.tabs__scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabs__scroller::-webkit-scrollbar { display: none; }
+
+/* The edge fades are overlays on the strip, never a mask on the scroller:
+   a masked-out region of an element is not hit-tested in Chromium, so a
+   mask here would quietly eat taps on the half-visible tab it is fading. */
+.tabs__strip { position: relative; min-width: 0; }
+
+.tabs__strip::before,
+.tabs__strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 3;
+}
+
+.tabs__strip::before { left: 0; background: linear-gradient(90deg, var(--raised), transparent); }
+.tabs__strip::after { right: 0; background: linear-gradient(270deg, var(--raised), transparent); }
+.tabs__strip.is-start::before { opacity: 1; }
+.tabs__strip.is-end::after { opacity: 1; }
+
+.tabs__list {
+  position: relative;              /* the indicator's offsetParent */
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  min-width: max-content;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs__tab {
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 0 14px;
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.tabs__tab:hover { color: var(--ink); }
+.tabs__tab[aria-selected="true"] { color: var(--ink); font-weight: 600; }
+
+.tabs__tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+  border-radius: var(--radius-sm);
+}
+
+.tabs__badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s ease 0.06s, color 0.18s ease 0.06s;
+}
+
+.tabs__sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The indicator and the hover pill are both positioned from JS with `x`, so
+   neither carries a CSS transform or a CSS `left`: an offset in both places
+   doubles it. */
+.tabs__indicator,
+.tabs__hover {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+}
+
+.tabs__indicator {
+  z-index: 1;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--accent);
+}
+
+.tabs__hover {
+  z-index: 0;
+  top: 5px;
+  bottom: 5px;
+  border-radius: var(--radius-sm);
+  background: var(--hover);
+  opacity: 0;
+}
+
+/* The pill style: a segmented control at tab scale. The indicator becomes the
+   filled segment and the selected label flips to the accent's ink, a beat
+   behind the pill so the colour arrives with it rather than with the click. */
+.tabs[data-style="pill"] .tabs__list {
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tabs[data-style="pill"] .tabs__tab {
+  min-height: 34px;
+  border-radius: var(--radius-sm);
+  /* Deselecting darkens the label quickly, so the tab the pill is leaving is
+     never white-on-white for a beat. */
+  transition: color 0.12s ease;
+}
+
+.tabs[data-style="pill"] .tabs__indicator {
+  top: 6px;
+  bottom: 6px;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.tabs[data-style="pill"] .tabs__hover { top: 6px; bottom: 6px; }
+
+/* The selected pill tab also paints the accent under itself, a beat AFTER the
+   indicator has finished travelling (0.3s against the indicator's 0.34s), so
+   the fill lands invisibly beneath the pill. It is not decoration: it means the
+   white label has its own opaque backdrop, so a contrast checker measures the
+   pair a reader actually sees instead of the card behind them. Deselecting
+   clears it instantly, because the pill leaves instantly too. */
+.tabs[data-style="pill"] .tabs__tab[aria-selected="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+  transition: color 0.16s ease 0.14s, background-color 0.01s linear 0.3s;
+}
+
+.tabs[data-style="pill"] .tabs__tab[aria-selected="true"] .tabs__badge {
+  background: var(--accent-ink);
+  color: var(--accent);
+}
+
+/* ---------- Panels ---------- */
+.tabs__panels {
+  position: relative;
+  overflow: hidden;
+}
+
+.tabs__panel {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tabs__panel[hidden] { display: none; }
+
+.tabs__panel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: var(--radius-sm);
+}
+
+.tabs__lead {
+  color: var(--ink-2);
+  max-width: 58ch;
+}
+
+.tabs__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.tabs__facts > div { display: flex; flex-direction: column; gap: 3px; }
+
+.tabs__facts dt {
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+
+.tabs__facts dd {
+  color: var(--ink);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  .stage { padding: 20px 12px; }
+  .tabs__panel { padding: 18px 16px 20px; }
+  .tabs__facts { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* Hover states are gated so a tap on a touch device cannot pin one open. */
+@media (hover: none) {
+  .tabs__tab:hover { color: var(--ink-3); }
+  .tabs__tab[aria-selected="true"]:hover { color: var(--ink); }
+  .tabs[data-style="pill"] .tabs__tab[aria-selected="true"]:hover { color: var(--accent-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs *,
+  .tabs__tab,
+  .tabs__badge {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

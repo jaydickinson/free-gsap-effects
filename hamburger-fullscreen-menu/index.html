@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullscreen Hamburger Menu — GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Open the menu with the button; Escape or a link closes it.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <header class="site-bar">
+      <button class="burger" id="menuToggle" type="button" aria-expanded="false" aria-controls="fullscreenMenu" aria-label="Open menu">
+        <span class="burger-line" data-line="top"></span>
+        <span class="burger-line" data-line="mid"></span>
+        <span class="burger-line" data-line="bot"></span>
+      </button>
+      <a class="site-cta" href="#subscribe">Subscribe</a>
+    </header>
+
+    <nav class="menu-overlay" id="fullscreenMenu" aria-label="Main">
+      <div class="menu-body">
+        <ul class="menu-list">
+          <li class="menu-item"><a href="#work"><span class="menu-index">01</span>Work</a></li>
+          <li class="menu-item"><a href="#studio"><span class="menu-index">02</span>Studio</a></li>
+          <li class="menu-item"><a href="#journal"><span class="menu-index">03</span>Journal</a></li>
+          <li class="menu-item"><a href="#careers"><span class="menu-index">04</span>Careers</a></li>
+          <li class="menu-item"><a href="#contact"><span class="menu-index">05</span>Contact</a></li>
+        </ul>
+        <div class="menu-foot">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+          <a href="#accessibility">Accessibility</a>
+        </div>
+      </div>
+    </nav>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+    })();
+  </script>
+</body>
+</html>

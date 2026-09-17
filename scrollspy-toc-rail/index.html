@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Scrollspy Table of Contents — GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+  </style>
+</head>
+<body data-variant="light">
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Scroll the page, or click an entry, and watch the marker follow the reading position.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Rail side">
+      <button class="side-btn" type="button" data-side="left" aria-pressed="true">Left</button>
+      <button class="side-btn" type="button" data-side="right" aria-pressed="false">Right</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="toc-layout" id="tocLayout" data-rail-side="left">
+    <nav class="toc-rail" id="tocRail" aria-label="On this page">
+      <p class="toc-heading">On this page</p>
+      <div class="toc-inner">
+        <span class="toc-track" aria-hidden="true"></span>
+        <span class="toc-progress" id="tocProgress" aria-hidden="true"></span>
+        <span class="toc-marker" id="tocMarker" aria-hidden="true"></span>
+        <ul class="toc-list">
+          <li><a class="toc-link" href="#endpoint">Build the endpoint</a></li>
+          <li><a class="toc-link" href="#register">Register the URL</a></li>
+          <li><a class="toc-link" href="#signatures">Verify the signature</a></li>
+          <li><a class="toc-link" href="#responding">Respond fast, work later</a></li>
+          <li><a class="toc-link" href="#retries">Retries and idempotency</a></li>
+          <li><a class="toc-link" href="#monitoring">Monitoring and rotation</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <article class="toc-article" id="tocArticle">
+      <h1>Setting up webhooks</h1>
+      <p class="toc-lede">Webhooks push events to your server the moment they happen, so you can stop polling for changes that may never come. Six steps take you from an empty route to an endpoint you can trust in production.</p>
+
+      <section class="toc-section" id="endpoint">
+        <h2>Build the endpoint</h2>
+        <p>Start with a single route that accepts POST requests and nothing else. It needs no authentication of its own, because the request is authenticated by its signature rather than by a session, and adding a login in front of it is the most common reason a first webhook never arrives.</p>
+        <p>Read the request body as raw bytes before any middleware parses it. Signature verification runs over the exact bytes that were sent, and a JSON parser that reorders keys or normalises whitespace will produce a body that no longer matches the signature you were given.</p>
+      </section>
+
+      <section class="toc-section" id="register">
+        <h2>Register the URL</h2>
+        <p>Add the endpoint in your dashboard and subscribe it to the specific events you handle, not to everything. A subscription that fires on every event type in the catalogue means every future addition arrives at a handler that has no branch for it, and your logs fill with unknown types you cannot act on.</p>
+        <p>Register separate endpoints for test and live traffic. Sharing one URL across both makes it far too easy to act on a test event with production data, and the two streams are impossible to tell apart once they are interleaved in the same log.</p>
+      </section>
+
+      <section class="toc-section" id="signatures">
+        <h2>Verify the signature</h2>
+        <p>Every delivery carries a signature header computed from the raw body and a secret only the two of you hold. Recompute it on receipt and compare the two values with a constant-time comparison; a plain equality check leaks timing information that can be used to guess the signature byte by byte.</p>
+        <p>Signatures usually include a timestamp, and the timestamp is as important as the digest. Reject anything older than a few minutes so a captured request cannot be replayed later, and make sure the clock on your server is actually synchronised before you tighten that window.</p>
+      </section>
+
+      <section class="toc-section" id="responding">
+        <h2>Respond fast, work later</h2>
+        <p>Return a 2xx status as soon as the signature checks out. Providers hold the connection open while you work and treat a slow response as a failure, so anything beyond writing the event to a queue or a table belongs in a background job rather than in the request.</p>
+        <p>That split also keeps your handler honest under load. When a batch of events arrives at once, a route that only records them stays fast regardless of how expensive the downstream work is, and the queue absorbs the burst instead of your web tier.</p>
+      </section>
+
+      <section class="toc-section" id="retries">
+        <h2>Retries and idempotency</h2>
+        <p>Assume every event will arrive more than once. Retries after a timeout, a redelivery from the dashboard and an ordinary network hiccup all produce duplicates, and a handler that charges a card or sends an email on each one will do it twice.</p>
+        <p>Store the event id the first time you see it and treat a repeat as a no-op. Writing that record in the same transaction as the work itself is what makes the guarantee hold; two separate writes leave a window where the work is done and the record is not.</p>
+      </section>
+
+      <section class="toc-section" id="monitoring">
+        <h2>Monitoring and rotation</h2>
+        <p>Log every delivery with its id, type and outcome, and alert on the failure rate rather than on individual failures. Providers disable an endpoint that fails for long enough, and the first sign is usually a quiet gap in the data rather than an error anyone noticed.</p>
+        <p>Rotate the signing secret on a schedule. Accept both the old and the new secret for the length of one rotation window, then drop the old one, so a delivery in flight during the change is still verified rather than rejected.</p>
+      </section>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollToPlugin.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        // The rail is measured, so it re-measures on the resize the switch fires.
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+
+      // Demo-only: the documented data-rail-side option, shown as a control.
+      var layout = document.getElementById('tocLayout');
+      var sides = Array.prototype.slice.call(document.querySelectorAll('.side-btn'));
+      sides.forEach(function (b) {
+        b.addEventListener('click', function () {
+          layout.setAttribute('data-rail-side', b.dataset.side);
+          sides.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+          requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

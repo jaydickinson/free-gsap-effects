@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Tabs &mdash; GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__label { color: var(--ink-3); }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    /* One row on a phone: the prompt goes so both control groups stay on screen. */
+    @media (max-width: 620px) {
+      .showcase-toolbar__prompt, .showcase-toolbar__label { display: none; }
+      .showcase-toolbar { justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Click a tab, or use the arrow keys, and watch the indicator lead the panel.</span>
+    <span class="showcase-toolbar__label">Style</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Indicator style">
+      <button class="style-btn" type="button" data-style="underline" aria-pressed="true">Underline</button>
+      <button class="style-btn" type="button" data-style="pill" aria-pressed="false">Pill</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="stage__inner">
+
+      <section class="tabs" id="tabs" data-tabs data-style="underline" data-tabs-hash>
+        <div class="tabs__strip">
+          <div class="tabs__scroller">
+            <div class="tabs__list" role="tablist" aria-label="Release sections">
+              <span class="tabs__hover" aria-hidden="true"></span>
+              <span class="tabs__indicator" aria-hidden="true"></span>
+
+              <button class="tabs__tab" type="button" role="tab" id="tab-overview" data-tab="overview"
+                      aria-controls="panel-overview" aria-selected="true" tabindex="0">Overview</button>
+
+              <button class="tabs__tab" type="button" role="tab" id="tab-activity" data-tab="activity"
+                      aria-controls="panel-activity" aria-selected="false" tabindex="-1">Activity<span class="tabs__badge">3<span class="tabs__sr"> new updates</span></span></button>
+
+              <button class="tabs__tab" type="button" role="tab" id="tab-files" data-tab="files"
+                      aria-controls="panel-files" aria-selected="false" tabindex="-1">Files</button>
+
+              <button class="tabs__tab" type="button" role="tab" id="tab-people" data-tab="people"
+                      aria-controls="panel-people" aria-selected="false" tabindex="-1">People</button>
+
+              <button class="tabs__tab" type="button" role="tab" id="tab-settings" data-tab="settings"
+                      aria-controls="panel-settings" aria-selected="false" tabindex="-1">Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs__panels">
+
+          <div class="tabs__panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" tabindex="0">
+            <p class="tabs__lead">Everything for the September release lives here: the brief, the files it produced, and the people reviewing them. Changes are visible to the whole team as soon as they are saved.</p>
+            <dl class="tabs__facts">
+              <div><dt>Status</dt><dd>In review</dd></div>
+              <div><dt>Owner</dt><dd>Priya Raman</dd></div>
+              <div><dt>Created</dt><dd>12 August 2026</dd></div>
+              <div><dt>Visibility</dt><dd>Team</dd></div>
+            </dl>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" id="panel-activity" aria-labelledby="tab-activity" tabindex="0" hidden>
+            <p class="tabs__lead">Three updates since you last opened this. Comment threads stay attached to the file version they were raised on, so resolving one does not hide the history behind it.</p>
+            <dl class="tabs__facts">
+              <div><dt>Last update</dt><dd>2 hours ago</dd></div>
+              <div><dt>Open threads</dt><dd>3</dd></div>
+              <div><dt>Resolved this week</dt><dd>11</dd></div>
+              <div><dt>Digest</dt><dd>Daily, 09:00</dd></div>
+            </dl>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" id="panel-files" aria-labelledby="tab-files" tabindex="0" hidden>
+            <p class="tabs__lead">Twelve files, six of them changed in the last week. Dropping a file with a name that already exists adds a version rather than replacing what is there.</p>
+            <dl class="tabs__facts">
+              <div><dt>Files</dt><dd>12</dd></div>
+              <div><dt>Storage used</dt><dd>248 MB</dd></div>
+              <div><dt>Latest upload</dt><dd>brief-v4.pdf</dd></div>
+              <div><dt>Version history</dt><dd>90 days</dd></div>
+            </dl>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" id="panel-people" aria-labelledby="tab-people" tabindex="0" hidden>
+            <p class="tabs__lead">Four reviewers and two editors. Reviewers can comment and approve; editors can also upload new versions and change who else has access.</p>
+            <dl class="tabs__facts">
+              <div><dt>Editors</dt><dd>2</dd></div>
+              <div><dt>Reviewers</dt><dd>4</dd></div>
+              <div><dt>Pending invites</dt><dd>1</dd></div>
+              <div><dt>Approvals needed</dt><dd>2 of 4</dd></div>
+            </dl>
+          </div>
+
+          <div class="tabs__panel" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" tabindex="0" hidden>
+            <p class="tabs__lead">Anyone with the link can comment. Changing the visibility applies to every file in this section, including versions uploaded before the change.</p>
+            <dl class="tabs__facts">
+              <div><dt>Visibility</dt><dd>Anyone with link</dd></div>
+              <div><dt>Comments</dt><dd>Enabled</dd></div>
+              <div><dt>Notifications</dt><dd>Daily digest</dd></div>
+              <div><dt>Region</dt><dd>EU (Frankfurt)</dd></div>
+            </dl>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+
+  <script>
+    // Demo-only: the toolbar. Switches data-variant on <body> and data-style on
+    // the component, then dispatches a resize so anything measured (the sliding
+    // indicator, the panel height) re-measures against the new padding.
+    (function () {
+      function reMeasure() {
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+
+      var variantButtons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var variantNames = variantButtons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        variantButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        reMeasure();
+      }
+      var wantedVariant = new URLSearchParams(location.search).get('variant');
+      setVariant(variantNames.indexOf(wantedVariant) > -1 ? wantedVariant : (document.body.getAttribute('data-variant') || variantNames[0]));
+      variantButtons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+
+      var tabsRoot = document.getElementById('tabs');
+      var styleButtons = Array.prototype.slice.call(document.querySelectorAll('.style-btn'));
+      var styleNames = styleButtons.map(function (b) { return b.dataset.style; });
+      function setStyle(name) {
+        tabsRoot.setAttribute('data-style', name);
+        styleButtons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.style === name)); });
+        reMeasure();
+      }
+      var wantedStyle = new URLSearchParams(location.search).get('style');
+      setStyle(styleNames.indexOf(wantedStyle) > -1 ? wantedStyle : (tabsRoot.getAttribute('data-style') || styleNames[0]));
+      styleButtons.forEach(function (b) { b.addEventListener('click', function () { setStyle(b.dataset.style); }); });
+    })();
+  </script>
+</body>
+</html>

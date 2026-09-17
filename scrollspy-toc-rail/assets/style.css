@@ -1,0 +1,202 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------------------------------------------------------------------
+   Themes. Two values of one design: `light` (the default) and `dark`.
+   Every colour, radius, rule width and marker shape the rail and the page
+   around it use is a custom property, so a theme is one block of overrides
+   on [data-variant]. Set it on <body> in the demo, or on the element that
+   wraps the rail and the article in your own page. Nothing in
+   assets/script.js reads the theme name.
+   --------------------------------------------------------------------- */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+  --ground: #f2f2f1;            /* the page */
+  --ground-2: #e9e9e7;          /* the demo toolbar strip */
+  --raised: #fbfbfa;            /* not used by the rail; kept for the toolbar */
+  --hover: #e2e2df;
+  --ink: #141412;               /* headings, the active entry */
+  --ink-2: #4b4b47;             /* body copy */
+  --ink-3: #676762;             /* rail label, resting entries */
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --accent: #ff4d00;            /* signal orange: the marker, and only the marker */
+  --accent-ink: #141412;        /* text ON the accent (::selection) */
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+
+  /* the rail itself */
+  --track: #dcdcd9;             /* the unread rule, solid */
+  --progress: #ffbb99;          /* how far the reader has come, solid */
+  --marker: var(--accent);
+  --track-w: 2px;
+  --marker-w: 2px;
+  --marker-radius: 999px;
+  --link-fg: var(--ink-3);
+  --link-fg-active: var(--ink);
+  --focus-ring: var(--accent);
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --accent: #ff4d00;
+  --accent-ink: #141412;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --track: #2e2e2e;
+  --progress: #6e2c0e;
+}
+
+/* Lenis and CSS smooth scrolling fight the ScrollToPlugin tween. */
+html { overflow-x: clip; scroll-behavior: auto; }
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;                    /* the demo toolbar strip */
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* --------------------------------- layout --------------------------------
+   The rail beside the document it reads. Swap `data-rail-side="right"` on
+   .toc-layout and the rail sits on the far side; nothing measured changes.
+   -------------------------------------------------------------------------- */
+.toc-layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 640px);
+  justify-content: center;
+  gap: 48px;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 20px 45vh;
+}
+.toc-layout[data-rail-side="right"] { grid-template-columns: minmax(0, 640px) 200px; }
+.toc-layout[data-rail-side="right"] .toc-rail { order: 2; }
+
+/* ---------------------------------- rail --------------------------------- */
+.toc-rail {
+  position: sticky;
+  top: 76px;                            /* 44px toolbar + the page's own 32px */
+  align-self: start;
+}
+.toc-heading {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+  padding-left: 14px;
+}
+.toc-inner { position: relative; }
+
+/* The unread rule, the fill that follows reading progress, and the marker
+   share one left edge. The marker keeps top: 0 and takes a measured y from
+   GSAP, so no CSS offset is ever added to the tween. */
+.toc-track,
+.toc-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--track-w);
+  border-radius: 999px;
+}
+.toc-track { height: 100%; background: var(--track); }
+.toc-progress { height: 100%; background: var(--progress); transform-origin: top center; }
+.toc-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--marker-w);
+  height: 24px;
+  border-radius: var(--marker-radius);
+  background: var(--marker);
+  z-index: 2;
+}
+.toc-list { list-style: none; }
+.toc-link {
+  display: block;
+  min-height: 32px;
+  padding: 7px 0 7px 14px;
+  color: var(--link-fg);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.toc-link:hover { color: var(--link-fg-active); }
+.toc-link.is-active { color: var(--link-fg-active); }
+.toc-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* -------------------------------- document -------------------------------
+   The page the rail reads: demo furniture, styled from the same tokens so
+   the theme toggle flips both. Your own article markup goes here; the rail
+   only needs each section to carry the id its entry points at.
+   -------------------------------------------------------------------------- */
+.toc-article { max-width: 640px; color: var(--ink-2); }
+.toc-article > h1 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.toc-article > .toc-lede { margin-bottom: 32px; max-width: 62ch; }
+.toc-section { padding-bottom: 40px; }
+.toc-section h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 10px;
+  scroll-margin-top: 76px;
+}
+.toc-section:focus { outline: none; }
+.toc-section:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 6px; border-radius: var(--radius-sm); }
+.toc-section p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin-bottom: 12px;
+}
+.toc-section p:last-child { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .toc-layout {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 16px;
+    padding: 24px 16px 45vh;
+    max-width: none;
+  }
+  .toc-layout[data-rail-side="right"] { grid-template-columns: minmax(0, 1fr) 112px; }
+  .toc-rail { top: 56px; }
+  .toc-heading { display: none; }
+  .toc-link { font-size: 0.75rem; padding-left: 10px; }
+  .toc-article > h1 { font-size: 1.1875rem; }
+  .toc-section h2 { font-size: 1rem; }
+  .toc-section p { font-size: 0.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

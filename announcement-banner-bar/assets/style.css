@@ -1,0 +1,277 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------------------------------------------------------------------
+   Themes. Every colour, radius and shadow the bar (and the demo ground)
+   uses is a custom property, so a theme is one block of values. Set
+   data-variant on <body> in the demo, or on any ancestor of the bar in
+   your own page. Nothing in assets/script.js reads the theme name.
+
+   `light` is the default; `dark` is the same design at the other end of
+   the same tokens, not a second design.
+
+   The four type accents (--type-info / promo / warning / danger) are picked
+   up by [data-type] on the bar and become --bar-accent, which colours the
+   pip, the progress fill and the CTA.
+   --------------------------------------------------------------------- */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+  /* Ground: the page the bar sits on. */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --accent: #635bff;
+  --accent-ink: #ffffff;
+  --accent-wash: #e7e5fc;
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+
+  /* The bar itself. */
+  --bar-bg: var(--raised);
+  --bar-rule: 1px solid var(--line);
+  --msg-size: 0.875rem;
+  --msg-weight: 500;
+  --progress-track: rgba(20, 20, 18, 0.10);
+  --type-info: #4f46d6;
+  --type-promo: #1c6b47;
+  --type-warning: #7d5405;
+  --type-danger: #b3261e;
+}
+
+/* Dark: the same tokens re-valued. Not a second design. */
+body[data-variant="dark"] {
+  color-scheme: dark;
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --accent: #9a93ff;
+  --accent-ink: #141414;
+  --accent-wash: #232043;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --progress-track: rgba(241, 239, 234, 0.14);
+  --type-info: #9a93ff;
+  --type-promo: #61c495;
+  --type-warning: #dcae55;
+  --type-danger: #f0938c;
+}
+
+html { overflow-x: clip; }
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;   /* the demo toolbar strip; delete it in your own page */
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------------------------------------------------------------------
+   The component. It sits in normal flow at the top of the page, so when its
+   height tweens the content below genuinely moves.
+   --------------------------------------------------------------------- */
+.ann-bar {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  background: var(--bar-bg);
+  color: var(--ink);
+  border-bottom: var(--bar-rule);
+  --bar-accent: var(--type-info);
+}
+.ann-bar[data-type="promo"]   { --bar-accent: var(--type-promo); }
+.ann-bar[data-type="warning"] { --bar-accent: var(--type-warning); }
+.ann-bar[data-type="danger"]  { --bar-accent: var(--type-danger); }
+
+/* Pre-hidden start state, gated under .has-js so a page without JavaScript
+   shows the bar in full. The script tweens the height in; overflow is
+   clipped only while it is closed or moving, so focus rings are never cut. */
+.has-js .ann-bar:not(.is-open) { height: 0; overflow: hidden; }
+.ann-bar[hidden] { display: none; }
+.ann-bar.is-sticky { position: sticky; top: 0; }
+
+.ann-bar__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.6rem 0.5rem 0.9rem;
+  min-height: 44px;
+}
+
+/* Prev / next / close share one button style. */
+.ann-bar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-3);
+  cursor: pointer;
+  font: inherit;
+}
+.ann-bar__btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.ann-bar__btn:hover { background: var(--hover); color: var(--ink); }
+.ann-bar__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; background: var(--hover); color: var(--ink); }
+.ann-bar__close { margin-left: 0.15rem; }
+
+/* The mask. Messages stack in one grid cell; only the active one is shown.
+   Vertical page scroll stays native on touch; a sideways swipe steps. */
+.ann-bar__viewport {
+  overflow: hidden;
+  min-width: 0;
+  touch-action: pan-y;
+}
+.ann-bar__list {
+  list-style: none;
+  display: grid;
+}
+.ann-bar__msg {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: 0.15rem 0.25rem;
+  visibility: hidden;
+  transform-origin: 0 50%;   /* origin only: GSAP owns the transform */
+  font-weight: var(--msg-weight);
+  font-size: var(--msg-size);
+  line-height: 1.5;
+}
+.ann-bar__msg.is-active { visibility: visible; }
+/* Without JavaScript nothing rotates, so every message is listed in full
+   rather than one shown and the rest lost. */
+html:not(.has-js) .ann-bar__msg { grid-area: auto; visibility: visible; }
+
+.ann-bar__pip {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bar-accent);
+}
+
+.ann-bar__text {
+  min-width: 0;
+  flex: 0 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--ink);
+}
+.ann-bar__word {
+  display: inline-block;   /* so each word can move on its own */
+}
+
+.ann-bar__cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--bar-accent);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.ann-bar__cta:hover { text-decoration-thickness: 2px; }
+.ann-bar__cta:focus-visible { outline: 2px solid var(--bar-accent); outline-offset: 2px; }
+
+/* Time to the next message. GSAP scales it from the left. */
+.ann-bar__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--progress-track);
+}
+.ann-bar__progress span {
+  display: block;
+  height: 100%;
+  background: var(--bar-accent);
+  transform-origin: 0 50%;
+}
+
+/* Coarse pointers: swipe replaces the arrows; the CTA and close grow to
+   real tap targets, and the message stays one line. */
+@media (pointer: coarse) {
+  .ann-bar__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.25rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.9rem;
+    min-height: 56px;
+  }
+  .ann-bar__prev, .ann-bar__next { display: none; }
+  .ann-bar__close { width: 44px; height: 44px; margin-left: 0; }
+  .ann-bar__cta { min-height: 44px; padding: 0 0.5rem; }
+  .ann-bar__msg { justify-content: flex-start; gap: 0.55rem; }
+}
+@media (max-width: 520px) {
+  .ann-bar__msg { font-size: calc(var(--msg-size) * 0.92); }
+}
+
+/* ---------------------------------------------------------------------
+   Demo furniture. A bar has to sit on a page to be judged, so the demo
+   puts a short document under it: a heading and a few paragraphs, tall
+   enough to scroll. It is not a site — no nav, no hero, no brand — and it
+   is not part of the component. Delete the .stage-* rules and the markup
+   under the bar in your own page. Its colours are the same ground tokens
+   the bar uses, so the theme toggle flips both together.
+   --------------------------------------------------------------------- */
+.stage-doc {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 20px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--ink-2);
+}
+.stage-doc h1 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); }
+.stage-doc h2 { font-size: 1rem; font-weight: 600; color: var(--ink); margin-top: 12px; }
+.stage-doc p { max-width: 62ch; }
+
+/* ---------------------------------------------------------------------
+   Reduced motion: the bar mounts open in its final state, messages cut
+   instead of sliding, and the progress track is hidden (the interval still
+   runs, so the messages still rotate).
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .has-js .ann-bar:not(.is-open) { height: auto; }
+  .has-js .ann-bar.is-dismissed { height: 0; }
+  .ann-bar__progress { display: none; }
+  .ann-bar__msg, .ann-bar__word { transition: none; }
+  .stage-doc * { transition: none !important; }
+}

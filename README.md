@@ -4,7 +4,7 @@
 
 Nine free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 93 copy-paste GSAP animation effects, 50 UI components and 69 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 96 copy-paste GSAP animation effects, 51 UI components and 71 complete website templates.
 
 ## The Effects
 
@@ -27,8 +27,17 @@ Each one ships its variants, its keyboard model and its ARIA contract.
 
 | Component | What it is | Live demo |
 |--------|--------------|-----------|
-| [iOS Toggle Switch](./ios-toggle-switch) | Native checkbox toggle whose knob can be tapped or dragged, snaps to the nearer side, stretches while pressed and cross-fades the track colour. | [Demo](https://gsapvault.com/ui-elements/ios-toggle-switch) |
-| [Copy to Clipboard Button](./copy-to-clipboard-button) | A copy control whose clipboard icon morphs into a stroke-drawn check, floats a Copied pill up above it and flashes the value it took. | [Demo](https://gsapvault.com/ui-elements/copy-to-clipboard-button) |
+| [Fullscreen Hamburger Menu](./hamburger-fullscreen-menu) | A fullscreen hamburger menu: the burger icon morphs into an X while the overlay wipes in and the links stagger up, with focus trapping. | [Demo](https://gsapvault.com/ui-elements/hamburger-fullscreen-menu) |
+| [Collapsible Sidebar Menu](./accordion-sidebar-nav) | A collapsible sidebar menu for docs and admin apps: sections open on a measured height tween and an indicator slides to the current link. | [Demo](https://gsapvault.com/ui-elements/accordion-sidebar-nav) |
+| [iOS Toggle Switch](./ios-toggle-switch) | An iOS-style toggle switch on a native checkbox: tap or drag the knob, it snaps to the nearer side and the track colour cross-fades. | [Demo](https://gsapvault.com/ui-elements/ios-toggle-switch) |
+| [Progress Stepper](./step-progress-indicator) | A progress stepper for checkouts and onboarding: the track fills to the active step and completed steps flip into a drawn checkmark. | [Demo](https://gsapvault.com/ui-elements/step-progress-indicator) |
+| [Skeleton Loader](./skeleton-to-content-reveal) | A skeleton loader: shimmering placeholders crossfade into real content with a stagger, and each card's height eases to what it loaded. | [Demo](https://gsapvault.com/ui-elements/skeleton-to-content-reveal) |
+| [Copy to Clipboard Button](./copy-to-clipboard-button) | A copy to clipboard button: the clipboard icon morphs into a drawn check, a Copied label floats up and the copied value flashes. | [Demo](https://gsapvault.com/ui-elements/copy-to-clipboard-button) |
+| [Scrollspy Table of Contents](./scrollspy-toc-rail) | A scrollspy table of contents for long pages: a marker slides to the section in view and a progress line tracks reading. | [Demo](https://gsapvault.com/ui-elements/scrollspy-toc-rail) |
+| [Star Rating](./star-rating-input) | A star rating input on native radios: hover sweeps the fill to the pointer, a click locks it in with a spring pop and a label. | [Demo](https://gsapvault.com/ui-elements/star-rating-input) |
+| [Announcement Bar](./announcement-banner-bar) | An announcement bar for sites: pushes the page down instead of covering it, rotates messages with a masked swap and collapses on dismiss. | [Demo](https://gsapvault.com/ui-elements/announcement-banner-bar) |
+| [Animated Tabs](./sliding-indicator-tabs) | Animated tabs: the indicator slides and stretches between tabs, panels change directionally and the container eases between heights. | [Demo](https://gsapvault.com/ui-elements/sliding-indicator-tabs) |
+| [FAQ Accordion](./faq-disclosure-accordion) | An accessible FAQ accordion: answers open to their natural height, a plus morphs into a minus, with expand all and #deep links. | [Demo](https://gsapvault.com/ui-elements/faq-disclosure-accordion) |
 
 ## The Templates
 
@@ -77,7 +86,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (218 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (224 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -94,7 +103,7 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 93 effects and 69 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 96 effects and 71 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)

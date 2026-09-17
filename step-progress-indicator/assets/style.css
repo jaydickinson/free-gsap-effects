@@ -1,0 +1,247 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: clip; }
+
+/* ---------------------------------------------------------------------
+   Themes. One design at two token values: `light` and `dark`. Every
+   colour, size and radius the component AND the demo ground use is a
+   custom property, so re-branding is one block of overrides.
+   Set data-variant on <body> in the demo, or on the component's own
+   wrapper in your app.
+
+   The script reads --node-done-bg, --node-done-line and --track-w with
+   getComputedStyle at the moment they are needed, so a theme swap stays
+   correct without a single colour being hard-coded in JS.
+   --------------------------------------------------------------------- */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+
+  /* ground: the demo page the component sits on */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /* the one accent: the fill, the step you are on, the step you finished */
+  --accent: #2563eb;
+  --accent-ink: #ffffff;      /* text on the accent */
+  --accent-text: #1d4ed8;     /* the accent AS text, on a light surface */
+  --accent-wash: #e3ebfb;     /* solid: the accent at ~12% over the ground */
+
+  /* the nodes */
+  --node-size: 32px;
+  --node-radius: 9999px;
+  --node-bg: var(--raised);
+  --node-line: var(--line-strong);
+  --node-fg: var(--ink-3);
+  --node-active-bg: var(--raised);
+  --node-active-line: var(--accent);
+  --node-active-fg: var(--accent-text);
+  --node-done-bg: #2563eb;    /* solid hex: read by the script at flip time */
+  --node-done-line: #2563eb;
+  --node-done-fg: #ffffff;
+
+  /* the rail */
+  --track-w: 2px;
+  --track-bg: #dcdcd9;
+  --fill-bg: var(--accent);
+
+  /* the labels under the nodes */
+  --label-fg: var(--ink-3);
+  --label-active-fg: var(--ink);
+  --label-done-fg: var(--ink-2);
+  --label-weight: 500;
+  --label-size: 0.8125rem;
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --accent-text: #93b4fd;     /* the accent as text needs lifting on the deep */
+  --accent-wash: #1c2540;
+
+  --track-bg: #2e2e2e;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;                 /* the demo toolbar strip */
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ---------- Demo furniture: the ground the component is centred on ----- */
+.stage { min-height: calc(100svh - 44px); display: grid; place-items: center; padding: 32px 20px; }
+.stage__inner { width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+
+/* ---------- The indicator ---------- */
+.stepper {
+  position: relative;
+  width: 100%;
+}
+/* The rail is positioned from measurement: it runs from the centre of the
+   first node to the centre of the last, so it never pokes out at the ends
+   whatever the node size or the gap. */
+.stepper-rail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--track-bg);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.stepper-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: var(--fill-bg);
+  border-radius: inherit;
+}
+.stepper-list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+/* No CSS transform on the node or on the number/check inside it: GSAP
+   pulses the node with scale and flips the two faces on rotationX. */
+.step-node {
+  position: relative;
+  width: var(--node-size);
+  height: var(--node-size);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--node-bg);
+  border: 1px solid var(--node-line);
+  border-radius: var(--node-radius);
+  color: var(--node-fg);
+  font: 500 0.8125rem/1 var(--font);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  perspective: 400px;
+}
+.step-node:disabled { cursor: default; pointer-events: none; }
+.step-node:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.step.is-active .step-node {
+  background: var(--node-active-bg);
+  border-color: var(--node-active-line);
+  color: var(--node-active-fg);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+.step.is-done .step-node { border-color: var(--node-done-line); color: var(--node-done-fg); }
+
+.step-num,
+.step-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  backface-visibility: hidden;
+}
+.step-check { opacity: 0; }
+.step-node-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.step-label {
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  color: var(--label-fg);
+  white-space: nowrap;
+}
+.step.is-active .step-label { color: var(--label-active-fg); font-weight: 600; }
+.step.is-done .step-label { color: var(--label-done-fg); }
+
+.stepper-status {
+  min-height: 1.2em;
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Compact vertical layout ---------- */
+@media (max-width: 600px) {
+  /* Shrink to content so the stack centres on the page. */
+  .stepper { width: auto; max-width: 100%; }
+  .stepper-list {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 22px;
+  }
+  .step { flex-direction: row; align-items: center; gap: 12px; }
+}
+
+/* ---------- Demo-only controls: the Back / Continue pair ---------- */
+.demo-controls { display: flex; gap: 8px; }
+.demo-controls button {
+  font: 500 0.8125rem/1 var(--font);
+  min-height: 36px;
+  padding: 0 16px;
+  background: var(--raised);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.demo-controls button:hover:not(:disabled) { background: var(--hover); }
+.demo-controls button.is-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.demo-controls button.is-primary:hover:not(:disabled) { background: #1d4ed8; border-color: #1d4ed8; }
+.demo-controls button:disabled { opacity: 0.45; cursor: default; pointer-events: none; }
+.demo-controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

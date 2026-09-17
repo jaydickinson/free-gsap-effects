@@ -6,7 +6,7 @@ iOS Toggle Switch is a production-ready GSAP UI component from GSAP Vault. This 
 
 - Product: iOS Toggle Switch
 - Type: UI component
-- Description: Native checkbox toggle whose knob can be tapped or dragged, snaps to the nearer side, stretches while pressed and cross-fades the track colour.
+- Description: An iOS-style toggle switch on a native checkbox: tap or drag the knob, it snaps to the nearer side and the track colour cross-fades.
 - GSAP plugins: Draggable
 - Techniques: micro-interaction, draggable, touch-drag, click-toggle, form-animation
 - Lenis smooth scrolling: not required

@@ -1,23 +1,23 @@
 # Start Here: AI Setup Prompt
 
-Copy to Clipboard Button is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Collapsible Sidebar Menu is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
-- Product: Copy to Clipboard Button
+- Product: Collapsible Sidebar Menu
 - Type: UI component
-- Description: A copy to clipboard button: the clipboard icon morphs into a drawn check, a Copied label floats up and the copied value flashes.
+- Description: A collapsible sidebar menu for docs and admin apps: sections open on a measured height tween and an indicator slides to the current link.
 - GSAP plugins: GSAP core only
-- Techniques: micro-interaction, clipboard, morphing, svg-stroke
+- Techniques: micro-interaction, click-toggle, keyboard-navigation, timeline-control
 - Lenis smooth scrolling: not required
-- Difficulty: beginner
+- Difficulty: intermediate
 
 The supplied package is the source of truth. It includes the working page markup, readable JavaScript, CSS, documentation, and any product assets. Read the README before changing the implementation.
 
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Copy to Clipboard Button UI component into my project.
+Integrate the supplied Collapsible Sidebar Menu UI component into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.

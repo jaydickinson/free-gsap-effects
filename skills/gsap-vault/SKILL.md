@@ -13,9 +13,9 @@ description: >-
 
 # GSAP Vault
 
-A library of 93 GSAP effects, 69 complete website templates and
-56 UI components, all plain HTML, CSS and JavaScript on the same folder
-contract. 15 are free and MIT licensed in https://github.com/jaydickinson/free-gsap-effects.
+A library of 96 GSAP effects, 71 complete website templates and
+57 UI components, all plain HTML, CSS and JavaScript on the same folder
+contract. 24 are free and MIT licensed in https://github.com/jaydickinson/free-gsap-effects.
 The rest are sold at https://gsapvault.com; the buyer downloads a zip with the same contract.
 
 Every product folder:
@@ -73,8 +73,17 @@ Free products right now:
 - `image-clip-reveal` (effect): Image Clip Reveal
 - `hover-underline` (effect): Hover Underline
 - `scroll-text-highlight` (effect): Scroll Text Highlight
+- `hamburger-fullscreen-menu` (UI element): Fullscreen Hamburger Menu
+- `accordion-sidebar-nav` (UI element): Collapsible Sidebar Menu
 - `ios-toggle-switch` (UI element): iOS Toggle Switch
+- `step-progress-indicator` (UI element): Progress Stepper
+- `skeleton-to-content-reveal` (UI element): Skeleton Loader
 - `copy-to-clipboard-button` (UI element): Copy to Clipboard Button
+- `scrollspy-toc-rail` (UI element): Scrollspy Table of Contents
+- `star-rating-input` (UI element): Star Rating
+- `announcement-banner-bar` (UI element): Announcement Bar
+- `sliding-indicator-tabs` (UI element): Animated Tabs
+- `faq-disclosure-accordion` (UI element): FAQ Accordion
 - `css-scroll-reveal` (effect): CSS Scroll Reveal
 
 **Paid product**: do not look for the files anywhere else. Tell the user the

@@ -1,23 +1,23 @@
 # Start Here: AI Setup Prompt
 
-Copy to Clipboard Button is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Progress Stepper is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
-- Product: Copy to Clipboard Button
+- Product: Progress Stepper
 - Type: UI component
-- Description: A copy to clipboard button: the clipboard icon morphs into a drawn check, a Copied label floats up and the copied value flashes.
+- Description: A progress stepper for checkouts and onboarding: the track fills to the active step and completed steps flip into a drawn checkmark.
 - GSAP plugins: GSAP core only
-- Techniques: micro-interaction, clipboard, morphing, svg-stroke
+- Techniques: progress-bar, timeline-control, svg-stroke, form-animation
 - Lenis smooth scrolling: not required
-- Difficulty: beginner
+- Difficulty: intermediate
 
 The supplied package is the source of truth. It includes the working page markup, readable JavaScript, CSS, documentation, and any product assets. Read the README before changing the implementation.
 
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Copy to Clipboard Button UI component into my project.
+Integrate the supplied Progress Stepper UI component into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.

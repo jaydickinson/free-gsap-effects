@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton Loader &mdash; GSAP Vault</title>
+  <script>document.documentElement.className += ' has-js';</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    /* One row on a phone: the prompt goes so both control groups stay on screen. */
+    @media (max-width: 560px) {
+      .showcase-toolbar__prompt { display: none; }
+      .showcase-toolbar { justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">The panel loads on its own. Press Reload to watch it resolve again.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Data">
+      <button type="button" id="skReload">Reload</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="stage__inner">
+
+      <section class="sk-feed" id="skFeed" aria-busy="true" aria-label="Account overview">
+
+        <div class="sk-tiles">
+
+          <article class="sk-card sk-card--tile">
+            <div class="sk-skeleton" aria-hidden="true">
+              <div class="sk-block sk-line sk-line-label"></div>
+              <div class="sk-block sk-line sk-line-value"></div>
+              <div class="sk-block sk-line sk-line-change"></div>
+            </div>
+            <div class="sk-content">
+              <p class="sk-stat-label">Active seats</p>
+              <p class="sk-stat-value">1,284</p>
+              <p class="sk-stat-change">+62 this week</p>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--tile">
+            <div class="sk-skeleton" aria-hidden="true">
+              <div class="sk-block sk-line sk-line-label"></div>
+              <div class="sk-block sk-line sk-line-value"></div>
+              <div class="sk-block sk-line sk-line-change"></div>
+            </div>
+            <div class="sk-content">
+              <p class="sk-stat-label">Weekly sessions</p>
+              <p class="sk-stat-value">18,430</p>
+              <p class="sk-stat-change">+4.1% on last week</p>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--tile">
+            <div class="sk-skeleton" aria-hidden="true">
+              <div class="sk-block sk-line sk-line-label"></div>
+              <div class="sk-block sk-line sk-line-value"></div>
+              <div class="sk-block sk-line sk-line-change"></div>
+            </div>
+            <div class="sk-content">
+              <p class="sk-stat-label">Open tickets</p>
+              <p class="sk-stat-value">27</p>
+              <p class="sk-stat-change">5 fewer than yesterday</p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="sk-list">
+
+          <article class="sk-card sk-card--row">
+            <div class="sk-skeleton sk-row-skeleton" aria-hidden="true">
+              <div class="sk-block sk-avatar-block"></div>
+              <div class="sk-lines">
+                <div class="sk-block sk-line sk-line-title"></div>
+                <div class="sk-block sk-line sk-line-meta"></div>
+              </div>
+            </div>
+            <div class="sk-content sk-row-content">
+              <span class="sk-avatar" aria-hidden="true">NT</span>
+              <div class="sk-text">
+                <p class="sk-title">Northwind Traders</p>
+                <p class="sk-meta">Scale &middot; EMEA &middot; 128 seats &middot; updated 2d ago</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--row">
+            <div class="sk-skeleton sk-row-skeleton" aria-hidden="true">
+              <div class="sk-block sk-avatar-block"></div>
+              <div class="sk-lines">
+                <div class="sk-block sk-line sk-line-title"></div>
+                <div class="sk-block sk-line sk-line-meta"></div>
+              </div>
+            </div>
+            <div class="sk-content sk-row-content">
+              <span class="sk-avatar" aria-hidden="true">AF</span>
+              <div class="sk-text">
+                <p class="sk-title">Alpine Freight</p>
+                <p class="sk-meta">Growth &middot; EMEA &middot; 42 seats &middot; updated 9d ago</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--row">
+            <div class="sk-skeleton sk-row-skeleton" aria-hidden="true">
+              <div class="sk-block sk-avatar-block"></div>
+              <div class="sk-lines">
+                <div class="sk-block sk-line sk-line-title"></div>
+                <div class="sk-block sk-line sk-line-meta"></div>
+              </div>
+            </div>
+            <div class="sk-content sk-row-content">
+              <span class="sk-avatar" aria-hidden="true">SC</span>
+              <div class="sk-text">
+                <p class="sk-title">Sable and Co</p>
+                <p class="sk-meta">Scale &middot; AMER &middot; 96 seats &middot; updated 4d ago</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--row">
+            <div class="sk-skeleton sk-row-skeleton" aria-hidden="true">
+              <div class="sk-block sk-avatar-block"></div>
+              <div class="sk-lines">
+                <div class="sk-block sk-line sk-line-title"></div>
+                <div class="sk-block sk-line sk-line-meta"></div>
+              </div>
+            </div>
+            <div class="sk-content sk-row-content">
+              <span class="sk-avatar" aria-hidden="true">KL</span>
+              <div class="sk-text">
+                <p class="sk-title">Kestrel Labs</p>
+                <p class="sk-meta">Starter &middot; APAC &middot; 12 seats &middot; updated 21d ago</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="sk-card sk-card--row">
+            <div class="sk-skeleton sk-row-skeleton" aria-hidden="true">
+              <div class="sk-block sk-avatar-block"></div>
+              <div class="sk-lines">
+                <div class="sk-block sk-line sk-line-title"></div>
+                <div class="sk-block sk-line sk-line-meta"></div>
+              </div>
+            </div>
+            <div class="sk-content sk-row-content">
+              <span class="sk-avatar" aria-hidden="true">IH</span>
+              <div class="sk-text">
+                <p class="sk-title">Ironbark Health</p>
+                <p class="sk-meta">Growth &middot; AMER &middot; 64 seats &middot; updated 1d ago</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </section>
+
+      <p class="sk-status" id="skStatus" role="status" aria-live="polite"></p>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+    })();
+  </script>
+</body>
+</html>

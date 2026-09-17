@@ -1,0 +1,246 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: clip; }
+
+/* ---------- Theme tokens ----------
+   Every colour, radius, border and shadow the component and the demo ground
+   use is a custom property on <body>, keyed by data-variant. There are two
+   values, light and dark: the same design at two token sets. The script reads
+   --star-on with getComputedStyle at the moment a sparkle is built, so a
+   re-valued theme needs no JavaScript change. To fit your own brand, re-value
+   the short list below. */
+body,
+body[data-variant="light"] {
+  color-scheme: light;
+
+  /* Ground (the page the component sits on) */
+  --ground: #f2f2f1;
+  --ground-2: #e9e9e7;
+  --raised: #fbfbfa;
+  --hover: #e2e2df;
+
+  /* Ink */
+  --ink: #141412;
+  --ink-2: #4b4b47;
+  --ink-3: #676762;
+  --line: rgba(20, 20, 18, 0.12);
+  --line-strong: rgba(20, 20, 18, 0.22);
+
+  /* Accent: the stars, and nothing else */
+  --accent: #f5c400;
+  --accent-ink: #141412;
+  --accent-wash: #f7efd0;
+
+  --shadow: 0 1px 2px rgba(20, 20, 18, 0.06), 0 4px 12px rgba(20, 20, 18, 0.06);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+
+  /* Component */
+  --star-on: #f5c400;
+  --star-empty: #dcdcd8;
+  --star-gap: 6px;
+  --focus: #141412;
+}
+
+body[data-variant="dark"] {
+  color-scheme: dark;
+
+  --ground: #141414;
+  --ground-2: #0f0f0f;
+  --raised: #1c1c1c;
+  --hover: #232323;
+
+  --ink: #f1efea;
+  --ink-2: #c9c7c1;
+  --ink-3: #9a988f;
+  --line: rgba(241, 239, 234, 0.12);
+  --line-strong: rgba(241, 239, 234, 0.22);
+
+  --accent: #f5c400;
+  --accent-ink: #141412;
+  --accent-wash: #3a3113;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --star-on: #f5c400;
+  --star-empty: #3a3a37;
+  --focus: #f1efea;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 44px;              /* the demo toolbar strip */
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Demo furniture ----------
+   The stage centres the component at the width a product would give a form
+   group. .stage-* classes are demo only; script.js never reads one. */
+.stage { min-height: calc(100svh - 44px); display: grid; place-items: center; padding: 32px 20px; }
+.stage__inner { width: 100%; max-width: 480px; }
+
+.stage-form { display: flex; flex-direction: column; gap: 18px; }
+.stage-field { display: flex; flex-direction: column; gap: 7px; }
+.stage-field__label { font-size: 0.8125rem; font-weight: 500; color: var(--ink-2); }
+.stage-form textarea {
+  width: 100%;
+  min-height: 84px;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--raised);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+}
+.stage-form textarea::placeholder { color: var(--ink-3); }
+.stage-form textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--line-strong); }
+.stage-actions { display: flex; align-items: center; gap: 12px; }
+.stage-submit {
+  appearance: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 0 16px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--ground);
+  font: inherit; font-weight: 500;
+  cursor: pointer;
+}
+.stage-submit:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.stage-submit:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.stage-submit[disabled] { cursor: default; opacity: 1; background: var(--ink-2); border-color: var(--ink-2); }
+.stage-note { font-size: 0.75rem; color: var(--ink-3); }
+
+/* ---------- The component ---------- */
+.rating { display: flex; flex-direction: column; gap: 10px; }
+.rating-stars {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  border: 0;
+  padding: 0;
+  --star-size: 32px;
+}
+.rating--small .rating-stars { --star-size: 24px; }
+
+/* The visible question above the stars. The fieldset keeps its own sr-only
+   <legend> naming the group, so it sits outside the fieldset: the hit strips
+   cover everything inside it. */
+.rating-legend {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.rating-row { display: flex; gap: var(--star-gap); }
+
+/* No CSS transform on .star, ever: GSAP owns its scale for the click pop. */
+.star {
+  position: relative;
+  display: block;
+  width: var(--star-size);
+  height: var(--star-size);
+}
+.star svg { display: block; width: var(--star-size); height: var(--star-size); }
+.star-base { fill: var(--star-empty); }
+
+/* The fill is a clipping window, so its width is the fill fraction. GSAP
+   animates that width; the star inside keeps its full size. */
+.star-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  overflow: hidden;
+}
+.star-fill svg { fill: var(--star-on); }
+
+.star.is-focus::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid var(--focus);
+  border-radius: var(--radius-sm);
+}
+
+/* The radios are the control: transparent hit strips laid across the stars,
+   in DOM order, so Tab reaches the group and the arrow keys move through it. */
+.rating-hits { position: absolute; inset: 0; display: flex; }
+.rating-hit {
+  flex: 1 1 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.rating-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  min-height: 1.3em;
+}
+
+/* Sparkle particles, built and removed by the script. */
+.sparkle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/* Without JavaScript the radios still carry the value, so the stars are
+   filled from :checked with plain CSS. --nojs-fill is the chosen rating. */
+html:not(.has-js) .star:nth-child(1) .star-fill { width: calc(100% * clamp(0, var(--nojs-fill, 0) - 0, 1)); }
+html:not(.has-js) .star:nth-child(2) .star-fill { width: calc(100% * clamp(0, var(--nojs-fill, 0) - 1, 1)); }
+html:not(.has-js) .star:nth-child(3) .star-fill { width: calc(100% * clamp(0, var(--nojs-fill, 0) - 2, 1)); }
+html:not(.has-js) .star:nth-child(4) .star-fill { width: calc(100% * clamp(0, var(--nojs-fill, 0) - 3, 1)); }
+html:not(.has-js) .star:nth-child(5) .star-fill { width: calc(100% * clamp(0, var(--nojs-fill, 0) - 4, 1)); }
+.rating-stars:has(.rating-hit[value="0.5"]:checked) { --nojs-fill: 0.5; }
+.rating-stars:has(.rating-hit[value="1"]:checked)   { --nojs-fill: 1; }
+.rating-stars:has(.rating-hit[value="1.5"]:checked) { --nojs-fill: 1.5; }
+.rating-stars:has(.rating-hit[value="2"]:checked)   { --nojs-fill: 2; }
+.rating-stars:has(.rating-hit[value="2.5"]:checked) { --nojs-fill: 2.5; }
+.rating-stars:has(.rating-hit[value="3"]:checked)   { --nojs-fill: 3; }
+.rating-stars:has(.rating-hit[value="3.5"]:checked) { --nojs-fill: 3.5; }
+.rating-stars:has(.rating-hit[value="4"]:checked)   { --nojs-fill: 4; }
+.rating-stars:has(.rating-hit[value="4.5"]:checked) { --nojs-fill: 4.5; }
+.rating-stars:has(.rating-hit[value="5"]:checked)   { --nojs-fill: 5; }
+html:not(.has-js) .rating-hit:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+}
+
+@media (max-width: 420px) {
+  .rating-stars { --star-size: 40px; }
+  .stage { padding: 24px 16px; }
+}

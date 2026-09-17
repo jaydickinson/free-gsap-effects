@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>FAQ Accordion | GSAP Vault</title>
+  <script data-cfasync="false">document.documentElement.classList.add('has-js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: 6px; border: 1px solid var(--line); background: var(--raised); flex: none; }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Open a question, then another: in one-open mode the first closes as the next opens.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Accordion mode">
+      <button class="mode-btn" type="button" data-mode="single" aria-pressed="true">One open</button>
+      <button class="mode-btn" type="button" data-mode="multiple" aria-pressed="false">Many open</button>
+    </div>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="stage__inner">
+
+      <!-- Component starts here -->
+      <section class="faq" data-accordion data-accordion-mode="single" aria-labelledby="faq-title">
+        <div class="faq-head">
+          <div class="faq-head__text">
+            <h1 class="faq-title" id="faq-title">Frequently asked questions</h1>
+            <p class="faq-sub">Billing, plans and seats. For anything else, contact our support team.</p>
+          </div>
+          <div class="faq-bulk">
+            <button class="faq-bulk__btn" type="button" data-accordion-expand>Expand all</button>
+            <button class="faq-bulk__btn" type="button" data-accordion-collapse>Collapse all</button>
+          </div>
+        </div>
+
+        <div class="faq-list">
+
+          <div class="faq-item is-open" id="faq-billing-date" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-billing-date-trigger" aria-expanded="true" aria-controls="faq-billing-date-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">When will I be charged?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-billing-date-panel" role="region" aria-labelledby="faq-billing-date-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>Your card is charged on the day you subscribe, then on the same date each month or year depending on your plan. If that date does not exist in a given month, such as the 31st, we charge on the last day of that month instead.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-switch-plan" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-switch-plan-trigger" aria-expanded="false" aria-controls="faq-switch-plan-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">Can I switch between monthly and annual billing?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-switch-plan-panel" role="region" aria-labelledby="faq-switch-plan-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>Yes, from Billing in your account settings. What happens next depends on the direction:</p>
+                <ul>
+                  <li><strong>Monthly to annual</strong> takes effect straight away, and the unused part of your current month is credited against the annual price.</li>
+                  <li><strong>Annual to monthly</strong> keeps your annual price until the paid year ends, then moves you to monthly billing on the renewal date.</li>
+                  <li>Either way, every invoice stays in one history under Billing.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-seats" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-seats-trigger" aria-expanded="false" aria-controls="faq-seats-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">How do I add or remove seats?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-seats-panel" role="region" aria-labelledby="faq-seats-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>Admins can change the seat count at any time under Members. Added seats are billed straight away at a prorated rate for the rest of the period. Removed seats stay usable until the period ends and come off your next invoice.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-failed-payment" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-failed-payment-trigger" aria-expanded="false" aria-controls="faq-failed-payment-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">What happens if a payment fails?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-failed-payment-panel" role="region" aria-labelledby="faq-failed-payment-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>We retry the card three times over seven days and email your billing contact after each attempt. Your workspace keeps working normally in the meantime.</p>
+                <p>If the last retry fails, the account becomes read-only: everyone can still sign in and export their data, but nothing new can be created until the balance is paid. Updating the card under Billing clears it immediately.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-cancel" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-cancel-trigger" aria-expanded="false" aria-controls="faq-cancel-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">How do I cancel my subscription?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-cancel-panel" role="region" aria-labelledby="faq-cancel-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>Cancel from Billing whenever you like; there is no notice period. You keep access until the end of the period you have paid for and are not charged again. If you cancelled an annual plan recently, check <a href="#faq-refunds">whether you can get a refund</a>.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" id="faq-refunds" data-accordion-item>
+            <h2 class="faq-q">
+              <button class="faq-trigger" type="button" id="faq-refunds-trigger" aria-expanded="false" aria-controls="faq-refunds-panel" data-accordion-trigger>
+                <span class="faq-trigger__text">Can I get a refund?</span>
+                <span class="faq-icon" aria-hidden="true"><span class="faq-icon__bar"></span><span class="faq-icon__bar faq-icon__bar--v" data-accordion-icon-bar></span></span>
+              </button>
+            </h2>
+            <div class="faq-panel" id="faq-refunds-panel" role="region" aria-labelledby="faq-refunds-trigger" data-accordion-panel>
+              <div class="faq-answer" data-accordion-answer>
+                <p>Annual plans cancelled within 14 days of purchase or renewal are refunded in full to the original payment method. Monthly plans are not refunded.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- Component ends here -->
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+    })();
+
+    // Demo-only: the mode control sets data-accordion-mode on the component,
+    // the one attribute the script reads for it. Also honours ?mode=multiple.
+    (function () {
+      var root = document.querySelector('[data-accordion]');
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.mode-btn'));
+      function setMode(mode) {
+        root.setAttribute('data-accordion-mode', mode);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === mode)); });
+      }
+      var wanted = new URLSearchParams(location.search).get('mode');
+      if (wanted === 'single' || wanted === 'multiple') setMode(wanted);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
+    })();
+  </script>
+</body>
+</html>

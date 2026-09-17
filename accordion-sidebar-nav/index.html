@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapsible Sidebar Menu &mdash; GSAP Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* Demo-only toolbar; not part of the component. */
+    .showcase-toolbar {
+      position: fixed; inset: 0 0 auto 0; z-index: 1000; height: 44px;
+      display: flex; align-items: center; gap: 10px; padding: 0 12px;
+      flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+      background: var(--ground-2); border-bottom: 1px solid var(--line);
+      color: var(--ink-3); font-family: var(--font); font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .showcase-toolbar::-webkit-scrollbar { display: none; }
+    .showcase-toolbar__prompt { color: var(--ink-2); margin-right: auto; }
+    .showcase-toolbar__group { display: flex; gap: 2px; padding: 2px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--raised); }
+    .showcase-toolbar button {
+      appearance: none; border: 0; cursor: pointer; font: inherit;
+      min-height: 26px; padding: 0 9px; border-radius: 4px;
+      background: transparent; color: var(--ink-2);
+    }
+    .showcase-toolbar button:hover { background: var(--hover); color: var(--ink); }
+    .showcase-toolbar button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+    .showcase-toolbar button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+    /* One row on a phone: the prompt goes rather than wrapping, so the
+       strip stays 44px and the body's reserved padding keeps matching. */
+    @media (max-width: 620px) { .showcase-toolbar__prompt { display: none; } }
+  </style>
+</head>
+<body data-variant="light">
+
+  <header class="showcase-toolbar">
+    <span class="showcase-toolbar__prompt">Open a section: each panel tweens to its own measured height.</span>
+    <div class="showcase-toolbar__group" role="group" aria-label="Theme">
+      <button class="variant-btn" type="button" data-variant="light" aria-pressed="true">Light</button>
+      <button class="variant-btn" type="button" data-variant="dark" aria-pressed="false">Dark</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="stage__inner">
+
+      <!-- data-multi="true" lets several sections stay open at once. -->
+      <aside class="docs-sidebar" id="docsSidebar" data-multi="false">
+        <nav class="sidebar-nav" id="sidebarNav" aria-label="Help centre">
+          <span class="acc-rail" id="accRail" aria-hidden="true"></span>
+
+          <section class="acc-section" data-open="true">
+            <h2 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="accPanel1">
+                <span class="acc-label">Articles</span>
+                <span class="acc-chevron" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </span>
+              </button>
+            </h2>
+            <div class="acc-panel" id="accPanel1">
+              <ul class="acc-links">
+                <li><a class="acc-link" href="#getting-started">Getting started</a></li>
+                <li><a class="acc-link is-active" href="#billing" aria-current="page">Billing</a></li>
+                <li><a class="acc-link" href="#api">API</a></li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="acc-section">
+            <h2 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="accPanel2">
+                <span class="acc-label">Collections</span>
+                <span class="acc-chevron" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </span>
+              </button>
+            </h2>
+            <div class="acc-panel" id="accPanel2">
+              <ul class="acc-links">
+                <li><a class="acc-link" href="#account-basics">Account basics</a></li>
+                <li><a class="acc-link" href="#integrations">Integrations</a></li>
+                <li><a class="acc-link" href="#troubleshooting">Troubleshooting</a></li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="acc-section">
+            <h2 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="accPanel3">
+                <span class="acc-label">Settings</span>
+                <span class="acc-chevron" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </span>
+              </button>
+            </h2>
+            <div class="acc-panel" id="accPanel3">
+              <ul class="acc-links">
+                <li><a class="acc-link" href="#profile">Profile</a></li>
+                <li><a class="acc-link" href="#notifications">Notifications</a></li>
+              </ul>
+            </div>
+          </section>
+        </nav>
+      </aside>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script src="assets/script.js"></script>
+  <script>
+    // Demo-only: switches data-variant on <body>; also honours ?variant=name.
+    (function () {
+      var buttons = Array.prototype.slice.call(document.querySelectorAll('.variant-btn'));
+      var names = buttons.map(function (b) { return b.dataset.variant; });
+      function setVariant(name) {
+        document.body.setAttribute('data-variant', name);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.variant === name)); });
+        // The rail is measured, and a theme can move padding: re-measure.
+        requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
+      }
+      var wanted = new URLSearchParams(location.search).get('variant');
+      var initial = names.indexOf(wanted) > -1 ? wanted : document.body.getAttribute('data-variant') || names[0];
+      setVariant(initial);
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setVariant(b.dataset.variant); }); });
+    })();
+  </script>
+</body>
+</html>
