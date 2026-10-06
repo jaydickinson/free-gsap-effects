@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Image Clip Reveal is a production-ready GSAP animation effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Image Clip Reveal is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Image Clip Reveal
-- Type: animation effect
+- Type: effect
 - Description: A cinematic image reveal where a directional polygon aperture opens as the photograph settles from a restrained Ken Burns scale and its caption lands.
 - GSAP plugins: ScrollTrigger
 - Techniques: scroll-reveal, clip-path, ken-burns, stagger
@@ -17,12 +17,12 @@ The supplied package is the source of truth. It includes the working page markup
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Image Clip Reveal animation effect into my project.
+Integrate the supplied Image Clip Reveal effect into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the animation effect should live and which existing files you plan to change.
+3. Explain briefly where the effect should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Coming Soon Template is a production-ready GSAP website template from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Coming Soon Template is a production-ready GSAP template from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Coming Soon Template
-- Type: website template
+- Type: template
 - Description: A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day.
 - GSAP plugins: GSAP core only
 - Techniques: countdown, ambient, canvas, particle-system, blend-mode, load-sequence, scroll-reveal, stagger, quickTo, mouse-follow, organic-motion, micro-interaction
@@ -29,12 +29,12 @@ Fill these in before pasting the prompt, or ask your assistant to collect them:
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Coming Soon Template website template into my project.
+Integrate the supplied Coming Soon Template template into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the website template should live and which existing files you plan to change.
+3. Explain briefly where the template should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

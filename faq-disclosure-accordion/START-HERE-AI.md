@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-FAQ Accordion is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+FAQ Accordion is a production-ready GSAP UI element from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: FAQ Accordion
-- Type: UI component
+- Type: UI element
 - Description: An accessible FAQ accordion: answers open to their natural height, a plus morphs into a minus, with expand all and #deep links.
 - GSAP plugins: GSAP core only
 - Techniques: click-toggle, state-transition, micro-interaction, keyboard-navigation, focus-management
@@ -17,12 +17,12 @@ The supplied package is the source of truth. It includes the working page markup
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied FAQ Accordion UI component into my project.
+Integrate the supplied FAQ Accordion UI element into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the UI component should live and which existing files you plan to change.
+3. Explain briefly where the UI element should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

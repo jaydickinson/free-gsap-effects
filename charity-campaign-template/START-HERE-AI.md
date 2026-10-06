@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Charity Campaign Template is a production-ready GSAP website template from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Charity Campaign Template is a production-ready GSAP template from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Charity Campaign Template
-- Type: website template
+- Type: template
 - Description: A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading.
 - GSAP plugins: ScrollTrigger, Draggable
 - Techniques: draggable, clip-path, before-after, count-up, scroll-reveal, stagger, svg-line-draw, progress-bar
@@ -29,12 +29,12 @@ Fill these in before pasting the prompt, or ask your assistant to collect them:
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Charity Campaign Template website template into my project.
+Integrate the supplied Charity Campaign Template template into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the website template should live and which existing files you plan to change.
+3. Explain briefly where the template should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

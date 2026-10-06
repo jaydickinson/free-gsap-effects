@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Parallax Hero is a production-ready GSAP animation effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Parallax Hero is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Parallax Hero
-- Type: animation effect
+- Type: effect
 - Description: A pinned hero that pulls its layers into depth from one scrubbed ScrollTrigger: a headline sandwiched inside the stack, ridges or photographs climbing over it, and a sun that sets behind the far layer.
 - GSAP plugins: ScrollTrigger
 - Techniques: parallax, scrub, pinning, scroll-progress
@@ -17,12 +17,12 @@ The supplied package is the source of truth. It includes the working page markup
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Parallax Hero animation effect into my project.
+Integrate the supplied Parallax Hero effect into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the animation effect should live and which existing files you plan to change.
+3. Explain briefly where the effect should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

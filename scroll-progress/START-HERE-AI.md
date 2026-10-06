@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Scroll Progress Indicator is a production-ready GSAP animation effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Scroll Progress Indicator is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Scroll Progress Indicator
-- Type: animation effect
+- Type: effect
 - Description: A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage.
 - GSAP plugins: ScrollTrigger
 - Techniques: scroll-progress, progress-bar, svg-stroke
@@ -17,12 +17,12 @@ The supplied package is the source of truth. It includes the working page markup
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Scroll Progress Indicator animation effect into my project.
+Integrate the supplied Scroll Progress Indicator effect into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the animation effect should live and which existing files you plan to change.
+3. Explain briefly where the effect should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

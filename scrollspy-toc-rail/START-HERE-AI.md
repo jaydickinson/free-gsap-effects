@@ -1,11 +1,11 @@
 # Start Here: AI Setup Prompt
 
-Scrollspy Table of Contents is a production-ready GSAP UI component from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Scrollspy Table of Contents is a production-ready GSAP UI element from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
 
 ## Product context
 
 - Product: Scrollspy Table of Contents
-- Type: UI component
+- Type: UI element
 - Description: A scrollspy table of contents for long pages: a marker slides to the section in view and a progress line tracks reading.
 - GSAP plugins: ScrollTrigger, ScrollToPlugin
 - Techniques: scrollspy, scroll-progress, smooth-scroll, checkpoint-navigation, keyboard-navigation
@@ -17,12 +17,12 @@ The supplied package is the source of truth. It includes the working page markup
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Scrollspy Table of Contents UI component into my project.
+Integrate the supplied Scrollspy Table of Contents UI element into my project.
 
 Before editing anything:
 1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
 2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the UI component should live and which existing files you plan to change.
+3. Explain briefly where the UI element should live and which existing files you plan to change.
 
 During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.

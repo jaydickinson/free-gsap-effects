@@ -2,9 +2,9 @@
 
 ![GSAP Vault free effects and templates](./og-free-repo.png)
 
-Nine free, production-ready GSAP animation effects and four complete website templates. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Nine free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 96 copy-paste GSAP animation effects, 51 UI components and 71 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 117 copy-paste GSAP animation effects, 53 UI components and 82 complete website templates.
 
 ## The Effects
 
@@ -86,7 +86,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (224 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (296 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -103,11 +103,11 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 96 effects and 71 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 117 effects, 53 UI components and 82 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)
-- All of it, one payment: [The Vault](https://gsapvault.com/pricing), a one-time purchase covering everything in the catalogue, including future releases, unlimited commercial projects. Current prices are on the pricing page
+- All of it, one payment: [The Vault](https://gsapvault.com/pricing), a one-time purchase covering every collection in the Vault library, plus future items added to those collections, unlimited commercial projects. Current prices are on the pricing page
 - Tutorials and guides: [gsapvault.com/blog](https://gsapvault.com/blog), including [GSAP animation examples with code](https://gsapvault.com/blog/gsap-animation-examples)
 - For assistants and agents: [gsapvault.com/llms.txt](https://gsapvault.com/llms.txt)
 
