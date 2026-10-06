@@ -1,6 +1,6 @@
 # Free GSAP Effects
 
-![GSAP Vault free effects and templates](./og-free-repo.png)
+![Free GSAP effects in motion: parallax hero, scroll text highlight, 3D card flip and the link-in-bio template](./demo.gif)
 
 Nine free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
