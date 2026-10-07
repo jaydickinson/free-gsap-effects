@@ -2,15 +2,16 @@
 
 ![Free GSAP effects in motion: parallax hero, scroll text highlight, 3D card flip and the link-in-bio template](./demo.gif)
 
-Nine free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Ten free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 117 copy-paste GSAP animation effects, 53 UI components and 82 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 120 copy-paste GSAP animation effects, 53 UI components and 82 complete website templates.
 
 ## The Effects
 
 | Effect | What it does | Live demo |
 |--------|--------------|-----------|
 | [Tailwind Component Remixer](./tailwind-class-playground) | Generate fresh Tailwind component recipes with procedural SVG artwork, coordinated colour palettes and animated GSAP layout transitions. | [Demo](https://gsapvault.com/effects/tailwind-class-playground) |
+| [Spotlight Background](./spotlight-background) | A theatrical GSAP and WebGL spotlight background: two stage follow-spots in a hazed room sweep in from the wings, cross over your headline and land on it, then trail the cursor like spots worked by an operator. | [Demo](https://gsapvault.com/effects/spotlight-background) |
 | [3D Card Flip Gallery](./3d-card-flip) | Tactile GSAP 3D cards with deep perspective, reactive edge lighting and shifting shadows. Flip on hover, keyboard focus or tap, with grouped auto-close. | [Demo](https://gsapvault.com/effects/3d-card-flip) |
 | [Scroll Progress Indicator](./scroll-progress) | A precise GSAP reading-progress indicator in four shapes: a top bar, an SVG ring, a side rail, and a numeric percentage. | [Demo](https://gsapvault.com/effects/scroll-progress) |
 | [Typewriter Text](./typewriter-text) | A typewriter that types a line character by character, holds it, accelerates through deletion, and cycles to the next phrase, with optional cursor, status and progress hooks. | [Demo](https://gsapvault.com/effects/typewriter-text) |
@@ -86,7 +87,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (296 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (299 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -103,7 +104,7 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 117 effects, 53 UI components and 82 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 120 effects, 53 UI components and 82 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)

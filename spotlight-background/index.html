@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Spotlight Background Demo | GSAP Vault</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- Required. Runs before first paint: if WebGL is available it stamps
+         html.gl, which hides the CSS rendition of the beams so it never
+         flashes on a page that is about to get a canvas (three.js is a
+         network fetch away). No JavaScript or no WebGL: no class, and the
+         CSS rendition shows. The probe context is released at once. -->
+    <script>
+        (function () {
+            try {
+                var c = document.createElement('canvas');
+                var gl = c.getContext('webgl2') || c.getContext('webgl');
+                if (!gl) return;
+                var lose = gl.getExtension('WEBGL_lose_context');
+                if (lose) lose.loseContext();
+                document.documentElement.classList.add('gl');
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;800&display=swap">
+</head>
+<body>
+    <main class="stage" tabindex="0" data-spotlight-keys
+          aria-label="Northlight spring season" aria-describedby="stage-keys">
+
+        <!-- The background layer. It fills the positioned .stage and sits
+             under the content; everything inside it is decorative. The
+             script draws the light into a canvas it adds here; the beam and
+             pool elements are the CSS rendition shown without WebGL. -->
+        <div class="spotlight" data-spotlight data-spotlight-target=".stage__title" aria-hidden="true">
+            <div class="spotlight__beam" data-spotlight-beam="key">
+                <div class="spotlight__cone"></div>
+                <div class="spotlight__haze"></div>
+            </div>
+            <div class="spotlight__beam" data-spotlight-beam="gel">
+                <div class="spotlight__cone"></div>
+                <div class="spotlight__haze"></div>
+            </div>
+            <div class="spotlight__pool" data-spotlight-pool="key"></div>
+            <div class="spotlight__pool" data-spotlight-pool="gel"></div>
+        </div>
+
+        <div class="stage__content">
+            <h1 class="stage__title">Opening night is 14 March.</h1>
+            <p class="stage__lede">Six new productions in the restored Corn Exchange. The good seats go first.</p>
+            <a class="stage__btn" href="#season">See what’s on</a>
+            <p class="stage__cue" data-vault-badge-pad>
+                <span class="stage__cue--fine">Move to aim the lights. Hold to focus.</span>
+                <span class="stage__cue--touch">Drag to aim the lights. Tap to focus.</span>
+            </p>
+        </div>
+
+        <p class="sr-only" id="stage-keys">Arrow keys aim the stage lights; hold Space to focus them.</p>
+    </main>
+
+    <!-- GSAP core: every motion value, matchMedia and teardown. -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <!-- three.js as an ES module through an import map; the shim below sets
+         window.THREE and then loads the effect as a plain script. If three
+         cannot load, the CSS rendition comes back. -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.min.js"
+      }
+    }
+    </script>
+    <script type="module">
+      const showFallback = () => document.documentElement.classList.remove('gl');
+      import('three').then((THREE) => {
+        window.THREE = THREE;
+        const effect = document.createElement('script');
+        effect.src = 'assets/script.js';
+        effect.onerror = showFallback;
+        document.body.appendChild(effect);
+      }).catch(showFallback);
+    </script>
+</body>
+</html>

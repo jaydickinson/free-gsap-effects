@@ -1,0 +1,378 @@
+/* Spotlight Background
+   Two follow-spots hung at the top of the frame. The effect is the
+   .spotlight layer and the .spotlight-lit rule near the end; everything
+   under DEMO is the sample hero and can be replaced wholesale.
+
+   With WebGL the script draws the light into a canvas inside .spotlight.
+   The beam and pool elements below are the CSS rendition: what visitors
+   without WebGL or JavaScript see, as a lit, resting frame. */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    color-scheme: dark;
+
+    --page: #0a0a0a;
+    --ink: #f1efea;
+    --ink-dim: #a9a49c;    /* 7.6:1 on the ground */
+    --ink-faint: #918c85;  /* 5.6:1 on the ground */
+    --font-sans: 'Mona Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+}
+
+::selection {
+    background: #ff2d6f;
+    color: #0a0a0a;
+}
+
+/* ============================================
+   THE EFFECT
+   ============================================ */
+
+/* The layer fills whatever positioned box it is placed in. Content sits
+   above it as a sibling; the layer never takes pointer events. */
+.spotlight {
+    /* Restyle here. Key is the warm white lamp, gel the coloured one. */
+    --spotlight-ground: #0a0a0a;
+    --spotlight-key: #fff1dc;
+    --spotlight-gel: #ff2d6f;
+    /* Haze density inside the cones, 0 to 1. */
+    --spotlight-haze: 0.6;
+
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--spotlight-ground);
+    pointer-events: none;
+    isolation: isolate;
+    contain: strict;
+}
+
+/* The WebGL light. The script adds it and removes it on revert. */
+.spotlight__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* CSS rendition. A beam is a fixed-size cone pointing down from its apex
+   at top centre, turned and stretched by a transform; the soft edges come
+   from the conic mask. The 16.7deg half angle matches the 600 x 1000 box
+   (atan(300 / 1000)). Hidden before first paint when WebGL is available
+   (html.gl, from the probe in <head>) and removed once the canvas is up. */
+.spotlight__beam {
+    --beam: var(--spotlight-key);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 600px;
+    height: 1000px;
+    transform-origin: 50% 0;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+    mix-blend-mode: plus-lighter;
+    -webkit-mask-image:
+        conic-gradient(from 163.3deg at 50% 0, transparent 0deg, #000 10deg, #000 23.4deg, transparent 33.4deg),
+        linear-gradient(to bottom, transparent 0%, #000 7%, #000 84%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        conic-gradient(from 163.3deg at 50% 0, transparent 0deg, #000 10deg, #000 23.4deg, transparent 33.4deg),
+        linear-gradient(to bottom, transparent 0%, #000 7%, #000 84%, transparent 100%);
+    mask-composite: intersect;
+}
+
+.spotlight__beam[data-spotlight-beam="gel"],
+.spotlight__pool[data-spotlight-pool="gel"] {
+    --beam: var(--spotlight-gel);
+}
+
+/* Light in the air: brightest near the lamp, thinning towards the pool,
+   with a narrow hot core down the middle. */
+.spotlight__cone {
+    position: absolute;
+    inset: 0;
+    background:
+        conic-gradient(from 173deg at 50% 0, transparent 0deg, color-mix(in srgb, var(--beam) 20%, transparent) 7deg, transparent 14deg),
+        linear-gradient(to bottom,
+            color-mix(in srgb, var(--beam) 46%, transparent) 0%,
+            color-mix(in srgb, var(--beam) 19%, transparent) 50%,
+            color-mix(in srgb, var(--beam) 10%, transparent) 100%);
+}
+
+/* Haze: a beam-coloured fill seen through a fixed turbulence texture. The
+   texture is rasterised once; drift is a transform. Isotropic, low-frequency
+   noise so it reads as smoke when the beam scales, and one untiled 600 x 1600
+   mask covering the whole element so there is no repeat seam. */
+.spotlight__haze {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -30%;
+    height: 160%;
+    opacity: calc(var(--spotlight-haze) * 0.5);
+    background: var(--beam);
+    will-change: transform, opacity;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='1600'%3E%3Cfilter id='h'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.5 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23h)'/%3E%3C/svg%3E");
+    -webkit-mask-size: 600px 1600px;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='1600'%3E%3Cfilter id='h'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035' numOctaves='4' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.5 0 0 0 -0.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23h)'/%3E%3C/svg%3E");
+    mask-size: 600px 1600px;
+    mask-repeat: no-repeat;
+}
+
+/* Where the light lands on the back wall. */
+.spotlight__pool {
+    --beam: var(--spotlight-key);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 220px;
+    border-radius: 50%;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+    mix-blend-mode: plus-lighter;
+    background: radial-gradient(closest-side,
+        color-mix(in srgb, var(--beam) 17%, transparent) 0%,
+        color-mix(in srgb, var(--beam) 11%, transparent) 42%,
+        color-mix(in srgb, var(--beam) 4%, transparent) 74%,
+        transparent 100%);
+}
+
+/* The resting frame: both beams on the lower middle of the box, where
+   content usually sits. */
+.spotlight__beam {
+    left: 32%;
+    top: -8%;
+    transform: translateX(-50%) rotate(-24deg) scale(0.62, 0.48);
+}
+
+.spotlight__beam[data-spotlight-beam="gel"] {
+    left: 68%;
+    transform: translateX(-50%) rotate(24deg) scale(0.62, 0.48);
+}
+
+.spotlight__pool {
+    left: 41%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.75);
+}
+
+.spotlight__pool[data-spotlight-pool="gel"] {
+    left: 59%;
+}
+
+[data-spotlight-beams="1"] [data-spotlight-beam="key"] {
+    left: 50%;
+    transform: translateX(-50%) scale(0.62, 0.48);
+}
+
+[data-spotlight-beams="1"] [data-spotlight-pool="key"] {
+    left: 50%;
+}
+
+[data-spotlight-beams="1"] [data-spotlight-beam="gel"],
+[data-spotlight-beams="1"] [data-spotlight-pool="gel"] {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .spotlight__beam {
+        transform: translateX(-50%) rotate(-9deg) scale(0.42, 0.5);
+    }
+
+    .spotlight__beam[data-spotlight-beam="gel"] {
+        transform: translateX(-50%) rotate(9deg) scale(0.42, 0.5);
+    }
+
+    .spotlight__pool {
+        left: 40%;
+        top: 46%;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+
+    .spotlight__pool[data-spotlight-pool="gel"] {
+        left: 60%;
+    }
+}
+
+/* visibility, not display: nothing reflows when the canvas arrives. */
+.gl .spotlight__beam,
+.gl .spotlight__pool {
+    visibility: hidden;
+}
+
+.spotlight.is-live .spotlight__beam,
+.spotlight.is-live .spotlight__pool {
+    display: none;
+}
+
+/* The heading the beams land on. The script adds this class and the
+   custom properties together and removes them on revert. The base ink is
+   the heading's own colour, so the catch only ever brightens the type.
+
+   A background clipped to text only paints inside the element's box, and a
+   tight display line-height puts descenders and accents outside it. The
+   padding grows the painted box past every glyph; the matching negative
+   margin keeps the layout exactly where it was. */
+.spotlight-lit {
+    padding: 0.08em 0.06em 0.2em;
+    margin: -0.08em -0.06em -0.2em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-image:
+        radial-gradient(ellipse var(--spotlight-kr, 1px) var(--spotlight-kry, 1px) at var(--spotlight-kx, -999px) var(--spotlight-ky, -999px),
+            color-mix(in srgb, color-mix(in srgb, var(--spotlight-key-c, #fff) 45%, #fff) calc(var(--spotlight-ka, 0) * 100%), transparent) 0%,
+            color-mix(in srgb, color-mix(in srgb, var(--spotlight-key-c, #fff) 45%, #fff) calc(var(--spotlight-ka, 0) * 70%), transparent) 45%,
+            transparent 100%),
+        radial-gradient(ellipse var(--spotlight-gr, 1px) var(--spotlight-gry, 1px) at var(--spotlight-gx, -999px) var(--spotlight-gy, -999px),
+            color-mix(in srgb, color-mix(in srgb, var(--spotlight-gel-c, #fff) 20%, #fff) calc(var(--spotlight-ga, 0) * 100%), transparent) 0%,
+            color-mix(in srgb, color-mix(in srgb, var(--spotlight-gel-c, #fff) 20%, #fff) calc(var(--spotlight-ga, 0) * 70%), transparent) 45%,
+            transparent 100%),
+        linear-gradient(var(--spotlight-ink, #fff), var(--spotlight-ink, #fff));
+}
+
+/* ============================================
+   DEMO: a sample hero. Replace freely.
+   ============================================ */
+.stage {
+    position: relative;
+    display: grid;
+    height: 100svh;
+    min-height: 520px;
+    overflow: hidden;
+    align-content: end;
+    justify-items: center;
+    padding: 0 1.5rem clamp(2.5rem, 9vh, 5.5rem);
+    /* Vertical scrolling stays with the page on touch screens. */
+    touch-action: pan-y;
+}
+
+.stage:focus-visible {
+    outline: 2px solid #ff2d6f;
+    outline-offset: -6px;
+}
+
+.stage__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    max-width: 52rem;
+    text-align: center;
+}
+
+.stage__title {
+    max-width: 16ch;
+    color: #e6e2da;  /* 15:1 unlit on the ground; the catch only brightens it */
+    font-size: clamp(2.6rem, 6.6vw, 5.25rem);
+    font-weight: 800;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+}
+
+.stage__lede {
+    max-width: 38ch;
+    color: var(--ink-dim);
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.5;
+    text-wrap: pretty;
+}
+
+.stage__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.875rem;
+    margin-top: 0.25rem;
+    padding: 0 1.4rem;
+    border-radius: 999px;
+    background: #f1efea;
+    color: #0a0a0a;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.stage__btn:hover,
+.stage__btn:focus-visible {
+    background: #ff2d6f;  /* ink on the gel holds 5.5:1 */
+}
+
+.stage__btn:focus-visible {
+    outline: 2px solid #ff2d6f;
+    outline-offset: 3px;
+}
+
+.stage__cue {
+    margin-top: 0.75rem;
+    color: var(--ink-faint);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+}
+
+.stage__cue--touch {
+    display: none;
+}
+
+@media (pointer: coarse) {
+    .stage__cue--fine { display: none; }
+    .stage__cue--touch { display: inline; }
+}
+
+@media (max-width: 640px) {
+    .stage {
+        padding-bottom: 4.5rem;
+    }
+
+    .stage__content {
+        gap: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
