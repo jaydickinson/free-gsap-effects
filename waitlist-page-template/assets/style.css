@@ -1,0 +1,499 @@
+/* ==========================================================================
+   Waitlist Page Template: a one-screen pre-launch page you tune like a radio
+
+   One photographed object on a flat grey ground, and the object runs the
+   page: dragging its knob sweeps a needle across a printed scale, and each
+   "station" tunes in one part of the launch story, ending on the sign-up.
+   Make it yours by swapping the photo and the <li data-station> copy first.
+
+   Reskin: repaint the five colour tokens below, set --ground to the colour
+   of your photo's backdrop, and re-measure the overlay positions in .radio.
+   ========================================================================== */
+
+:root {
+    /* Measured pairs (WCAG, as rendered):
+       --ink #16191B on --ground #ADB1B5        8.3:1  (all body copy)
+       --ink-soft #33383C on --ground           5.6:1  (secondary copy, facts)
+       #FFFFFF on --signal #C4421B              5.2:1  (pill buttons)
+       --print #2A2C2E on dial paper #DEDDD8   10.3:1  (scale numerals)
+       --signal-print #9E3210 on dial paper     5.3:1  (tuned station name)
+       --signal on --ground is 2.3:1: it is never used for text on the grey,
+       only for fills, the needle and small markers.
+       Rationale: every bit of colour on the page belongs to the product. The
+       ground is sampled from the photo's own backdrop so the object sits on
+       the page with no visible frame. Display stays conservative (about 2.6x
+       body); the photograph is the loud thing. */
+    --ground: #ADB1B5;
+    --ground-rgb: 173, 177, 181;
+
+    --ink: #16191B;
+    --ink-rgb: 22, 25, 27;
+    --ink-soft: #33383C;
+
+    --signal: #C4421B;
+    --signal-rgb: 196, 66, 27;
+    --on-signal: #FFFFFF;
+    --signal-print: #9E3210;   /* tuned station name on the dial paper */
+
+    /* Dial print: ink for the scale printed on the radio's dial paper */
+    --print: #2A2C2E;
+    --print-rgb: 42, 44, 46;
+    --lamp-rgb: 255, 176, 64;
+
+    --font-display: 'Rethink Sans', system-ui, sans-serif;
+    --font-body: 'Rethink Sans', system-ui, sans-serif;
+    --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
+
+    --step-display: clamp(2rem, 1.2rem + 2.4vw, 2.85rem);
+    --step-h2: clamp(1.4rem, 1.1rem + 0.8vw, 1.75rem);
+    --step-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    --step-fine: 0.8125rem;
+
+    --gutter: clamp(1rem, 3.4vw, 3rem);
+}
+
+/* --------------------------------------------------------------------------
+   BASE
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--step-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.page {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow-x: clip;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER AND FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem var(--gutter);
+}
+
+.wordmark { display: inline-flex; color: var(--ink); text-decoration: none; border-radius: 6px; }
+.wordmark svg { width: 9.5rem; height: auto; }
+
+.site-header__batch {
+    margin: 0 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: var(--step-fine);
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.5rem 1.15rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--signal);
+    color: var(--on-signal);
+    font: 700 0.9375rem/1 var(--font-body);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.pill:hover { background: color-mix(in srgb, var(--signal) 88%, black); }
+.pill:active { transform: translateY(1px) scale(0.98); }
+.pill--big { min-height: 3rem; padding-inline: 1.4rem; font-size: 1rem; }
+
+.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    padding: 1rem var(--gutter) 1.25rem;
+    font-size: var(--step-fine);
+    color: var(--ink-soft);
+}
+.site-footer p { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   HERO: copy and panel on the left, the object on the right
+   -------------------------------------------------------------------------- */
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(19rem, 25rem) minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(1rem, 2vw, 2.5rem);
+    padding: 0 var(--gutter);
+}
+
+.hero__copy { position: relative; z-index: 2; padding-bottom: 2.5rem; }
+
+.eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--step-fine);
+    color: var(--ink-soft);
+}
+
+.hero__title {
+    margin: 0 0 2rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--step-display);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+}
+
+/* The panel: readout strip, then the station that is tuned in */
+.panel { position: relative; }
+
+.readout {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.55rem 0;
+    margin-bottom: 1.1rem;
+    border-block: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--step-fine);
+    color: var(--ink);
+}
+.readout__freq { font-size: 1.6rem; line-height: 1; letter-spacing: -0.02em; min-width: 4.6ch; text-align: right; font-variant-numeric: tabular-nums; }
+.readout__name { margin-left: 0.6rem; flex: 1; white-space: nowrap; overflow: hidden; }
+.readout__bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 1rem; align-self: center; }
+.readout__bars i { width: 4px; background: var(--ink); opacity: 0.22; }
+.readout__bars i:nth-child(1) { height: 20%; }
+.readout__bars i:nth-child(2) { height: 40%; }
+.readout__bars i:nth-child(3) { height: 60%; }
+.readout__bars i:nth-child(4) { height: 80%; }
+.readout__bars i:nth-child(5) { height: 100%; }
+.readout__bars i.is-on { opacity: 1; }
+
+.stations { list-style: none; margin: 0; padding: 0; }
+.station + .station { margin-top: 2rem; }
+
+.station__title {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-h2);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+.station p { margin: 0; max-width: 34ch; }
+
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+}
+.facts li {
+    padding: 0.2rem 0.55rem;
+    border: 1.5px solid rgba(var(--ink-rgb), 0.55);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink);
+}
+
+/* Sign-up form on the launch station */
+.signup { margin-top: 1.2rem; }
+.signup__label { display: block; margin-bottom: 0.35rem; font-size: var(--step-fine); font-weight: 700; }
+.signup__row { display: flex; gap: 0.5rem; }
+.signup__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 3rem;
+    padding: 0 1rem;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--ink);
+    font: 500 1rem var(--font-body);
+}
+.signup__input::placeholder { color: rgba(var(--ink-rgb), 0.6); }
+.signup__input:focus-visible { outline-offset: 2px; background: #fff; }
+.signup__input[aria-invalid="true"] { border-color: var(--signal); }
+.signup__error { min-height: 1.4em; margin: 0.4rem 0 0; font-size: var(--step-fine); font-weight: 700; }
+.signup__done { margin-top: 1.2rem; padding: 0.9rem 1.1rem; border-left: 4px solid var(--signal); background: rgba(255, 255, 255, 0.4); }
+.signup__done strong { display: block; }
+.signup__done:focus { outline: none; }
+.signup__demo { display: block; margin-top: 0.3rem; font-size: var(--step-fine); color: var(--ink-soft); }
+
+.panel__static { display: none; }
+
+/* --------------------------------------------------------------------------
+   THE OBJECT. Every overlay is positioned in percent of the photo, so the
+   whole radio scales as one. Re-measure these for your own photo.
+   -------------------------------------------------------------------------- */
+
+.stage { position: relative; align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding-bottom: 1rem; }
+
+.radio {
+    /* Measured on radio-front (1536 x 1024) */
+    --dial-x: 16.4%;  --dial-y: 26.4%;  --dial-w: 44.5%; --dial-h: 17%;
+    --knob-x: 76.17%; --knob-y: 36.13%; --knob-d: 15.2%;   /* centre + diameter (of width) */
+    --lamp-x: 65.63%; --lamp-y: 26.22%;
+    --key-x: 76.27%;  --key-y: 68%;     --key-d: 7.5%;
+
+    position: relative;
+    container-type: inline-size;
+    width: min(100%, 76rem, calc((100svh - 13rem) * 1.5));
+    margin: 0 auto;
+    aspect-ratio: 1536 / 1024;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.radio__photo {
+    width: 100%;
+    height: auto;
+    -webkit-user-drag: none;
+    /* Feather the photo's edges into the ground so no frame shows */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent), linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent), linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+    mask-composite: intersect;
+}
+
+/* Dial window: the printed scale and the needle sit over the blank paper */
+.dial {
+    position: absolute;
+    left: var(--dial-x); top: var(--dial-y);
+    width: var(--dial-w); height: var(--dial-h);
+    border-radius: 3px;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+.has-js .dial { cursor: ew-resize; }
+.dial__scale { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: multiply; }
+.dial__label { transition: fill 0.2s ease; }
+.dial__label.is-tuned { fill: var(--signal-print); }
+.dial__needle {
+    position: absolute;
+    top: 6%; bottom: 25%;   /* stops above the station names */
+    left: 0;
+    width: 3px;
+    margin-left: -1.5px;
+    border-radius: 2px;
+    background: var(--signal);
+    box-shadow: 2px 1px 3px rgba(var(--print-rgb), 0.35);
+    will-change: transform;
+}
+html:not(.has-js) .dial__needle { display: none; }
+html:not(.has-js) .hero { align-items: start; }
+@media (min-width: 901px) and (min-aspect-ratio: 13/10) { html:not(.has-js) .stage { position: sticky; top: 0; align-self: start; min-height: 100vh; } }
+
+.lamp {
+    position: absolute;
+    left: var(--lamp-x); top: var(--lamp-y);
+    width: 6%; aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(var(--lamp-rgb), 1) 0 18%, rgba(var(--lamp-rgb), 0.55) 32%, rgba(var(--lamp-rgb), 0) 100%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.knob {
+    position: absolute;
+    left: var(--knob-x); top: var(--knob-y);
+    width: var(--knob-d); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow: 0 0.5cqw 0.9cqw rgba(40, 14, 4, 0.45), 0 0.1cqw 0.15cqw rgba(40, 14, 4, 0.5);
+    touch-action: none;
+}
+.has-js .knob { cursor: grab; }
+.knob.is-dragging { cursor: grabbing; }
+.knob img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    clip-path: circle(49.4%);
+    -webkit-user-drag: none;
+    will-change: transform;
+}
+/* Static key light from the upper left, so the highlight does not turn with the cap */
+.knob::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 55%);
+    pointer-events: none;
+}
+.radio:not(.is-pointer):has(.tuner:focus-visible) .knob { outline: 3px solid #FFFFFF; outline-offset: 1.2cqw; }
+
+/* The preset key is drawn from the photo itself, so it can be pressed */
+.key {
+    position: absolute;
+    left: var(--key-x); top: var(--key-y);
+    width: var(--key-d); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: url("img/radio-front.webp") no-repeat;
+    /* size = 100 / key-d; position = centre-of-key maths, see README */
+    background-size: 1333.33% auto;
+    background-position: 78.40% 70.28%;
+    cursor: pointer;
+    transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+.key:hover { filter: brightness(1.04); }
+.key.is-pressed, .key:active { transform: translate(-50%, -50%) scale(0.94); filter: brightness(0.9); box-shadow: inset 0 0.2cqw 0.5cqw rgba(60, 40, 20, 0.35); }
+.key:focus-visible { outline-offset: 0.35cqw; }
+
+/* The real control for keyboard and assistive tech. It stays in the page
+   and takes focus; the knob shows the focus ring. */
+.tuner { position: absolute; left: var(--knob-x); top: var(--knob-y); width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+html:not(.has-js) .tuner, html:not(.has-js) .key, html:not(.has-js) .lamp { display: none; }
+
+/* Station strip under the object */
+/* Above the photo: the tall layout pulls the radio down over the strip */
+.strip { position: relative; z-index: 2; }
+.strip ol {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.4rem;
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0;
+}
+.strip a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    min-width: 5.5rem;
+    padding: 0.4rem 0.6rem 0.45rem;
+    border-radius: 0.6rem;
+    font-size: var(--step-fine);
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+}
+.strip a span { font-family: var(--font-mono); font-weight: 500; color: var(--ink-soft); }
+.strip a:hover { background: rgba(255, 255, 255, 0.28); }
+.strip a[aria-current="true"] { background: rgba(255, 255, 255, 0.42); }
+.strip a[aria-current="true"] span { color: var(--ink); }
+
+.hint {
+    margin: 0.5rem 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+}
+html:not(.has-js) .hint { display: none; }
+
+/* --------------------------------------------------------------------------
+   TUNER MODE (JS). One station shows at a time, stacked in the same cell so
+   the panel never changes height. Without JS every station stays listed.
+   -------------------------------------------------------------------------- */
+
+.has-js .stations { display: grid; }
+.has-js .station { grid-area: 1 / 1; margin: 0; visibility: hidden; }
+.has-js .station.is-active { visibility: visible; }
+.has-js .panel__static {
+    /* Scanline static, clipped to the station box (top and height are set
+       by the script to match the station list). */
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 4rem;
+    width: 100%;
+    height: 12rem;
+    image-rendering: pixelated;
+    opacity: 0;
+    pointer-events: none;
+}
+html:not(.has-js) .readout { display: none; }
+
+/* --------------------------------------------------------------------------
+   TALL WINDOWS (squarer than 13:10): the object takes the full width on top,
+   headline and panel sit side by side beneath it.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 901px) and (max-aspect-ratio: 13/10) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: "stage stage" "eyebrow panel" "title panel";
+        align-items: start;
+        align-content: center;
+        column-gap: clamp(2rem, 5vw, 5rem);
+    }
+    .hero__copy { display: contents; }
+    .stage { grid-area: stage; padding-bottom: 1.75rem; }
+    .eyebrow { grid-area: eyebrow; }
+    .hero__title { grid-area: title; }
+    .panel { grid-area: panel; }
+    .radio { width: min(100%, 80rem, calc((100svh - 31rem) * 1.5)); margin-block: -3% -4%; }
+}
+
+/* --------------------------------------------------------------------------
+   SMALLER SCREENS: title, object, strip, then the panel
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .hero { grid-template-columns: minmax(0, 1fr); padding-bottom: 1rem; }
+    .hero__copy { display: contents; }
+    .eyebrow { order: 1; }
+    .hero__title { order: 2; margin-bottom: 0.5rem; }
+    .stage { order: 3; margin: 0 calc(-1 * var(--gutter)); }
+    .panel { order: 4; margin-top: 0.75rem; }
+    .radio { width: min(100%, 40rem); }
+    .site-header__batch { display: none; }
+    .site-header .pill { margin-left: auto; }
+}
+
+@media (max-width: 520px) {
+    .radio { width: 112%; margin-left: -6%; }
+    .strip ol { gap: 0.15rem; flex-wrap: nowrap; justify-content: space-between; padding: 0 var(--gutter); }
+    .strip a { min-width: 0; padding: 0.35rem 0.5rem; font-size: 0.6875rem; }
+    .wordmark svg { width: 8rem; }
+    .signup__row { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pill, .key { transition: none; }
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fennick R1: a pocket FM radio, first batch ships 4 March 2027</title>
+    <meta name="description" content="The Fennick R1 is a pocket FM radio made by two people in Glasgow. Batch 01 is 300 numbered radios at £145, shipping 4 March 2027. Join the list.">
+    <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@500;700;800&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/img/radio-front.webp" fetchpriority="high">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+
+    <header class="site-header">
+        <a class="wordmark" href="./" aria-label="Fennick Radio, home">
+            <!-- Wordmark: a dial mark plus the name. Swap the <text> for your
+                 brand, or replace the whole <svg> with your own logo. -->
+            <svg viewBox="0 0 168 36" width="168" height="36" aria-hidden="true" focusable="false">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="3"/>
+                <path d="M18 18 L18 6" stroke="var(--signal)" stroke-width="3.5" stroke-linecap="round"/>
+                <circle cx="18" cy="18" r="3.5" fill="currentColor"/>
+                <text x="42" y="27" font-family="Rethink Sans, system-ui, sans-serif" font-weight="800" font-size="26" letter-spacing="-0.6" fill="currentColor">Fennick</text>
+            </svg>
+        </a>
+        <p class="site-header__batch"><span>Batch 01</span> <span aria-hidden="true">·</span> <span>300 radios</span></p>
+        <a class="pill" href="#launch" data-tune-link="launch">Join the list</a>
+    </header>
+
+    <main class="hero" id="main">
+        <div class="hero__copy">
+            <p class="eyebrow">Fennick R1 &middot; pocket FM radio</p>
+            <h1 class="hero__title">A small orange radio, ready in&nbsp;March.</h1>
+
+            <!-- THE PANEL. Each <li data-station> is one station on the dial:
+                 data-freq is where it sits (87.5 to 108), data-name is the short
+                 label for the readout and the station strip. Add, remove or
+                 reorder them freely; the scale, markers and strip are built
+                 from this list. The LAST station is launch day and holds the form. -->
+            <section class="panel" aria-label="Launch details" data-panel>
+                <div class="readout" aria-hidden="true" data-readout>
+                    <span class="readout__band">FM</span>
+                    <span class="readout__freq" data-readout-freq>88.6</span>
+                    <span class="readout__unit">MHz</span>
+                    <span class="readout__name" data-readout-name>Hello</span>
+                    <span class="readout__bars" data-readout-bars><i></i><i></i><i></i><i></i><i></i></span>
+                </div>
+
+                <ol class="stations" data-stations>
+                    <li class="station" id="hello" data-station data-freq="88.6" data-name="Hello">
+                        <h2 class="station__title">A radio for your shirt&nbsp;pocket.</h2>
+                        <p>The R1 does one thing: FM, loud enough for a kitchen and small enough to forget it&rsquo;s on you. One knob, one key, and an aerial that pulls out to 42&nbsp;cm.</p>
+                        <ul class="facts">
+                            <li>FM 87.5&ndash;108</li><li>One knob</li><li>No app</li>
+                        </ul>
+                    </li>
+                    <li class="station" id="price" data-station data-freq="92.4" data-name="Price">
+                        <h2 class="station__title">&pound;145, posted anywhere in the&nbsp;UK.</h2>
+                        <p>That includes the USB-C cable, a waxed-cotton sleeve and a two-year guarantee we honour from our own bench. EU and US postage is quoted at checkout.</p>
+                        <ul class="facts">
+                            <li>&pound;145</li><li>2-year guarantee</li><li>UK post included</li>
+                        </ul>
+                    </li>
+                    <li class="station" id="build" data-station data-freq="96.8" data-name="Build">
+                        <h2 class="station__title">One block of aluminium, anodised&nbsp;orange.</h2>
+                        <p>The shell is machined from solid 6061 and anodised in Sheffield. The knob is knurled graphite, the key is cream acetal, and the speaker sits behind 380 drilled holes.</p>
+                        <ul class="facts">
+                            <li>190 g</li><li>11 &times; 6.5 &times; 2.4 cm</li><li>30 h a charge</li>
+                        </ul>
+                    </li>
+                    <li class="station" id="batch" data-station data-freq="101.2" data-name="Batch 01">
+                        <h2 class="station__title">300 radios, numbered on the&nbsp;back.</h2>
+                        <p>The two of us assemble and test every R1 in our workshop in Kinning Park, Glasgow. When Batch 01 is gone, Batch 02 follows in the summer.</p>
+                        <ul class="facts">
+                            <li>No. 001&ndash;300</li><li>Made in Glasgow</li><li>Batch 02: summer</li>
+                        </ul>
+                    </li>
+                    <li class="station station--launch" id="launch" data-station data-freq="105.6" data-name="Launch day">
+                        <h2 class="station__title">Ships 4 March&nbsp;2027.</h2>
+                        <p>Leave your email and we&rsquo;ll write once, on launch morning, with first claim on Batch&nbsp;01. Nothing to pay&nbsp;now.</p>
+                        <!-- Front end only: this form sends nothing. Point action at
+                             your list provider (Buttondown, Mailchimp, Formspree...)
+                             and remove the demo line in the success message. -->
+                        <form class="signup" id="waitlist" action="#" method="post" novalidate data-signup>
+                            <label class="signup__label" for="email">Email address</label>
+                            <div class="signup__row">
+                                <input class="signup__input" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="email-error">
+                                <button class="pill pill--big" type="submit">Join the list</button>
+                            </div>
+                            <p class="signup__error" id="email-error" data-signup-error></p>
+                        </form>
+                        <p class="signup__done" data-signup-done hidden tabindex="-1">
+                            <strong>You&rsquo;re on the list for Batch 01.</strong>
+                            We&rsquo;ll write on 4 March. <span class="signup__demo">Demo form: nothing was sent.</span>
+                        </p>
+                    </li>
+                </ol>
+                <canvas class="panel__static" width="160" height="120" aria-hidden="true" data-static></canvas>
+                <p class="visually-hidden" aria-live="polite" data-live></p>
+            </section>
+        </div>
+
+        <div class="stage">
+            <!-- THE OBJECT. Overlay positions are percentages of this photo,
+                 set as custom properties in style.css (.radio). Swap the photo
+                 and re-measure those values for your own product. -->
+            <figure class="radio" data-radio>
+                <img class="radio__photo" src="assets/img/radio-front.webp" width="1536" height="1024"
+                     alt="The Fennick R1, a signal-orange aluminium pocket radio with a dial window, speaker grille, graphite tuning knob and cream preset key"
+                     draggable="false">
+
+                <div class="dial" data-dial>
+                    <svg class="dial__scale" viewBox="0 0 1000 256" preserveAspectRatio="none" aria-hidden="true" focusable="false" data-scale></svg>
+                    <div class="dial__needle" data-needle></div>
+                </div>
+
+                <span class="lamp" aria-hidden="true" data-lamp></span>
+
+                <div class="knob" data-knob>
+                    <img src="assets/img/knob.webp" width="480" height="480" alt="" draggable="false">
+                </div>
+                <label class="visually-hidden" for="tuner">Tuning dial</label>
+                <input class="tuner" id="tuner" type="range" min="875" max="1080" step="1" value="886" data-tuner>
+
+
+                <button class="key" type="button" data-key aria-label="Preset key: join the list for launch day"></button>
+            </figure>
+
+            <nav class="strip" aria-label="Stations">
+                <ol data-strip>
+                    <li><a href="#hello"><span>88.6</span>Hello</a></li>
+                    <li><a href="#price"><span>92.4</span>Price</a></li>
+                    <li><a href="#build"><span>96.8</span>Build</a></li>
+                    <li><a href="#batch"><span>101.2</span>Batch 01</a></li>
+                    <li><a href="#launch"><span>105.6</span>Launch day</a></li>
+                </ol>
+            </nav>
+            <p class="hint" aria-hidden="true" data-hint>Drag the knob or the dial to tune</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Fennick Radio &middot; Kinning Park, Glasgow</p>
+        <p><a href="mailto:hello@fennickradio.co.uk">hello@fennickradio.co.uk</a> &middot; <a href="#" aria-label="Fennick Radio on Instagram">Instagram</a></p>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
