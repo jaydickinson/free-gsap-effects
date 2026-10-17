@@ -2,7 +2,7 @@
 
 ![Free GSAP effects in motion: parallax hero, scroll text highlight, 3D card flip and the link-in-bio template](./demo.gif)
 
-Ten free, production-ready GSAP animation effects, eleven animated UI components and five complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Ten free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
 From [GSAP Vault](https://gsapvault.com), a library of 135 copy-paste GSAP animation effects, 54 UI components and 87 complete website templates.
 
@@ -50,7 +50,7 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 | [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
 | [QR Table Menu Template](./qr-menu-template) | A phone-first digital menu made to open from a QR code at the table, with a sticky category bar that crossfades between sections and dietary chips that filter every dish at once. | [Demo](https://gsapvault.com/templates/qr-menu-template) |
 | [Waitlist Page Template](./waitlist-page-template) | A one-screen pre-launch waitlist page built round one product photograph: visitors drag the radio's tuning knob, static gives way to stations that tune in the price, materials and batch, and launch day holds the email sign-up. Worked example: a pocket radio from a Glasgow workshop. | [Demo](https://gsapvault.com/templates/waitlist-page-template) |
-| [Coming Soon Template (Cinema)](./coming-soon-cinema-template) | A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day. | Open `index.html` |
+
 
 ## Quick Start
 
