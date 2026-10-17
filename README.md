@@ -4,7 +4,7 @@
 
 Ten free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 133 copy-paste GSAP animation effects, 53 UI components and 85 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 135 copy-paste GSAP animation effects, 54 UI components and 86 complete website templates.
 
 ## The Effects
 
@@ -46,10 +46,10 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 
 | Template | What it is | Live demo |
 |--------|--------------|-----------|
-| [Coming Soon Template](./coming-soon-template) | A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day. | [Demo](https://gsapvault.com/templates/coming-soon-template) |
 | [Charity Campaign Template](./charity-campaign-template) | A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
 | [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
 | [QR Table Menu Template](./qr-menu-template) | A phone-first digital menu made to open from a QR code at the table, with a sticky category bar that crossfades between sections and dietary chips that filter every dish at once. | [Demo](https://gsapvault.com/templates/qr-menu-template) |
+| [Coming Soon Template (Cinema)](./coming-soon-cinema-template) | A free single-screen holding page dressed as a picture house: a projector beam rakes across a dark auditorium, a house light wanders the room, and the countdown is an Academy leader whose sweep hand turns continuously while the day count cuts once a day. | Open `index.html` |
 
 ## Quick Start
 
@@ -87,7 +87,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (319 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (323 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -104,7 +104,7 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 133 effects, 53 UI components and 85 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 135 effects, 54 UI components and 86 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)
