@@ -1,0 +1,141 @@
+{
+  "profile": {
+    "firstName": "Clare",
+    "lastName": "Whitlock",
+    "headline": "Head of Year 9 and Teacher of History at Endcliffe Vale School",
+    "summary": "I have taught history in Sheffield for fourteen years, and for the last four I have looked after Year 9 at Endcliffe Vale School: 212 students, nine tutors and one long corridor. What I enjoy most is planning: deciding what a thirteen-year-old should still remember at twenty, then building the lessons backwards from there.\n\nI am now looking for a curriculum leadership role where that planning is the whole job: setting out what a department teaches across five years, and helping the teachers who teach it.",
+    "location": "Sheffield, England, United Kingdom",
+    "websites": [
+      {
+        "label": "Personal",
+        "url": "https://clarewhitlock.co.uk"
+      }
+    ]
+  },
+  "positions": [
+    {
+      "title": "Head of Year 9",
+      "company": "Endcliffe Vale School",
+      "location": "Sheffield",
+      "startedOn": "Sep 2021",
+      "finishedOn": "",
+      "description": "I lead the pastoral team for a year group of 212 students and nine form tutors, and still teach history to Years 9 to 11.\n• Year 9 attendance up from 91.8% to 94.6% in two years with a tutor-led morning check-in.\n• Rebuilt the options evening so every student leaves with a named adult for GCSE questions.\n• On the group that rewrote the Key Stage 3 humanities curriculum for 2024."
+    },
+    {
+      "title": "Second in History",
+      "company": "Endcliffe Vale School",
+      "location": "Sheffield",
+      "startedOn": "Sep 2017",
+      "finishedOn": "Aug 2021",
+      "description": "Planned the Key Stage 3 history curriculum with the head of department and mentored new teachers.\n• Wrote Sheffield at Work, a Year 8 unit now taught in 11 city schools.\n• Mentored six trainee and early-career teachers.\n• Year 11 grade 4+ results rose from 58% to 71%."
+    },
+    {
+      "title": "Teacher of History",
+      "company": "Loxley Bank Academy",
+      "location": "Sheffield",
+      "startedOn": "Sep 2012",
+      "finishedOn": "Aug 2017",
+      "description": "Taught history and citizenship across Key Stages 3 and 4, starting in my training year.\n• Led the Year 10 Somme and Ypres trip for four springs, 40 students each time.\n• Started the club that became the school's first A level history group."
+    },
+    {
+      "title": "Teaching Assistant, Key Stage 2",
+      "company": "Norton Grange Primary School",
+      "location": "Sheffield",
+      "startedOn": "Sep 2010",
+      "finishedOn": "Jul 2011",
+      "description": "Ran small reading groups in Years 5 and 6 for a year before training to teach."
+    }
+  ],
+  "education": [
+    {
+      "school": "Northern Institute of Education",
+      "degree": "PGCE, Secondary History",
+      "startDate": "2011",
+      "endDate": "2012",
+      "notes": "Placements at Loxley Bank Academy and an 11 to 18 school in Rotherham."
+    },
+    {
+      "school": "Pennine University",
+      "degree": "BA (Hons) History",
+      "startDate": "2007",
+      "endDate": "2010",
+      "notes": "Dissertation on women's work in the Sheffield cutlery trades, 1890 to 1914."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Leading Teaching, middle leaders",
+      "authority": "Northern Institute of Education",
+      "url": "",
+      "startedOn": "Jul 2023",
+      "finishedOn": ""
+    },
+    {
+      "name": "Youth Mental Health First Aider",
+      "authority": "Northern Youth Wellbeing Trust",
+      "url": "",
+      "startedOn": "Mar 2022",
+      "finishedOn": "Mar 2025"
+    },
+    {
+      "name": "Educational Visits Leader",
+      "authority": "Sheffield Learning Partnership",
+      "url": "",
+      "startedOn": "Feb 2014",
+      "finishedOn": ""
+    }
+  ],
+  "skills": [
+    "Curriculum design",
+    "KS3 and KS4 history",
+    "Pastoral leadership",
+    "Safeguarding",
+    "Assessment and moderation",
+    "Mentoring",
+    "Educational visits",
+    "Parents and carers"
+  ],
+  "recommendations": [
+    {
+      "firstName": "Tom",
+      "lastName": "Adeyemi",
+      "company": "Endcliffe Vale School",
+      "jobTitle": "Head of History",
+      "text": "She plans backwards from what a thirteen-year-old will actually remember, which is rarer than it should be. Sheffield at Work is the best unit our department teaches, and Clare wrote it around a full timetable. Eleven schools now use it.",
+      "date": "Jun 2021"
+    },
+    {
+      "firstName": "Rachel",
+      "lastName": "Ostrowski",
+      "company": "Endcliffe Vale School",
+      "jobTitle": "Deputy Headteacher",
+      "text": "Clare knows every one of her 212 Year 9s by name and, more usefully, by what each of them needs. When she rebuilt our morning check-in, attendance moved within a term and stayed moved. She is ready to lead a curriculum, and I would say so to anyone.",
+      "date": "Mar 2025"
+    },
+    {
+      "firstName": "Priya",
+      "lastName": "Natarajan",
+      "company": "Endcliffe Vale School",
+      "jobTitle": "Teacher of History",
+      "text": "Clare mentored me through my first two years. She watched my worst lessons without flinching and gave me one thing to change each week, never five. I still plan the way she taught me.",
+      "date": "Sep 2020"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Sheffield at Work",
+      "meta": "Year 8 unit, 2019",
+      "text": "Six local-history lessons on how the city made a living, each ending with something students make. Now taught in 11 Sheffield schools."
+    },
+    {
+      "title": "The battlefields trip",
+      "meta": "Year 10 trip, since 2013",
+      "text": "Four days on the Somme and at Ypres for 40 students, each of whom first finds a soldier from their own street in the city archive."
+    },
+    {
+      "title": "The morning check-in",
+      "meta": "Pastoral, 2022",
+      "text": "Ten minutes in which every tutor speaks to every student by name. Year 9 attendance rose from 91.8% to 94.6% in two years."
+    }
+  ]
+}

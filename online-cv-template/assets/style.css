@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Online CV template
+   One page: a real A4 CV (794 x 1123 CSS px) on an ultramarine desk, with a
+   rail of key facts on the left and an action bar that switches one page /
+   full CV, downloads the PDF, prints, emails and copies the link.
+
+   PALETTE (measured):
+   --ground   #1d2b8f ultramarine desk. White on it 10.9:1; --on-ground-2
+              (white at 80%) 7.6:1; --on-ground-accent #b9c1ff 6.9:1.
+   --paper    #fdfcf8 the sheet.
+   --ink      #16161a on paper 17.6:1.
+   --muted    #5f5f6b on paper 6.2:1 (secondary lines, captions).
+   --accent   #1d2b8f on paper 10.6:1 (the italic surname, numbers, chips).
+   Rule: one blue does everything. Grey is only ever text on paper; nothing
+   on the desk competes with the sheet.
+
+   TYPE: Instrument Serif for the name, headings and numbers; Hanken Grotesk
+   for text and labels. Change both in the Google Fonts link in each page.
+   ========================================================================== */
+
+:root {
+    --ground: #1d2b8f;
+    --ground-rgb: 29, 43, 143;
+    --ground-lift: #2534a6;
+    --ground-deep: #131c66;
+    --on-ground: #ffffff;
+    --on-ground-2: rgba(255, 255, 255, 0.8);
+    --on-ground-accent: #b9c1ff;
+    --paper: #fdfcf8;
+    --paper-rgb: 253, 252, 248;
+    --ink: #16161a;
+    --ink-rgb: 22, 22, 26;
+    --muted: #5f5f6b;
+    --rule: #d9d7cf;
+    --accent: #1d2b8f;
+    --dock: rgba(var(--shadow-rgb), 0.92);
+    --shadow-rgb: 5, 8, 40;
+
+    --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --font-text: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --rail-w: 300px;
+    --dock-w: 210px;
+    --s: 0.84; /* sheet scale; script.js fits it to the window */
+
+    /* Matte paper shadow: a tight contact shadow plus a long soft one. */
+    --paper-shadow: 0 1px 2px rgba(var(--shadow-rgb), 0.35), 0 18px 40px rgba(var(--shadow-rgb), 0.32), 0 60px 110px -30px rgba(var(--shadow-rgb), 0.5);
+}
+
+/* Colour options. Each restates the desk, the accent (the italic surname and
+   every number, on screen and in the PDFs) and the shadow tint. Set one on
+   <html data-palette="forest"> in index.html and print.html, or copy its
+   values into :root above. Measured: white on the lightest part of the desk,
+   the light accent on the desk, and the accent on paper.
+   forest   7.8:1, 5.5:1,  9.8:1     oxblood  9.3:1, 6.0:1, 11.0:1
+   charcoal 12.2:1, 8.5:1, 14.5:1    teal     6.9:1, 4.9:1,  8.7:1 */
+:root[data-palette="forest"] {
+    --ground: #1f4a38; --ground-rgb: 31, 74, 56; --ground-lift: #285c46; --ground-deep: #14332a;
+    --on-ground-accent: #b5e3c7; --accent: #1f4a38; --shadow-rgb: 6, 26, 18;
+}
+:root[data-palette="oxblood"] {
+    --ground: #6b1f2a; --ground-rgb: 107, 31, 42; --ground-lift: #7f2834; --ground-deep: #4a141d;
+    --on-ground-accent: #f5c3c9; --accent: #6b1f2a; --shadow-rgb: 36, 6, 12;
+}
+:root[data-palette="charcoal"] {
+    --ground: #26272c; --ground-rgb: 38, 39, 44; --ground-lift: #34353b; --ground-deep: #17181b;
+    --on-ground-accent: #e3d6b8; --accent: #26272c; --shadow-rgb: 0, 0, 0;
+}
+:root[data-palette="teal"] {
+    --ground: #0f5257; --ground-rgb: 15, 82, 87; --ground-lift: #16646a; --ground-deep: #0a3a3e;
+    --on-ground-accent: #a6e6e1; --accent: #0f5257; --shadow-rgb: 3, 24, 26;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: clip; }
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(90% 70% at 50% 18%, var(--ground-lift) 0%, var(--ground) 50%, var(--ground-deep) 100%) fixed;
+    background-color: var(--ground);
+    color: var(--on-ground);
+    font-family: var(--font-text);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+ol, ul { list-style: none; }
+:focus-visible { outline: 2px solid var(--on-ground); outline-offset: 3px; }
+
+.visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+.skip {
+    position: absolute; left: 16px; top: -60px; z-index: 50;
+    background: var(--paper); color: var(--ink); padding: 10px 14px; border-radius: 6px; font-weight: 600;
+}
+.skip:focus { top: 12px; }
+
+.secnum { font-family: var(--font-display); color: var(--accent); margin-right: 0.4em; font-variant-numeric: lining-nums; }
+
+/* ==========================================================================
+   The rail: name, line, a few facts and the contact details. Fixed on the
+   left on wide screens; on smaller ones the name sits above the sheet and
+   the facts follow it.
+   ========================================================================== */
+
+.rail__name {
+    display: inline-block; text-decoration: none;
+    font-family: var(--font-display); font-size: 36px; line-height: 0.95; letter-spacing: -0.01em;
+}
+.rail__name i { color: var(--on-ground-accent); }
+.rail__line { font-size: 14px; color: var(--on-ground-2); margin-top: 8px; }
+.rail__intro { font-size: 14px; line-height: 1.55; color: var(--on-ground-2); max-width: 30ch; }
+
+.rail__facts { display: grid; gap: 18px; }
+.rail__facts div { border-top: 1px solid rgba(255, 255, 255, 0.22); padding-top: 12px; }
+.rail__facts dt { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-ground-accent); }
+.rail__facts dd { font-family: var(--font-display); font-size: 24px; line-height: 1.15; margin-top: 4px; }
+
+.rail__foot { font-size: 13px; color: var(--on-ground-2); display: grid; gap: 6px; justify-items: start; }
+.rail__foot a { text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, 0.4); }
+.in-glyph { display: inline-flex; width: 22px; height: 22px; color: #ffffff; margin-top: 6px; }
+.in-glyph svg { width: 100%; height: 100%; fill: currentColor; }
+
+@media (min-width: 1180px) {
+    .rail {
+        position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail-w); z-index: 5;
+        padding: 36px 30px 30px 40px;
+        display: flex; flex-direction: column; gap: 32px;
+        overflow-y: auto;
+    }
+    .rail__foot { margin-top: auto; }
+}
+
+@media (max-width: 1179.98px) {
+    /* The sheet comes straight after the name; the facts and contact follow. */
+    .home { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "stage" "facts" "foot"; }
+    .rail { display: contents; }
+    .rail__top { grid-area: top; padding: 18px 24px; }
+    .rail__name { font-size: 28px; }
+    .rail__line { margin-top: 2px; font-size: 13px; }
+    .rail__intro { display: none; }
+    .stage { grid-area: stage; }
+    .rail__facts { grid-area: facts; padding: 8px 24px 0; max-width: 760px; width: 100%; margin: 0 auto; }
+    .rail__foot { grid-area: foot; padding: 28px 24px 140px; max-width: 760px; width: 100%; margin: 0 auto; }
+}
+
+/* ==========================================================================
+   The desk and the sheet
+   ========================================================================== */
+
+.stage { position: relative; }
+.desk { display: flex; flex-direction: column; align-items: center; padding: 24px 16px 32px; }
+.set { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+html:not([data-cv="full"]) .set--full,
+html[data-cv="full"] .set--one { display: none; }
+
+@media (min-width: 1180px) {
+    .home .stage { margin-left: var(--rail-w); margin-right: var(--dock-w); min-height: 100vh; }
+    .home .desk { padding: 24px 24px 48px; }
+}
+
+
+/* --- One sheet of A4 ---------------------------------------------------- */
+.page {
+    position: relative;
+    width: 794px; height: 1123px; flex: none;
+    zoom: var(--s);
+    background: var(--paper); color: var(--ink);
+    box-shadow: var(--paper-shadow);
+    font-family: var(--font-text);
+}
+/* Page 1 sits above page 2 so page 2 can slide out from behind it. */
+.set > .page:first-child { z-index: 2; }
+/* The old text, laid over page 1 while switching length, then faded out. */
+.cv--ghost { position: absolute; inset: 0; z-index: 3; background: var(--paper); pointer-events: none; }
+
+.cv { height: 100%; padding: 40px 54px 34px; display: flex; flex-direction: column; font-size: 11.2px; line-height: 1.48; }
+.cv a { text-decoration: none; }
+.run {
+    display: flex; justify-content: space-between; gap: 12px;
+    font-size: 9.2px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+    padding-bottom: 10px; border-bottom: 1px solid var(--ink);
+}
+.mast { display: grid; grid-template-columns: 1fr 128px; gap: 26px; align-items: end; padding: 18px 0 20px; border-bottom: 1px solid var(--rule); }
+.name { font-family: var(--font-display); font-weight: 400; font-size: 100px; line-height: 0.84; letter-spacing: -0.025em; }
+.name i { display: block; color: var(--accent); }
+.mast__photo img { width: 128px; height: 156px; object-fit: cover; object-position: 50% 20%; filter: grayscale(1) contrast(1.05); }
+.mast__photo figcaption { font-size: 9px; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; }
+.std { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--rule); }
+.std > div { padding: 9px 0 10px; font-size: 10.4px; }
+.std > div + div { padding-left: 14px; border-left: 1px solid var(--rule); }
+.std dt { font-size: 8.6px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+.cv h2 { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1; letter-spacing: -0.005em; margin: 14px 0 10px; }
+.cv .secnum { font-size: 13px; margin-right: 6px; }
+
+
+
+
+.profile { padding: 4px 0 14px; border-bottom: 1px solid var(--rule); }
+.profile p { font-family: var(--font-display); font-size: 19.5px; line-height: 1.26; text-wrap: pretty; }
+.profile p:first-of-type::first-letter { float: left; font-size: 58px; line-height: 0.82; padding: 5px 7px 0 0; color: var(--accent); }
+.profile p + p { margin-top: 8px; }
+
+.cols { display: grid; grid-template-columns: 1.62fr 1fr; gap: 30px; flex: 1; }
+.cols > .side:last-child { border-left: 1px solid var(--rule); padding-left: 22px; }
+.job { display: grid; grid-template-columns: 62px 1fr; gap: 12px; padding: 7px 0 8px; border-top: 1px solid var(--rule); }
+.job .y { font-family: var(--font-display); font-size: 17px; line-height: 1; color: var(--accent); font-variant-numeric: lining-nums; }
+.job .y small { display: block; font-family: var(--font-text); font-size: 8.6px; color: var(--muted); margin-top: 3px; letter-spacing: 0.04em; }
+.jt { font-weight: 700; font-size: 12px; font-family: var(--font-text); }
+.org { color: var(--muted); font-size: 10.4px; margin-bottom: 3px; }
+.job ul li { padding-left: 11px; position: relative; margin-bottom: 1px; }
+.job ul li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 5px; height: 1px; background: var(--ink); }
+.side .sec { margin-bottom: 4px; }
+.side .sec p { margin-bottom: 7px; }
+.side .t { font-weight: 700; display: block; }
+.side .s { color: var(--muted); font-size: 10.4px; }
+.side .n { display: block; font-size: 10.4px; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.tags li { white-space: nowrap; }
+.tags li::after { content: " /"; color: #a9a79f; }
+.tags li:last-child::after { content: ""; }
+.quote { margin-top: 12px; padding-top: 2px; border-top: 1px solid var(--ink); }
+.quote .quote__label { font-size: 15px; margin: 10px 0 8px; }
+.quote blockquote p { font-family: var(--font-display); font-style: italic; font-size: 15px; line-height: 1.28; margin-bottom: 6px; }
+.quote .s { font-size: 9.6px; }
+.foot {
+    display: flex; justify-content: space-between;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    padding-top: 9px; border-top: 1px solid var(--ink); margin-top: 10px;
+}
+
+/* Reflow (narrow windows): where the A4 type would be too small to read,
+   script.js adds .is-reflow and the sheet becomes one readable column at a
+   larger zoom, the same content in the same order. */
+.is-reflow .page { width: var(--page-w, 100%); height: auto; }
+.is-reflow .cv { height: auto; padding: 26px 20px 22px; }
+.is-reflow .run { flex-wrap: wrap; row-gap: 4px; }
+.is-reflow .run > :nth-child(2) { display: none; }
+.is-reflow .mast { grid-template-columns: 1fr 76px; gap: 14px; padding: 14px 0 16px; }
+.is-reflow .name, .is-reflow .cv--full .name { font-size: 50px; }
+.is-reflow .mast__photo img { width: 76px; height: 92px; }
+.is-reflow .mast__photo figcaption { display: none; }
+.is-reflow .std { grid-template-columns: 1fr; }
+.is-reflow .std > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+.is-reflow .profile p, .is-reflow .cv--full .profile p { font-size: 15.5px; }
+.is-reflow .profile p:first-of-type::first-letter { font-size: 44px; }
+.is-reflow .cols, .is-reflow .cv--two .cols--even { display: block; }
+.is-reflow .cols > .side:last-child { border-left: 0; padding-left: 0; margin-top: 10px; border-top: 1px solid var(--ink); }
+.is-reflow .job, .is-reflow .jobs--full .job { grid-template-columns: 46px 1fr; gap: 10px; }
+.is-reflow .jobs--full .jt .org { display: block; margin-left: 0; }
+.is-reflow .foot { margin-top: 16px; }
+.is-reflow .signoff { grid-template-columns: 1fr; gap: 14px; }
+.is-reflow .signoff__facts { grid-template-columns: 1fr 1fr; justify-content: start; gap: 10px 18px; }
+.is-reflow .signoff__name { font-size: 46px; }
+
+/* Full CV, page 1: the whole profile and every post with its opening line,
+   set a size up from the one-pager because there is room to read. */
+.cv--full { font-size: 12px; line-height: 1.5; }
+.cv--full .name { font-size: 96px; }
+.cv--full .profile p { font-size: 18.5px; }
+.cv--full h2 { font-size: 24px; margin: 18px 0 12px; }
+.jobs--full { flex: 1; }
+.jobs--full .job { grid-template-columns: 78px 1fr; padding: 11px 0 13px; }
+.jobs--full .job .y { font-size: 20px; }
+.jobs--full .job .y small { font-size: 9.4px; }
+.jobs--full .jt { font-size: 13px; }
+.jobs--full .jt .org { font-weight: 400; font-size: 11.6px; margin-left: 6px; }
+.jobs--full .intro p { margin: 3px 0 5px; }
+.jobs--full .job li { margin-bottom: 3px; }
+/* Full CV, page 2: two even columns. */
+.cv--two { font-size: 12.4px; line-height: 1.5; }
+.cv--two .cols--even { grid-template-columns: 1fr 1fr; margin-top: 8px; }
+.cv--two h2 { font-size: 26px; margin: 22px 0 14px; }
+.cv--two .side .s, .cv--two .side .n { font-size: 11.4px; }
+.cv--two .side .sec p { margin-bottom: 13px; }
+.cv--two .tags { gap: 6px 14px; }
+.cv--two .refs blockquote p { font-family: var(--font-display); font-style: italic; font-size: 18px; line-height: 1.3; }
+.cv--two .refs .s { display: block; margin: 6px 0 18px; font-size: 10.6px; }
+.cv--two .refs .s b { color: var(--ink); font-weight: 600; }
+.contact-block { border-top: 1px solid var(--ink); }
+/* The sign-off closing the full CV: the name again, as a signature. */
+.signoff { display: grid; grid-template-columns: auto 1fr; gap: 30px; align-items: end; border-top: 1px solid var(--ink); padding: 18px 0 6px; }
+.signoff__name { font-family: var(--font-display); font-style: italic; font-size: 54px; line-height: 0.9; color: var(--accent); letter-spacing: -0.015em; }
+.signoff__facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: end; gap: 0 22px; font-size: 11.4px; }
+.signoff__facts dt { font-size: 8.6px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.signoff__facts a { color: var(--accent); }
+
+/* ==========================================================================
+   The action bar
+   ========================================================================== */
+
+.dock {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 30;
+    display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 14px;
+    background: var(--dock);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    max-width: calc(100vw - 16px);
+    font-size: 13px; line-height: 1;
+}
+.dock__seg { display: none; background: rgba(255, 255, 255, 0.08); border-radius: 9px; padding: 3px; }
+.has-js .dock__seg { display: flex; }
+.dock__seg button {
+    border: 0; background: none; color: var(--on-ground-2); font-weight: 500;
+    padding: 0 11px; min-height: 38px; border-radius: 7px; cursor: pointer; white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+}
+.dock__seg button[aria-pressed="true"] { background: #ffffff; color: var(--ink); }
+.dock__rule { display: none; }
+.dock__btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; min-width: 40px; justify-content: center; padding: 0 10px; border-radius: 9px;
+    color: #ffffff; text-decoration: none; font-weight: 500; white-space: nowrap;
+    border: 0; background: none; cursor: pointer;
+    transition: background-color 0.2s;
+}
+.dock__btn:hover { background: rgba(255, 255, 255, 0.1); }
+.dock__btn--primary, .dock__btn--primary:hover { background: #ffffff; color: var(--ink); padding: 0 14px; }
+.dock__btn svg { width: 16px; height: 16px; flex: none; }
+.dock__btn .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.dock__btn--primary .lbl { position: static; width: auto; height: auto; clip-path: none; overflow: visible; }
+.dock__long, .dock__size { display: none; }
+.dock__btn.is-done { color: #b9f3c8; }
+/* Print and Copy link need JavaScript; without it the bar keeps PDF and Email. */
+.dock [data-print], .dock [data-copy], .dock [data-zoom] { display: none; }
+.has-js .dock [data-print], .has-js .dock [data-copy] { display: inline-flex; }
+/* Zoom is for wide screens; on phones a tap on the sheet opens the PDF. */
+@media (min-width: 1180px) {
+    .has-js .dock [data-zoom] { display: inline-flex; }
+    .has-js .desk .page { cursor: zoom-in; }
+    .has-js.is-zoomed .desk .page { cursor: zoom-out; }
+    .desk .page a { cursor: pointer; }
+}
+.has-js .contact__row { display: flex; }
+.dock__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.dock :focus-visible { outline-color: #ffffff; outline-offset: 1px; }
+
+@media (min-width: 560px) {
+    .dock__btn .lbl { position: static; width: auto; height: auto; clip-path: none; overflow: visible; }
+    .dock__long { display: inline; }
+    .dock__rule { display: block; width: 1px; height: 22px; background: rgba(255, 255, 255, 0.14); margin: 0 2px; }
+}
+
+@media (min-width: 1180px) {
+    .dock {
+        left: auto; right: 28px; bottom: auto; top: 50%; transform: translateY(-50%);
+        width: 170px; flex-direction: column; align-items: stretch; padding: 8px; gap: 2px;
+    }
+    .dock__seg { flex-direction: column; }
+    .dock__seg button { min-height: 40px; }
+    .dock__rule { width: auto; height: 1px; margin: 6px 4px; }
+    .dock__btn { justify-content: flex-start; padding: 0 12px; }
+    .dock__btn--primary { flex-wrap: wrap; row-gap: 2px; padding: 9px 14px; margin-bottom: 4px; }
+    .dock__size { display: block; width: 100%; padding-left: 24px; font-size: 11.5px; font-weight: 400; color: var(--muted); }
+}
+
+@media (max-width: 1179.98px) {
+    .home .desk { padding-bottom: 20px; }
+}
+
+/* ==========================================================================
+   The opening (only on arrival from outside the site; see the head script)
+   ========================================================================== */
+.has-js.intro .desk .set,
+.has-js.intro .rail__facts > div,
+.has-js.intro .rail__intro,
+.has-js.intro .dock { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0s !important; }
+}
+
+/* ==========================================================================
+   print.html: the sheets alone, at full size
+   ========================================================================== */
+.print-page { background: #8e8e96; color: var(--ink); }
+.print-note { text-align: center; font-size: 14px; padding: 14px 16px 0; color: #111111; }
+.desk--print { --s: 1; }
+
+/* ==========================================================================
+   Print: only the chosen sheet(s), one A4 page each, nothing else.
+   ========================================================================== */
+@page { size: A4; margin: 0; }
+@media print {
+    *, *::before, *::after { transition: none !important; }
+    html, body { background: #ffffff !important; min-height: 0; }
+    body { display: block !important; }
+    .rail, .dock, .skip, .print-note { display: none !important; }
+    .stage, .home .stage { margin: 0 !important; min-height: 0; }
+    .desk { padding: 0 !important; display: block; --s: 1; }
+    .set { display: block; }
+    html:not([data-cv="full"]) .set--full, html[data-cv="full"] .set--one { display: none !important; }
+    .page, .is-reflow .page {
+        zoom: 1 !important; width: 210mm; height: 297mm; box-shadow: none; overflow: hidden;
+        break-after: page; page-break-after: always; margin: 0;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .set > .page:last-child { break-after: auto; page-break-after: auto; }
+    .has-js.intro .desk .set { opacity: 1 !important; }
+    .set, .page { transform: none !important; opacity: 1 !important; }
+}

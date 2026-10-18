@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clare Whitlock, CV</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <!-- print.html?full=0 is the one-page CV, print.html?full=1 the two-page CV.
+         tools/build-pdf.mjs renders both to cv.pdf and cv-full.pdf; without it,
+         open this page and use your browser's Print, Save as PDF. -->
+    <script>(function(d){var q=new URLSearchParams(location.search);d.dataset.cv=q.get('full')==='1'?'full':'one'})(document.documentElement)</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body class="print-page">
+    <p class="print-note">Print this page, or choose Save as PDF, with margins set to None. <a href="print.html?full=0">One page</a> &middot; <a href="print.html?full=1">Full CV</a></p>
+    <main class="desk desk--print">
+        <div class="set set--one" data-set="one">
+          <article class="page" aria-label="CV, one page">
+            <div class="cv">
+              <p class="run"><span>Curriculum vitae</span><span><!-- cv:city -->Sheffield<!-- /cv:city -->, October 2026</span><a href="https://clarewhitlock.co.uk">clarewhitlock.co.uk</a></p>
+              <header class="mast">
+                <h1 class="name"><!-- cv:first-name -->Clare<!-- /cv:first-name --> <i><!-- cv:last-name -->Whitlock<!-- /cv:last-name --></i></h1>
+                <figure class="mast__photo"><img src="assets/img/portrait.webp" alt="Clare Whitlock holding a stack of textbooks in a school corridor." width="128" height="156" /><figcaption>Endcliffe Vale School, 2025</figcaption></figure>
+              </header>
+              <dl class="std">
+                <div><dt>Now</dt><dd><!-- cv:now -->Head of Year 9<!-- /cv:now -->, Teacher of History</dd></div>
+                <div><dt>Looking for</dt><dd>Curriculum leadership</dd></div>
+                <div><dt>Contact</dt><dd><a href="mailto:clare@clarewhitlock.co.uk">clare@clarewhitlock.co.uk</a></dd></div>
+              </dl>
+              <section class="sec sec--static profile" data-ch="profile">
+                <h2><span class="secnum">01</span>Profile</h2>
+                <template data-cv-row="summary@one" data-cv-max="1">
+                  <p>{{text}}</p>
+                </template>
+                <!-- cv:summary@one -->
+                  <p>I have taught history in Sheffield for fourteen years, and for the last four I have looked after Year 9 at Endcliffe Vale School: 212 students, nine tutors and one long corridor. What I enjoy most is planning: deciding what a thirteen-year-old should still remember at twenty, then building the lessons backwards from there.</p>
+<!-- /cv:summary@one -->
+              </section>
+              <div class="cols">
+                <section class="sec sec--static jobs" data-ch="experience">
+                  <h2><span class="secnum">02</span>Experience</h2>
+                  <template data-cv-row="experience@one" data-cv-bullets="3">
+                    <div class="job"><p class="y">{{from}}<small>to {{to}}</small></p><div><h3 class="jt">{{title}}</h3><p class="org">{{org}}</p>{{#points}}<ul>{{{points}}}</ul>{{/points}}</div></div>
+                  </template>
+                  <!-- cv:experience@one -->
+                    <div class="job"><p class="y">2021<small>to present</small></p><div><h3 class="jt">Head of Year 9</h3><p class="org">Endcliffe Vale School, Sheffield</p><ul><li>Year 9 attendance up from 91.8% to 94.6% in two years with a tutor-led morning check-in.</li><li>Rebuilt the options evening so every student leaves with a named adult for GCSE questions.</li><li>On the group that rewrote the Key Stage 3 humanities curriculum for 2024.</li></ul></div></div>
+                    <div class="job"><p class="y">2017<small>to 2021</small></p><div><h3 class="jt">Second in History</h3><p class="org">Endcliffe Vale School, Sheffield</p><ul><li>Wrote Sheffield at Work, a Year 8 unit now taught in 11 city schools.</li><li>Mentored six trainee and early-career teachers.</li><li>Year 11 grade 4+ results rose from 58% to 71%.</li></ul></div></div>
+                    <div class="job"><p class="y">2012<small>to 2017</small></p><div><h3 class="jt">Teacher of History</h3><p class="org">Loxley Bank Academy, Sheffield</p><ul><li>Led the Year 10 Somme and Ypres trip for four springs, 40 students each time.</li><li>Started the club that became the school&rsquo;s first A level history group.</li></ul></div></div>
+                    <div class="job"><p class="y">2010<small>to 2011</small></p><div><h3 class="jt">Teaching Assistant, Key Stage 2</h3><p class="org">Norton Grange Primary School, Sheffield</p></div></div>
+<!-- /cv:experience@one -->
+                </section>
+                <div class="side">
+                  <section class="sec sec--static" data-ch="education">
+                    <h2>Education</h2>
+                    <template data-cv-row="education@one">
+                      <p><span class="t">{{degree}}</span><span class="s">{{school}}, {{year}}</span></p>
+                    </template>
+                    <!-- cv:education@one -->
+                      <p><span class="t">PGCE, Secondary History</span><span class="s">Northern Institute of Education, 2012</span></p>
+                      <p><span class="t">BA (Hons) History</span><span class="s">Pennine University, 2010</span></p>
+<!-- /cv:education@one -->
+                  </section>
+                  <section class="sec sec--static" data-ch="training">
+                    <h2>Training</h2>
+                    <template data-cv-row="certifications@one">
+                      <p>{{name}} <span class="s">{{year}}</span></p>
+                    </template>
+                    <!-- cv:certifications@one -->
+                      <p>Leading Teaching, middle leaders <span class="s">2023</span></p>
+                      <p>Youth Mental Health First Aider <span class="s">2022</span></p>
+                      <p>Educational Visits Leader <span class="s">2014</span></p>
+<!-- /cv:certifications@one -->
+                  </section>
+                  <section class="sec sec--static" data-ch="skills">
+                    <h2>Skills</h2>
+                    <ul class="tags">
+                      <template data-cv-row="skills@one">
+                        <li>{{name}}</li>
+                      </template>
+                      <!-- cv:skills@one -->
+                        <li>Curriculum design</li>
+                        <li>KS3 and KS4 history</li>
+                        <li>Pastoral leadership</li>
+                        <li>Safeguarding</li>
+                        <li>Assessment and moderation</li>
+                        <li>Mentoring</li>
+                        <li>Educational visits</li>
+                        <li>Parents and carers</li>
+<!-- /cv:skills@one -->
+                    </ul>
+                  </section>
+                  <section class="sec sec--static quote" data-ch="references">
+                    <h2 class="quote__label"><span class="secnum">04</span>References</h2>
+                    <template data-cv-row="recommendations@one" data-cv-max="1">
+                      <blockquote><p>&ldquo;{{lead}}&rdquo;</p></blockquote>
+                      <p class="s">{{name}}, {{jobTitle}}</p>
+                    </template>
+                    <!-- cv:recommendations@one -->
+                      <blockquote><p>&ldquo;She plans backwards from what a thirteen-year-old will actually remember, which is rarer than it should be.&rdquo;</p></blockquote>
+                      <p class="s">Tom Adeyemi, Head of History</p>
+<!-- /cv:recommendations@one -->
+                  </section>
+                </div>
+              </div>
+              <p class="foot"><span><!-- cv:name -->Clare Whitlock<!-- /cv:name --></span><span>Page 1 of 1</span></p>
+            </div>
+          </article>
+        </div>
+        <div class="set set--full" data-set="full">
+          <article class="page" aria-label="CV, page 1 of 2">
+            <div class="cv cv--full">
+              <p class="run"><span>Curriculum vitae</span><span><!-- cv:city -->Sheffield<!-- /cv:city -->, October 2026</span><a href="https://clarewhitlock.co.uk">clarewhitlock.co.uk</a></p>
+              <header class="mast">
+                <h1 class="name"><!-- cv:first-name -->Clare<!-- /cv:first-name --> <i><!-- cv:last-name -->Whitlock<!-- /cv:last-name --></i></h1>
+                <figure class="mast__photo"><img src="assets/img/portrait.webp" alt="Clare Whitlock holding a stack of textbooks in a school corridor." width="128" height="156" /><figcaption>Endcliffe Vale School, 2025</figcaption></figure>
+              </header>
+              <dl class="std">
+                <div><dt>Now</dt><dd><!-- cv:now -->Head of Year 9<!-- /cv:now -->, Teacher of History</dd></div>
+                <div><dt>Looking for</dt><dd>Curriculum leadership</dd></div>
+                <div><dt>Contact</dt><dd><a href="mailto:clare@clarewhitlock.co.uk">clare@clarewhitlock.co.uk</a></dd></div>
+              </dl>
+              <section class="sec sec--static profile" data-ch="profile">
+                <h2><span class="secnum">01</span>Profile</h2>
+                <template data-cv-row="summary@full">
+                  <p>{{text}}</p>
+                </template>
+                <!-- cv:summary@full -->
+                  <p>I have taught history in Sheffield for fourteen years, and for the last four I have looked after Year 9 at Endcliffe Vale School: 212 students, nine tutors and one long corridor. What I enjoy most is planning: deciding what a thirteen-year-old should still remember at twenty, then building the lessons backwards from there.</p>
+                  <p>I am now looking for a curriculum leadership role where that planning is the whole job: setting out what a department teaches across five years, and helping the teachers who teach it.</p>
+<!-- /cv:summary@full -->
+              </section>
+              <section class="sec sec--static jobs jobs--full" data-ch="experience">
+                <h2><span class="secnum">02</span>Experience</h2>
+                <template data-cv-row="experience@full">
+                  <div class="job"><p class="y">{{from}}<small>to {{to}}</small></p><div><h3 class="jt">{{title}} <span class="org">{{org}}</span></h3><div class="intro">{{{intro}}}</div>{{#points}}<ul>{{{points}}}</ul>{{/points}}</div></div>
+                </template>
+                <!-- cv:experience@full -->
+                  <div class="job"><p class="y">2021<small>to present</small></p><div><h3 class="jt">Head of Year 9 <span class="org">Endcliffe Vale School, Sheffield</span></h3><div class="intro"><p>I lead the pastoral team for a year group of 212 students and nine form tutors, and still teach history to Years 9 to 11.</p></div><ul><li>Year 9 attendance up from 91.8% to 94.6% in two years with a tutor-led morning check-in.</li><li>Rebuilt the options evening so every student leaves with a named adult for GCSE questions.</li><li>On the group that rewrote the Key Stage 3 humanities curriculum for 2024.</li></ul></div></div>
+                  <div class="job"><p class="y">2017<small>to 2021</small></p><div><h3 class="jt">Second in History <span class="org">Endcliffe Vale School, Sheffield</span></h3><div class="intro"><p>Planned the Key Stage 3 history curriculum with the head of department and mentored new teachers.</p></div><ul><li>Wrote Sheffield at Work, a Year 8 unit now taught in 11 city schools.</li><li>Mentored six trainee and early-career teachers.</li><li>Year 11 grade 4+ results rose from 58% to 71%.</li></ul></div></div>
+                  <div class="job"><p class="y">2012<small>to 2017</small></p><div><h3 class="jt">Teacher of History <span class="org">Loxley Bank Academy, Sheffield</span></h3><div class="intro"><p>Taught history and citizenship across Key Stages 3 and 4, starting in my training year.</p></div><ul><li>Led the Year 10 Somme and Ypres trip for four springs, 40 students each time.</li><li>Started the club that became the school&rsquo;s first A level history group.</li></ul></div></div>
+                  <div class="job"><p class="y">2010<small>to 2011</small></p><div><h3 class="jt">Teaching Assistant, Key Stage 2 <span class="org">Norton Grange Primary School, Sheffield</span></h3><div class="intro"><p>Ran small reading groups in Years 5 and 6 for a year before training to teach.</p></div></div></div>
+<!-- /cv:experience@full -->
+              </section>
+              <p class="foot"><span><!-- cv:name -->Clare Whitlock<!-- /cv:name --></span><span>Page 1 of 2</span></p>
+            </div>
+          </article>
+          <article class="page" aria-label="CV, page 2 of 2">
+            <div class="cv cv--full cv--two">
+              <p class="run"><span><!-- cv:name -->Clare Whitlock<!-- /cv:name --></span><span>Curriculum vitae, continued</span><a href="https://clarewhitlock.co.uk">clarewhitlock.co.uk</a></p>
+              <div class="cols cols--even">
+                <div class="side">
+                  <section class="sec sec--static" data-ch="education">
+                    <h2><span class="secnum">03</span>Education</h2>
+                    <template data-cv-row="education@full">
+                      <p><span class="t">{{degree}}</span><span class="s">{{school}}, {{year}}</span>{{#notes}}<span class="n">{{notes}}</span>{{/notes}}</p>
+                    </template>
+                    <!-- cv:education@full -->
+                      <p><span class="t">PGCE, Secondary History</span><span class="s">Northern Institute of Education, 2012</span><span class="n">Placements at Loxley Bank Academy and an 11 to 18 school in Rotherham.</span></p>
+                      <p><span class="t">BA (Hons) History</span><span class="s">Pennine University, 2010</span><span class="n">Dissertation on women&rsquo;s work in the Sheffield cutlery trades, 1890 to 1914.</span></p>
+<!-- /cv:education@full -->
+                  </section>
+                  <section class="sec sec--static" data-ch="training">
+                    <h2><span class="secnum">04</span>Training</h2>
+                    <template data-cv-row="certifications@full">
+                      <p><span class="t">{{name}}</span><span class="s">{{authority}}, {{year}}</span></p>
+                    </template>
+                    <!-- cv:certifications@full -->
+                      <p><span class="t">Leading Teaching, middle leaders</span><span class="s">Northern Institute of Education, 2023</span></p>
+                      <p><span class="t">Youth Mental Health First Aider</span><span class="s">Northern Youth Wellbeing Trust, 2022</span></p>
+                      <p><span class="t">Educational Visits Leader</span><span class="s">Sheffield Learning Partnership, 2014</span></p>
+<!-- /cv:certifications@full -->
+                  </section>
+                  <section class="sec sec--static work" data-ch="teaching">
+                    <h2><span class="secnum">05</span>Selected work</h2>
+                    <template data-cv-row="projects@full">
+                      <p><span class="t">{{title}}</span><span class="s">{{meta}}</span><span class="n">{{text}}</span></p>
+                    </template>
+                    <!-- cv:projects@full -->
+                      <p><span class="t">Sheffield at Work</span><span class="s">Year 8 unit, 2019</span><span class="n">Six local-history lessons on how the city made a living, each ending with something students make. Now taught in 11 Sheffield schools.</span></p>
+                      <p><span class="t">The battlefields trip</span><span class="s">Year 10 trip, since 2013</span><span class="n">Four days on the Somme and at Ypres for 40 students, each of whom first finds a soldier from their own street in the city archive.</span></p>
+                      <p><span class="t">The morning check-in</span><span class="s">Pastoral, 2022</span><span class="n">Ten minutes in which every tutor speaks to every student by name. Year 9 attendance rose from 91.8% to 94.6% in two years.</span></p>
+<!-- /cv:projects@full -->
+                  </section>
+                </div>
+                <div class="side">
+                  <section class="sec sec--static" data-ch="skills">
+                    <h2><span class="secnum">06</span>Skills</h2>
+                    <ul class="tags">
+                      <template data-cv-row="skills@full">
+                        <li>{{name}}</li>
+                      </template>
+                      <!-- cv:skills@full -->
+                        <li>Curriculum design</li>
+                        <li>KS3 and KS4 history</li>
+                        <li>Pastoral leadership</li>
+                        <li>Safeguarding</li>
+                        <li>Assessment and moderation</li>
+                        <li>Mentoring</li>
+                        <li>Educational visits</li>
+                        <li>Parents and carers</li>
+<!-- /cv:skills@full -->
+                    </ul>
+                  </section>
+                  <section class="sec sec--static refs" data-ch="references">
+                    <h2><span class="secnum">07</span>References</h2>
+                    <template data-cv-row="recommendations@full">
+                      <blockquote>{{{text}}}</blockquote>
+                      <p class="s"><b>{{name}}</b>, {{role}}</p>
+                    </template>
+                    <!-- cv:recommendations@full -->
+                      <blockquote><p>She plans backwards from what a thirteen-year-old will actually remember, which is rarer than it should be. Sheffield at Work is the best unit our department teaches, and Clare wrote it around a full timetable. Eleven schools now use it.</p></blockquote>
+                      <p class="s"><b>Tom Adeyemi</b>, Head of History, Endcliffe Vale School</p>
+                      <blockquote><p>Clare knows every one of her 212 Year 9s by name and, more usefully, by what each of them needs. When she rebuilt our morning check-in, attendance moved within a term and stayed moved. She is ready to lead a curriculum, and I would say so to anyone.</p></blockquote>
+                      <p class="s"><b>Rachel Ostrowski</b>, Deputy Headteacher, Endcliffe Vale School</p>
+                      <blockquote><p>Clare mentored me through my first two years. She watched my worst lessons without flinching and gave me one thing to change each week, never five. I still plan the way she taught me.</p></blockquote>
+                      <p class="s"><b>Priya Natarajan</b>, Teacher of History, Endcliffe Vale School</p>
+<!-- /cv:recommendations@full -->
+                  </section>
+                </div>
+              </div>
+              <div class="signoff">
+                <p class="signoff__name"><!-- cv:name -->Clare Whitlock<!-- /cv:name --></p>
+                <dl class="signoff__facts">
+                  <div><dt>Available</dt><dd>From September 2027</dd></div>
+                  <div><dt>Contact</dt><dd><a href="mailto:clare@clarewhitlock.co.uk">clare@clarewhitlock.co.uk</a></dd></div>
+                  <div><dt>References</dt><dd>In full on request</dd></div>
+                </dl>
+              </div>
+              <p class="foot"><span><!-- cv:name -->Clare Whitlock<!-- /cv:name --></span><span>Page 2 of 2</span></p>
+            </div>
+          </article>
+        </div>
+    </main>
+  </body>
+</html>

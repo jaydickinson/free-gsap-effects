@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Import from your LinkedIn data export</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <!--
+      Import from your LinkedIn® data export, in the browser.
+      A tool for you, not a page of your site: nothing links here, and you can
+      delete the tools folder before you publish. Everything runs on this
+      computer with FileReader; nothing is uploaded and no request leaves the
+      page except reading your own site files next to it.
+    -->
+    <style>
+      :root { --ink: #1d2b8f; --ink-rgb: 29, 43, 143; --paper: #fdfcf8; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.6 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      main { width: min(100% - 2rem, 44rem); margin: 0 auto; padding: 3rem 0 5rem; }
+      h1 { font: 400 2.2rem/1.1 Georgia, serif; margin: 0 0 1rem; }
+      h2 { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 2.5rem 0 0.75rem; }
+      p { margin: 0 0 1rem; }
+      .privacy { font-weight: 600; border-left: 2px solid var(--ink); padding-left: 1rem; }
+      ol.steps { padding-left: 1.25rem; }
+      ol.steps li + li { margin-top: 0.4rem; }
+      .drop { display: block; border: 1.5px dashed rgba(var(--ink-rgb), 0.5); padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; margin-top: 1rem; }
+      .drop.is-over { background: rgba(var(--ink-rgb), 0.06); border-style: solid; }
+      .drop input { display: block; margin: 1rem auto 0; font: inherit; }
+      .dim { color: rgba(var(--ink-rgb), 0.8); }
+      .log { white-space: pre-wrap; font: 0.9rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .preview li { margin: 0.25rem 0; }
+      .preview q { display: block; font-style: italic; }
+      button { font: inherit; font-weight: 600; color: var(--paper); background: var(--ink); border: 0; padding: 0.7rem 1.2rem; margin: 0.25rem 0.5rem 0.25rem 0; cursor: pointer; }
+      button.quiet { background: none; color: var(--ink); text-decoration: underline; padding-inline: 0; }
+      :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+      [hidden] { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Import from your LinkedIn&reg; data export</h1>
+      <p class="privacy">Your files stay on this computer. This page reads them in your browser and uploads nothing.</p>
+
+      <h2>1. Get your export</h2>
+      <ol class="steps">
+        <li>On LinkedIn, open <strong>Me &rsaquo; Settings &amp; Privacy &rsaquo; Data privacy &rsaquo; Download your data</strong>.</li>
+        <li>Choose the larger archive, or tick Positions, Education, Profile, Skills, Certifications and Recommendations, then <strong>Request archive</strong>.</li>
+        <li>LinkedIn emails you a link, usually within a day. Download the .zip.</li>
+      </ol>
+
+      <h2>2. Drop it here</h2>
+      <label class="drop" data-drop>
+        Drop the .zip, or the CSV files from inside it.
+        <span class="dim" data-site-hint hidden><br />This page could not read your site files on its own (it was opened straight from disk), so also drop <strong>cv.json</strong> and your <strong>.html</strong> pages from the site folder.</span>
+        <input type="file" multiple accept=".zip,.csv,.html,.json" data-input />
+      </label>
+
+      <section data-result hidden>
+        <h2>3. Check what was read</h2>
+        <p class="log" data-log></p>
+        <div class="preview" data-preview></div>
+
+        <h2>4. Save the updated site files</h2>
+        <p>The download holds cv.json and every page with a marked region, already rewritten. Replace the files in your site folder with these, then edit any wording by hand. Then rebuild <strong>cv.pdf</strong> and <strong>cv-full.pdf</strong>: run <code>node tools/build-pdf.mjs</code>, or open <strong>print.html?full=0</strong> and <strong>?full=1</strong>, use Print, Save as PDF, and save them in <strong>assets/</strong>.</p>
+        <button type="button" data-save-zip>Download updated files (.zip)</button>
+        <button type="button" class="quiet" data-save-json>Download cv.json only</button>
+      </section>
+    </main>
+
+    <script src="cv-core.js"></script>
+    <script>
+      (function () {
+        'use strict';
+        const C = window.CVCore;
+        const PAGES = ['index.html', 'print.html'];
+        const site = { pages: {}, cv: null };
+        const exportFiles = {};
+        let result = null;
+        const $ = function (s) { return document.querySelector(s); };
+
+        /* Read the site files beside this folder. Works when the site is
+           served (a local server or your host); from file:// the browser
+           refuses, and the page asks for the files to be dropped instead. */
+        async function loadSite() {
+          try {
+            const r = await fetch('../cv.json', { cache: 'no-store' });
+            if (!r.ok) throw new Error();
+            site.cv = await r.json();
+            for (const p of PAGES) {
+              const res = await fetch('../' + p, { cache: 'no-store' });
+              if (res.ok) site.pages[p] = await res.text();
+            }
+          } catch (e) {
+            $('[data-site-hint]').hidden = false;
+          }
+        }
+
+        async function inflateRaw(bytes) {
+          const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+          return new Uint8Array(await new Response(stream).arrayBuffer());
+        }
+
+        function readAs(file, kind) {
+          return new Promise(function (resolve, reject) {
+            const fr = new FileReader();
+            fr.onload = function () { resolve(fr.result); };
+            fr.onerror = reject;
+            if (kind === 'buffer') fr.readAsArrayBuffer(file); else fr.readAsText(file);
+          });
+        }
+
+        async function take(files) {
+          for (const f of files) {
+            const name = f.name.toLowerCase();
+            if (name.endsWith('.zip')) Object.assign(exportFiles, await C.readZip(await readAs(f, 'buffer'), inflateRaw));
+            else if (name.endsWith('.csv')) exportFiles[f.name] = await readAs(f);
+            else if (name === 'cv.json') site.cv = JSON.parse(await readAs(f));
+            else if (name.endsWith('.html')) site.pages[f.name] = await readAs(f);
+          }
+          run();
+        }
+
+        function esc(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+        function run() {
+          if (!Object.keys(exportFiles).length) return;
+          const out = C.readExport(exportFiles);
+          const lines = [];
+          if (!out.report.found.length) { lines.push('No LinkedIn CSV files were recognised in what you dropped.'); }
+          else {
+            lines.push('Read: ' + out.report.found.join(', '));
+            if (out.report.missing.length) lines.push('Missing: ' + out.report.missing.join(', ') + ' (those sections keep what the site already has)');
+            if (out.report.hiddenRecommendations) lines.push('Left out: ' + out.report.hiddenRecommendations + ' recommendation(s) not marked VISIBLE on LinkedIn');
+            out.report.notes.forEach(function (n) { lines.push(n); });
+            lines.push('Never read: birth date, address, phone numbers, email addresses.');
+          }
+          const cv = C.mergeCV(site.cv || {}, out.part);
+          const pages = {};
+          Object.keys(site.pages).forEach(function (name) {
+            const r = C.renderPage(site.pages[name], cv);
+            if (r.regions.length) pages[name] = r.html;
+          });
+          lines.push(Object.keys(pages).length
+            ? 'Pages rewritten: ' + Object.keys(pages).join(', ')
+            : 'No site pages loaded yet, so only cv.json can be saved. Drop your .html pages too to update them.');
+          result = { cv: cv, pages: pages };
+          $('[data-log]').textContent = lines.join('\n');
+
+          const p = cv.profile || {};
+          const list = function (title, items) { return items && items.length ? '<h2>' + title + '</h2><ul>' + items.join('') + '</ul>' : ''; };
+          $('[data-preview]').innerHTML =
+            '<h2>Profile</h2><p><strong>' + esc([p.firstName, p.lastName].join(' ')) + '</strong><br>' + esc(p.headline) + '<br><span class="dim">' + esc(p.location) + '</span></p>' +
+            list('Experience', (cv.positions || []).map(function (r) { return '<li>' + esc(r.title) + ', ' + esc(r.company) + ' <span class="dim">' + esc(r.startedOn) + ' to ' + esc(r.finishedOn || 'now') + '</span></li>'; })) +
+            list('Education', (cv.education || []).map(function (r) { return '<li>' + esc(r.degree) + ', ' + esc(r.school) + '</li>'; })) +
+            list('Certifications', (cv.certifications || []).map(function (r) { return '<li>' + esc(r.name) + ', ' + esc(r.authority) + '</li>'; })) +
+            list('Skills', (cv.skills || []).length ? ['<li>' + esc(cv.skills.join(', ')) + '</li>'] : []) +
+            list('References', (cv.recommendations || []).map(function (r) { return '<li><q>' + esc(r.text) + '</q>' + esc(r.firstName + ' ' + r.lastName) + ', ' + esc(r.jobTitle) + '</li>'; }));
+          $('[data-result]').hidden = false;
+        }
+
+        function save(name, parts, type) {
+          const url = URL.createObjectURL(new Blob(parts, { type: type }));
+          const a = document.createElement('a');
+          a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        }
+
+        $('[data-save-json]').addEventListener('click', function () {
+          if (result) save('cv.json', [JSON.stringify(result.cv, null, 2) + '\n'], 'application/json');
+        });
+        $('[data-save-zip]').addEventListener('click', function () {
+          if (!result) return;
+          const entries = [{ name: 'cv.json', text: JSON.stringify(result.cv, null, 2) + '\n' }];
+          Object.keys(result.pages).forEach(function (n) { entries.push({ name: n, text: result.pages[n] }); });
+          save('cv-site-update.zip', C.writeZip(entries), 'application/zip');
+        });
+
+        const drop = $('[data-drop]');
+        ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
+        ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function () { drop.classList.remove('is-over'); }); });
+        drop.addEventListener('drop', function (e) { e.preventDefault(); take(Array.from(e.dataTransfer.files)); });
+        $('[data-input]').addEventListener('change', function (e) { take(Array.from(e.target.files)); });
+
+        loadSite();
+      })();
+    </script>
+  </body>
+</html>
