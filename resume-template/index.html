@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nadia Osei, product engineer in Lisbon. Ten years building interfaces that stay fast under real data. Read the site, or switch it to a printable one-page CV.">
+    <title>Nadia Osei - Resume Template | GSAP Vault</title>
+    <!-- Reveal gate: set before first paint so nothing the script animates
+         in is ever painted in its finished state first. If script.js never
+         confirms (it adds .js-ready), the gate comes off after 4s and the
+         page reads as a plain document. data-cfasync stops Cloudflare
+         Rocket Loader from deferring it. -->
+    <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Fraunces:opsz,wght@9..144,700&family=IBM+Plex+Mono:wght@700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Playfair+Display:wght@700&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ============ STICKY UTILITY BAR ============
+         The mode toggle is the signature control. Without
+         JavaScript it stays hidden and the page reads as the
+         web layout; printing still produces the A4 CV either way. -->
+    <header class="bar">
+        <a class="bar-brand" href="#top">
+            <span class="bar-monogram" aria-hidden="true">N.O.</span>
+            <span class="bar-name">Nadia Osei<span class="bar-role">Product engineer</span></span>
+        </a>
+
+        <div class="modes" role="group" aria-label="Layout" data-modes>
+            <button type="button" class="mode-btn is-on" data-mode="web" aria-pressed="true">Web</button>
+            <button type="button" class="mode-btn" data-mode="paper" aria-pressed="false">R&eacute;sum&eacute;</button>
+        </div>
+
+        <div class="bar-actions">
+            <button type="button" class="btn btn--ghost" data-copy="nadia@osei.dev">
+                <span data-copy-label>Copy email</span>
+            </button>
+            <button type="button" class="btn btn--solid" data-print><span class="btn-long">Download </span>PDF</button>
+        </div>
+    </header>
+
+    <p class="sr-only" role="status" aria-live="polite" data-mode-status></p>
+
+    <main class="desk" id="top">
+        <article class="sheet" data-flip-id="sheet">
+
+            <!-- ============ HEAD ============ -->
+            <div class="sheet-head">
+                <div class="head-main" data-flip-id="head-main">
+                    <p class="eyebrow">Curriculum vitae</p>
+
+                    <h1 class="name">
+                        <span class="mask"><span class="word" data-word>Nadia</span></span>
+                        <span class="mask"><span class="word" data-word>Osei</span></span>
+                    </h1>
+
+                    <p class="role-line">
+                        <span class="role-part">Product engineer</span>
+                        <span class="dot" aria-hidden="true">/</span>
+                        <span class="role-part">Lisbon, remote across CET</span>
+                    </p>
+
+                    <p class="available" data-mode-fade>
+                        <span class="available-dot" aria-hidden="true"></span>
+                        Open to staff roles from September
+                    </p>
+
+                    <p class="summary">
+                        I build the parts of a product people actually touch: <mark class="hl">interfaces that stay fast under real data</mark>, design systems teams keep using, and the unglamorous plumbing that stops both from rotting. Ten years across health, fintech, and developer tools, most of it <mark class="hl">leading the frontend of one team at a time</mark>.
+                    </p>
+                </div>
+
+                <!-- At a glance. A screen affordance: Resume mode and
+                     print drop it, because the history below says it. -->
+                <dl class="head-meta" data-flip-id="head-meta">
+                    <div>
+                        <dt>Right now</dt>
+                        <dd>Staff product engineer at Kestrel Health</dd>
+                    </div>
+                    <div>
+                        <dt>Focus</dt>
+                        <dd>Frontend platform, design systems, accessibility</dd>
+                    </div>
+                    <div>
+                        <dt>Previously</dt>
+                        <dd>Orbital Bank, Hexlet Tools</dd>
+                    </div>
+                    <div>
+                        <dt>Writing</dt>
+                        <dd>osei.dev/notes</dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="sheet-body" data-flip-id="body">
+
+                <!-- ============ SIDE COLUMN ============
+                     Contact, skills, languages and education. In
+                     Resume mode the chips become comma lists, the
+                     way a printed CV sets them. -->
+                <aside class="side">
+
+                    <section class="side-block side-block--contact" data-flip-id="side-contact">
+                        <h2 class="side-title">Contact</h2>
+                        <ul class="contact">
+                            <li><a href="mailto:nadia@osei.dev">nadia@osei.dev</a></li>
+                            <li><a href="tel:+351910000000">+351 91 000 0000</a></li>
+                            <li><a href="#top">osei.dev</a></li>
+                            <li><a href="#top">github.com/nadiaosei</a></li>
+                            <li><a href="#top">linkedin.com/in/nadiaosei</a></li>
+                        </ul>
+                    </section>
+
+                    <section class="side-block" data-flip-id="side-skills">
+                        <h2 class="side-title">Skills</h2>
+
+                        <p class="skill-label">Programming</p>
+                        <ul class="chips">
+                            <li>TypeScript</li><li>JavaScript</li><li>Ruby</li><li>SQL</li><li>Go</li>
+                        </ul>
+
+                        <p class="skill-label">Frontend</p>
+                        <ul class="chips">
+                            <li>React</li><li>Svelte</li><li>GSAP</li><li>CSS architecture</li><li>WCAG 2.2 AA</li>
+                        </ul>
+
+                        <p class="skill-label">Platform</p>
+                        <ul class="chips">
+                            <li>Node</li><li>Postgres</li><li>Docker</li><li>GitHub Actions</li><li>Playwright</li>
+                        </ul>
+
+                        <p class="skill-label">Practice</p>
+                        <ul class="chips">
+                            <li>Design systems</li><li>Technical writing</li><li>Mentoring</li><li>Hiring</li>
+                        </ul>
+                    </section>
+
+                    <section class="side-block" data-flip-id="side-langs">
+                        <h2 class="side-title">Spoken</h2>
+                        <ul class="chips">
+                            <li>English (native)</li><li>Portuguese (B2)</li><li>German (B1)</li>
+                        </ul>
+                    </section>
+
+                    <section class="side-block" data-flip-id="side-edu">
+                        <h2 class="side-title">Education</h2>
+                        <p class="edu-name">BSc Computer Science</p>
+                        <p class="edu-meta">University of Manchester, first class, 2012&ndash;2015</p>
+                    </section>
+
+                    <section class="side-block" data-flip-id="side-talks">
+                        <h2 class="side-title">Speaking &amp; writing</h2>
+                        <ul class="talks">
+                            <li>
+                                <p class="talk-title">Performance budgets that survive a roadmap</p>
+                                <p class="talk-meta">Front Conference, Zurich, 2025</p>
+                            </li>
+                            <li>
+                                <p class="talk-title">Migrating a legacy frontend without a freeze</p>
+                                <p class="talk-meta">Smashing Magazine essay, 2024</p>
+                            </li>
+                            <li>
+                                <p class="talk-title">Accessible date pickers, the whole problem</p>
+                                <p class="talk-meta">osei.dev essay, 2023</p>
+                            </li>
+                        </ul>
+                    </section>
+
+                </aside>
+
+                <!-- ============ MAIN COLUMN ============ -->
+                <div class="col">
+
+                    <!-- Experience: the spine rule and the mono date
+                         column carry the chronology. Each role expands
+                         for detail (set aria-expanded="true" to start one
+                         open, as the current role does), and Resume mode
+                         opens all of them. -->
+                    <section class="block" data-flip-id="block-exp">
+                        <h2 class="block-title">Experience</h2>
+
+                        <ol class="spine">
+                            <li class="entry" data-flip-id="exp-1">
+                                <p class="entry-date">2023 &ndash; now</p>
+                                <div class="entry-body">
+                                    <h3 class="entry-role">Staff product engineer</h3>
+                                    <p class="entry-org">Kestrel Health <span class="entry-place">Lisbon, remote</span></p>
+                                    <p class="entry-lede">Rebuilt the scheduling flow <mark class="hl">340 clinics book through every day</mark>.</p>
+                                    <button type="button" class="entry-more" data-expand aria-expanded="true" aria-controls="exp-1">
+                                        <span class="entry-more-label">Detail</span>
+                                        <span class="entry-more-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="entry-detail" id="exp-1" data-detail>
+                                        <ul class="bullets">
+                                            <li>Took booking abandonment from 34% to 12% by rewriting the availability picker around real clinic data rather than an idealised calendar.</li>
+                                            <li>Led four engineers through a nine-month Ember to React migration of 180,000 lines with no feature freeze and no rollback.</li>
+                                            <li>Put performance budgets in CI, so regressions fail the build instead of arriving in a quarterly report.</li>
+                                            <li>Wrote the accessibility standard the product org now audits against.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="entry" data-flip-id="exp-2">
+                                <p class="entry-date">2020 &ndash; 2023</p>
+                                <div class="entry-body">
+                                    <h3 class="entry-role">Senior frontend engineer</h3>
+                                    <p class="entry-org">Orbital Bank <span class="entry-place">Berlin</span></p>
+                                    <p class="entry-lede">Built the design system <mark class="hl">eleven product teams still ship on</mark>.</p>
+                                    <button type="button" class="entry-more" data-expand aria-expanded="false" aria-controls="exp-2">
+                                        <span class="entry-more-label">Detail</span>
+                                        <span class="entry-more-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="entry-detail" id="exp-2" data-detail>
+                                        <ul class="bullets">
+                                            <li>Shipped 64 components with visual regression tests, adopted by 11 teams inside a year.</li>
+                                            <li>Owned the card-issuing dashboard end to end, from the Figma review to the on-call rota.</li>
+                                            <li>Cut first contentful paint from 4.1s to 1.2s on a throttled 3G connection.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="entry" data-flip-id="exp-3">
+                                <p class="entry-date">2018 &ndash; 2020</p>
+                                <div class="entry-body">
+                                    <h3 class="entry-role">Frontend engineer</h3>
+                                    <p class="entry-org">Hexlet Tools <span class="entry-place">Berlin</span></p>
+                                    <p class="entry-lede">Documentation and plugin marketplace for a developer CLI.</p>
+                                    <button type="button" class="entry-more" data-expand aria-expanded="false" aria-controls="exp-3">
+                                        <span class="entry-more-label">Detail</span>
+                                        <span class="entry-more-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <div class="entry-detail" id="exp-3" data-detail>
+                                        <ul class="bullets">
+                                            <li>Rebuilt the docs site around search-first navigation; monthly reads grew to 1.9 million.</li>
+                                            <li>Shipped the editor plugin marketplace, including the review queue the team still uses.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="entry" data-flip-id="exp-4">
+                                <p class="entry-date">2016 &ndash; 2018</p>
+                                <div class="entry-body">
+                                    <h3 class="entry-role">Developer</h3>
+                                    <p class="entry-org">Studio Fennec <span class="entry-place">London</span></p>
+                                    <p class="entry-lede">Agency work: twenty-odd client sites, one of everything.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </section>
+
+                    <!-- Selected work: the project's kind sits where a date
+                         would, so it reads in the same grammar as the roles. -->
+                    <section class="block" data-flip-id="block-work">
+                        <h2 class="block-title">Selected work</h2>
+                        <ul class="works">
+                            <li class="work" data-flip-id="work-1">
+                                <p class="work-kind">Open source</p>
+                                <div class="work-body">
+                                    <h3 class="work-name">Ledger</h3>
+                                    <p class="work-desc">A spreadsheet that reads its formulas as code. <span class="work-stat">8,200 stars, 61 contributors, maintained since 2021.</span></p>
+                                </div>
+                            </li>
+                            <li class="work" data-flip-id="work-2">
+                                <p class="work-kind">Personal</p>
+                                <div class="work-body">
+                                    <h3 class="work-name">Quiet Hours</h3>
+                                    <p class="work-desc">A focus timer for macOS and the web with no streaks, badges or notifications. <span class="work-stat">40,000 people use it.</span></p>
+                                </div>
+                            </li>
+                            <li class="work" data-flip-id="work-3">
+                                <p class="work-kind">Contract</p>
+                                <div class="work-body">
+                                    <h3 class="work-name">Specimen</h3>
+                                    <p class="work-desc">A specimen builder for variable fonts. <span class="work-stat">Now the type foundry&rsquo;s whole storefront.</span></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                </div>
+            </div>
+
+            <div class="sheet-foot" data-flip-id="foot">
+                <p>
+                    References on request
+                    <span class="dot" aria-hidden="true">/</span>
+                    Last updated July 2026
+                </p>
+            </div>
+
+        </article>
+
+        <footer class="page-foot">
+            <p>&copy; 2026 Nadia Osei.</p>
+        </footer>
+    </main>
+
+    <!-- GSAP Core + plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+
+    <!-- Lenis smooth scroll -->
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+
+    <!-- Template code -->
+    <script src="assets/script.js"></script>
+</body>
+</html>

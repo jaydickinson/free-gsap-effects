@@ -1,0 +1,1124 @@
+/* ============================================
+   Nadia Osei, Resume Template
+   Tokens: indigo desk, cream sheet, graphite ink,
+   one highlighter yellow. The sheet is a document
+   lying on a desk; Resume mode turns the desk into
+   a print preview and the sheet into an A4 page.
+   ============================================ */
+
+/* The whole palette. Every colour on the page resolves from one of
+   these tokens, so a reskin is this block and nothing else. It splits
+   into two groups on purpose: the DESK is the chrome the document
+   lies on, the SHEET is the document. Keeping them separate is what
+   lets the desk go light without dragging the sticky bar with it. */
+:root {
+    /* -- The desk: page ground and sticky-bar chrome -- */
+    --desk: #1E2A4A;        /* page ground, deep indigo */
+    --desk-deep: #16203A;   /* sticky bar, scrollbar track, pressed states */
+    --desk-lift: #33406A;   /* scrollbar thumb */
+    --bar-ink: #F4EFE4;     /* primary type in the sticky bar */
+    --bar-dim: #B9BFD2;     /* secondary type in the bar, 8.8:1 on --desk-deep */
+    --bar-line: #6A7290;    /* ghost-button border, 3.4:1 on --desk-deep */
+    --bar-rule: #2C3654;    /* the hairline under the bar */
+    --bar-fill: #2A3556;    /* the mode-toggle track */
+    --on-desk: #B9BFD2;     /* the page foot, the only type on the desk itself */
+
+    /* -- The sheet: the document -- */
+    --sheet: #F4EFE4;       /* the CV sheet, warm cream */
+    --ink: #23262B;         /* body type on the sheet, 13.6:1 */
+    --ink-soft: #5C626B;    /* secondary type, 5.4:1 on the sheet */
+    --rule: #D8D0C1;        /* rules and dividers */
+    --mark: #EDE04A;        /* highlighter, the only accent */
+    --ok: #2E7D4F;          /* the one state colour: the availability dot */
+    --sheet-shadow: rgba(8, 14, 30, 0.7);   /* the sheet lifting off the desk */
+
+    /* -- Resume mode: the desk becomes a print preview -- */
+    --paper-desk: #DBD8D1;
+    --on-paper-desk: #4E5158;
+    --paper-shadow: rgba(20, 24, 32, 0.55);
+
+    --font-display: 'Bricolage Grotesque', sans-serif;
+    --font-display-weight: 800;  /* Bricolage Grotesque: the alternates set their own */
+    --font-body: 'Literata', Georgia, serif;
+    --font-mono: 'Azeret Mono', monospace;
+
+    --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+    --pad: clamp(1rem, 4vw, 3.5rem);
+
+    /* -- Layout tokens --
+       Every size that differs between the web page and the A4
+       document is one of these. Resume mode and print swap the set
+       (see DOCUMENT TOKENS below), so the rules further down are
+       written once and never restated per mode. */
+    --scale: 1;                                   /* multiplies all sheet type */
+    --name-size: clamp(3.1rem, 7.2vw, 6.2rem);
+    --sheet-max: 1140px;
+    --sheet-min-h: 0px;
+    --sheet-pad: clamp(1.5rem, 4.5vw, 4.25rem);
+    --head-gap: clamp(1.5rem, 4vw, 3.5rem);       /* name column to at-a-glance */
+    --side-col: 15rem;
+    --body-gap: clamp(2rem, 5vw, 4.5rem);         /* side column to main column */
+    --body-top: clamp(2.25rem, 4.5vw, 3.5rem);    /* head to body */
+    --block-gap: clamp(2.5rem, 4.5vw, 3.25rem);   /* between sections */
+    --side-gap: 2.25rem;
+    --title-gap: 1.4rem;                          /* section title to content */
+    --entry-gap: 1.9rem;                          /* between dated rows */
+    --date-col: 7.5rem;
+    --gutter: 1.5rem;
+    --leading: 1.55;                              /* running text */
+
+    /* scrollbars and native controls follow the palette */
+    color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--desk);
+    color: var(--bar-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.7s var(--ease-soft);
+}
+
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; }
+a { color: inherit; }
+
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.bar :focus-visible { outline-color: var(--mark); }
+
+::selection { background: var(--mark); color: var(--ink); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--desk-deep); }
+::-webkit-scrollbar-thumb { background: var(--desk-lift); border: 2px solid var(--desk-deep); }
+::-webkit-scrollbar-thumb:hover { background: var(--mark); }
+
+/* ============================================
+   STICKY UTILITY BAR
+   ============================================ */
+
+.bar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem var(--pad);
+    background: var(--desk-deep);
+    border-bottom: 1px solid var(--bar-rule);
+}
+
+.bar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    margin-right: auto;
+    min-width: 0;
+}
+
+/* Initials on a square of highlighter: the one accent, used as a
+   signature rather than a logo */
+.bar-monogram {
+    display: grid;
+    place-items: center;
+    width: 2.1rem; height: 2.1rem;
+    flex: none;
+    background: var(--mark);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: var(--font-display-weight);
+    font-size: 0.74rem;
+    letter-spacing: 0.01em;
+}
+
+.bar-name {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.bar-role {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bar-dim);
+}
+
+/* The mode toggle: the control the template is built around.
+   Two equal halves and one highlighter thumb that slides between
+   them; the thumb follows aria-pressed, so it can never disagree
+   with what a screen reader is told. */
+.modes {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 3px;
+    background: var(--bar-fill);
+    border-radius: 999px;
+}
+
+.modes::before {
+    content: "";
+    position: absolute;
+    top: 3px; bottom: 3px; left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 999px;
+    background: var(--mark);
+    transition: transform 0.45s var(--ease-soft);
+}
+.modes:has([data-mode="paper"][aria-pressed="true"])::before { transform: translateX(100%); }
+
+.mode-btn {
+    position: relative;
+    padding: 0.42rem 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--bar-dim);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.mode-btn:hover { color: var(--bar-ink); }
+.mode-btn[aria-pressed="true"] { color: var(--ink); }
+
+/* Without JS the toggle does nothing, so it stays hidden */
+.modes { display: none; }
+.has-js .modes { display: grid; }
+
+.bar-actions { display: flex; gap: 0.5rem; }
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.btn--ghost {
+    background: transparent;
+    border-color: var(--bar-line);
+    color: var(--bar-ink);
+}
+.btn--ghost:hover { border-color: var(--mark); color: var(--mark); }
+
+.btn--solid {
+    background: var(--bar-ink);
+    color: var(--desk-deep);
+}
+.btn--solid:hover { background: var(--mark); }
+
+/* Both bar actions need JS, so neither is offered without it.
+   The email address stays readable in the contact list either way. */
+[data-print], [data-copy] { display: none; }
+.has-js [data-print], .has-js [data-copy] { display: inline-block; }
+
+/* ============================================
+   DESK + SHEET
+   ============================================ */
+
+.desk {
+    padding: clamp(1.25rem, 4vw, 3.5rem) var(--pad) 0;
+}
+
+.sheet {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--sheet-max);
+    min-height: var(--sheet-min-h);
+    margin: 0 auto;
+    padding: var(--sheet-pad);
+    background: var(--sheet);
+    color: var(--ink);
+    border-radius: 3px;
+    box-shadow: 0 30px 70px -30px var(--sheet-shadow);
+}
+
+/* ============================================
+   HEAD
+   ============================================ */
+
+.sheet-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--meta-col, minmax(0, 15rem));
+    gap: var(--head-gap);
+    align-items: end;
+}
+
+/* In the A4 document the head becomes two columns that line up with
+   the body: name and role over the side column, summary over the
+   main one. The placements below only take effect when the
+   document tokens switch .head-main to a grid. */
+.head-main {
+    display: var(--head-display, block);
+    grid-template-columns: var(--side-col) minmax(0, 1fr);
+    column-gap: var(--body-gap);
+    align-items: start;
+}
+.head-main > :not(.summary) { grid-column: 1; }
+.head-main > .summary { grid-column: 2; grid-row: 1 / span 4; }
+
+/* Career at a glance: what the reader wants before they commit to
+   the full history. A screen affordance, so the document drops it. */
+.head-meta {
+    display: var(--screen-display, flex);
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 0.3rem;
+}
+
+.head-meta > div { display: grid; gap: 0.2rem; }
+
+.head-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.head-meta dd {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.3rem;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: max(calc(0.66rem * var(--scale)), 8px);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.name {
+    margin-top: 0.3em;
+    font-family: var(--font-display);
+    font-weight: var(--font-display-weight);
+    font-size: var(--name-size);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.26em;
+}
+
+/* Each word rides up out of its own mask on load. The start state
+   lives here rather than in the script, so the word is never painted
+   in place and then snapped down. */
+/* clip-path rather than overflow: it clips top and bottom only, so a
+   word wider than its column (mid-morph) is never cut off at the side */
+.mask { display: block; clip-path: inset(-0.2em -100vw 0 -100vw); padding-bottom: 0.06em; }
+.word { display: block; }
+.has-js .word { transform: translateY(118%); }
+
+
+.role-line {
+    margin-top: 0.75em;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: calc(1.3rem * var(--scale));
+    line-height: 1.3;
+    color: var(--ink);
+}
+
+.dot { color: var(--ink-soft); padding: 0 0.35em; }
+
+/* In the document's narrow head column, role and place stack */
+.role-part { display: var(--role-part, inline); }
+.role-line .dot { display: var(--role-dot, inline); }
+
+.available {
+    display: var(--screen-display, inline-flex);
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.1rem;
+    padding: 0.4rem 0.9rem 0.4rem 0.8rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+}
+
+.available-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--ok);
+    flex: none;
+}
+
+.summary {
+    margin-top: var(--summary-top, 1.5em);
+    max-width: 60ch;
+    font-size: calc(1.12rem * var(--scale));
+    line-height: var(--leading);
+}
+
+/* Highlighter: a real document behaviour, swept in on scroll.
+   Sits behind the text so the ink stays fully legible. */
+.hl {
+    background-color: transparent;
+    background-image: var(--hl-image, linear-gradient(var(--mark), var(--mark)));
+    background-repeat: no-repeat;
+    background-position: 0 84%;
+    background-size: 100% 48%;
+    color: inherit;
+    padding: 0 0.06em;
+}
+
+.has-js .hl { background-size: 0% 48%; }
+
+/* ============================================
+   BODY GRID
+   ============================================ */
+
+.sheet-body {
+    display: grid;
+    grid-template-columns: var(--side-col) minmax(0, 1fr);
+    gap: var(--body-gap);
+    margin-top: var(--body-top);
+    padding-top: var(--body-top);
+    border-top: 1px solid var(--rule);
+}
+
+/* ============================================
+   SIDE COLUMN
+   ============================================ */
+
+.side-block + .side-block { margin-top: var(--side-gap); }
+
+.side-title, .block-title {
+    padding-bottom: 0.6em;
+    margin-bottom: var(--title-gap);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: max(calc(0.64rem * var(--scale)), 8px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    font-size: calc(0.94rem * var(--scale));
+    line-height: 1.5;
+}
+
+.contact a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--link-rule, var(--rule));
+    padding-bottom: 1px;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+.contact a:hover { border-color: var(--ink); background: var(--mark); }
+
+.skill-label {
+    font-family: var(--font-mono);
+    font-size: max(calc(0.62rem * var(--scale)), 7.5px);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 1.1em 0 0.45em;
+}
+.side-block .skill-label:first-of-type { margin-top: 0; }
+
+/* Chips on screen, comma lists on paper: the document tokens swap
+   the display, the box and the separator. */
+.chips {
+    display: var(--chips-display, flex);
+    flex-wrap: wrap;
+    gap: var(--chip-gap, 0.35rem);
+    font-size: calc(var(--chip-size, 0.68rem) * var(--scale));
+    line-height: 1.5;
+}
+
+.chips li {
+    display: var(--chip-display, block);
+    padding: var(--chip-pad, 0.2rem 0.55rem);
+    border: 1px solid var(--chip-border, var(--rule));
+    border-radius: 3px;
+    font-family: var(--chip-font, var(--font-mono));
+    color: var(--ink);
+}
+.chips li:not(:last-child)::after { content: var(--chip-sep, none); }
+
+/* Education: one line of qualification, one of place and date */
+.edu-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: calc(1rem * var(--scale));
+    line-height: 1.3;
+}
+.edu-meta {
+    margin-top: 0.15em;
+    font-size: calc(0.9rem * var(--scale));
+    line-height: 1.5;
+    color: var(--ink-soft);
+}
+
+/* Speaking and writing: title, then venue and year */
+.talks { display: grid; gap: 0.9em; font-size: calc(0.9rem * var(--scale)); line-height: 1.4; }
+
+.talk-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: calc(1rem * var(--scale));
+    line-height: 1.3;
+}
+.talk-meta { margin-top: 0.15em; color: var(--ink-soft); }
+
+/* ============================================
+   MAIN COLUMN
+   ============================================ */
+
+.block + .block { margin-top: var(--block-gap); }
+
+/* The spine is the chronology made visible: one rule running down
+   the whole run of roles, in the gutter between the date column and
+   the entry body. */
+.spine { position: relative; }
+
+.entry,
+.work {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--date-col) minmax(0, 1fr);
+    gap: var(--gutter);
+}
+
+.entry { padding-bottom: var(--entry-gap); }
+.entry:last-child { padding-bottom: 0; }
+
+.spine .entry::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--date-col) + var(--gutter) / 2);
+    top: 0.55rem;
+    bottom: -0.45rem;
+    width: 1px;
+    background: var(--rule);
+}
+.spine .entry:last-child::before { display: none; }
+
+.spine .entry::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--date-col) + var(--gutter) / 2 - 3px);
+    top: calc(0.35rem + 2px);
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+}
+
+.entry-date,
+.work-kind {
+    font-family: var(--font-mono);
+    font-size: max(calc(0.7rem * var(--scale)), 8px);
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    padding-top: 0.2em;
+    text-align: right;
+}
+
+.entry-role,
+.work-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: calc(1.18rem * var(--scale));
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+.entry-org {
+    margin-top: 0.15em;
+    font-size: calc(0.95rem * var(--scale));
+    color: var(--ink-soft);
+}
+
+.entry-place::before { content: " / "; color: var(--ink-soft); }
+
+.entry-lede {
+    margin-top: 0.45em;
+    font-size: calc(1rem * var(--scale));
+    line-height: var(--leading);
+    max-width: 58ch;
+}
+
+/* Running text blocks set their own size, so the line boxes around
+   their children shrink with the type rather than keeping a 16px strut */
+.entry-body,
+.work-body {
+    font-size: calc(0.95rem * var(--scale));
+    line-height: var(--leading);
+}
+
+/* Expandable detail */
+.entry-more {
+    display: var(--screen-display, inline-flex);
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.7rem;
+    padding: 0.2rem 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.entry-more-icon {
+    position: relative;
+    width: 11px; height: 11px;
+    flex: none;
+}
+.entry-more-icon::before,
+.entry-more-icon::after {
+    content: "";
+    position: absolute;
+    background: var(--ink);
+    transition: transform 0.3s var(--ease-soft), opacity 0.3s;
+}
+.entry-more-icon::before { left: 0; top: 5px; width: 11px; height: 1px; }
+.entry-more-icon::after { left: 5px; top: 0; width: 1px; height: 11px; }
+
+.entry-more[aria-expanded="true"] .entry-more-icon::after { transform: rotate(90deg); opacity: 0; }
+
+.entry-more:hover .entry-more-label { background: var(--mark); }
+
+/* Closed by default once JS is here; the document tokens force every
+   panel open, and the script clears its inline heights to let them. */
+.entry-detail { overflow: hidden; }
+.has-js .entry-detail { height: var(--detail-closed, 0); }
+.has-js .entry-more[aria-expanded="true"] + .entry-detail { height: auto; }
+
+.bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    padding-top: 0.75em;
+    max-width: 62ch;
+}
+
+.bullets li {
+    position: relative;
+    padding-left: 1em;
+    font-size: calc(0.95rem * var(--scale));
+    line-height: var(--leading);
+    color: var(--ink);
+}
+
+.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.72em;
+    width: 0.4em; height: 1px;
+    background: var(--ink-soft);
+}
+
+/* Selected work: the same two columns as the chronology, with the
+   kind of project where the date would be, so the whole sheet reads
+   in one grammar. */
+.works { display: grid; gap: var(--entry-gap); }
+
+.work-desc {
+    margin-top: 0.3em;
+    font-size: calc(0.98rem * var(--scale));
+    line-height: var(--leading);
+    max-width: 58ch;
+}
+
+.work-stat { color: var(--ink-soft); }
+
+/* In the document a project's name runs into its description, so the
+   list stays three lines long */
+.work-name,
+.work-desc { display: var(--run-in, block); }
+.work-name { margin-right: 0.4em; }
+
+/* ============================================
+   SHEET FOOT + PAGE FOOT
+   ============================================ */
+
+.sheet-foot {
+    margin-top: auto;
+    padding-top: var(--block-gap);
+}
+
+.sheet-foot p {
+    padding-top: 1em;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: max(calc(0.64rem * var(--scale)), 8px);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.page-foot {
+    padding: 2.25rem 0 2.75rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-desk);
+}
+
+/* ============================================
+   DOCUMENT TOKENS
+   Resume mode and print are the same document,
+   so they share these values. Two groups:
+
+   - Content: what the document shows. Applied in
+     Resume mode at every width.
+   - A4 geometry: the page itself. Applied in
+     Resume mode wherever an A4 page fits on
+     screen, and always in print.
+
+   Print repeats both lists in its own block at
+   the end of this section: change a value here,
+   change it there.
+   ============================================ */
+
+body.mode-paper {
+    /* content */
+    --screen-display: none;      /* at-a-glance, availability, Detail buttons */
+    --hl-image: none;            /* the highlighter is a screen affordance */
+    --meta-col: 0px;             /* the head drops its at-a-glance column */
+    --detail-closed: auto;       /* every role opens: a CV shows the detail */
+    --link-rule: transparent;
+    --chip-display: inline;
+    --chip-pad: 0;
+    --chip-border: transparent;
+    --chip-font: var(--font-body);
+    --chip-size: 0.92rem;
+    --chip-sep: ", ";
+    --chip-gap: 0;
+    --chips-display: block;      /* so a list wraps word by word, like prose */
+
+    --scale: 0.9;
+    background: var(--paper-desk);
+}
+
+/* A4 is 794 x 1123 CSS pixels: the sheet takes exactly that size
+   and the content is set to fit it, so what is on screen is the
+   page the PDF will hold. */
+@media screen and (min-width: 880px) {
+    body.mode-paper {
+        --scale: 0.72;
+        --name-size: 2.75rem;
+        --sheet-max: 794px;
+        --sheet-min-h: 1123px;
+        --sheet-pad: 42px 50px 34px;
+        --head-gap: 0px;
+        --side-col: 164px;
+        --body-gap: 26px;
+        --body-top: 18px;
+        --block-gap: 18px;
+        --side-gap: 18px;
+        --title-gap: 9px;
+        --entry-gap: 11px;
+        --date-col: 3.9rem;
+        --gutter: 1rem;
+        --leading: 1.4;
+        --head-display: grid;
+        --summary-top: 0px;
+        --run-in: inline;
+        --role-part: block;
+        --role-dot: none;
+    }
+}
+
+body.mode-paper .sheet {
+    box-shadow: 0 18px 46px -22px var(--paper-shadow);
+    border-radius: 0;
+}
+
+body.mode-paper .page-foot { color: var(--on-paper-desk); }
+
+/* While the layout morphs, each moving block clips its own content.
+   Text is reflowing at in-between sizes inside in-between boxes, and
+   a clean edge reads as a mask where spill would read as a collision. */
+.is-morphing [data-flip-id]:not(.sheet) { overflow: hidden; }
+
+/* ============================================
+   RESPONSIVE
+   Screen only: print has its own fixed page.
+   ============================================ */
+
+@media screen and (max-width: 900px) {
+    .sheet-head { grid-template-columns: 1fr; gap: 1.75rem; }
+    .head-meta {
+        display: var(--screen-display, grid);
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 1rem 1.5rem;
+    }
+
+    /* One column: contact first, then the history, then the rest of
+       the side column. display: contents lets the side blocks join
+       the body grid so they can be ordered around the main column. */
+    .sheet-body { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    .side { display: contents; }
+    .side-block + .side-block { margin-top: 0; }
+    .side-block--contact { order: -1; }
+    .side-block:not(.side-block--contact) { order: 1; }
+}
+
+@media screen and (max-width: 720px) {
+    .entry, .work { grid-template-columns: 1fr; gap: 0.3rem; }
+    .entry-date, .work-kind { text-align: left; padding-top: 0; }
+
+    /* The spine only reads as chronology in two columns */
+    .spine .entry::before,
+    .spine .entry::after { display: none; }
+}
+
+@media screen and (max-width: 560px) {
+    .bar { gap: 0.6rem; padding-block: 0.6rem; }
+    /* The monogram carries the brand; the name is still read out */
+    .bar-name {
+        position: absolute;
+        width: 1px; height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+    .bar-actions .btn--ghost { display: none; }
+    .mode-btn { padding-inline: 0.75rem; }
+    .btn { padding-inline: 0.85rem; }
+    .btn-long { display: none; }
+
+    .available { font-size: 0.64rem; letter-spacing: 0; }
+}
+
+/* ============================================
+   REDUCED MOTION
+   Everything visible, nothing to wait for.
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    body, .mode-btn, .btn, .modes::before { transition: none !important; }
+
+    .has-js .hl { background-size: 100% 48%; }
+    .has-js .word { transform: none !important; }
+}
+
+/* ============================================
+   PRINT
+   Always prints the A4 document, whichever mode
+   is on screen: the same tokens as Resume mode,
+   on white, with the page margin inside the sheet.
+   ============================================ */
+
+@media print {
+    @page { size: A4; margin: 0; }
+
+    /* body.mode-paper is listed so these win over Resume mode's own
+       values when printing from that mode */
+    body,
+    body.mode-paper {
+        /* content (keep in step with body.mode-paper) */
+        --screen-display: none;
+        --hl-image: none;
+        --meta-col: 0px;
+        --detail-closed: auto;
+        --link-rule: transparent;
+        --chip-display: inline;
+        --chip-pad: 0;
+        --chip-border: transparent;
+        --chip-font: var(--font-body);
+        --chip-size: 0.92rem;
+        --chip-sep: ", ";
+        --chip-gap: 0;
+        --chips-display: block;
+
+        /* A4 geometry (keep in step with the min-width: 880px block) */
+        --scale: 0.72;
+        --name-size: 2.75rem;
+        --sheet-max: none;
+        --sheet-min-h: 0px;
+        --sheet-pad: 42px 50px 34px;
+        --head-gap: 0px;
+        --side-col: 164px;
+        --body-gap: 26px;
+        --body-top: 18px;
+        --block-gap: 18px;
+        --side-gap: 18px;
+        --title-gap: 9px;
+        --entry-gap: 11px;
+        --date-col: 3.9rem;
+        --gutter: 1rem;
+        --leading: 1.4;
+        --head-display: grid;
+        --summary-top: 0px;
+        --run-in: inline;
+        --role-part: block;
+        --role-dot: none;
+
+        background: #fff !important;
+    }
+
+    .bar, .page-foot, .modes { display: none !important; }
+
+    .desk { padding: 0 !important; }
+
+    .sheet {
+        background: #fff !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    /* Whatever the script left mid-animation, print the settled page */
+    .word { opacity: 1 !important; transform: none !important; }
+    .entry-detail { height: auto !important; }
+
+    a { text-decoration: none; }
+}
+
+/* ============================================================
+   ALTERNATE PALETTES
+   ------------------------------------------------------------
+   Four alternatives to the default indigo. These are yours to
+   keep: they are not demo scaffolding, and nothing outside this
+   block depends on them.
+
+   To use one, set the attribute on the <html> tag in
+   index.html:
+
+       <html lang="en" data-palette="moss">
+
+   ...or, once you have settled on one, copy its values into the
+   :root block at the top of this file and delete the other
+   three. Keep the print rule at the end of this block either
+   way: see the note on it.
+
+   Each block restates the same nineteen colour tokens as :root,
+   including the two shadow tokens, so nothing is left resolving
+   from the palette you switched away from. Everything else on
+   the page is already drawing from those tokens.
+
+   Each block also carries its own display face, so the five
+   read as five identities rather than one design in five
+   colours; the faces are loaded by the fonts <link> in
+   index.html, and a browser only downloads the one in use.
+   Keep the display face and drop the palette, or the other way
+   round: the two tokens are independent. Only the name and the
+   bar monogram read the weight token; the entry and role lines
+   keep asking for 600 and 400, and a family loaded at one
+   weight answers with that weight.
+
+   Every palette was measured against the same contrast bar as
+   the default: body type on the sheet, the small mono date and
+   label type (the most at-risk type on the page), type sitting
+   over the highlighter, and every piece of type in the sticky
+   bar. All at 4.5:1 or better. The highlighter itself, the
+   availability dot and the sheet's edge against the desk were
+   checked at 3:1 or better, so the marks still read as marks.
+
+   The page foot is the only type sitting on the desk itself, so
+   each palette gives it a solid --on-desk and --on-paper-desk
+   token rather than a translucent tint: both measure 4.5:1 or
+   better on their ground in every palette.
+   ============================================================ */
+
+/* ---- Moss: deep green desk, lime highlighter ---- */
+:root[data-palette="moss"] {
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-display-weight: 700;  /* Fraunces: a soft, warm serif */
+
+    --desk: #22342C;
+    --desk-deep: #182620;
+    --desk-lift: #354A40;
+    --bar-ink: #F1F0E6;
+    --bar-dim: #B3C0B7;
+    --bar-line: #63756B;
+    --bar-rule: #2E4238;
+    --bar-fill: #2C4038;
+    --on-desk: #B3C0B7;
+
+    --sheet: #F2F0E9;
+    --ink: #1F2420;
+    --ink-soft: #585F59;
+    --rule: #D3D2C7;
+    --mark: #C4E86B;
+    --ok: #2E7D4F;
+    --sheet-shadow: rgba(6, 18, 12, 0.7);
+
+    --paper-desk: #D9D9CE;
+    --on-paper-desk: #4C5250;
+    --paper-shadow: rgba(20, 28, 24, 0.55);
+}
+
+/* ---- Claret: wine desk, amber highlighter ---- */
+:root[data-palette="claret"] {
+    --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-display-weight: 700;  /* Playfair Display: a high-contrast editorial serif */
+
+    --desk: #3A1F28;
+    --desk-deep: #2A151C;
+    --desk-lift: #523240;
+    --bar-ink: #F7EFE8;
+    --bar-dim: #CDB6BC;
+    --bar-line: #836268;
+    --bar-rule: #46262F;
+    --bar-fill: #4A2B34;
+    --on-desk: #CDB6BC;
+
+    --sheet: #F7F1E9;
+    --ink: #2A2225;
+    --ink-soft: #615A5C;
+    --rule: #DDD3C7;
+    --mark: #FFBE6E;
+    --ok: #2E7D4F;
+    --sheet-shadow: rgba(28, 8, 14, 0.7);
+
+    --paper-desk: #DFD6CE;
+    --on-paper-desk: #55504F;
+    --paper-shadow: rgba(32, 20, 24, 0.55);
+}
+
+/* ---- Charcoal: near-black desk, cyan highlighter ---- */
+:root[data-palette="charcoal"] {
+    --font-display: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    --font-display-weight: 700;  /* IBM Plex Mono: a mono, for an engineer's CV */
+
+    --desk: #1C1D20;
+    --desk-deep: #141517;
+    --desk-lift: #33353A;
+    --bar-ink: #F2F1EE;
+    --bar-dim: #B4B5B8;
+    --bar-line: #63656A;
+    --bar-rule: #2A2C30;
+    --bar-fill: #28292D;
+    --on-desk: #B4B5B8;
+
+    --sheet: #FAF8F4;
+    --ink: #1D1F22;
+    --ink-soft: #5A5D63;
+    --rule: #DAD6CF;
+    --mark: #8FE3F0;
+    --ok: #2E7D4F;
+    --sheet-shadow: rgba(0, 0, 0, 0.7);
+
+    --paper-desk: #DCDAD6;
+    --on-paper-desk: #4F5257;
+    --paper-shadow: rgba(16, 16, 18, 0.55);
+}
+
+/* ---- Kraft: the inversion. A light kraft-paper desk instead
+        of a dark one, with the sticky bar staying dark so the
+        chrome still separates from the document. This is why
+        the bar tokens are their own group: --on-desk goes dark
+        for the page foot while --bar-ink stays light one
+        element away. The desk is kept dark enough to clear 3:1
+        against the sheet, or the sheet stops reading as a sheet
+        and the whole conceit falls apart. ---- */
+:root[data-palette="kraft"] {
+    --font-display: 'Zilla Slab', Rockwell, Georgia, serif;
+    --font-display-weight: 700;  /* Zilla Slab: a slab */
+
+    --desk: #9B9179;
+    --desk-deep: #2A2721;
+    --desk-lift: #4A463C;
+    --bar-ink: #F5F1E9;
+    --bar-dim: #B7B1A5;
+    --bar-line: #767063;
+    --bar-rule: #3B3730;
+    --bar-fill: #3A362E;
+    --on-desk: #292720;
+
+    --sheet: #FFFDF8;
+    --ink: #22242A;
+    --ink-soft: #5A5D64;
+    --rule: #DCD7CC;
+    --mark: #FF8FB8;
+    --ok: #2E7D4F;
+    --sheet-shadow: rgba(40, 34, 22, 0.55);
+
+    --paper-desk: #E2DED4;
+    --on-paper-desk: #4F5158;
+    --paper-shadow: rgba(40, 34, 22, 0.5);
+
+    /* this palette inverts the ground */
+    color-scheme: light;
+}
+
+/* ---- Print stays ink on white, whatever palette is set ----
+        A CV gets printed, and the printed page has to be ink on
+        white however the screen is coloured. The print
+        stylesheet earlier in this file already forces a white
+        page and black body type, and it removes the
+        highlighter, so the only palette-dependent things left
+        in print are the sheet's own type and rule colours.
+        This rule pins those back to the defaults.
+
+        It must stay BELOW the palette blocks above.
+        :root[data-palette] and :root[data-palette="moss"] have
+        the same specificity, so source order is the only thing
+        making this win. Move it up and an alternate palette
+        will print in its own colours.
+
+        None of the four palettes above inverts the sheet, so
+        this changes nothing about them today. It is here so
+        that it stays true: add a fifth palette with a dark
+        sheet and print still comes out correct. Nothing about
+        the desk is restated, since none of it prints. ---- */
+@media print {
+    :root[data-palette] {
+        --sheet: #F4EFE4;
+        --ink: #23262B;
+        --ink-soft: #5C626B;
+        --rule: #D8D0C1;
+        --mark: #EDE04A;
+        --paper-desk: #DBD8D1;
+        --on-paper-desk: #4E5158;
+    }
+}

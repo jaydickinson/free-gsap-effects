@@ -2,7 +2,7 @@
 
 ![Free GSAP effects in motion: parallax hero, scroll text highlight, 3D card flip and the link-in-bio template](./demo.gif)
 
-Ten free, production-ready GSAP animation effects, eleven animated UI components and four complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Ten free, production-ready GSAP animation effects, eleven animated UI components and five complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
 From [GSAP Vault](https://gsapvault.com), a library of 135 copy-paste GSAP animation effects, 54 UI components and 87 complete website templates.
 
@@ -46,6 +46,7 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 
 | Template | What it is | Live demo |
 |--------|--------------|-----------|
+| [Resume Template](./resume-template) | A personal CV site that morphs between two layouts: a signature Flip-driven toggle reflows the whole page from a spacious web resume into an A4 document, backed by a real print stylesheet so the site is also the PDF. | [Demo](https://gsapvault.com/templates/resume-template) |
 | [Charity Campaign Template](./charity-campaign-template) | A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
 | [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
 | [QR Table Menu Template](./qr-menu-template) | A phone-first digital menu made to open from a QR code at the table, with a sticky category bar that crossfades between sections and dietary chips that filter every dish at once. | [Demo](https://gsapvault.com/templates/qr-menu-template) |
