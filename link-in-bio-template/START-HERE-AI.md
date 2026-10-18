@@ -6,10 +6,10 @@ Link in Bio Template is a production-ready GSAP template from GSAP Vault. This f
 
 - Product: Link in Bio Template
 - Type: template
-- Description: A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link.
-- GSAP plugins: Draggable, InertiaPlugin
-- Techniques: draggable, momentum, stagger, load-sequence, micro-interaction
-- Lenis smooth scrolling: included
+- Description: A free link-in-bio page, links first: a giant wordmark on one loud colour, a small pile of photo prints for the three latest things (flick one away to see the next, tap to open) and the full list of links on the first screen. Mariam Odede, a potter in Margate, is the worked example; it suits musicians, podcasters, small shops and writers just as well.
+- GSAP plugins: Draggable, InertiaPlugin, ScrollTrigger
+- Techniques: draggable, touch-drag, momentum, keyboard-navigation, focus-management, load-sequence, stagger, scroll-reveal, progressive-enhancement
+- Lenis smooth scrolling: not required
 - Difficulty: beginner
 
 The supplied package is the source of truth. It includes the working page markup, readable JavaScript, CSS, documentation, and any product assets. Read the README before changing the implementation.
@@ -40,7 +40,7 @@ During implementation:
 1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.
 2. Preserve the visual design, interaction model, and animation timing unless I explicitly request changes.
 3. Scope selectors and animation queries so they cannot affect unrelated components.
-4. Reuse the project's existing GSAP installation where possible. Register only the plugins this product needs: Draggable, InertiaPlugin.
+4. Reuse the project's existing GSAP installation where possible. Register only the plugins this product needs: Draggable, InertiaPlugin, ScrollTrigger.
 5. Preserve responsive behaviour, keyboard operation, semantic HTML, ARIA attributes, and prefers-reduced-motion handling.
 6. Preserve or add correct GSAP, ScrollTrigger, observer, ticker, and event-listener cleanup for the detected framework and routing model.
 7. Keep the page usable if JavaScript or an animation dependency fails. Do not leave content hidden in fallback or reduced-motion states.

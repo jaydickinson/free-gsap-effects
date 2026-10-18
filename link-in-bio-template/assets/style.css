@@ -1,464 +1,757 @@
-/* ============================================
-   TATI MORENO - LINK IN BIO TEMPLATE
-   A creator profile page as a desk of stickers:
-   light lilac ground, die-cut white-edged link
-   cards that toss in on load, drag anywhere,
-   and tidy back into a stack.
-   ============================================ */
+/* ==========================================================================
+   LINK IN BIO: a creator's one link, built as a pile of photo prints
+
+   One loud glaze colour, a fat hand-thrown wordmark and real snapshots that
+   are the links themselves. Make it yours by repainting --glaze, changing
+   the two wordmark words and swapping the six prints for your own photos.
+
+   Reskin: repaint the colour tokens below. Everything else is one of them
+   at another value or opacity.
+   ========================================================================== */
 
 :root {
-    /* One light lavender ground, near-black violet ink, and one hot
-       orange spent only where it is loud on purpose. The look this page
-       refuses: a dark "linktree clone" column of identical grey pills.
-       The cards are stickers - white die-cut edges, a thrown scatter -
-       and everything else stays quiet around them.
+    /* Persimmon (kaki) glaze ground with iron-oxide ink, measured as rendered:
+         ink #1E120D on glaze #E15A2B      5.0:1  every word on the glaze
+         ink on a hovered list row          6.0:1  (paper at 16% over glaze)
+         ink on paper #FBF6EE              17.0:1  print labels, form field
+         slip #F6E8D6 on clay #2A1A14      13.9:1  kiln block and footer
+         celadon #9FD3C1 on clay           10.0:1  countdown line, focus on clay
+       Text on the glaze is full-strength ink only: there is no headroom for
+       a dimmed ink. The ground is the design: lighten it freely, but darker
+       than about #D75529 drops body text under 4.5:1. Never add a second
+       loud colour; the photographs bring the rest. Bagel Fat One is for the
+       wordmark and headings only (about 7:1 to body on phones, 10:1 on
+       desktop); Onest carries every word you read. */
+    --glaze: #E15A2B;
+    --glaze-rgb: 225, 90, 43;
+    --ink: #1E120D;
+    --ink-rgb: 30, 18, 13;
+    --paper: #FBF6EE;
+    --paper-rgb: 251, 246, 238;
+    --clay: #2A1A14;
+    --clay-rgb: 42, 26, 20;
+    --slip: #F6E8D6;
+    --slip-rgb: 246, 232, 214;
+    --celadon: #9FD3C1;
 
-       Contrast measured as used, composited:
+    --font-display: 'Bagel Fat One', 'Arial Rounded MT Bold', system-ui, sans-serif;
+    --font-body: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-       ON THE GROUND (lilac #D8CEEE)
-         ink name, card labels via face          10.74
-         ink-dim bio, hint, footer                5.92
-       ON THE CARD FACE (#F1EDFA)
-         ink labels                              14.01
-         ink-dim sub lines                        7.72
-       ON THE ACCENT (orange #FF4D0D)
-         ink handle pill, tidy button, CTA        4.85
-       ON THE PANEL (ink #251C38)
-         lilac drop title                        10.74
-         panel-dim body copy                      7.41
-         orange badge text                        4.85
+    --step-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    --step-h2: clamp(2.4rem, 1.6rem + 3.6vw, 4.5rem);
+    --step-fine: 0.75rem;
 
-       The accent is banned as TYPE on the ground and on the cards: it
-       measures 2.21 on lilac and 3.32 on white, both under the 4.5
-       floor. It only ever appears as a fill with ink type on it, or as
-       type on the ink panel, where it clears. Keep that rule if you
-       repaint: an orange hot enough to sing on lilac is too light to
-       read on it.
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --section-y: clamp(4rem, 9vw, 7.5rem);
 
-       Reskin = repaint the six values below, keeping the -rgb triples
-       in step; shadows, borders and the desk outline resolve from them. */
-    --ground: #D8CEEE;         /* the desk, page base */
-    --card: #F1EDFA;           /* sticker faces, inside a white die-cut edge */
-    --ink: #251C38;            /* near-black violet: type, and the drop panel */
-    --ink-dim: #4E4370;        /* secondary type on ground and cards */
-    --panel-dim: #B7A8DC;      /* secondary type on the ink panel only */
-    --accent: #FF4D0D;         /* hot orange: fills and panel type, never type on light */
+    /* The print. Its photo is 4:5 and its paper border carries the label.
+       On phones the pile is about 62% of the width, small enough that the
+       wordmark, the bio, the pile and the first rows of the list all fit
+       the first screen. */
+    --print-w: min(62vw, 15rem);
+    --print-pad: 0.45rem;
+    --label-h: 3.5rem;
+    --photo-h: calc((var(--print-w) - 2 * var(--print-pad)) * 1.25);
+    --print-h: calc(var(--photo-h) + var(--print-pad) + var(--label-h));
 
-    --ground-rgb: 216, 206, 238;
-    --ink-rgb: 37, 28, 56;
-    --accent-rgb: 255, 77, 13;
-
-    --font-display: 'Baloo 2', 'Arial Rounded MT Bold', system-ui, sans-serif;
-    --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
-
-    /* scrollbars and native controls follow the palette */
-    color-scheme: light;
+    /* Wordmark size: a fallback until the script fits the words to the
+       column after the font loads. */
+    --mark-size: min(22vw, 5.5rem);
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    /* Nothing may pan the page sideways, including a card mid-throw. */
-    overflow-x: clip;
+html {
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+    background: var(--glaze);
 }
 
 body {
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    background: var(--ground);
+    margin: 0;
+    background: var(--glaze);
     color: var(--ink);
     font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    font-size: var(--step-body);
+    line-height: 1.55;
+    overflow-x: clip;
 }
 
-::selection {
-    background: var(--accent);
-    color: var(--ink);
-}
+img { display: block; max-width: 100%; height: auto; }
 
 a { color: inherit; }
 
 :focus-visible {
     outline: 3px solid var(--ink);
     outline-offset: 3px;
-    border-radius: 4px;
 }
 
-.shell {
-    width: min(100% - 2.5rem, 980px);
-    margin-inline: auto;
-    flex: 1;
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-/* ---------- Profile ---------- */
+/* --------------------------------------------------------------------------
+   STRIP: handle and the one thing happening now
+   -------------------------------------------------------------------------- */
 
-.hero {
-    text-align: center;
-    padding: clamp(3rem, 8vh, 5rem) 0 1.5rem;
-}
-
-/* The avatar is a drawn monogram on a sticker blob - no photo to
-   source, grade or licence. Swap the initial, or replace the whole
-   block with an <img> at the same size. */
-.avatar {
-    display: grid;
-    place-items: center;
-    width: 104px;
-    height: 104px;
-    margin: 0 auto 1.1rem;
-    background: var(--accent);
-    border: 5px solid #fff;
-    border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
-    transform: rotate(-6deg);
-    box-shadow: 0 10px 24px rgba(var(--ink-rgb), 0.18);
-}
-
-.avatar-mark {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 3.2rem;
-    line-height: 1;
-    color: var(--ink);
-    transform: rotate(6deg) translateY(-4px);
-}
-
-.hero-name {
-    margin: 0 0 0.6rem;
-    font-family: var(--font-display);
-    font-weight: 800;
-    /* Display face, capped well under 6rem: it is a name, not a poster. */
-    font-size: clamp(2.6rem, 7.5vw, 4.25rem);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-}
-
-.hero-handle { margin: 0 0 1.1rem; }
-
-.handle-pill {
-    display: inline-block;
-    padding: 0.3rem 1rem 0.35rem;
-    background: var(--accent);
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 999px;
-    transform: rotate(-1.5deg);
-}
-
-.hero-bio {
-    max-width: 34rem;
-    margin: 0 auto;
-    color: var(--ink-dim);
-    font-size: 1.06rem;
-}
-
-/* ---------- The desk of links ---------- */
-
-.links { padding: 2.25rem 0 1rem; }
-
-/* The hint and the Tidy button only mean anything once the cards can
-   move, so the whole bar is injected by script.js rather than written
-   in the HTML - with scripting off it simply never exists. */
-.desk-bar {
+.strip {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 5;
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
-    width: min(100%, 640px);
-    margin: 0 auto 0.9rem;
-}
-
-.desk-hint {
-    margin: 0;
-    color: var(--ink-dim);
-    font-size: 0.92rem;
-}
-
-.tidy-btn {
-    flex: none;
-    padding: 0.45rem 1.1rem 0.5rem;
-    background: var(--accent);
-    color: var(--ink);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.95rem;
-    line-height: 1;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.35);
-}
-
-.tidy-btn:hover { filter: brightness(1.06); }
-.tidy-btn:active { transform: translateY(1px); }
-
-/* The play surface. Its dashed edge is the cards' drag boundary made
-   visible; without JavaScript there is nothing to drag, so no frame. */
-.desk { padding: 0; }
-
-.has-js .desk {
-    border: 2px dashed rgba(var(--ink-rgb), 0.25);
-    border-radius: 28px;
-    padding: clamp(1.1rem, 3vw, 2rem);
-}
-
-.cards {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    width: min(100%, 420px);
-    margin: 0 auto;
-}
-
-/* A die-cut sticker: pale face, thick white edge, soft drop shadow.
-   GSAP owns the card's transform, so nothing here transitions it. */
-.card {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.9rem;
-    padding: 0.9rem 1.2rem;
-    background: var(--card);
-    border: 4px solid #fff;
-    border-radius: 20px;
-    text-decoration: none;
-    box-shadow: 0 8px 20px rgba(var(--ink-rgb), 0.14);
-    transition: box-shadow 0.25s ease;
-    will-change: transform;
-}
-
-.has-js .card {
-    cursor: grab;
-    /* Vertical touch swipes stay the page's to scroll; only a sideways
-       start picks a card up (see initDrag in script.js). */
-    touch-action: pan-y;
-}
-
-.card.is-held {
-    cursor: grabbing;
-    box-shadow: 0 18px 40px rgba(var(--ink-rgb), 0.26);
-}
-
-.card-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    min-width: 0;
-}
-
-.card-label {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 1.15;
-    color: var(--ink);
-}
-
-.card-sub {
-    font-size: 0.9rem;
-    color: var(--ink-dim);
-}
-
-.card-arrow {
-    flex: none;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--ink);
-}
-
-/* ---------- The latest thing ---------- */
-
-.latest { padding: 2.5rem 0 3rem; }
-
-.latest-panel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    width: min(100%, 760px);
-    margin: 0 auto;
-    padding: clamp(1.6rem, 4vw, 2.5rem) clamp(1.4rem, 4vw, 2.75rem);
-    background: var(--ink);
-    border-radius: 28px;
-    color: var(--ground);
-}
-
-.latest-badge {
-    margin: 0 0 0.4rem;
-    color: var(--accent);
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.14em;
+    padding: 0.85rem var(--gutter);
+    font-size: var(--step-fine);
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
-.latest-title {
-    margin: 0 0 0.55rem;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    line-height: 1.1;
-    color: var(--ground);
+.strip a { text-decoration: none; }
+.strip a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.strip__now {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.45em 0.85em;
+    border: 2px solid var(--ink);
+    border-radius: 99px;
 }
 
-.latest-body {
-    max-width: 26rem;
-    margin: 0 0 1.3rem;
-    color: var(--panel-dim);
-    font-size: 0.98rem;
+.strip__now { white-space: nowrap; }
+@media (max-width: 24.9em) { .strip__when { display: none; } }
+
+.strip__dot {
+    width: 0.55em; height: 0.55em;
+    border-radius: 50%;
+    background: var(--ink);
 }
 
-.latest-cta {
-    display: inline-block;
-    padding: 0.6rem 1.4rem 0.65rem;
-    background: var(--accent);
-    color: var(--ink);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
-    line-height: 1;
-    text-decoration: none;
-    border-radius: 999px;
-}
+/* --------------------------------------------------------------------------
+   HERO
 
-.latest-cta:hover { filter: brightness(1.06); }
+   Phones: one column in reading order. Wordmark, one-line bio, a small
+   pile of the three latest things, then the full list, which starts on
+   the first screen.
+   -------------------------------------------------------------------------- */
 
-.latest-panel :focus-visible { outline-color: var(--ground); }
-
-/* Three grumpy pigeons, drawn in CSS on white sticker rounds. They are
-   decoration: delete .latest-art and the panel simply narrows. */
-.latest-art {
-    flex: none;
+.hero {
     position: relative;
-    width: 190px;
-    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem var(--gutter) 0;
+    overflow-x: clip;
 }
 
-.pigeon {
+.wordmark {
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.mark {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--mark-size);
+    line-height: 0.88;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: var(--ink);
+}
+
+/* Letters the script wraps; it owns their transforms. */
+.mark__letter { display: inline-block; will-change: transform; }
+
+.hero__intro { text-align: center; }
+
+.hero__bio {
+    max-width: 24rem;
+    margin: 0.45rem 0 0;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Socials and contact: plain words, so there is no icon set to maintain. */
+.socials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem 1.1rem;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+.socials a {
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+}
+
+.socials a:hover { text-decoration-thickness: 0.16em; }
+
+/* --------------------------------------------------------------------------
+   THE PILE
+   -------------------------------------------------------------------------- */
+
+.pile {
+    position: relative;
+    z-index: 2;
+    width: var(--print-w);
+    margin-top: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pile__stack {
+    position: relative;
+    width: var(--print-w);
+    height: var(--print-h);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.print {
     position: absolute;
+    inset: 0;
+    /* Hand vertical swipes to the browser so the page still scrolls. */
+    touch-action: pan-y;
+    /* Each print is its own layer, so a throw moves pixels instead of
+       repainting the shadow every frame (large prints dropped frames). */
+    will-change: transform;
+}
+
+/* Static stack without the script: the first print on top, the next two
+   tilted behind it. The script replaces these with its own seeded pose. */
+.print:nth-child(1) { z-index: 6; }
+.print:nth-child(2) { z-index: 5; transform: rotate(5deg) translate(6px, 4px); }
+.print:nth-child(3) { z-index: 4; transform: rotate(-6deg) translate(-8px, 6px); }
+.print:nth-child(4) { z-index: 3; }
+
+/* Without the script only the top print is a working link (the list below
+   carries the rest): the covered ones ship inert in the markup, and the
+   script moves inert to whichever print is underneath. */
+html:not(.has-js) .print:nth-child(n+2) { background: var(--paper); box-shadow: 0 1px 2px rgba(var(--ink-rgb), 0.25), 0 10px 26px rgba(var(--ink-rgb), 0.22); }
+
+.print__link {
+    display: block;
+    position: relative;
+    height: 100%;
+    padding: var(--print-pad) var(--print-pad) 0;
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 2px;
+    box-shadow:
+        0 1px 2px rgba(var(--ink-rgb), 0.25),
+        0 10px 26px rgba(var(--ink-rgb), 0.22);
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Covered prints only need a tight edge shadow. A soft 26px shadow on
+   every large print cost dropped frames during a throw at 1920. */
+.print[inert] .print__link {
+    box-shadow: 0 1px 3px rgba(var(--ink-rgb), 0.3);
+}
+
+.print.is-held .print__link {
+    box-shadow:
+        0 2px 4px rgba(var(--ink-rgb), 0.25),
+        0 22px 44px rgba(var(--ink-rgb), 0.3);
+}
+
+.print__photo {
+    display: block;
+    height: var(--photo-h);
+    overflow: hidden;
+    background: var(--clay);
+}
+
+.print__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+.print__label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: var(--label-h);
+    padding: 0 2.4rem 0 0.25rem;
+    line-height: 1.2;
+}
+
+.print__kicker {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.print__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.print__arrow {
+    position: absolute;
+    right: 0.6rem;
+    bottom: calc(var(--label-h) / 2 - 0.875rem);
     display: grid;
     place-items: center;
-    width: 96px;
-    height: 96px;
-    background: #fff;
+    width: 1.75rem; height: 1.75rem;
     border-radius: 50%;
-    box-shadow: 0 8px 18px rgba(var(--ink-rgb), 0.4);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 1rem;
+    line-height: 1;
 }
 
-.pigeon-1 { top: 0; left: 0; transform: rotate(-8deg); }
-.pigeon-2 { top: 18px; right: 0; transform: rotate(6deg); }
-.pigeon-3 { bottom: 0; left: 34px; transform: rotate(-3deg); z-index: 1; }
+.print__link:focus-visible { outline-offset: 4px; }
 
-.pigeon-face {
+.pile__hint {
+    display: none;
+    margin: 0.75rem 0 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.has-js .pile__hint { display: block; }
+
+.pile__hint-touch,
+.pile__hint-mouse { display: none; }
+.has-js .pile__hint-touch { display: inline; }
+@media (pointer: fine) {
+    .has-js .pile__hint-touch { display: none; }
+    .has-js .pile__hint-mouse { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .has-js .pile__hint { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   EVERY LINK
+   -------------------------------------------------------------------------- */
+
+.links {
+    width: 100%;
+    max-width: 34rem;
+    margin-top: 1.4rem;
+}
+
+.links__title {
+    margin: 0 0 0.45rem;
+    font-size: var(--step-fine);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.links__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 2px solid var(--ink);
+}
+
+.links__list li { border-bottom: 1px solid rgba(var(--ink-rgb), 0.4); }
+
+.link {
+    display: grid;
+    grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.9rem;
+    min-height: 4.1rem;
+    padding: 0.45rem 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.15s;
+}
+
+.link:hover { background: rgba(var(--paper-rgb), 0.16); }
+
+.link__thumb {
+    width: 3.25rem;
+    height: 3.25rem;
+    object-fit: cover;
+    border: 3px solid var(--paper);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(var(--ink-rgb), 0.25);
+    transform: rotate(-3deg);
+    transition: transform 0.2s;
+}
+
+.links__list li:nth-child(even) .link__thumb { transform: rotate(3deg); }
+.link:hover .link__thumb { transform: rotate(0deg) scale(1.06); }
+
+.link__text { display: flex; flex-direction: column; min-width: 0; }
+
+.link__name { font-weight: 600; font-size: 1.0625rem; line-height: 1.3; }
+.link__meta { font-size: 0.875rem; line-height: 1.35; }
+
+.link__arrow { font-weight: 600; font-size: 1.15rem; padding-right: 0.3rem; }
+
+/* --------------------------------------------------------------------------
+   KILN OPENING: the one dark block
+   -------------------------------------------------------------------------- */
+
+.kiln {
+    margin-top: var(--section-y);
+    background: var(--clay);
+    color: var(--slip);
+}
+
+.kiln__inner {
+    display: grid;
+    gap: 2rem;
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 var(--gutter) var(--section-y);
+}
+
+.kiln__print {
+    width: min(62vw, 17rem);
+    margin: -3.5rem 0 0 auto;
+    padding: 0.5rem 0.5rem 2.2rem;
+    background: var(--paper);
+    border-radius: 2px;
+    box-shadow: 0 14px 34px rgba(var(--clay-rgb), 0.45);
+    transform: rotate(4deg);
+}
+
+.kiln__print img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+
+.kiln__kicker {
+    margin: 0;
+    font-size: var(--step-fine);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.kiln__date {
+    margin: 0.3rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(3rem, 2rem + 6vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+}
+
+.kiln__countdown {
+    margin: 0.9rem 0 0;
+    color: var(--celadon);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.kiln__body { max-width: 34rem; margin: 1rem 0 0; }
+
+.kiln__cta {
+    display: inline-block;
+    margin-top: 1.6rem;
+    padding: 0.95rem 1.6rem;
+    border-radius: 99px;
+    background: var(--glaze);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s;
+}
+
+.kiln__cta:hover { transform: rotate(-2deg) scale(1.03); }
+.kiln :focus-visible { outline-color: var(--celadon); }
+
+/* --------------------------------------------------------------------------
+   ABOUT
+   -------------------------------------------------------------------------- */
+
+.about {
+    display: grid;
+    gap: 2.2rem;
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: var(--section-y) var(--gutter) 0;
+}
+
+.about__print {
+    width: min(86vw, 30rem);
+    margin: 0 0 0 calc(var(--gutter) * -0.4);
+    padding: 0.6rem 0.6rem 2.6rem;
+    background: var(--paper);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(var(--ink-rgb), 0.25), 0 16px 36px rgba(var(--ink-rgb), 0.25);
+    transform: rotate(-3deg);
+}
+
+.about__print img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+
+.about__title,
+.diary__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--step-h2);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+}
+
+.about__text p { max-width: 32rem; margin: 0 0 1rem; }
+.about__where { font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   KILN DIARY
+   -------------------------------------------------------------------------- */
+
+.diary { padding: var(--section-y) var(--gutter); }
+
+.diary__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* The heading crosses a small tilted print. The print sits behind the second word
+   only and the heading is in front with a glaze edge, so no letter is lost. */
+.diary__head {
     position: relative;
-    width: 66px;
-    height: 66px;
-    background: #8F86A8;
-    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1.4rem;
 }
 
-.pigeon-brow {
-    position: absolute;
-    top: 20px;
-    left: 13px;
-    width: 40px;
-    height: 8px;
-    background: var(--ink);
-    border-radius: 4px;
-    /* One bar, clipped to a shallow V: the frown. */
-    clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 55%, 50% 100%, 0 55%);
+.diary__print {
+    width: clamp(8.5rem, 30vw, 13rem);
+    margin: 0;
+    padding: 0.4rem 0.4rem 1.6rem;
+    background: var(--paper);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(var(--ink-rgb), 0.25), 0 12px 28px rgba(var(--ink-rgb), 0.22);
+    transform: translateX(55%) rotate(6deg);
 }
 
-.pigeon-eye {
-    position: absolute;
-    top: 28px;
-    width: 9px;
-    height: 9px;
-    background: var(--ink);
-    border-radius: 50%;
-}
+.diary__print img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
 
-.pigeon-eye-l { left: 17px; }
-.pigeon-eye-r { right: 17px; }
-
-.pigeon-beak {
+.diary__head .diary__title {
     position: absolute;
-    top: 39px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 10px solid var(--accent);
+    top: 58%;
+    margin: 0;
+    z-index: 1;
+    transform: translate(-50%, -50%) rotate(-3deg);
+    font-size: clamp(3.6rem, 2rem + 8vw, 8.5rem);
+    white-space: nowrap;
+    -webkit-text-stroke: 0.07em var(--glaze);
+    paint-order: stroke fill;
 }
 
-/* ---------- Footer ---------- */
+.diary__lede { margin: 0 auto 1.6rem; max-width: 30rem; }
+
+.diary__label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: var(--step-fine);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.diary__row {
+    display: flex;
+    max-width: 28rem;
+    margin: 0 auto;
+    border: 2px solid var(--ink);
+    border-radius: 99px;
+    background: var(--paper);
+    overflow: hidden;
+}
+
+.diary__input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.9rem 1.1rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+}
+
+.diary__input::placeholder { color: rgba(var(--ink-rgb), 0.7); }
+.diary__input:focus-visible { outline: none; }
+.diary__row:focus-within { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.diary__btn {
+    padding: 0 1.4rem;
+    border: 0;
+    background: var(--ink);
+    color: var(--paper);
+    font: 600 1rem var(--font-body);
+    cursor: pointer;
+}
+
+.diary__btn:focus-visible { outline: 3px solid var(--paper); outline-offset: -5px; }
+
+.diary__done { min-height: 1.5em; margin: 0.8rem 0 0; font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
 
 .foot {
+    padding: 2.6rem var(--gutter) 2.2rem;
+    background: var(--clay);
+    color: var(--slip);
     text-align: center;
-    padding: 0 1.25rem 2rem;
 }
 
-.foot-line {
+.foot__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.6rem;
     margin: 0;
-    color: var(--ink-dim);
-    font-size: 0.88rem;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
 }
 
-.foot-link {
-    color: var(--ink-dim);
-    text-decoration: underline;
-    text-underline-offset: 2px;
+.foot__links a { text-decoration: none; }
+.foot__links a:hover { color: var(--glaze); }
+.foot :focus-visible { outline-color: var(--celadon); }
+
+.foot__small { margin: 1.2rem 0 0; font-size: 0.8125rem; }
+
+/* --------------------------------------------------------------------------
+   DESKTOP (64em and up): one line of wordmark across the width, the pile in the middle
+   column where the two words meet, bio left and the list right.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 36em) and (max-width: 63.99em) {
+    /* Tablets keep the phone composition with a larger print. */
+    :root { --print-w: min(46vw, 19rem); --label-h: 4rem; }
 }
 
-.foot-link:hover { color: var(--ink); }
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 720px) {
-    .latest-panel {
-        flex-direction: column;
-        align-items: flex-start;
+@media (min-width: 64em) {
+    :root {
+        /* Held to the window height so the whole hero fits the first
+           screen under a wordmark set at about 13% of the width. */
+        --print-w: clamp(16rem, min(28vw, 64vh - 10rem), 32rem);
+        --print-pad: 0.55rem;
+        --label-h: 4.2rem;
+        --mark-size: 12vw;
     }
 
-    .latest-art {
+    /* The wordmark runs across the top on one line; below it, the bio, the
+       pile and the full list share one row. Nothing overlaps. */
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--print-w) minmax(0, 1fr);
+        grid-template-areas:
+            "mark mark  mark"
+            "bio  pile  links";
+        column-gap: clamp(3rem, 5.5vw, 7rem);
+        row-gap: clamp(1.25rem, 3vh, 2.25rem);
+        align-content: center;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: 4rem var(--gutter) 1.5rem;
+    }
+
+    .wordmark {
+        grid-area: mark;
+        display: flex;
+        justify-content: center;
+        gap: 0.22em;
+        font-size: var(--mark-size);
+    }
+
+    .mark { font-size: 1em; }
+
+    .pile { grid-area: pile; margin-top: 0; justify-self: center; }
+
+    .print__kicker { font-size: 0.6875rem; }
+    .print__title { font-size: 1.1875rem; }
+
+    .hero__intro {
+        grid-area: bio;
         align-self: center;
-        width: 210px;
-        height: 120px;
+        justify-self: end;
+        max-width: 18rem;
+        text-align: left;
     }
 
-    .pigeon { width: 82px; height: 82px; }
-    .pigeon-face { width: 56px; height: 56px; }
-    .pigeon-brow { top: 16px; left: 10px; width: 36px; }
-    .pigeon-eye { top: 23px; }
-    .pigeon-eye-l { left: 13px; }
-    .pigeon-eye-r { right: 13px; }
-    .pigeon-beak { top: 32px; }
-    .pigeon-1 { top: 0; left: 8px; }
-    .pigeon-2 { top: 10px; right: 8px; }
-    .pigeon-3 { bottom: 0; left: 64px; }
+    .hero__bio {
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 1.35;
+    }
+
+    .socials {
+        justify-content: flex-start;
+        margin-top: 1rem;
+        font-size: 1.0625rem;
+    }
+
+    .links {
+        grid-area: links;
+        align-self: center;
+        justify-self: start;
+        max-width: 27rem;
+        margin-top: 0;
+    }
+
+    .kiln__inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+        align-items: center;
+        column-gap: 5rem;
+    }
+
+    .kiln__print { width: 100%; max-width: 22rem; margin: -4.5rem auto 0; }
+
+    .about {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        column-gap: 5rem;
+    }
+
+    .about__print { margin: 0; justify-self: end; }
 }
 
-@media (max-width: 480px) {
-    .desk-bar { flex-direction: column; align-items: stretch; gap: 0.6rem; }
-    .tidy-btn { align-self: flex-start; }
-}
+/* --------------------------------------------------------------------------
+   REVEAL GATES: pre-hidden before first paint (head script), restored for
+   reduced motion and whenever the script removes .has-js.
+   -------------------------------------------------------------------------- */
 
-/* ---------- Reduced motion ---------- */
+.has-js [data-reveal],
+.has-js [data-print],
+.has-js [data-wordmark] { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+    .has-js [data-reveal],
+    .has-js [data-print],
+    .has-js [data-wordmark] { opacity: 1; }
 }

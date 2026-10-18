@@ -2,9 +2,9 @@
 
 ![Free GSAP effects in motion: parallax hero, scroll text highlight, 3D card flip and the link-in-bio template](./demo.gif)
 
-Ten free, production-ready GSAP animation effects, eleven animated UI components and six complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
+Ten free, production-ready GSAP animation effects, eleven animated UI components and seven complete website templates, all MIT licensed. Copy, paste, and ship. Everything is self-contained, framework-agnostic, accessible, and memory-safe.
 
-From [GSAP Vault](https://gsapvault.com), a library of 135 copy-paste GSAP animation effects, 54 UI components and 89 complete website templates.
+From [GSAP Vault](https://gsapvault.com), a library of 135 copy-paste GSAP animation effects, 54 UI components and 90 complete website templates.
 
 ## The Effects
 
@@ -47,11 +47,12 @@ Complete single-purpose web pages, not just isolated effects: open `index.html` 
 | Template | What it is | Live demo |
 |--------|--------------|-----------|
 | [Resume Template](./resume-template) | A personal CV site that morphs between two layouts: a signature Flip-driven toggle reflows the whole page from a spacious web resume into an A4 document, backed by a real print stylesheet so the site is also the PDF. | [Demo](https://gsapvault.com/templates/resume-template) |
-| [Charity Campaign Template](./charity-campaign-template) | A free one-page river-restoration appeal built around a draggable before/after comparator: a gauge-board divider wipes between the degraded and the restored river, and every figure on the page counts like a reading. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
-| [Link in Bio Template](./link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
+| [Charity Campaign Template](./charity-campaign-template) | A free one-page appeal template where visitors give by packing a crate: drag tins, pasta and nappies off a shelf, watch the total rewrite what the gift does, and carry it into the donation form. Worked as a Sheffield food bank's winter appeal. | [Demo](https://gsapvault.com/templates/charity-campaign-template) |
+| [Link in Bio Template](./link-in-bio-template) | A free link-in-bio page, links first: a giant wordmark on one loud colour, a small pile of photo prints for the three latest things (flick one away to see the next, tap to open) and the full list of links on the first screen. Mariam Odede, a potter in Margate, is the worked example; it suits musicians, podcasters, small shops and writers just as well. | [Demo](https://gsapvault.com/templates/link-in-bio-template) |
 | [QR Table Menu Template](./qr-menu-template) | A phone-first digital menu made to open from a QR code at the table, with a sticky category bar that crossfades between sections and dietary chips that filter every dish at once. | [Demo](https://gsapvault.com/templates/qr-menu-template) |
 | [Waitlist Page Template](./waitlist-page-template) | A one-screen pre-launch waitlist page built round one product photograph: visitors drag the radio's tuning knob, static gives way to stations that tune in the price, materials and batch, and launch day holds the email sign-up. Worked example: a pocket radio from a Glasgow workshop. | [Demo](https://gsapvault.com/templates/waitlist-page-template) |
 | [Online CV](./online-cv-template) | A one-page online CV website: the A4 CV itself on an ultramarine desk, with a switch between a one-page and a full two-page CV, PDF download, print and email. Fills from your LinkedIn data export. Suits teachers, nurses, engineers, solicitors and graduates. | [Demo](https://gsapvault.com/templates/online-cv-template) |
+| [Sticker Link in Bio](./sticker-link-in-bio-template) | A free creator profile page whose link cards toss onto the page like stickers landing on a desk, drag anywhere with momentum, and tween back into a neat stack on 'Tidy up' - while a tap always just opens the link. | [Demo](https://gsapvault.com/templates/sticker-link-in-bio-template) |
 
 
 ## Quick Start
@@ -90,7 +91,7 @@ AI is optional. Every folder is ordinary, documented HTML, CSS and JavaScript, a
 
 ### Claude Code, Cursor and Codex: install the skill
 
-This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (326 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
+This repo ships an agent skill, `skills/gsap-vault`, that knows the whole GSAP Vault catalogue (327 products, free and paid), fetches any free one straight from this repo, and carries the integration rules. Install it into your project or globally:
 
 ```bash
 npx skills add jaydickinson/free-gsap-effects
@@ -107,7 +108,7 @@ Then ask your assistant for what you need ("add a parallax hero to the landing p
 
 ## Want more?
 
-This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 135 effects, 54 UI components and 89 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
+This repo is the free tier of [GSAP Vault](https://gsapvault.com). The full library has 135 effects, 54 UI components and 90 templates, including scroll-image sequences, infinite marquees, draggable galleries, text scramble/decode, magnetic cursors, particle systems, and complete portfolio, restaurant, and SaaS landing templates.
 
 - Browse everything: [effects](https://gsapvault.com/effects), [templates](https://gsapvault.com/templates) and [UI elements](https://gsapvault.com/ui-elements)
 - By category: [GSAP effects by type](https://gsapvault.com/gsap-effects), [templates by use case](https://gsapvault.com/gsap-templates), [every category page](https://gsapvault.com/categories)

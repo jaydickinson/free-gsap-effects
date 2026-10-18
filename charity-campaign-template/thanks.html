@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you | Hollins Lane Larder</title>
+    <meta name="description" content="Thank you for giving to the Hollins Lane Larder winter appeal.">
+    <meta name="robots" content="noindex">
+    <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Smooch+Sans:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="thanks-page">
+    <header class="nav is-solid nav--thanks">
+        <a class="wordmark" href="index.html" aria-label="Hollins Lane Larder, back to the appeal">
+            <svg class="wordmark-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+                <rect x="3" y="15" width="34" height="22" rx="3" fill="currentColor"/>
+                <rect x="8" y="5" width="9" height="12" rx="2" fill="currentColor" opacity=".55"/>
+                <rect x="20" y="8" width="12" height="9" rx="2" fill="currentColor" opacity=".55"/>
+                <rect x="7" y="21" width="26" height="3" rx="1.5" fill="var(--nav-mark-cut)"/>
+                <rect x="7" y="28" width="26" height="3" rx="1.5" fill="var(--nav-mark-cut)"/>
+            </svg>
+            <span class="wordmark-text">Hollins Lane<br>Larder</span>
+        </a>
+        <div class="nav-pills"><a class="pill pill--ink" href="index.html">Back to the appeal</a></div>
+    </header>
+
+    <!-- The thank-you page your donation platform redirects to. It reads
+         amount, frequency, crate, giftaid, in_name, gift_name and name from
+         the query string; without them it reads as a plain thank-you. -->
+    <main class="thanks" data-thanks>
+        <div class="thanks-copy">
+            <p class="eyebrow">Winter appeal · Hollins Lane Larder</p>
+            <h1 class="display-xl thanks-title">Your crate is on the shelf.</h1>
+            <p class="thanks-lede"><span data-thanks-name>Thank you.</span> You gave <strong class="thanks-amount" data-thanks-amount>to the winter appeal</strong>, and it goes on the shelves this week.</p>
+            <p class="thanks-giftaid" data-thanks-giftaid hidden></p>
+
+            <div class="thanks-crate" data-thanks-crate-wrap hidden>
+                <p class="give-crate-title">What you packed</p>
+                <ul class="give-crate-list" data-thanks-crate></ul>
+            </div>
+
+            <div class="thanks-gift" data-thanks-gift hidden>
+                <p class="give-crate-title">A card is on its way to</p>
+                <p class="thanks-gift-name" data-thanks-gift-name></p>
+            </div>
+
+            <div class="thanks-actions">
+                <button class="btn btn--ink" type="button" data-share data-share-url="index.html">Share the appeal</button>
+                <a class="btn btn--ask" href="index.html#help">Give a morning too</a>
+            </div>
+            <p class="thanks-fine">A receipt comes from your donation platform by email. Questions? <a href="mailto:hello@example.org">hello@example.org</a></p>
+        </div>
+        <figure class="thanks-photo">
+            <img src="assets/img/thanks-unpacking.webp" width="1400" height="935"
+                 alt="Two women laughing as they unpack bread from a paper grocery bag in a bright front room">
+        </figure>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-mark">
+            <p class="footer-word">Hollins Lane<br>Larder</p>
+            <p>The old Co-op, Hollins Lane, Walkley, Sheffield S6</p>
+        </div>
+        <div>
+            <p class="footer-label">Open</p>
+            <p>Monday to Saturday, 10:00 to 16:00<br>Thursday supper from 17:30</p>
+        </div>
+        <div>
+            <p class="footer-label">The appeal</p>
+            <p>Closes 31 March 2027<br>Registered charity no. 1187402</p>
+        </div>
+        <div>
+            <p class="footer-label">Get in touch</p>
+            <p><a href="mailto:hello@example.org">hello@example.org</a><br><a href="tel:+441140000000">0114 000 0000</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,142 +1,150 @@
-# Charity Campaign Template: "Brenna Rivers Trust"
+# Charity Campaign Template
 
-A complete, deployable one-page appeal for a charity campaign, written as a river-restoration trust. Static files, no build step, no backend.
+A one-page appeal where visitors give by packing a crate. The worked example is **Hollins Lane Larder**, a community food bank in the old Co-op on Hollins Lane, Walkley, Sheffield, raising £38,000 to keep its shelves full until spring.
 
-The page argues the way a good small charity argues: with measurements. A placard hero with a live raised-so-far counter, the problem in figures, a before/after photograph pair you wipe between, donation tiers priced in metres of bank and tonnes of gravel, work party dates, and a donation form that words out exactly what an amount buys.
+The first screen does what strong charity sites do: a full-bleed photograph, a headline as big as the window allows, a give card whose amounts say what they buy, and a raised-so-far strip along the bottom. Further down, nine items sit on a wooden shelf with their prices. Drag one into the crate, tap it or press Enter, and the total, the sentence describing what the crate does and the donation form amount all update together.
 
-**The signature is the comparator.** Two photographs of the same kind of river fill one frame; a draggable divider styled as a river gauge board clips between them. Drag it, arrow-key it, or swipe it on a phone; a vertical swipe on the board still scrolls the page, because the drag only commits once a touch gesture is clearly horizontal.
+Static files, no build step, no backend.
 
 ---
 
 ## Quick Start
 
-1. Copy the whole folder onto your host. It is plain HTML, CSS, JS and WebP; anything that serves static files will do.
-2. Replace the campaign copy and figures in `index.html`. Every number on the page is plain markup: the counter, the stats, the tier prices, the work party dates.
-3. Replace the photographs in `assets/img/` (see **Images** below).
-4. Repaint the three colours at the top of `assets/style.css` if you want a different palette (see **Palette**).
-5. Wire the donation form's submit to your payment provider (see **The donation form**).
+1. Upload the folder to any static host, or open `index.html` in a browser.
+2. Edit the appeal copy and figures in `index.html`: the headline, the raised-so-far strip, the stats and the stories are plain markup.
+3. Replace the shelf items with what your appeal buys (see **Pack a crate**).
+4. Replace the photographs in `assets/img/` (see **Images**).
+5. Point the donation form at your donation platform (see **The donation form**).
 
-There is nothing to install and nothing to compile.
+## Using It With Your Own Design
 
----
+Every section is a self-contained block in `index.html`, and every initialiser in `assets/script.js` returns early when its markup is missing. Delete the stories, the trust card, the shifts or the Buy it all band and the rest keeps working.
 
-## Editing the campaign
+Behaviour hooks are `data-` attributes (`data-crate`, `data-item`, `data-give-form`, `data-give-card`, `data-amount-input`, `data-outcome` and so on); class names are for styling only. To restyle, repaint the colour tokens at the top of `assets/style.css`, then adjust section rules. Type is Smooch Sans (display and figures, weights 800 and 900) and Be Vietnam Pro (body, 400, 600 and 700), loaded from Google Fonts.
 
-Everything a visitor reads lives in `index.html`:
+## Files
 
-- **The counter.** The raised figure and donor count are `data-count` spans: the text content is the final value shown without JavaScript, and `data-count-to` is the value the count-up animates to. Keep the two in agreement. The progress bar's width is an inline `style="width: 69%"`; set it to `raised / target`.
-- **The stats band.** Each stat is a `<dt>` figure and a `<dd>` caption. `data-count-to` takes decimals via `data-count-decimals="1"`. A figure without `data-count` (the zero) simply never animates.
-- **Tier cards.** Each card's button carries `data-give="25"`; clicking it scrolls to the form and preselects that amount. Amounts that match a form preset select the radio; anything else fills the Other field.
-- **Work parties.** Each row is a list item with a mono date, a task, a places note and a mailto link. Mark a full date by adding the `party--full` class and swapping the link for the `party-full-note` span, as the December row shows.
-
-Sections are independent: the script skips any section it does not find, so delete whole `<section>` blocks freely.
-
----
-
-## The comparator
-
-```html
-<div class="comp" data-comparator data-comp-start="46">
-```
-
-| Attribute | Values | Default | What it does |
-|---|---|---|---|
-| `data-comp-start` | `0`–`100` | `46` | Where the divider rests: the percentage of the frame showing the *before* photograph |
-
-The divider position is one number, and everything renders from it: the clip on the before pane, the board's `left`, and the slider's `aria-valuenow`.
-
-**Input behaviour:**
-
-| Input | What happens |
+| File | What it is |
 |---|---|
-| Drag the board (mouse or pen) | The wipe follows the pointer |
-| Click anywhere on the frame | The divider animates to the click |
-| Horizontal swipe (touch) | The wipe follows the finger |
-| Vertical swipe, even starting on the board (touch) | The page scrolls; the divider does not move |
-| Arrow keys | ±4. `Page Up` / `Page Down` ±20, `Home` / `End` to the extremes |
+| `index.html` | The appeal page |
+| `thanks.html` | The thank-you page the form submits to |
+| `assets/style.css` | Tokens, layout, section styles, reveal gates and reduced-motion overrides |
+| `assets/script.js` | Readable source |
+| `assets/script.min.js` | Minified copy of the same script; point the `<script>` tags at it in production if you like |
+| `assets/favicon.svg` | The crate mark |
+| `assets/img/` | Bundled WebP images |
+| `assets/img-src/` | Transparent masters for the crate and the nine item cut-outs |
+| `assets/img-manifest.json` | Sources, crops and bake settings for every image |
 
-The touch rules are deliberate: a touch press commits nothing, and the drag only starts scrubbing once the gesture is more horizontal than vertical. Coordinates are read from the raw event (null-safe) rather than GSAP's cached pointer, which reads `0` when the browser reclaims a gesture for scrolling.
+---
 
-**Inertia (optional).** Add one script tag next to the others and the board glides to a stop after a flick; without it the board simply stays where it is released:
+## Pack a crate
+
+Each shelf item is one button:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
+<button class="item" type="button"
+        data-item="nappies"
+        data-price="8"
+        data-extra="1|week of nappies|weeks of nappies"
+        data-fill="1"
+        data-name="Nappies, a week's pack">
+    <span class="item-pic"><img src="assets/img/item-nappies.webp" width="420" height="544" alt="" draggable="false"></span>
+    <span class="item-name">Nappies, a week's pack</span>
+    <span class="item-price">£8</span>
+    <span class="visually-hidden">Add to crate</span>
+</button>
 ```
 
-**Swapping the photographs.** The pair must read as the same kind of subject (same scale, similar horizon) or the wipe reads as two unrelated pictures. Replace `comp-before.webp` and `comp-after.webp` (1600×900), update the `alt` text and the two `figcaption` tags, and keep both `<figure>` blocks: without JavaScript they render stacked with their labels, which is the fallback.
+| Attribute | What it does |
+|---|---|
+| `data-item` | A unique id |
+| `data-price` | Price in pounds; the crate total is the sum |
+| `data-name` | Used in the crate list, the form summary and screen reader announcements |
+| `data-meals` | For food: how many meals one unit adds to "about N meals" |
+| `data-extra` | For anything else: `amount per unit|singular phrase|plural phrase`, read as "a week of nappies" or "3 weeks of nappies" |
+| `data-fill` | How many of this item Fill it for me and Buy it all pack |
 
-**Without JavaScript** the comparator is a labelled stacked pair and the drag instruction swaps for a caption describing it. **Under reduced motion** the comparator stays fully draggable, because it is a control rather than decoration, and only the intro sweep and the surrounding animation are dropped.
+The outcome sentence joins the meals and the phrases: "£45 packs about 34 meals, 240 cups of tea, a wash bag, a week of nappies and a Thursday supper for a family." Keep the `data-fill` counts adding up to the crate price you quote elsewhere on the page (£45 here, in the Buy it all band, the hero chip and the no-JavaScript line).
 
----
+**Reskinning the shelf.** For a wildlife trust: nest boxes, metres of hedging, a bat detector night. For a hospice: comfort kits, night-nurse hours, a family room night. For a music charity: a violin loan, a term of lessons, a rehearsal room. Use `data-extra` for anything that isn't a meal and leave `data-meals` off.
 
-## The donation form
+**Where packed items sit.** The crate is one photograph drawn twice; the front copy is clipped from `--front-top` (on `.crate-box`) down, so items sit behind the front wall. If you replace `crate.webp`, set `--front-top` to where the front wall starts, as a percentage of the image height. The twelve drawn positions are the `SLOTS` array in `script.js` (left, bottom, rotation, stacking); a thirteenth item and beyond still count and show as "+n more".
 
-The form is a front end. It validates, words the outcome, confirms, and tells the visitor nothing has been charged, because it is not connected to a payment provider until you connect one.
+**Input.** Every item is a native button, so click, tap, Enter and Space all add it. Dragging is an extra route: a press commits nothing, the drag starts only when a finger moves more sideways than up or down, and a vertical swipe over the shelf scrolls the page. On phones the shelf is one column with the crate pinned beside it, so packing is always a sideways move. The crate list has a remove and an add button per line; Empty the crate clears it.
 
-- **The outcome line** ("£25 fences and plants 4 metres of bank") is computed by `TIER_MATH` at the top of `assets/script.js`: an array of bands, each with the minimum amount it applies from, a unit cost, and a function that words the outcome. Edit the costs and wording to match your charity's real arithmetic; the point of the line is that it is true.
-- **Wiring the submit.** Find the `on(form, 'submit', ...)` handler in `initGiveForm` and replace its confirmation body with a redirect or `fetch()` to your provider: Stripe Payment Links, JustGiving, GoCardless for the monthly option, or your own endpoint. The helper `amount()` returns the chosen amount as a number, and the `freq` radios distinguish one-off from monthly.
-- **Gift Aid.** The checkbox is a declaration only; pass its state to your provider or CRM. If your charity is not UK-registered, delete the label.
+**One amount everywhere.** The crate total writes the amount into the hero card, the nav Donate pill, the form, the button label and the Gift Aid line. Emptying the crate hands the form back to the £45 preset.
 
----
+## The give card and the donation form
+
+The hero card is a small form with Once / Monthly, four amount chips and an amount field. Each chip's `data-outcome` is the sentence shown when that amount is chosen. Other amounts get a generic line (about two meals per pound, or whole family crates from £45), written in `outcomeFor()` in `script.js`; change the rate there to suit your appeal.
+
+The full form at `#give` collects frequency, amount, name, email, a Gift Aid declaration and optional gift-in-someone's-name details, plus a hidden `crate` field listing what was packed. **It takes no payment.** It submits by GET to `thanks.html`. To go live, either change the form's `action` to your platform's checkout, or post the fields to your own handler and redirect to `thanks.html` with the same query parameters. JustGiving, Enthuse and Stripe Checkout can all return to a thank-you URL.
+
+## The thank-you page
+
+`thanks.html` reads `amount`, `frequency`, `crate`, `giftaid`, `in_name`, `gift_name` and `name` from the query string and shows them back: the amount, the Gift Aid value, the packed items and who the card goes to. Without them it reads as a plain thank-you. Share the appeal uses the Web Share sheet where available and copies the link otherwise; it shares `index.html`, set by `data-share-url`.
+
+## Editing the rest
+
+- **Raised so far.** The figure is final in the markup; `data-count-to` is what the count-up animates to, so keep the two in agreement. The bar's share is `--raised: 0.61` on `.raised-fill`. Update both, and the days left, by hand.
+- **Stats.** Each `<dt>` is the final value with a matching `data-count-to`.
+- **Where every pound goes.** Segment widths are `--share` values on `.split-seg`; keep them in step with the legend.
+- **Shifts.** Each row is a list item with a day, a time, a description and a sign-up link. A full shift uses the `pill--full` span instead of a link.
 
 ## Palette
 
-Three hues; everything else is one of them at another value or opacity. The tokens live at the top of `assets/style.css` with their measured contrast table in the comment above them:
+| Token | Value | Role |
+|---|---|---|
+| `--leek` | `#13853A` | Main saturated ground: the raised strip, Pack a crate, the green story, Give. White text only (4.73:1) |
+| `--leek-deep` | `#0E6B2E` | The shelf, big figures on oat (6.02:1) |
+| `--oat` | `#FBF3E2` | Paper ground |
+| `--lilac` | `#D8CBFF` | Colour-block bands and the Volunteer pill |
+| `--ink` | `#13221A` | Text, shop-sign plate, footer |
+| `--yolk` | `#FFCC1A` | The ask only: Donate, prices, selected amount, Give buttons. Never a ground |
+| `--tomato` | `#E5452B` | The marquee strip and the split bar; never body text |
 
-```css
---river: #14584A;         /* the ground */
---river-deep: #0E463A;    /* recessed bands, and ink on chalk */
---river-lift: #1B6355;    /* raised cards */
---chalk: #EFEBDC;         /* type on green; the donate panel */
---chalk-deep: #E2DCC7;    /* chalk's second value: wells, hover fills */
---water: #8AD6C2;         /* the one accent, rationed to small labels and rules */
-
---river-rgb: 20, 88, 74;
---chalk-rgb: 239, 235, 220;
---water-rgb: 138, 214, 194;
---ink-rgb: 14, 70, 58;
-```
-
-Every translucent value in the stylesheet resolves from the `--*-rgb` triples, so a reskin is an edit to the hex values and their matching triples; nothing else holds a colour. If you change them, re-measure the pairs listed in the comment: the header documents which combinations were measured and where the floors are.
-
----
+The hero scrim uses its own fixed `--scrim-rgb` so a repaint never leaves the headline unreadable over the photograph. Measured ratios and limits are in the comment at the top of `style.css`.
 
 ## Images
 
-The photographs are **bundled, optimised WebP derivatives** with the template's cool viridian grade baked into the pixels, not original Unsplash files. `assets/img-manifest.json` records each source URL, output size, and grade.
+All images are bundled WebP derivatives; nothing is hot-linked. Regenerate them with:
 
-- **To swap a photo:** replace the file in `assets/img/` with your own (same dimensions), or edit the `src` in the manifest and regenerate.
-- **To regenerate the set** (from the GSAP Vault repo): `bun scripts/build-template-assets.ts charity-campaign-template --force`. The script downloads each source, applies the crop and grade, and emits WebP into `assets/img/`.
-- Keep a `background-color` beneath full-bleed images (already in the CSS) so text never sits on nothing while they load.
+```bash
+bun scripts/build-template-assets.ts charity-campaign-template --force
+```
 
-Original photography, via Unsplash:
+**Photographs** (Pexels licence; free to use and modify, not to be sold unaltered):
 
-- Before (silted river): https://unsplash.com/photos/debris-and-tree-stumps-in-muddy-water-with-forest-background-Sqrbqx5Ya0g
-- After (restored meadow stream): https://unsplash.com/photos/a-winding-stream-flows-through-a-grassy-meadow-cSUpOHhzjh8
-- Work party: https://unsplash.com/photos/volunteers-collecting-trash-along-a-riverbank-tX-A7eBc45Q
-- Planting: https://unsplash.com/photos/gloved-hands-planting-seedling-in-soil-CbZh3kaPxrE
-- Gravel riffle: https://unsplash.com/photos/a-stream-of-water-surrounded-by-rocks-and-grass-H6IORFX4A14
+| File | Source |
+|---|---|
+| `hero-sorting-room.webp` | https://www.pexels.com/photo/6994869/ |
+| `why-long-table.webp` | https://www.pexels.com/photo/6994963/ |
+| `supply-tins.webp` | https://www.pexels.com/photo/6994944/ |
+| `story-samira.webp` | https://www.pexels.com/photo/6994787/ |
+| `story-graham.webp` | https://www.pexels.com/photo/37894473/ |
+| `story-maureen.webp` | https://www.pexels.com/photo/6647066/ |
+| `help-delivery.webp` | https://www.pexels.com/photo/7551581/ |
+| `thanks-unpacking.webp` | https://www.pexels.com/photo/6721918/ |
 
----
+The names and quotes attached to the photographs are fiction written for the demo; replace them with your own people, with their permission.
+
+**Crate and item cut-outs** (`crate.webp`, `item-*.webp`) are AI-generated images made for this template, with plain packaging and no brands. Their transparent masters are in `assets/img-src/`, and the manifest crops each one to its object. To use your own, save a transparent WebP or PNG in `assets/img-src/` under the same name, rebuild, and update the `width`/`height` attributes in `index.html`.
 
 ## Accessibility
 
-- The comparator divider is a real `role="slider"` with `aria-valuenow`, `aria-valuemin/max`, and an `aria-valuetext` that reports how much of the restored view is shown. Its keydown handler implements the full slider keyboard contract.
-- Every campaign figure is present in the markup at its final value, so nothing depends on the count-ups running.
-- Reveal states are gated behind an `html.has-js` class that is only added once GSAP is confirmed present: a blocked CDN leaves a fully readable page.
-- Reduced motion is honoured twice, by a CSS media query and a `gsap.matchMedia` branch, and leaves a complete static page with the comparator still operable.
-- The donation form uses real labels, fieldsets and legends; the outcome line and the confirmation are polite live regions.
-- Focus is always visible: water outlines on green grounds, ink outlines on the chalk panel.
-- A skip link jumps straight to the donation form.
-
-## Browser Support
-
-Modern browsers (ES5 syntax, CSS `clip-path`, `inset`, custom properties). Not compatible with IE11.
+- Every shelf item is a native button with a label that includes its price and how many are already in the crate; adding or removing announces the new total through a status region.
+- The crate list's remove and add buttons are labelled per item, and focus stays on the list after a removal.
+- Amount chips and Once / Monthly are native radio groups; the form marks invalid fields and names them in one message.
+- Without JavaScript, or with the CDN blocked, the shelf reads as a priced list, every figure is final and the form submits.
+- Under reduced motion the crate works the same; flights, count-ups, reveals and the marquee are dropped.
 
 ## Dependencies
 
-- GSAP 3.12+ (core)
-- ScrollTrigger plugin (reveals and count-ups; the page stays fully readable without it)
-- Draggable plugin (the comparator drag; keyboard and click still work without it)
-- InertiaPlugin (optional: the board glides after a flick; not loaded by default)
-- Lenis (optional: smooth scrolling; the page works without it)
+- GSAP 3.15.0 core and ScrollTrigger (jsDelivr). Works with GSAP 3.12+.
+- Lenis 1.3.17 (unpkg), optional. Remove its `<script>` tag, add `data-smooth="off"` to `<html>`, or add `?smooth=off` to the URL.
+- Google Fonts: Smooch Sans, Be Vietnam Pro.
+
+## Teardown
+
+Everything the script creates lives in one GSAP context exposed as `window.gsapContext`. `window.gsapContext.revert()` kills its tweens and ScrollTriggers, removes its listeners, the drawn crate slots and any drag ghost, and stops Lenis, leaving other animations on the page alone.

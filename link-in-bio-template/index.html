@@ -3,117 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tati Moreno - illustrator in Bristol. Stickers, riso prints, a weekly pigeon comic, and everywhere else to find her, on one page.">
-    <title>Tati Moreno - Link in Bio Template | GSAP Vault</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <title>Mariam Odede, potter in Margate</title>
+    <meta name="description" content="Kiln openings, Thursday clay classes, the shop and restaurant tableware from Mariam Odede's studio in Margate.">
+    <meta name="theme-color" content="#E15A2B">
+    <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Onest:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<main class="shell">
+<header class="strip">
+    <a class="strip__handle" href="#about">@mariamodede</a>
+    <a class="strip__now" href="#kiln"><span class="strip__dot" aria-hidden="true"></span>Kiln opening<span class="strip__when"> Saturday</span></a>
+</header>
 
-    <!-- Profile. The avatar is a drawn monogram sticker, not a photo:
-         swap the initial in .avatar-mark and it is yours. -->
-    <header class="hero">
-        <div class="avatar" data-avatar aria-hidden="true">
-            <span class="avatar-mark">t.</span>
+<main>
+    <!-- ==================================================================
+         HERO: the wordmark, a one-line bio, a small pile of the three
+         latest things and then every link. The two wordmark words are
+         decoration (aria-hidden); the h1 carries the name for search and
+         screen readers. Change all three together.
+         ================================================================== -->
+    <section class="hero" data-hero aria-labelledby="hero-title">
+        <h1 id="hero-title" class="sr-only">Mariam Odede, potter in Margate</h1>
+
+        <div class="wordmark" aria-hidden="true">
+            <p class="mark" data-wordmark>Mariam</p>
+            <p class="mark" data-wordmark>Odede</p>
         </div>
-        <h1 class="hero-name" data-rise>Tati Moreno</h1>
-        <p class="hero-handle" data-rise><span class="handle-pill">@tatidoodles</span></p>
-        <p class="hero-bio" data-rise>I draw round animals with bad attitudes.
-        Stickers, riso prints, and one very cross pigeon comic, from a small
-        desk in Bristol.</p>
-    </header>
 
-    <!-- The links. Without JavaScript this is exactly what it looks like:
-         a plain stacked list, every link reachable. With it, the cards
-         toss in like stickers and can be dragged anywhere on the desk.
-         The hint line and the Tidy up button are injected by script.js,
-         because they describe a feature only the script provides; their
-         wording lives in initDeskBar. -->
-    <section class="links" id="links" aria-label="Links">
-        <div class="desk" data-desk>
-            <div class="cards">
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">The shop</span>
-                        <span class="card-sub">Sticker sheets &amp; riso prints</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">Pigeon Post</span>
-                        <span class="card-sub">One cross pigeon, weekly. Free to read</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">Commissions</span>
-                        <span class="card-sub">Two slots open for autumn</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">Sticker Club</span>
-                        <span class="card-sub">A surprise pack in the post, monthly</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">Instagram</span>
-                        <span class="card-sub">Works in progress and studio floor</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
-                <a class="card" data-card href="#">
-                    <span class="card-text">
-                        <span class="card-label">Newsletter</span>
-                        <span class="card-sub">One email a month, no more</span>
-                    </span>
-                    <span class="card-arrow" aria-hidden="true">&#8599;</span>
-                </a>
+        <div class="hero__intro">
+            <p class="hero__bio">Potter in Margate. Mugs, jugs and kiln openings.</p>
+            <!-- Socials and contact sit up here, where visitors arriving from a
+                 profile look for them; the footer repeats them. -->
+            <ul class="socials" aria-label="Elsewhere">
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">TikTok</a></li>
+                <li><a href="mailto:studio@mariamodede.example">Email</a></li>
+            </ul>
+        </div>
+
+        <!-- THE PILE: the three latest things, one print and one link each;
+             the first is on top. Two to four work. They also appear in the
+             full list below (#links), so nobody has to flick to find one. -->
+        <div class="pile" data-pile aria-label="Latest, as a pile of prints" aria-describedby="pile-hint" role="region">
+            <ol class="pile__stack" data-pile-stack>
+                <li class="print" data-print>
+                    <a class="print__link" href="#kiln" draggable="false">
+                        <span class="print__photo"><img src="assets/img/print-kiln-opening.webp" width="900" height="1125" alt="Small dishes in a deep teal glaze with toasted rims, seen from above" draggable="false"></span>
+                        <span class="print__label">
+                            <span class="print__kicker">Saturday, 10:00</span>
+                            <span class="print__title">Kiln opening</span>
+                        </span>
+                        <span class="print__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="print" data-print inert aria-hidden="true">
+                    <a class="print__link" href="#" draggable="false">
+                        <span class="print__photo"><img src="assets/img/print-classes.webp" width="900" height="1125" alt="Mariam beside a student at the studio bench, pressing out a slab of clay" draggable="false"></span>
+                        <span class="print__label">
+                            <span class="print__kicker">Thursdays, 6.30pm</span>
+                            <span class="print__title">Clay classes</span>
+                        </span>
+                        <span class="print__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="print" data-print inert aria-hidden="true">
+                    <a class="print__link" href="#" draggable="false">
+                        <span class="print__photo"><img src="assets/img/print-shop.webp" width="900" height="1125" alt="Hand-painted cups in butter yellow, pink and pale blue on a wooden counter" draggable="false"></span>
+                        <span class="print__label">
+                            <span class="print__kicker">Between firings</span>
+                            <span class="print__title">The shop</span>
+                        </span>
+                        <span class="print__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ol>
+
+            <!-- The hint only appears once the pile can move (.has-js). -->
+            <p class="pile__hint" id="pile-hint">
+                <span class="pile__hint-touch">Flick for more</span>
+                <span class="pile__hint-mouse">Drag for more</span>
+                <span class="sr-only">Use the left and right arrow keys for the next print.</span>
+            </p>
+            <p class="sr-only" data-pile-status aria-live="polite"></p>
+        </div>
+
+        <!-- EVERY LINK: all of them, including the three on the pile. This
+             is the path for keyboard, screen readers, no-JS and skimmers. -->
+        <nav class="links" id="links" aria-labelledby="links-title">
+            <h2 class="links__title" id="links-title">Every link</h2>
+            <ul class="links__list">
+                <li><a class="link" href="#kiln">
+                    <img class="link__thumb" src="assets/img/print-kiln-opening.webp" width="900" height="1125" alt="">
+                    <span class="link__text"><span class="link__name">Kiln opening</span><span class="link__meta">Saturday 10:00, 31 pieces</span></span>
+                    <span class="link__arrow" aria-hidden="true">&rarr;</span>
+                </a></li>
+                <li><a class="link" href="#">
+                    <img class="link__thumb" src="assets/img/print-classes.webp" width="900" height="1125" alt="">
+                    <span class="link__text"><span class="link__name">Thursday clay classes</span><span class="link__meta">6.30pm, six places, &pound;45</span></span>
+                    <span class="link__arrow" aria-hidden="true">&rarr;</span>
+                </a></li>
+                <li><a class="link" href="#">
+                    <img class="link__thumb" src="assets/img/print-shop.webp" width="900" height="1125" alt="">
+                    <span class="link__text"><span class="link__name">The shop</span><span class="link__meta">Cups, mugs and seconds</span></span>
+                    <span class="link__arrow" aria-hidden="true">&rarr;</span>
+                </a></li>
+                <li><a class="link" href="#">
+                    <img class="link__thumb" src="assets/img/print-tableware.webp" width="900" height="1125" alt="">
+                    <span class="link__text"><span class="link__name">Restaurant tableware</span><span class="link__meta">Three a year, booking 2027</span></span>
+                    <span class="link__arrow" aria-hidden="true">&rarr;</span>
+                </a></li>
+                <li><a class="link" href="#diary">
+                    <img class="link__thumb" src="assets/img/print-kiln-diary.webp" width="900" height="1125" alt="">
+                    <span class="link__text"><span class="link__name">Kiln Diary</span><span class="link__meta">One email per firing</span></span>
+                    <span class="link__arrow" aria-hidden="true">&rarr;</span>
+                </a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <!-- ==================================================================
+         KILN OPENING: the one dark block. data-opens takes an ISO date
+         ("2026-11-07T10:00:00+00:00") or "next-saturday" for a rolling demo.
+         ================================================================== -->
+    <section class="kiln" id="kiln" data-kiln data-opens="next-saturday" data-opens-hour="10" aria-labelledby="kiln-title">
+        <div class="kiln__inner">
+            <figure class="kiln__print" data-reveal>
+                <img src="assets/img/kiln-plates.webp" width="720" height="900" alt="Glazed plates in teal and dusky pink on a scrubbed wooden table" loading="lazy">
+            </figure>
+            <div class="kiln__text" data-reveal>
+                <p class="kiln__kicker">Next kiln opening</p>
+                <h2 class="kiln__date" id="kiln-title" data-opens-date>Saturday, 10:00</h2>
+                <p class="kiln__countdown" data-countdown>Doors open online at 10:00 sharp</p>
+                <p class="kiln__body">Thirty-one pieces from this firing: mugs from &pound;24, two pouring jugs, a stack of side plates and one big copper-red platter. Everything goes live at once and usually sells within the hour.</p>
+                <a class="kiln__cta" href="#">Open the shop</a>
             </div>
         </div>
     </section>
 
-    <!-- The latest thing: one feature slot for whatever is newest.
-         The pigeons are drawn in CSS - restyle or delete them freely. -->
-    <section class="latest" id="latest" aria-labelledby="latest-title">
-        <div class="latest-panel" data-rise>
-            <div class="latest-text">
-                <p class="latest-badge">Latest drop</p>
-                <h2 class="latest-title" id="latest-title">Grumpy Pigeons</h2>
-                <p class="latest-body">Eight die-cut pigeons, each one furious
-                about something different. Waterproof, matte, pigeon-sized.
-                Gone when they&rsquo;re gone.</p>
-                <a class="latest-cta" href="#">Get the sheet &middot; &pound;6</a>
-            </div>
-            <div class="latest-art" aria-hidden="true">
-                <span class="pigeon pigeon-1"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
-                <span class="pigeon pigeon-2"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
-                <span class="pigeon pigeon-3"><span class="pigeon-face"><span class="pigeon-brow"></span><span class="pigeon-eye pigeon-eye-l"></span><span class="pigeon-eye pigeon-eye-r"></span><span class="pigeon-beak"></span></span></span>
-            </div>
+    <!-- ABOUT: one big candid print and a few lines. -->
+    <section class="about" id="about" aria-labelledby="about-title">
+        <figure class="about__print" data-reveal>
+            <img src="assets/img/portrait.webp" width="1000" height="1250" alt="Mariam smiling down at an unfired hand-built pot she is holding in the studio" loading="lazy">
+        </figure>
+        <div class="about__text" data-reveal>
+            <h2 class="about__title" id="about-title">Hello, I&rsquo;m Mariam.</h2>
+            <p>I make stoneware in a small studio off Northdown Road: thrown mugs with handles you can get four fingers through, wonky jugs, and plates for The Penny Whelk and two other kitchens on the coast.</p>
+            <p>The kiln goes on about every six weeks. Whatever comes out goes on sale that Saturday, seconds and all.</p>
+            <p class="about__where">Studio 4, Northdown Road, Cliftonville, Margate. Visits by appointment.</p>
         </div>
     </section>
 
+    <!-- KILN DIARY sign-up. Front end only: wire the form to your list. -->
+    <section class="diary" id="diary" aria-labelledby="diary-title">
+        <div class="diary__inner" data-reveal>
+            <div class="diary__head">
+                <figure class="diary__print" aria-hidden="true">
+                    <img src="assets/img/print-kiln-opening.webp" width="900" height="1125" alt="" loading="lazy">
+                </figure>
+                <h2 class="diary__title" id="diary-title">Kiln Diary</h2>
+            </div>
+            <p class="diary__lede">One email per firing, about six a year: what came out, what cracked, and the time the next opening goes live.</p>
+            <form class="diary__form" data-diary-form action="#" method="post">
+                <label class="diary__label" for="diary-email">Your email</label>
+                <div class="diary__row">
+                    <input class="diary__input" id="diary-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                    <button class="diary__btn" type="submit">Join</button>
+                </div>
+                <p class="diary__done" data-diary-done role="status"></p>
+            </form>
+        </div>
+    </section>
 </main>
 
-<footer class="foot" data-rise>
-    <p class="foot-line">&copy; 2026 Tati Moreno &middot; Bristol, UK &middot;
-    <a class="foot-link" href="mailto:hi@tatidoodles.com">hi@tatidoodles.com</a></p>
+<footer class="foot">
+    <ul class="foot__links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="mailto:studio@mariamodede.example">Email</a></li>
+    </ul>
+    <p class="foot__small">Made in Margate. &copy; 2026 Mariam Odede Ceramics.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
-<script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
 <script src="assets/script.js"></script>
-
 </body>
 </html>

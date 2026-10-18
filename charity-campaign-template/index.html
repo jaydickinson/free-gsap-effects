@@ -1,355 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Brenna Rivers Trust - the Welsden Reach appeal. £60,000 restores 3.1 km of the River Brenna: fenced banks, raked gravel, trees, and the trout back. See exactly what your money does.">
-    <title>Brenna Rivers Trust - Charity Campaign Template | GSAP Vault</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <title>Fill the shelves till spring | Hollins Lane Larder winter appeal</title>
+    <meta name="description" content="Hollins Lane Larder is Walkley's community food bank. Our winter appeal needs £38,000 to keep the shelves full until the end of March. Pack a crate or give any amount.">
+    <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=B612+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Smooch+Sans:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/img/hero-sorting-room.webp">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+    <a class="skip" href="#give">Skip to the donation form</a>
 
-<a class="skip" href="#give">Skip to the donation form</a>
-
-<nav class="nav" aria-label="Main">
-    <a class="nav-mark" href="#top">
-        <span class="nav-mark-rule" aria-hidden="true"></span>
-        <span class="nav-mark-text">Brenna<br>Rivers Trust</span>
-    </a>
-    <ul class="nav-links">
-        <li><a href="#problem">The problem</a></li>
-        <li><a href="#work">The work</a></li>
-        <li><a href="#money">What it costs</a></li>
-        <li><a href="#parties">Work parties</a></li>
-    </ul>
-    <a class="btn btn--chalk nav-cta" href="#give">Donate</a>
-</nav>
-
-<!-- ============ HERO: the placard ============ -->
-<header class="hero" id="top">
-    <div class="hero-inner">
-        <div class="hero-placard">
-            <p class="eyebrow" data-fade>Welsden Reach Appeal <span aria-hidden="true">&middot;</span> Registered charity no. 1198472</p>
-            <h1 class="placard">
-                <span class="mask"><span class="pl">A river is not</span></span>
-                <span class="mask"><span class="pl">supposed</span></span>
-                <span class="mask"><span class="pl">to be brown.</span></span>
-            </h1>
-            <svg class="hero-thread" viewBox="0 0 560 46" fill="none" aria-hidden="true" preserveAspectRatio="xMinYMid meet">
-                <path data-thread d="M2 30 C 50 8, 92 44, 148 30 S 240 6, 300 24 S 402 44, 452 22 S 530 10, 558 26"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <!-- ===================== NAV ===================== -->
+    <header class="nav" data-nav>
+        <a class="wordmark" href="#top" aria-label="Hollins Lane Larder, back to the top">
+            <svg class="wordmark-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+                <rect x="3" y="15" width="34" height="22" rx="3" fill="currentColor"/>
+                <rect x="8" y="5" width="9" height="12" rx="2" fill="currentColor" opacity=".55"/>
+                <rect x="20" y="8" width="12" height="9" rx="2" fill="currentColor" opacity=".55"/>
+                <rect x="7" y="21" width="26" height="3" rx="1.5" fill="var(--nav-mark-cut)"/>
+                <rect x="7" y="28" width="26" height="3" rx="1.5" fill="var(--nav-mark-cut)"/>
             </svg>
+            <span class="wordmark-text">Hollins Lane<br>Larder</span>
+        </a>
+        <nav class="nav-links" aria-label="Sections">
+            <a href="#why">The appeal</a>
+            <a href="#crate">Pack a crate</a>
+            <a href="#stories">Stories</a>
+            <a href="#help">Help out</a>
+        </nav>
+        <div class="nav-pills">
+            <a class="pill pill--lilac nav-volunteer" href="#help">Volunteer</a>
+            <a class="pill pill--ask" href="#give">Donate<span class="nav-total" data-nav-total hidden></span></a>
         </div>
+    </header>
 
-        <div class="hero-side">
-            <p class="standfirst" data-fade>The Brenna ran clear until the weir pool silted and two banks
-            went in 2019. Putting a river right is not complicated: fence the banks, plant
-            them, rake the gravel, count what comes back. It is just slow, and it is done
-            in waders, not in meetings.</p>
+    <main id="top">
 
-            <div class="counter" data-counter>
-                <p class="counter-raised">
-                    <span class="counter-fig mono"><span aria-hidden="true">£</span><span class="sr-only">£</span><span data-count data-count-to="41380">41<span class="fig-sep">,</span>380</span></span>
-                    <span class="counter-of">raised of £60,000</span>
-                </p>
-                <div class="counter-bar" role="img" aria-label="69 per cent of the £60,000 target raised">
-                    <div class="counter-fill" data-counter-fill style="width: 69%"></div>
+        <!-- ===================== HERO =====================
+             Cool Earth's arrangement: a full-bleed photograph, the headline
+             as big as the first screen allows, and the give card in the hero.
+             The card is a real form; without JavaScript it submits to #give. -->
+        <section class="hero" data-hero aria-labelledby="hero-title">
+            <img class="hero-photo" src="assets/img/hero-sorting-room.webp" width="2000" height="1333"
+                 alt="Three volunteers sorting bread, pasta and tins at long tables in a bright brick room with tall windows" fetchpriority="high">
+            <div class="hero-scrim" aria-hidden="true"></div>
+
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <p class="kicker" data-hero-fade>Winter appeal · Walkley, Sheffield</p>
+                    <h1 id="hero-title" class="hero-title">
+                        <span class="line"><span data-hero-line>Fill the shelves</span></span>
+                        <span class="line"><span data-hero-line>till spring.</span></span>
+                    </h1>
+                    <p class="hero-lede" data-hero-fade>We're Walkley's food bank, open six days a week from the old Co-op on Hollins Lane. Last winter the shelves were bare by February. £38,000 keeps them full until the end of March.</p>
+                    <a class="hero-crate-link" href="#crate" data-hero-fade>Or pack a crate yourself <span aria-hidden="true">↓</span></a>
                 </div>
-                <p class="counter-meta mono"><span data-count data-count-to="689">689</span> donors &middot; appeal closes 31 March 2027</p>
-            </div>
 
-            <div class="hero-ctas" data-fade>
-                <a class="btn btn--chalk" href="#give">Give to the appeal</a>
-                <a class="btn btn--ghost" href="#money">See where it goes</a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<main>
-
-<!-- ============ THE PROBLEM: gauge figures ============ -->
-<section class="problem" id="problem" aria-labelledby="problem-title">
-    <div class="section-inner">
-        <header class="section-head" data-fade>
-            <p class="eyebrow">The problem</p>
-            <h2 class="section-title" id="problem-title">What is wrong, measured</h2>
-            <p class="section-lede">We do not do vague. These are the numbers from the reach
-            between Welsden Bridge and Millers Meadow, and they are the numbers this appeal
-            exists to change.</p>
-        </header>
-
-        <dl class="stats">
-            <div class="stat" data-fade>
-                <dt class="stat-fig mono"><span data-count data-count-to="3.1" data-count-decimals="1">3<span class="fig-sep">.</span>1</span><span class="stat-unit">km</span></dt>
-                <dd class="stat-caption">of the Welsden reach rated <em>Poor</em> by the Environment
-                Agency. It is the only stretch of the Brenna below <em>Moderate</em>.</dd>
-            </div>
-            <div class="stat" data-fade>
-                <dt class="stat-fig mono"><span data-count data-count-to="212">212</span><span class="stat-unit">hrs</span></dt>
-                <dd class="stat-caption">of storm overflow into the river above the bridge in 2025,
-                logged by our own volunteers' monitors, not estimated.</dd>
-            </div>
-            <div class="stat" data-fade>
-                <dt class="stat-fig mono">0<span class="stat-unit">redds</span></dt>
-                <dd class="stat-caption">trout spawning nests counted below the weir last winter.
-                In 1998 the same walk counted forty.</dd>
-            </div>
-            <div class="stat" data-fade>
-                <dt class="stat-fig mono"><span data-count data-count-to="38">38</span><span class="stat-unit">tonnes</span></dt>
-                <dd class="stat-caption">of silt a year off two collapsed banks, smothering the
-                gravel that trout and lamprey spawn in.</dd>
-            </div>
-        </dl>
-    </div>
-</section>
-
-<!-- ============ THE WORK: before/after comparator ============ -->
-<section class="work" id="work" aria-labelledby="work-title">
-    <div class="section-inner work-head" data-fade>
-        <p class="eyebrow">The work</p>
-        <h2 class="section-title" id="work-title">The same water, four years on</h2>
-        <p class="section-lede">Millers Meadow was fenced, planted and re-graded between 2021
-        and 2025, at £38 a metre. Drag the gauge board across and see what that bought.
-        The unrestored reach below Fentley outfall still looks like the left-hand side.</p>
-    </div>
-
-    <div class="comp" data-comparator data-comp-start="46">
-        <figure class="comp-pane comp-pane--after">
-            <img src="assets/img/comp-after.webp" alt="The restored reach at Millers Meadow: a clear stream winding between planted, grassy banks" width="1600" height="900" loading="lazy">
-            <figcaption class="comp-tag comp-tag--after"><span class="mono">2025</span> Millers Meadow, restored</figcaption>
-        </figure>
-        <figure class="comp-pane comp-pane--before">
-            <img src="assets/img/comp-before.webp" alt="The unrestored reach below Fentley outfall: silt-brown water against a collapsed, bare bank" width="1600" height="900" loading="lazy">
-            <figcaption class="comp-tag comp-tag--before"><span class="mono">2021</span> Below Fentley outfall</figcaption>
-        </figure>
-        <div class="comp-staff" data-comp-handle role="slider" tabindex="0"
-             aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="46"
-             aria-label="Before and after comparison divider">
-            <div class="staff-board" aria-hidden="true">
-                <span class="staff-num staff-num--1">1.0</span>
-                <span class="staff-num staff-num--2">0.8</span>
-                <span class="staff-num staff-num--3">0.6</span>
-                <span class="staff-num staff-num--4">0.4</span>
-                <span class="staff-num staff-num--5">0.2</span>
-            </div>
-            <div class="staff-grip" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-                    <path d="M8 7 L3 12 L8 17 M16 7 L21 12 L16 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-    <p class="comp-help section-inner" data-fade><span class="js-only">The board is a river gauge from
-    the reach it measures. Drag it, or focus it and use the arrow keys.</span><span
-    class="nojs-only">Two photographs of the reach: restored above, unrestored below.</span></p>
-</section>
-
-<!-- ============ WHAT YOUR MONEY DOES ============ -->
-<section class="money" id="money" aria-labelledby="money-title">
-    <div class="section-inner">
-        <header class="section-head" data-fade>
-            <p class="eyebrow">What it costs</p>
-            <h2 class="section-title" id="money-title">What your money does. Exactly.</h2>
-            <p class="section-lede">Restoration is bought by the metre, the tonne and the tree,
-            so that is how we ask for it. Last year 92p in every pound went on the river itself;
-            the accounts are on the Charity Commission register.</p>
-        </header>
-
-        <div class="money-grid">
-            <div class="tiers">
-                <article class="tier" data-fade>
-                    <p class="tier-price mono">£10</p>
-                    <p class="tier-what">Rears and releases <strong>25 brown trout fry</strong> below
-                    Welsden weir, from Brenna broodstock.</p>
-                    <a class="btn btn--chalk btn--small" href="#give" data-give="10">Give £10</a>
-                </article>
-                <article class="tier" data-fade>
-                    <p class="tier-price mono">£25</p>
-                    <p class="tier-what">Fences and plants <strong>four metres of bare bank</strong>:
-                    willow whips, stakes, and a year of checks.</p>
-                    <a class="btn btn--chalk btn--small" href="#give" data-give="25">Give £25</a>
-                </article>
-                <article class="tier" data-fade>
-                    <p class="tier-price mono">£60</p>
-                    <p class="tier-what">Buys <strong>a tonne of washed gravel</strong>, raked into
-                    a spawning riffle by the work parties.</p>
-                    <a class="btn btn--chalk btn--small" href="#give" data-give="60">Give £60</a>
-                </article>
-                <article class="tier" data-fade>
-                    <p class="tier-price mono">£150</p>
-                    <p class="tier-what">Kits out <strong>one work party for a season</strong>:
-                    waders, gloves, loppers and the first aid box.</p>
-                    <a class="btn btn--chalk btn--small" href="#give" data-give="150">Give £150</a>
-                </article>
-            </div>
-            <figure class="money-photo" data-fade>
-                <img src="assets/img/planting.webp" alt="Gloved hands setting a rooted whip into riverbank soil" width="760" height="950" loading="lazy">
-                <figcaption>Bare-root planting on the Fentley bank. Every whip is £1.20 and most of them take.</figcaption>
-            </figure>
-        </div>
-    </div>
-</section>
-
-<!-- ============ WORK PARTIES ============ -->
-<section class="parties" id="parties" aria-labelledby="parties-title">
-    <div class="section-inner">
-        <div class="parties-grid">
-            <div class="parties-copy">
-                <header class="section-head" data-fade>
-                    <p class="eyebrow">Work parties</p>
-                    <h2 class="section-title" id="parties-title">Bring boots</h2>
-                    <p class="section-lede">Second Saturday of the month, 9.30 to 1.00. No experience
-                    needed and no standing around being thanked. Tools, waders and tea provided;
-                    bring boots that can get wet and a coat that can get worse.</p>
-                </header>
-
-                <ol class="party-list">
-                    <li class="party" data-fade>
-                        <p class="party-date mono">Sat 12 Sep</p>
-                        <div class="party-body">
-                            <p class="party-task">Willow spiling at Millers Meadow</p>
-                            <p class="party-meta mono">6 places</p>
-                        </div>
-                        <a class="btn btn--ghost btn--small" href="mailto:parties@brennariverstrust.org.uk?subject=Work%20party%2012%20September">Take a place</a>
-                    </li>
-                    <li class="party" data-fade>
-                        <p class="party-date mono">Sat 10 Oct</p>
-                        <div class="party-body">
-                            <p class="party-task">Gravel raking below the weir</p>
-                            <p class="party-meta mono">9 places</p>
-                        </div>
-                        <a class="btn btn--ghost btn--small" href="mailto:parties@brennariverstrust.org.uk?subject=Work%20party%2010%20October">Take a place</a>
-                    </li>
-                    <li class="party" data-fade>
-                        <p class="party-date mono">Sat 14 Nov</p>
-                        <div class="party-body">
-                            <p class="party-task">Bare-root planting, Fentley bank</p>
-                            <p class="party-meta mono">12 places</p>
-                        </div>
-                        <a class="btn btn--ghost btn--small" href="mailto:parties@brennariverstrust.org.uk?subject=Work%20party%2014%20November">Take a place</a>
-                    </li>
-                    <li class="party party--full" data-fade>
-                        <p class="party-date mono">Sat 12 Dec</p>
-                        <div class="party-body">
-                            <p class="party-task">Winter bird and outfall survey</p>
-                            <p class="party-meta mono">Full</p>
-                        </div>
-                        <span class="party-full-note mono" aria-hidden="true">Full</span>
-                    </li>
-                </ol>
-            </div>
-            <figure class="parties-photo" data-fade>
-                <img src="assets/img/work-party.webp" alt="Volunteers with sacks clearing litter from a riverbank" width="1100" height="760" loading="lazy">
-                <figcaption>The October party, clearing the town reach. Forty sacks before lunch.</figcaption>
-            </figure>
-        </div>
-    </div>
-</section>
-
-<!-- ============ DONATE ============ -->
-<section class="give" id="give" aria-labelledby="give-title">
-    <div class="section-inner give-grid">
-        <div class="give-intro" data-fade>
-            <p class="eyebrow">Donate</p>
-            <h2 class="section-title" id="give-title">Give to the appeal</h2>
-            <p class="section-lede">Every gift is spent on the reach this page describes.
-            If the appeal passes its target, the surplus starts the next reach upstream;
-            it does not disappear into admin.</p>
-            <figure class="give-photo">
-                <img src="assets/img/riffle.webp" alt="Clean gravel under shallow, clear water" width="1000" height="660" loading="lazy">
-                <figcaption>A raked riffle after one winter. The gravel stays clean when the banks hold.</figcaption>
-            </figure>
-        </div>
-
-        <form class="give-form" data-give-form novalidate>
-            <fieldset class="gf-amounts">
-                <legend class="gf-label mono">Amount</legend>
-                <div class="gf-amount-row" role="group">
-                    <label class="gf-pill"><input type="radio" name="amount" value="10"><span class="mono">£10</span></label>
-                    <label class="gf-pill"><input type="radio" name="amount" value="25" checked><span class="mono">£25</span></label>
-                    <label class="gf-pill"><input type="radio" name="amount" value="60"><span class="mono">£60</span></label>
-                    <label class="gf-pill gf-pill--other">
-                        <input type="radio" name="amount" value="other">
-                        <span class="mono">Other</span>
+                <form class="give-card" action="#give" data-give-card data-hero-fade aria-labelledby="give-card-title">
+                    <h2 id="give-card-title" class="visually-hidden">Give to the appeal</h2>
+                    <fieldset class="seg">
+                        <legend class="visually-hidden">How often</legend>
+                        <label><input type="radio" name="hero-frequency" value="once" data-frequency checked><span>Give once</span></label>
+                        <label><input type="radio" name="hero-frequency" value="monthly" data-frequency><span>Monthly</span></label>
+                    </fieldset>
+                    <fieldset class="chips">
+                        <legend class="visually-hidden">Choose an amount</legend>
+                        <label class="chip"><input type="radio" name="hero-amount" value="10" data-chip data-outcome="puts tins and pasta on the shelf for a week of teas"><span class="chip-amt">£10</span><span class="chip-what">a week of teas</span></label>
+                        <label class="chip"><input type="radio" name="hero-amount" value="25" data-chip data-outcome="buys a week of nappies and a month of breakfasts"><span class="chip-amt">£25</span><span class="chip-what">nappies and breakfasts</span></label>
+                        <label class="chip"><input type="radio" name="hero-amount" value="45" data-chip data-outcome="packs one full family crate: three days of meals for four" checked><span class="chip-amt">£45</span><span class="chip-what">a full family crate</span></label>
+                        <label class="chip"><input type="radio" name="hero-amount" value="100" data-chip data-outcome="cooks Thursday supper for eight families"><span class="chip-amt">£100</span><span class="chip-what">supper for eight families</span></label>
+                    </fieldset>
+                    <label class="amount-field">
+                        <span class="visually-hidden">Amount in pounds</span>
+                        <span class="amount-pound" aria-hidden="true">£</span>
+                        <input type="number" name="amount" min="1" step="1" inputmode="numeric" value="45" data-amount-input>
                     </label>
-                </div>
-                <div class="gf-other" data-gf-other hidden>
-                    <label class="gf-label mono" for="gf-other-amount">Your amount, £</label>
-                    <input class="gf-input mono" id="gf-other-amount" name="other-amount" type="number" min="1" step="1" inputmode="numeric" placeholder="40">
-                </div>
-                <p class="gf-outcome" data-gf-outcome aria-live="polite">£25 fences and plants four metres of bank.</p>
-            </fieldset>
-
-            <fieldset class="gf-freq">
-                <legend class="gf-label mono">Frequency</legend>
-                <div class="gf-amount-row" role="group">
-                    <label class="gf-pill"><input type="radio" name="freq" value="once" checked><span>Once</span></label>
-                    <label class="gf-pill"><input type="radio" name="freq" value="monthly"><span>Monthly</span></label>
-                </div>
-            </fieldset>
-
-            <div class="gf-field">
-                <label class="gf-label mono" for="gf-name">Name</label>
-                <input class="gf-input" id="gf-name" name="name" type="text" autocomplete="name">
-            </div>
-            <div class="gf-field">
-                <label class="gf-label mono" for="gf-email">Email</label>
-                <input class="gf-input" id="gf-email" name="email" type="email" autocomplete="email">
+                    <p class="outcome" data-outcome aria-live="polite">£45 packs one full family crate: three days of meals for four.</p>
+                    <button class="btn btn--ask btn--block" type="submit" data-give-label>Give £45</button>
+                </form>
             </div>
 
-            <label class="gf-giftaid">
-                <input type="checkbox" name="giftaid">
-                <span>I am a UK taxpayer. Add Gift Aid to this gift: an extra 25p in
-                the pound from HMRC, at no cost to me.</span>
-            </label>
+            <!-- Raised so far. Every figure is final in the markup; the
+                 count-up animates towards data-count-to. Update by hand. -->
+            <div class="raised" data-raised>
+                <p class="raised-figure"><span class="raised-num" data-count data-count-to="23140" data-count-prefix="£">£23,140</span> <span class="raised-of">raised of £38,000</span></p>
+                <div class="raised-bar" role="img" aria-label="61% of the £38,000 target raised"><span class="raised-fill" data-raised-fill style="--raised: 0.61"></span></div>
+                <p class="raised-meta"><strong>41 days left</strong> · 1,206 neighbours have given</p>
+            </div>
+        </section>
 
-            <button class="btn btn--river gf-submit" type="submit" data-gf-submit>Give £25 once</button>
-            <p class="gf-note">You will get one email receipt and a report when the reach is
-            done. No newsletters unless you ask.</p>
+        <!-- ===================== WHY NOW ===================== -->
+        <section class="why" id="why" aria-labelledby="why-title">
+            <div class="why-copy">
+                <p class="eyebrow" data-reveal>Why now</p>
+                <h2 id="why-title" class="display-l" data-reveal>Last winter the shelves were empty by February.</h2>
+                <p data-reveal>412 households came through the door between November and March, nearly twice the winter before. Heating bills went up, the school uniform grant went down, and by the second week of February we were turning people away with a voucher for somewhere else.</p>
+                <p data-reveal>This year we want to open every day until the clocks change. That means a full larder from the start, not a scramble in the new year.</p>
+                <a class="pill pill--ink" href="#crate" data-reveal>See what a crate holds</a>
+            </div>
+            <figure class="why-photo">
+                <img src="assets/img/why-long-table.webp" width="1100" height="1650" loading="lazy"
+                     alt="Volunteers packing loaves, bags of pasta and stacks of tins into clear boxes at a long table under the windows">
+            </figure>
+        </section>
 
-            <div class="gf-done" data-gf-done hidden aria-live="polite"></div>
-        </form>
-    </div>
-</section>
+        <!-- ===================== PACK THE CRATE =====================
+             The signature. Each shelf item is a button carrying its price,
+             name and what it does. Drag it into the crate, tap it or press
+             Enter. Edit the items here; the script reads everything from
+             these attributes. data-fill sets how many go in a family crate. -->
+        <section class="crate-sec" id="crate" data-crate aria-labelledby="crate-title">
+            <div class="crate-head">
+                <h2 id="crate-title" class="display-xl">Pack a crate</h2>
+                <p class="crate-intro">Drag anything off the shelf into the crate, or tap it. The prices are what we pay at the wholesaler, so your crate is exactly what goes on our shelves.</p>
+            </div>
 
-</main>
+            <div class="crate-grid">
+                <div class="shelf" aria-label="The shelf">
+                    <ul class="shelf-list" data-shelf>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="tomatoes" data-price="3" data-meals="4" data-fill="1" data-name="Chopped tomatoes, 4 tins">
+                                <span class="item-pic"><img src="assets/img/item-tomatoes.webp" width="420" height="427" alt="" draggable="false"></span>
+                                <span class="item-name">Chopped tomatoes, 4&nbsp;tins</span>
+                                <span class="item-price">£3</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="pasta" data-price="2" data-meals="6" data-fill="2" data-name="Penne, 1kg">
+                                <span class="item-pic"><img src="assets/img/item-pasta.webp" width="420" height="673" alt="" draggable="false"></span>
+                                <span class="item-name">Penne, 1kg</span>
+                                <span class="item-price">£2</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="rice" data-price="4" data-meals="10" data-fill="1" data-name="Long-grain rice, 2kg">
+                                <span class="item-pic"><img src="assets/img/item-rice.webp" width="420" height="553" alt="" draggable="false"></span>
+                                <span class="item-name">Long-grain rice, 2kg</span>
+                                <span class="item-price">£4</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="cereal" data-price="3" data-meals="8" data-fill="1" data-name="Breakfast cereal">
+                                <span class="item-pic"><img src="assets/img/item-cereal.webp" width="420" height="583" alt="" draggable="false"></span>
+                                <span class="item-name">Breakfast cereal</span>
+                                <span class="item-price">£3</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="teabags" data-price="5" data-extra="240|cup of tea|cups of tea" data-fill="1" data-name="Teabags, 240">
+                                <span class="item-pic"><img src="assets/img/item-teabags.webp" width="420" height="417" alt="" draggable="false"></span>
+                                <span class="item-name">Teabags, 240</span>
+                                <span class="item-price">£5</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="toiletries" data-price="6" data-extra="1|wash bag|wash bags" data-fill="1" data-name="Wash bag: toothpaste, soap, pads">
+                                <span class="item-pic"><img src="assets/img/item-toiletries.webp" width="420" height="331" alt="" draggable="false"></span>
+                                <span class="item-name">Wash bag: toothpaste, soap, pads</span>
+                                <span class="item-price">£6</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="nappies" data-price="8" data-extra="1|week of nappies|weeks of nappies" data-fill="1" data-name="Nappies, a week's pack">
+                                <span class="item-pic"><img src="assets/img/item-nappies.webp" width="420" height="544" alt="" draggable="false"></span>
+                                <span class="item-name">Nappies, a week's pack</span>
+                                <span class="item-price">£8</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="supper" data-price="12" data-extra="1|Thursday supper for a family|Thursday suppers for a family" data-fill="1" data-name="Thursday supper for a family">
+                                <span class="item-pic"><img src="assets/img/item-supper.webp" width="420" height="336" alt="" draggable="false"></span>
+                                <span class="item-name">Thursday supper for a family</span>
+                                <span class="item-price">£12</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                        <li class="shelf-slot">
+                            <button class="item" type="button" data-item="topup" data-price="20" data-extra="1|week of heat and light|weeks of heat and light" data-fill="0" data-name="Gas and electric top-up">
+                                <span class="item-pic"><img src="assets/img/item-topup.webp" width="420" height="260" alt="" draggable="false"></span>
+                                <span class="item-name">Gas and electric top-up</span>
+                                <span class="item-price">£20</span>
+                                <span class="visually-hidden">Add to crate</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-    <div class="section-inner footer-grid">
-        <div class="footer-col footer-col--mark">
-            <p class="footer-mark">Brenna<br>Rivers Trust</p>
-            <p class="footer-small">Restoring the River Brenna, from Harcup Edge to the Ottermere.</p>
+                <div class="crate-panel" data-crate-panel>
+                    <div class="crate-box" data-crate-box>
+                        <img class="crate-back" src="assets/img/crate.webp" width="1000" height="613" alt="" draggable="false">
+                        <div class="crate-slots" data-crate-slots aria-hidden="true"></div>
+                        <img class="crate-front" src="assets/img/crate.webp" width="1000" height="613" alt="" draggable="false" aria-hidden="true">
+                        <span class="crate-more" data-crate-more hidden></span>
+                    </div>
+                    <div class="crate-readout">
+                        <p class="crate-total"><span class="visually-hidden">Your crate costs </span><span data-crate-total>£0</span></p>
+                        <p class="crate-outcome" data-crate-outcome>Pack an item and this line says what it does.</p>
+                        <p class="visually-hidden" data-crate-status role="status"></p>
+                        <div class="crate-actions">
+                            <button class="btn btn--ink" type="button" data-crate-fill>Fill it for me</button>
+                            <a class="btn btn--ask" href="#give" data-crate-give>Give this crate</a>
+                        </div>
+                    </div>
+                    <div class="crate-list-wrap crate-list-wrap--panel" data-crate-list-wrap hidden>
+                        <h3 class="crate-list-title">In your crate</h3>
+                        <ul class="crate-list" data-crate-list></ul>
+                        <button class="text-btn" type="button" data-crate-empty>Empty the crate</button>
+                    </div>
+                    <!-- Shown without JavaScript in place of the interactive crate. -->
+                    <p class="crate-nojs">A full family crate costs <strong>£45</strong>: tomatoes, two bags of pasta, rice, cereal, tea, a wash bag, nappies and a Thursday supper. <a href="#give">Give £45</a>.</p>
+                </div>
+            </div>
+
+            <div class="crate-list-wrap crate-list-wrap--below" data-crate-list-wrap hidden>
+                <h3 class="crate-list-title">In your crate</h3>
+                <ul class="crate-list" data-crate-list></ul>
+                <button class="text-btn" type="button" data-crate-empty>Empty the crate</button>
+            </div>
+        </section>
+
+        <!-- ===================== BUY IT ALL ===================== -->
+        <section class="buyall" id="buy-it-all" data-buyall aria-labelledby="buyall-title">
+            <img class="buyall-photo" src="assets/img/supply-tins.webp" width="1920" height="1280" loading="lazy" data-buyall-photo
+                 alt="Stacks of tins and bags of pasta on the sorting table, ready to go on the shelves">
+            <div class="buyall-plate" data-reveal>
+                <h2 id="buyall-title" class="shop-sign">One family crate.<br>£45.</h2>
+                <p>Tomatoes, two bags of pasta, rice, cereal, tea, a wash bag, nappies and a Thursday supper. Three days of meals for a family of four.</p>
+                <button class="btn btn--ask btn--square" type="button" data-buy-all>Buy it all</button>
+                <a class="btn btn--ask btn--square buyall-nojs" href="#give">Give £45</a>
+            </div>
+            <div class="marquee" aria-hidden="true" data-marquee>
+                <div class="marquee-track" data-marquee-track>
+                    <span>Chopped tomatoes</span><span>Penne</span><span>Rice</span><span>Cornflakes</span><span>Teabags</span><span>Toothpaste</span><span>Nappies</span><span>Thursday supper</span><span>Gas top-ups</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== NUMBERS ===================== -->
+        <section class="numbers" aria-label="The larder in numbers">
+            <dl class="numbers-list" data-reveal-group>
+                <div><dt data-count data-count-to="412">412</dt><dd>households came through the door last winter</dd></div>
+                <div><dt data-count data-count-to="86">86</dt><dd>volunteers on the rota, aged 16 to 81</dd></div>
+                <div><dt data-count data-count-to="6">6</dt><dd>days a week open, with supper every Thursday</dd></div>
+            </dl>
+        </section>
+
+        <!-- ===================== STORIES ===================== -->
+        <section class="stories" id="stories" aria-labelledby="stories-title">
+            <h2 id="stories-title" class="display-l stories-title" data-reveal>Who keeps the shelves full</h2>
+
+            <article class="story" data-story>
+                <figure class="story-photo"><img src="assets/img/story-samira.webp" width="1100" height="733" loading="lazy"
+                     alt="Samira, smiling in a grey headscarf and volunteer badge, in the storeroom with a colleague sorting behind her"></figure>
+                <div class="story-copy" data-reveal>
+                    <blockquote class="story-quote"><p>“Tuesday mornings we sort what came in. By lunchtime it looks like a shop.”</p></blockquote>
+                    <p class="story-who"><strong>Samira</strong>, runs the Tuesday sorting shift</p>
+                    <p>Samira started coming in for the toddler group and stayed for the tea. Three winters on, she trains every new volunteer in how the shelves are laid out, oldest dates at the front.</p>
+                </div>
+            </article>
+
+            <article class="story story--flip" data-story>
+                <figure class="story-photo"><img src="assets/img/story-graham.webp" width="1000" height="1500" loading="lazy"
+                     alt="Graham laughing in a green tabard, sitting in the community room with notices on the wall behind him"></figure>
+                <div class="story-copy" data-reveal>
+                    <blockquote class="story-quote"><p>“Forty plates on a Thursday. Nobody’s asked why they’re there.”</p></blockquote>
+                    <p class="story-who"><strong>Graham</strong>, cooks Thursday supper</p>
+                    <p>A retired school cook, Graham turns whatever's on the shelf into a hot meal for anyone who walks in. Pasta bake is the favourite. £12 feeds a family of four at his table.</p>
+                </div>
+            </article>
+
+            <article class="story" data-story>
+                <figure class="story-photo"><img src="assets/img/story-maureen.webp" width="1100" height="733" loading="lazy"
+                     alt="Maureen talking over mugs of tea at her kitchen table with Kwame, a volunteer in a white t-shirt"></figure>
+                <div class="story-copy" data-reveal>
+                    <blockquote class="story-quote"><p>“Kwame brings the crate and stops for a brew. Some weeks he’s the only one I see.”</p></blockquote>
+                    <p class="story-who"><strong>Maureen</strong>, gets a Saturday delivery</p>
+                    <p>Maureen can't manage the hill since her hip operation, so the larder comes to her. Our drivers take forty crates up the valley every Saturday morning.</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- ===================== WHERE EVERY POUND GOES =====================
+             Trust as a designed object. Segment widths are --share values;
+             keep them in step with the labels. -->
+        <section class="pound" id="pound" aria-labelledby="pound-title">
+            <div class="trust" data-reveal>
+                <div class="trust-badge" aria-hidden="true"><span>92p</span></div>
+                <div class="trust-copy">
+                    <h2 id="pound-title" class="display-m">92p of every £1 goes on the shelves.</h2>
+                    <p>The rest keeps the van on the road and the lights on in the old Co-op. Our accounts are on the Charity Commission register, and the total at the top of this page is updated by hand every Monday.</p>
+                    <div class="split" data-split aria-hidden="true">
+                        <span class="split-seg split-seg--food" style="--share: 72"></span>
+                        <span class="split-seg split-seg--fuel" style="--share: 20"></span>
+                        <span class="split-seg split-seg--run" style="--share: 8"></span>
+                    </div>
+                    <ul class="split-legend">
+                        <li><span class="swatch swatch--food" aria-hidden="true"></span>Food on the shelves, 72%</li>
+                        <li><span class="swatch swatch--fuel" aria-hidden="true"></span>Gas and electric top-ups, 20%</li>
+                        <li><span class="swatch swatch--run" aria-hidden="true"></span>Van and rent, 8%</li>
+                    </ul>
+                    <p class="trust-fine">Hollins Lane Larder is a registered charity, no. 1187402.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== HELP OUT ===================== -->
+        <section class="help" id="help" aria-labelledby="help-title">
+            <figure class="help-photo">
+                <img src="assets/img/help-delivery.webp" width="1100" height="733" loading="lazy"
+                     alt="A volunteer and an older man unpacking a crate of lettuce and vegetables in his kitchen">
+            </figure>
+            <div class="help-copy">
+                <h2 id="help-title" class="display-l" data-reveal>Can't give money? Give a morning.</h2>
+                <ul class="shifts" data-reveal-group>
+                    <li class="shift">
+                        <p class="shift-when"><span class="shift-day">Tue</span> 10:00</p>
+                        <div class="shift-what"><strong>Sorting shift</strong><span>Unpack the week's donations and check the dates. 4 places left.</span></div>
+                        <a class="pill pill--lilac" href="mailto:volunteer@example.org?subject=Tuesday%20sorting%20shift">Sign up</a>
+                    </li>
+                    <li class="shift">
+                        <p class="shift-when"><span class="shift-day">Thu</span> 17:30</p>
+                        <div class="shift-what"><strong>Supper crew</strong><span>Chop, serve and wash up with Graham. 2 places left.</span></div>
+                        <a class="pill pill--lilac" href="mailto:volunteer@example.org?subject=Thursday%20supper%20crew">Sign up</a>
+                    </li>
+                    <li class="shift">
+                        <p class="shift-when"><span class="shift-day">Sat</span> 09:00</p>
+                        <div class="shift-what"><strong>Delivery drivers</strong><span>Your car, our crates, about three hours. Full until January.</span></div>
+                        <span class="pill pill--full">Full</span>
+                    </li>
+                    <li class="shift">
+                        <p class="shift-when"><span class="shift-day">Any</span> day</p>
+                        <div class="shift-what"><strong>Run a collection</strong><span>At work, school or church. We'll send the shopping list and pick it up.</span></div>
+                        <a class="pill pill--lilac" href="mailto:volunteer@example.org?subject=Running%20a%20collection">Ask us</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===================== GIVE =====================
+             A front end only: nothing is charged. It submits by GET to
+             thanks.html so the thank-you page can show the amount; point
+             action at your donation platform instead. -->
+        <section class="give" id="give" aria-labelledby="give-title">
+            <div class="give-intro">
+                <h2 id="give-title" class="display-xl">Give to the appeal</h2>
+                <p>Every pound goes on the shelves between now and the end of March. Monthly gifts let us buy in bulk before the price goes up.</p>
+                <div class="give-crate" data-give-crate hidden>
+                    <p class="give-crate-title">Your crate</p>
+                    <ul class="give-crate-list" data-give-crate-list></ul>
+                    <a class="text-btn text-btn--light" href="#crate">Change the crate</a>
+                </div>
+            </div>
+
+            <form class="give-form" action="thanks.html" method="get" data-give-form>
+                <fieldset class="seg seg--form">
+                    <legend class="field-label">How often</legend>
+                    <label><input type="radio" name="frequency" value="once" data-frequency checked><span>Give once</span></label>
+                    <label><input type="radio" name="frequency" value="monthly" data-frequency><span>Monthly</span></label>
+                </fieldset>
+
+                <fieldset class="chips chips--form">
+                    <legend class="field-label">Amount</legend>
+                    <label class="chip"><input type="radio" name="preset" value="10" data-chip data-outcome="puts tins and pasta on the shelf for a week of teas"><span class="chip-amt">£10</span></label>
+                    <label class="chip"><input type="radio" name="preset" value="25" data-chip data-outcome="buys a week of nappies and a month of breakfasts"><span class="chip-amt">£25</span></label>
+                    <label class="chip"><input type="radio" name="preset" value="45" data-chip data-outcome="packs one full family crate: three days of meals for four" checked><span class="chip-amt">£45</span></label>
+                    <label class="chip"><input type="radio" name="preset" value="100" data-chip data-outcome="cooks Thursday supper for eight families"><span class="chip-amt">£100</span></label>
+                </fieldset>
+                <label class="amount-field amount-field--form">
+                    <span class="visually-hidden">Amount in pounds</span>
+                    <span class="amount-pound" aria-hidden="true">£</span>
+                    <input type="number" name="amount" min="1" step="1" inputmode="numeric" value="45" required data-amount-input>
+                </label>
+                <p class="outcome outcome--form" data-outcome aria-live="polite">£45 packs one full family crate: three days of meals for four.</p>
+                <input type="hidden" name="crate" value="" data-crate-field>
+
+                <div class="field-row">
+                    <label class="field"><span class="field-label">Your name</span><input type="text" name="name" autocomplete="name" required></label>
+                    <label class="field"><span class="field-label">Email</span><input type="email" name="email" autocomplete="email" required></label>
+                </div>
+
+                <label class="check">
+                    <input type="checkbox" name="giftaid" value="yes" data-giftaid>
+                    <span><strong>Add Gift Aid</strong> <span data-giftaid-line>and £45 is worth £56.25 to us</span>. I am a UK taxpayer and understand that if I pay less Income Tax or Capital Gains Tax than the amount of Gift Aid claimed on all my donations in that tax year, it is my responsibility to pay any difference.</span>
+                </label>
+
+                <label class="check">
+                    <input type="checkbox" name="in_name" value="yes" data-inname>
+                    <span><strong>Give this in someone's name.</strong> We'll send them a card saying what you gave.</span>
+                </label>
+                <div class="inname" data-inname-fields>
+                    <div class="field-row">
+                        <label class="field"><span class="field-label">Their name</span><input type="text" name="gift_name"></label>
+                        <label class="field"><span class="field-label">Their email</span><input type="email" name="gift_email"></label>
+                    </div>
+                </div>
+
+                <p class="form-error" data-form-error role="alert" hidden></p>
+                <button class="btn btn--ask btn--block btn--big" type="submit" data-give-label>Give £45 once</button>
+                <p class="form-scope">This demo takes no payment. Connect the form to JustGiving, Enthuse, Stripe or your own donation platform.</p>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-mark">
+            <p class="footer-word">Hollins Lane<br>Larder</p>
+            <p>The old Co-op, Hollins Lane, Walkley, Sheffield S6</p>
         </div>
-        <div class="footer-col">
-            <p class="footer-head mono">Find us</p>
-            <p class="footer-small">The Wharf House, Bridge Street,<br>Welsden &middot; Saturdays, or by the river</p>
+        <div>
+            <p class="footer-label">Open</p>
+            <p>Monday to Saturday, 10:00 to 16:00<br>Thursday supper from 17:30</p>
         </div>
-        <div class="footer-col">
-            <p class="footer-head mono">Write to us</p>
-            <p class="footer-small"><a href="mailto:hello@brennariverstrust.org.uk">hello@brennariverstrust.org.uk</a><br>
-            <a href="mailto:parties@brennariverstrust.org.uk">parties@brennariverstrust.org.uk</a></p>
+        <div>
+            <p class="footer-label">The appeal</p>
+            <p>Closes 31 March 2027<br>Registered charity no. 1187402</p>
         </div>
-        <div class="footer-col">
-            <p class="footer-head mono">Small print</p>
-            <p class="footer-small">Registered charity in England and Wales, no. 1198472.
-            Accounts filed annually with the Charity Commission.</p>
+        <div>
+            <p class="footer-label">Get in touch</p>
+            <p><a href="mailto:hello@example.org">hello@example.org</a><br><a href="tel:+441140000000">0114 000 0000</a></p>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- GSAP core and plugins -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
-
-<!-- Lenis smooth scroll (optional - the page works without it) -->
-<script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
-
-<script src="assets/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+    <script src="assets/script.js"></script>
 </body>
 </html>
