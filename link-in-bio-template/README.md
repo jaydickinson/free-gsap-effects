@@ -9,7 +9,7 @@ It suits anyone whose one link lives in a social profile: musicians (release, to
 1. Open `index.html` in a browser, or upload the folder to any static host. There is no build step.
 2. Change the name in three places: the hidden `<h1>` and the two `[data-wordmark]` words.
 3. Edit the three prints in `[data-pile-stack]` (your latest things) and the rows in `#links` (every link, the three latest included).
-4. Replace the photos in `assets/img/` with your own at the same names (4:5, about 900x1125).
+4. Replace the photos in `assets/img/` with your own at the same names (4:5, about 900x1125). Each print also has a smaller `-480` copy (480x600, for phone-sized prints) and a `-160` copy (160x200, for the list thumbnails); replace those too.
 5. Repaint `--glaze` in `assets/style.css`.
 
 ## Using It With Your Own Design
@@ -66,7 +66,7 @@ Six colour tokens in `:root`:
 
 Ink on the glaze is 5.0:1. Text on the glaze is full-strength ink only, so there is no dimmed ink token. You can lighten the glaze freely, but a ground darker than about `#D75529` takes body text under 4.5:1. A different loud ground (acid green, cobalt, butter yellow) works the same way: re-measure ink on it.
 
-Type: Bagel Fat One (display: the wordmark and headings) and Onest 400/600 (everything you read), from Google Fonts.
+Type: Bagel Fat One (display: the wordmark and headings) and Onest 400/600 (everything you read), self-hosted in `assets/fonts/` (see Fonts below).
 
 ## Example
 
@@ -101,6 +101,14 @@ Everything runs inside one `gsap.context` stored on `window.gsapContext`. `windo
 - Restores the wordmark text and the prints' accessibility attributes.
 - Takes the `has-js` gate off.
 
+## Fonts
+
+Bagel Fat One and Onest are self-hosted in `assets/fonts/`, so the page makes no render-blocking third-party request for type. The files are the Latin subsets Google Fonts serves: Bagel Fat One is its regular, and Onest is one variable file covering weights 400 and 600. They are declared by the `@font-face` rules at the top of `assets/style.css` with the same weights and `unicode-range` Google uses, and the page preloads both, since the wordmark and the bio share the first screen.
+
+Licence: SIL Open Font License 1.1, full text in `assets/fonts/OFL.txt`. Bagel Fat One: Copyright 2022 The Bagel Fat Project Authors (https://github.com/JAMO-TYPEFACE/BagelFat). Onest: Copyright 2021 The Onest Project Authors (https://github.com/simpals/onest).
+
+To swap a face, put your `.woff2` in `assets/fonts/`, point its `@font-face` rule and the token at it, and change the preload in the head. To use Google Fonts instead, delete the `@font-face` rules and the preloads and add the Google Fonts `<link>` to the head.
+
 ## Images and Credits
 
 The images in `assets/img/` are cropped, resized and lightly graded WebP derivatives baked from Pexels photographs (Pexels licence), listed with their sources in `assets/img-manifest.json`:
@@ -113,4 +121,4 @@ The images in `assets/img/` are cropped, resized and lightly graded WebP derivat
 - Portrait with a pot: pexels.com/photo/6694761
 - Glazed plates on wood: pexels.com/photo/9736670
 
-To use your own photos, replace a file at the same name and shape. You can also change an entry's source in the manifest and re-bake it with `bun scripts/build-template-assets.ts link-in-bio-template` from the GSAP Vault repository; any image tool that exports 4:5 WebP does the same job.
+To use your own photos, replace a file at the same name and shape, with its `-480` and `-160` copies for the prints. The page picks the size that suits the screen through `srcset`, and preloads the top print. You can also change an entry's source in the manifest and re-bake it with `bun scripts/build-template-assets.ts link-in-bio-template` from the GSAP Vault repository; any image tool that exports 4:5 WebP does the same job.

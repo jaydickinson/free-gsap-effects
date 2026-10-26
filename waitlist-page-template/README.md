@@ -142,7 +142,24 @@ manifest and re-bake with your own image tools.
 ## Dependencies
 
 - GSAP core 3.12+ from jsDelivr (the demo is built against 3.15.0). No plugins.
-- Google Fonts: Rethink Sans (500, 700, 800) and Spline Sans Mono (500).
+- Rethink Sans (500, 700, 800) and Spline Sans Mono (500), self-hosted in
+  `assets/fonts/` (see **Fonts**).
+
+## Fonts
+
+Rethink Sans and Spline Sans Mono are self-hosted in `assets/fonts/` as the
+latin subsets Google Fonts serves, declared by the `@font-face` rules at the
+top of `assets/style.css`. Rethink Sans is a single variable file declared at
+the three weights the page uses. Both files are preloaded in the `<head>`
+because both appear on the first screen. Licence: SIL Open Font License 1.1,
+full text in `assets/fonts/OFL.txt` (Rethink Sans: Copyright 2022 The Rethink
+Sans Project Authors; Spline Sans Mono: Copyright 2022 The Spline Sans Mono
+Project Authors).
+
+To swap a face, put your `.woff2` in `assets/fonts/`, point its `@font-face`
+rule and the `--font-*` token at it, and change the preloads in the `<head>`.
+To use Google Fonts instead, delete the `@font-face` rules and the preloads and
+add the Google Fonts stylesheet link.
 
 ## Teardown
 

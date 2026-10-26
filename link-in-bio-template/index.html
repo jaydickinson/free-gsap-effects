@@ -7,10 +7,10 @@
     <meta name="description" content="Kiln openings, Thursday clay classes, the shop and restaurant tableware from Mariam Odede's studio in Margate.">
     <meta name="theme-color" content="#E15A2B">
     <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Onest:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preload" href="assets/fonts/bagel-fat-one-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="preload" as="image" href="assets/img/print-kiln-opening.webp" imagesrcset="assets/img/print-kiln-opening-480.webp 480w, assets/img/print-kiln-opening.webp 900w" imagesizes="(min-width: 64em) 32rem, (min-width: 36em) 19rem, 15rem" fetchpriority="high">
 </head>
 <body>
 
@@ -52,7 +52,7 @@
             <ol class="pile__stack" data-pile-stack>
                 <li class="print" data-print>
                     <a class="print__link" href="#kiln" draggable="false">
-                        <span class="print__photo"><img src="assets/img/print-kiln-opening.webp" width="900" height="1125" alt="Small dishes in a deep teal glaze with toasted rims, seen from above" draggable="false"></span>
+                        <span class="print__photo"><img src="assets/img/print-kiln-opening.webp" srcset="assets/img/print-kiln-opening-480.webp 480w, assets/img/print-kiln-opening.webp 900w" sizes="(min-width: 64em) 32rem, (min-width: 36em) 19rem, 15rem" width="900" height="1125" fetchpriority="high" alt="Small dishes in a deep teal glaze with toasted rims, seen from above" draggable="false"></span>
                         <span class="print__label">
                             <span class="print__kicker">Saturday, 10:00</span>
                             <span class="print__title">Kiln opening</span>
@@ -62,7 +62,7 @@
                 </li>
                 <li class="print" data-print inert aria-hidden="true">
                     <a class="print__link" href="#" draggable="false">
-                        <span class="print__photo"><img src="assets/img/print-classes.webp" width="900" height="1125" alt="Mariam beside a student at the studio bench, pressing out a slab of clay" draggable="false"></span>
+                        <span class="print__photo"><img src="assets/img/print-classes.webp" srcset="assets/img/print-classes-480.webp 480w, assets/img/print-classes.webp 900w" sizes="(min-width: 64em) 32rem, (min-width: 36em) 19rem, 15rem" width="900" height="1125" alt="Mariam beside a student at the studio bench, pressing out a slab of clay" draggable="false"></span>
                         <span class="print__label">
                             <span class="print__kicker">Thursdays, 6.30pm</span>
                             <span class="print__title">Clay classes</span>
@@ -72,7 +72,7 @@
                 </li>
                 <li class="print" data-print inert aria-hidden="true">
                     <a class="print__link" href="#" draggable="false">
-                        <span class="print__photo"><img src="assets/img/print-shop.webp" width="900" height="1125" alt="Hand-painted cups in butter yellow, pink and pale blue on a wooden counter" draggable="false"></span>
+                        <span class="print__photo"><img src="assets/img/print-shop.webp" srcset="assets/img/print-shop-480.webp 480w, assets/img/print-shop.webp 900w" sizes="(min-width: 64em) 32rem, (min-width: 36em) 19rem, 15rem" width="900" height="1125" alt="Hand-painted cups in butter yellow, pink and pale blue on a wooden counter" draggable="false"></span>
                         <span class="print__label">
                             <span class="print__kicker">Between firings</span>
                             <span class="print__title">The shop</span>
@@ -97,27 +97,27 @@
             <h2 class="links__title" id="links-title">Every link</h2>
             <ul class="links__list">
                 <li><a class="link" href="#kiln">
-                    <img class="link__thumb" src="assets/img/print-kiln-opening.webp" width="900" height="1125" alt="">
+                    <img class="link__thumb" src="assets/img/print-kiln-opening-160.webp" srcset="assets/img/print-kiln-opening-160.webp 160w, assets/img/print-kiln-opening-480.webp 480w" sizes="3.25rem" width="900" height="1125" alt="">
                     <span class="link__text"><span class="link__name">Kiln opening</span><span class="link__meta">Saturday 10:00, 31 pieces</span></span>
                     <span class="link__arrow" aria-hidden="true">&rarr;</span>
                 </a></li>
                 <li><a class="link" href="#">
-                    <img class="link__thumb" src="assets/img/print-classes.webp" width="900" height="1125" alt="">
+                    <img class="link__thumb" src="assets/img/print-classes-160.webp" srcset="assets/img/print-classes-160.webp 160w, assets/img/print-classes-480.webp 480w" sizes="3.25rem" width="900" height="1125" alt="">
                     <span class="link__text"><span class="link__name">Thursday clay classes</span><span class="link__meta">6.30pm, six places, &pound;45</span></span>
                     <span class="link__arrow" aria-hidden="true">&rarr;</span>
                 </a></li>
                 <li><a class="link" href="#">
-                    <img class="link__thumb" src="assets/img/print-shop.webp" width="900" height="1125" alt="">
+                    <img class="link__thumb" src="assets/img/print-shop-160.webp" srcset="assets/img/print-shop-160.webp 160w, assets/img/print-shop-480.webp 480w" sizes="3.25rem" width="900" height="1125" alt="">
                     <span class="link__text"><span class="link__name">The shop</span><span class="link__meta">Cups, mugs and seconds</span></span>
                     <span class="link__arrow" aria-hidden="true">&rarr;</span>
                 </a></li>
                 <li><a class="link" href="#">
-                    <img class="link__thumb" src="assets/img/print-tableware.webp" width="900" height="1125" alt="">
+                    <img class="link__thumb" src="assets/img/print-tableware-160.webp" srcset="assets/img/print-tableware-160.webp 160w, assets/img/print-tableware-480.webp 480w" sizes="3.25rem" width="900" height="1125" alt="">
                     <span class="link__text"><span class="link__name">Restaurant tableware</span><span class="link__meta">Three a year, booking 2027</span></span>
                     <span class="link__arrow" aria-hidden="true">&rarr;</span>
                 </a></li>
                 <li><a class="link" href="#diary">
-                    <img class="link__thumb" src="assets/img/print-kiln-diary.webp" width="900" height="1125" alt="">
+                    <img class="link__thumb" src="assets/img/print-kiln-diary-160.webp" srcset="assets/img/print-kiln-diary-160.webp 160w, assets/img/print-kiln-diary-480.webp 480w" sizes="3.25rem" width="900" height="1125" alt="">
                     <span class="link__text"><span class="link__name">Kiln Diary</span><span class="link__meta">One email per firing</span></span>
                     <span class="link__arrow" aria-hidden="true">&rarr;</span>
                 </a></li>
@@ -188,10 +188,10 @@
     <p class="foot__small">Made in Margate. &copy; 2026 Mariam Odede Ceramics.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
-<script src="assets/script.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Draggable.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/InertiaPlugin.min.js"></script>
+<script defer src="assets/script.js"></script>
 </body>
 </html>

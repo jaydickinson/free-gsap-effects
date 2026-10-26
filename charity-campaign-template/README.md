@@ -20,7 +20,7 @@ Static files, no build step, no backend.
 
 Every section is a self-contained block in `index.html`, and every initialiser in `assets/script.js` returns early when its markup is missing. Delete the stories, the trust card, the shifts or the Buy it all band and the rest keeps working.
 
-Behaviour hooks are `data-` attributes (`data-crate`, `data-item`, `data-give-form`, `data-give-card`, `data-amount-input`, `data-outcome` and so on); class names are for styling only. To restyle, repaint the colour tokens at the top of `assets/style.css`, then adjust section rules. Type is Smooch Sans (display and figures, weights 800 and 900) and Be Vietnam Pro (body, 400, 600 and 700), loaded from Google Fonts.
+Behaviour hooks are `data-` attributes (`data-crate`, `data-item`, `data-give-form`, `data-give-card`, `data-amount-input`, `data-outcome` and so on); class names are for styling only. To restyle, repaint the colour tokens at the top of `assets/style.css`, then adjust section rules. Type is Smooch Sans (display and figures, weights 800 and 900) and Be Vietnam Pro (body, 400, 600 and 700), self-hosted in `assets/fonts/` (see **Fonts**).
 
 ## Files
 
@@ -32,6 +32,7 @@ Behaviour hooks are `data-` attributes (`data-crate`, `data-item`, `data-give-fo
 | `assets/script.js` | Readable source |
 | `assets/script.min.js` | Minified copy of the same script; point the `<script>` tags at it in production if you like |
 | `assets/favicon.svg` | The crate mark |
+| `assets/fonts/` | Self-hosted Smooch Sans and Be Vietnam Pro (Latin woff2) and their licence, `OFL.txt` |
 | `assets/img/` | Bundled WebP images |
 | `assets/img-src/` | Transparent masters for the crate and the nine item cut-outs |
 | `assets/img-manifest.json` | Sources, crops and bake settings for every image |
@@ -118,7 +119,7 @@ bun scripts/build-template-assets.ts charity-campaign-template --force
 
 | File | Source |
 |---|---|
-| `hero-sorting-room.webp` | https://www.pexels.com/photo/6994869/ |
+| `hero-sorting-room.webp`, `hero-sorting-room-phone.webp` | https://www.pexels.com/photo/6994869/ |
 | `why-long-table.webp` | https://www.pexels.com/photo/6994963/ |
 | `supply-tins.webp` | https://www.pexels.com/photo/6994944/ |
 | `story-samira.webp` | https://www.pexels.com/photo/6994787/ |
@@ -127,9 +128,19 @@ bun scripts/build-template-assets.ts charity-campaign-template --force
 | `help-delivery.webp` | https://www.pexels.com/photo/7551581/ |
 | `thanks-unpacking.webp` | https://www.pexels.com/photo/6721918/ |
 
+`hero-sorting-room-phone.webp` is a 1200px-wide crop of the hero that phones in portrait load instead (the `<picture>` and the two preloads in the `<head>` of `index.html`). Its manifest crop starts at 64% of the width the phone never sees, so with the hero's `object-position: 64% 30%` it shows exactly the same window as the full frame. If you replace the hero, rebake both, or delete the `<source>` and the phone preload and drop the `media` attribute from the other preload.
+
 The names and quotes attached to the photographs are fiction written for the demo; replace them with your own people, with their permission.
 
 **Crate and item cut-outs** (`crate.webp`, `item-*.webp`) are AI-generated images made for this template, with plain packaging and no brands. Their transparent masters are in `assets/img-src/`, and the manifest crops each one to its object. To use your own, save a transparent WebP or PNG in `assets/img-src/` under the same name, rebuild, and update the `width`/`height` attributes in `index.html`.
+
+### Fonts
+
+Smooch Sans and Be Vietnam Pro are self-hosted in `assets/fonts/`, so the page makes no render-blocking third-party request. The files are the Latin subsets Google Fonts serves: one variable Smooch Sans file covers 800 and 900, and Be Vietnam Pro has a file per weight. They are declared by the `@font-face` rules at the top of `assets/style.css` with the weights and `unicode-range` Google uses, and the two faces on the first screen (Smooch Sans and Be Vietnam Pro 400) are preloaded in the `<head>`.
+
+Licence: SIL Open Font License 1.1, full texts in `assets/fonts/OFL.txt`. Smooch Sans: Copyright 2016 The Smooch Sans Project Authors (https://github.com/googlefonts/smooch-sans). Be Vietnam Pro: Copyright 2021 The Be Vietnam Pro Project Authors (https://github.com/bettergui/BeVietnamPro).
+
+To swap them, put your `.woff2` files in `assets/fonts/`, point the `@font-face` rules and `--font-display` / `--font-body` at them, and change the preload `href`s in both pages (or drop the preloads). To go back to Google Fonts instead, delete the `@font-face` rules and the preloads and add the Google Fonts `<link>` to each `<head>`.
 
 ## Accessibility
 
@@ -143,7 +154,7 @@ The names and quotes attached to the photographs are fiction written for the dem
 
 - GSAP 3.15.0 core and ScrollTrigger (jsDelivr). Works with GSAP 3.12+.
 - Lenis 1.3.17 (unpkg), optional. Remove its `<script>` tag, add `data-smooth="off"` to `<html>`, or add `?smooth=off` to the URL.
-- Google Fonts: Smooch Sans, Be Vietnam Pro.
+- Smooch Sans and Be Vietnam Pro, self-hosted in `assets/fonts/`.
 
 ## Teardown
 

@@ -8,9 +8,11 @@
     <meta name="robots" content="noindex">
     <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Smooch+Sans:wght@800;900&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted (assets/fonts/, declared in style.css). The
+         headline face and the body 400 are on the first screen, so both
+         are preloaded; the other weights load as they are needed. -->
+    <link rel="preload" href="assets/fonts/smooch-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/be-vietnam-pro-400-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="thanks-page">

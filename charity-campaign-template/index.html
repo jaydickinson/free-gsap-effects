@@ -7,10 +7,16 @@
     <meta name="description" content="Hollins Lane Larder is Walkley's community food bank. Our winter appeal needs £38,000 to keep the shelves full until the end of March. Pack a crate or give any amount.">
     <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Smooch+Sans:wght@800;900&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="assets/img/hero-sorting-room.webp">
+    <!-- Fonts are self-hosted (assets/fonts/, declared in style.css). The
+         headline face and the body 400 are on the first screen, so both
+         are preloaded; the other weights load as they are needed. -->
+    <link rel="preload" href="assets/fonts/smooch-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/be-vietnam-pro-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- The hero photograph is the largest paint. Phones in portrait get a
+         1200px-wide crop of it, cut so object-position: 64% 30% shows the
+         same window as the full frame; everything else gets the full frame. -->
+    <link rel="preload" as="image" href="assets/img/hero-sorting-room-phone.webp" media="(max-width: 900px) and (max-aspect-ratio: 3/5)" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/img/hero-sorting-room.webp" media="not all and (max-width: 900px) and (max-aspect-ratio: 3/5)" fetchpriority="high">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -47,8 +53,11 @@
              as big as the first screen allows, and the give card in the hero.
              The card is a real form; without JavaScript it submits to #give. -->
         <section class="hero" data-hero aria-labelledby="hero-title">
-            <img class="hero-photo" src="assets/img/hero-sorting-room.webp" width="2000" height="1333"
-                 alt="Three volunteers sorting bread, pasta and tins at long tables in a bright brick room with tall windows" fetchpriority="high">
+            <picture class="hero-pic">
+                <source media="(max-width: 900px) and (max-aspect-ratio: 3/5)" srcset="assets/img/hero-sorting-room-phone.webp" width="1200" height="1333">
+                <img class="hero-photo" src="assets/img/hero-sorting-room.webp" width="2000" height="1333"
+                     alt="Three volunteers sorting bread, pasta and tins at long tables in a bright brick room with tall windows" fetchpriority="high">
+            </picture>
             <div class="hero-scrim" aria-hidden="true"></div>
 
             <div class="hero-inner">
@@ -126,7 +135,7 @@
                     <ul class="shelf-list" data-shelf>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="tomatoes" data-price="3" data-meals="4" data-fill="1" data-name="Chopped tomatoes, 4 tins">
-                                <span class="item-pic"><img src="assets/img/item-tomatoes.webp" width="420" height="427" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-tomatoes.webp" width="420" height="427" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Chopped tomatoes, 4&nbsp;tins</span>
                                 <span class="item-price">£3</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -134,7 +143,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="pasta" data-price="2" data-meals="6" data-fill="2" data-name="Penne, 1kg">
-                                <span class="item-pic"><img src="assets/img/item-pasta.webp" width="420" height="673" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-pasta.webp" width="420" height="673" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Penne, 1kg</span>
                                 <span class="item-price">£2</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -142,7 +151,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="rice" data-price="4" data-meals="10" data-fill="1" data-name="Long-grain rice, 2kg">
-                                <span class="item-pic"><img src="assets/img/item-rice.webp" width="420" height="553" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-rice.webp" width="420" height="553" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Long-grain rice, 2kg</span>
                                 <span class="item-price">£4</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -150,7 +159,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="cereal" data-price="3" data-meals="8" data-fill="1" data-name="Breakfast cereal">
-                                <span class="item-pic"><img src="assets/img/item-cereal.webp" width="420" height="583" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-cereal.webp" width="420" height="583" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Breakfast cereal</span>
                                 <span class="item-price">£3</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -158,7 +167,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="teabags" data-price="5" data-extra="240|cup of tea|cups of tea" data-fill="1" data-name="Teabags, 240">
-                                <span class="item-pic"><img src="assets/img/item-teabags.webp" width="420" height="417" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-teabags.webp" width="420" height="417" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Teabags, 240</span>
                                 <span class="item-price">£5</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -166,7 +175,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="toiletries" data-price="6" data-extra="1|wash bag|wash bags" data-fill="1" data-name="Wash bag: toothpaste, soap, pads">
-                                <span class="item-pic"><img src="assets/img/item-toiletries.webp" width="420" height="331" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-toiletries.webp" width="420" height="331" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Wash bag: toothpaste, soap, pads</span>
                                 <span class="item-price">£6</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -174,7 +183,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="nappies" data-price="8" data-extra="1|week of nappies|weeks of nappies" data-fill="1" data-name="Nappies, a week's pack">
-                                <span class="item-pic"><img src="assets/img/item-nappies.webp" width="420" height="544" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-nappies.webp" width="420" height="544" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Nappies, a week's pack</span>
                                 <span class="item-price">£8</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -182,7 +191,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="supper" data-price="12" data-extra="1|Thursday supper for a family|Thursday suppers for a family" data-fill="1" data-name="Thursday supper for a family">
-                                <span class="item-pic"><img src="assets/img/item-supper.webp" width="420" height="336" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-supper.webp" width="420" height="336" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Thursday supper for a family</span>
                                 <span class="item-price">£12</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -190,7 +199,7 @@
                         </li>
                         <li class="shelf-slot">
                             <button class="item" type="button" data-item="topup" data-price="20" data-extra="1|week of heat and light|weeks of heat and light" data-fill="0" data-name="Gas and electric top-up">
-                                <span class="item-pic"><img src="assets/img/item-topup.webp" width="420" height="260" alt="" draggable="false"></span>
+                                <span class="item-pic"><img src="assets/img/item-topup.webp" width="420" height="260" loading="lazy" alt="" draggable="false"></span>
                                 <span class="item-name">Gas and electric top-up</span>
                                 <span class="item-price">£20</span>
                                 <span class="visually-hidden">Add to crate</span>
@@ -201,9 +210,9 @@
 
                 <div class="crate-panel" data-crate-panel>
                     <div class="crate-box" data-crate-box>
-                        <img class="crate-back" src="assets/img/crate.webp" width="1000" height="613" alt="" draggable="false">
+                        <img class="crate-back" src="assets/img/crate.webp" width="1000" height="613" loading="lazy" alt="" draggable="false">
                         <div class="crate-slots" data-crate-slots aria-hidden="true"></div>
-                        <img class="crate-front" src="assets/img/crate.webp" width="1000" height="613" alt="" draggable="false" aria-hidden="true">
+                        <img class="crate-front" src="assets/img/crate.webp" width="1000" height="613" loading="lazy" alt="" draggable="false" aria-hidden="true">
                         <span class="crate-more" data-crate-more hidden></span>
                     </div>
                     <div class="crate-readout">

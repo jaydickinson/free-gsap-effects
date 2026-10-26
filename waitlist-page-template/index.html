@@ -6,10 +6,10 @@
     <title>Fennick R1: a pocket FM radio, first batch ships 4 March 2027</title>
     <meta name="description" content="The Fennick R1 is a pocket FM radio made by two people in Glasgow. Batch 01 is 300 numbered radios at £145, shipping 4 March 2027. Join the list.">
     <script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@500;700;800&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="assets/img/radio-front.webp" fetchpriority="high">
+    <!-- Fonts are self-hosted in assets/fonts/ (@font-face at the top of style.css) -->
+    <link rel="preload" href="assets/fonts/rethink-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/spline-sans-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -108,7 +108,7 @@
                  set as custom properties in style.css (.radio). Swap the photo
                  and re-measure those values for your own product. -->
             <figure class="radio" data-radio>
-                <img class="radio__photo" src="assets/img/radio-front.webp" width="1536" height="1024"
+                <img class="radio__photo" src="assets/img/radio-front.webp" width="1536" height="1024" fetchpriority="high"
                      alt="The Fennick R1, a signal-orange aluminium pocket radio with a dial window, speaker grille, graphite tuning knob and cream preset key"
                      draggable="false">
 
@@ -148,7 +148,7 @@
     </footer>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script src="assets/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>
