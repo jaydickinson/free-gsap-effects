@@ -112,15 +112,13 @@ measures 5.2:1.
 
 ## Images
 
-`assets/img/` holds two WebP derivatives baked from the masters in
-`assets/img-src/` by `assets/img-manifest.json`:
+`assets/img/` holds two baked WebP derivatives:
 
 - `radio-front.webp`: the product, front-on, on the grey backdrop
 - `knob.webp`: the tuning knob cap, shot from above, rotated by the script
 
 Both are AI-generated images of a fictional product, made for this template.
-Replace the files (same names) or edit the
-manifest and re-bake with your own image tools.
+Replace the files (same names and proportions) and update their alt text.
 
 ## Accessibility
 

@@ -111,7 +111,7 @@ To swap a face, put your `.woff2` in `assets/fonts/`, point its `@font-face` rul
 
 ## Images and Credits
 
-The images in `assets/img/` are cropped, resized and lightly graded WebP derivatives baked from Pexels photographs (Pexels licence), listed with their sources in `assets/img-manifest.json`:
+The images in `assets/img/` are cropped, resized and lightly graded WebP derivatives baked from Pexels photographs (Pexels licence):
 
 - Teal glazed dishes: pexels.com/photo/28271468
 - Studio class at the bench: pexels.com/photo/6694305
@@ -121,4 +121,4 @@ The images in `assets/img/` are cropped, resized and lightly graded WebP derivat
 - Portrait with a pot: pexels.com/photo/6694761
 - Glazed plates on wood: pexels.com/photo/9736670
 
-To use your own photos, replace a file at the same name and shape, with its `-480` and `-160` copies for the prints. The page picks the size that suits the screen through `srcset`, and preloads the top print. You can also change an entry's source in the manifest and re-bake it with `bun scripts/build-template-assets.ts link-in-bio-template` from the GSAP Vault repository; any image tool that exports 4:5 WebP does the same job.
+To use your own photos, replace a file at the same name and shape, with its `-480` and `-160` copies for the prints. The page picks the size that suits the screen through `srcset`, and preloads the top print. Any image tool that exports 4:5 WebP does the job.

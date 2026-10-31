@@ -1,67 +1,55 @@
 # Start Here: AI Setup Prompt
 
-Resume Template is a production-ready GSAP template from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Resume Template is a complete website template from GSAP Vault. This file is designed for Claude Code, Cursor, GitHub Copilot, Windsurf, and other coding assistants that can edit files. It works as plain HTML, CSS and JavaScript with no build step.
 
 ## Product context
 
 - Product: Resume Template
-- Type: template
 - Description: A personal CV site that morphs between two layouts: a signature Flip-driven toggle reflows the whole page from a spacious web resume into an A4 document, backed by a real print stylesheet so the site is also the PDF.
 - GSAP plugins: ScrollTrigger, Flip
-- Techniques: flip-layout, text-animation, click-toggle, clipboard
-- Lenis smooth scrolling: included
-- Difficulty: intermediate
+- Lenis smooth scrolling: not required
 
-The supplied package is the source of truth. It includes the working page markup, readable JavaScript, CSS, documentation, and any product assets. Read the README before changing the implementation.
-
-
-## Brand and content details to provide
-
-Fill these in before pasting the prompt, or ask your assistant to collect them:
-
-- Brand or project name: [ADD HERE]
-- Industry and audience: [ADD HERE]
-- Primary goal and CTA: [ADD HERE]
-- Brand colours and typefaces: [ADD HERE]
-- Content or existing copy to use: [ADD HERE]
-- Deployment target: [ADD HERE]
+The business in the template is a fictional worked example. Expect a first pass to get the brand, copy and structure in place. You supply the photographs and check the facts, then keep refining from there.
 
 ## Copy and paste this into your coding assistant
 
 ```text
-Integrate the supplied Resume Template template into my project.
+Set up this Resume Template as the website for my business, editing the files in this folder.
+
+My business:
+- Name: [ADD HERE]
+- What we do and who for: [ADD HERE]
+- The main thing a visitor should do: [ADD HERE]
+- Brand colours and typefaces, if any: [ADD HERE]
+- Real copy, products, prices or contact details: [ADD HERE, or say "use placeholders"]
 
 Before editing anything:
-1. Inspect my project to identify its framework, routing, file structure, styling system, existing GSAP setup, and component conventions.
-2. Read START-HERE-AI.md, README.md, the supplied HTML, CSS, and JavaScript, plus any linked local assets.
-3. Explain briefly where the template should live and which existing files you plan to change.
+1. Read README.md, then every HTML page, then assets/script.js and the top of assets/style.css.
+2. Identify what is tied to the fictional example: product and content data in the script, filter names, units, pricing logic, opening hours, map coordinates, and words used by the interface.
+3. Tell me briefly how each page maps onto my business and anything that does not fit. Ask before removing a page or a signature interaction. If you cannot ask, keep it and list the decision for me.
 
-During implementation:
-1. Adapt the supplied code to my project's conventions instead of introducing a duplicate styling, routing, or dependency system.
-2. Preserve the visual design, interaction model, and animation timing unless I explicitly request changes.
-3. Scope selectors and animation queries so they cannot affect unrelated components.
-4. Reuse the project's existing GSAP installation where possible. Register only the plugins this product needs: ScrollTrigger, Flip.
-5. Preserve responsive behaviour, keyboard operation, semantic HTML, ARIA attributes, and prefers-reduced-motion handling.
-6. Preserve or add correct GSAP, ScrollTrigger, observer, ticker, and event-listener cleanup for the detected framework and routing model.
-7. Keep the page usable if JavaScript or an animation dependency fails. Do not leave content hidden in fallback or reduced-motion states.
-8. Do not replace working local assets with placeholders, remove licence notices, or add dependencies without explaining why.
-9. Test for console errors, layout overflow, missing assets, and broken interactions at desktop and mobile sizes.
+While editing:
+1. Work in place. Keep plain HTML, CSS and JavaScript unless I ask for a framework.
+2. Keep the design, layout and animation. Change them only where my content needs it, and keep the classes and data attributes the script relies on.
+3. Replace the example everywhere: page titles, meta descriptions, structured data, navigation and footers (repeated on every page), body copy, script data and strings, form text, email addresses and storage keys. Where HTML has very long lines, make exact edits or use a small script rather than broad find and replace.
+4. Keep big headings close to their original length and check they still fit.
+5. Keep responsive layouts, keyboard operation, ARIA attributes and prefers-reduced-motion handling working. Do not remove licence notices.
+
+Photographs:
+You cannot supply my photographs, so leave the image files in place. Keep alt text truthful about what each image shows until it is replaced. Note any photo with words, brands or products visible in it, and any caption or label tied to a photo.
 
 When finished:
-1. List every file changed or created.
-2. Summarise any framework-specific adaptation you made.
-3. Identify the safest colours, copy, timing, easing, and content values I can customise.
-4. Report what you tested and flag anything that still needs manual review.
-
-Ask before making a major design change, changing the animation concept, or replacing an existing project dependency.
+1. Search all files for the example's business name, people and places, and fix or list what remains.
+2. Check every page at desktop and mobile sizes for console errors, overflow and missing files, and try each interactive feature.
+3. Give me three lists: photographs to replace (file, where it appears, size to match, and what should be in it), everything you invented that I must check (prices, statistics, testimonials, addresses, claims), and anything you changed or did not test.
 ```
 
 ## Suggested follow-up requests
 
-- “Match this to my existing design tokens without changing the animation.”
-- “Replace the demo copy with my supplied content and keep the current hierarchy.”
-- “Convert this implementation to my framework's component pattern with complete cleanup.”
-- “Audit the result for mobile overflow, reduced motion, keyboard access, and console errors.”
+- “Here are my photographs. Swap them in, match each one's crop, and update the alt text and captions.”
+- “Replace the placeholder details with these real ones.”
+- “Remove the pages I do not need and update the navigation on every remaining page.”
+- “Move this into my existing project, following its framework and conventions, with complete GSAP cleanup on route changes.”
 
 ---
 

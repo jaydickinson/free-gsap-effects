@@ -121,6 +121,6 @@ All animation runs inside one `gsap.context()`; `window.gsapContext.revert()` re
 
 ## Images and Credits
 
-The photograph is from Pexels, used under the Pexels licence. The file in `assets/img/` is a cropped, resized WebP derivative, shown in black and white by CSS; `assets/img-manifest.json` records its source and output size. Replace it with your own at the same name and shape, or edit the manifest and run `bun scripts/build-template-assets.ts online-cv-template --force` from the GSAP Vault repository.
+The photograph is from Pexels, used under the Pexels licence. The file in `assets/img/` is a cropped, resized WebP derivative, shown in black and white by CSS. Replace it with your own at the same name and shape.
 
 - https://www.pexels.com/photo/smiling-black-female-teacher-with-textbooks-5905898/ (portrait)

@@ -41,52 +41,9 @@
 
     gsap.registerPlugin(ScrollTrigger, Flip);
 
-    /* OPTIONAL: Lenis smooth scroll. Delete this helper, its call below and
-       the Lenis <script> tag to drop it. Smooth scroll is opt-out with
-       data-smooth="off" on <html> or ?smooth=off in the URL, and it only
-       runs in the motion branch, so reduced motion never gets it. */
-    function initLenis() {
-        const wantsSmooth = (new URLSearchParams(location.search).get('smooth')
-            || root.dataset.smooth) !== 'off';
-        /* An existing window.lenis belongs to a host page: leave it alone */
-        if (!wantsSmooth || typeof Lenis === 'undefined' || window.lenis) return null;
-
-        const lenis = new Lenis({ allowNestedScroll: true, anchors: true, autoRaf: false });
-
-        /* Lenis and ScrollTrigger share ONE clock. On its own rAF, Lenis
-           would move the page while ScrollTrigger reads the previous frame. */
-        const tick = function (time) { lenis.raf(time * 1000); };
-        /* A refresh restores the native scroll position while Lenis may
-           still be easing toward an older target: resync it. */
-        const resync = function () {
-            lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-        };
-
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
-        ScrollTrigger.addEventListener('refresh', resync);
-        window.lenis = lenis;
-
-        return function destroyLenis() {
-            gsap.ticker.remove(tick);
-            gsap.ticker.lagSmoothing(500, 33);
-            ScrollTrigger.removeEventListener('refresh', resync);
-            lenis.destroy();
-            if (window.lenis === lenis) delete window.lenis;
-        };
-    }
-
-    /* Jump the page (no easing) whether or not Lenis is driving it. Lenis
-       caches the page height, so after a layout change it is told to
-       re-measure first, or it would clamp the jump to the old height. */
+    /* Jump the page (no easing). */
     function jumpTo(y) {
-        if (window.lenis) {
-            window.lenis.resize();
-            window.lenis.scrollTo(y, { immediate: true, force: true });
-        } else {
-            window.scrollTo(0, y);
-        }
+        window.scrollTo(0, y);
     }
 
     const ctx = gsap.context(function (rootContext) {
@@ -99,7 +56,6 @@
             const isMotion = context.conditions.isMotion;
             const removers = [];
             const resets = [];
-            const destroySmooth = isMotion ? initLenis() : null;
 
             /* Every listener goes through here. context.add(null, fn) wraps
                the handler without running it, so tweens it creates later
@@ -463,7 +419,6 @@
                 removers.length = 0;
                 resets.forEach(function (reset) { reset(); });
                 resets.length = 0;
-                if (destroySmooth) destroySmooth();
             };
         });
 

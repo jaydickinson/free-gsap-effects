@@ -141,5 +141,3 @@ CSS, so with anything missing the page degrades to the stacked list.
 - GSAP Draggable (CDN): the drag surface; without it the cards are a
   static list
 - GSAP InertiaPlugin (CDN, optional): the glide; remove freely
-- [Lenis](https://lenis.darkroom.engineering/) (CDN, optional): smooth
-  scrolling; remove freely

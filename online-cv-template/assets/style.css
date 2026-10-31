@@ -407,3 +407,12 @@ html[data-cv="full"] .set--one { display: none; }
     .has-js.intro .desk .set { opacity: 1 !important; }
     .set, .page { transform: none !important; opacity: 1 !important; }
 }
+
+/* Phones: readable text and comfortable tap targets. */
+@media (max-width: 700px) {
+    .is-reflow .cv .run, .is-reflow .cv .run > *, .is-reflow .cv .foot, .is-reflow .cv .mast__photo figcaption { font-size: 11px; }
+    .is-reflow .cv .std dt, .is-reflow .cv .signoff__facts dt, .is-reflow .cv .job .y small, .is-reflow .cv .jobs--full .job .y small { font-size: 11px; }
+    .is-reflow .cv .std > div, .is-reflow .cv .std dd, .is-reflow .cv .std a, .is-reflow .cv .org, .is-reflow .cv .jobs--full .jt .org, .is-reflow .cv .side .s, .is-reflow .cv .side .n, .is-reflow .cv .quote .s, .is-reflow .cv--two .refs .s, .is-reflow .cv--two .side .s, .is-reflow .cv--two .side .n { font-size: 11px; }
+    .is-reflow .cv a, .is-reflow .signoff a { display: inline-block; padding-block: 6px; margin-block: -6px; }
+    .in-glyph { width: 24px; height: 24px; }
+}

@@ -106,50 +106,6 @@
     const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const motionOK = function () { return !reducedQuery.matches; };
 
-    /* OPTIONAL Lenis smooth scroll. Copy this helper and its call, or omit
-       both. An existing window.lenis belongs to the host page. */
-    function initLenis() {
-        const wantsSmooth = (new URLSearchParams(location.search).get('smooth')
-            || docEl.dataset.smooth) !== 'off';
-        if (!wantsSmooth || typeof Lenis === 'undefined' || window.lenis) return null;
-
-        const previousLenis = window.lenis;
-        const previousDestroy = window.destroyLenis;
-        const hasST = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
-        const lenis = new Lenis({ autoRaf: !hasST, allowNestedScroll: true });
-        let destroyed = false;
-        const tick = function (time) { lenis.raf(time * 1000); };
-        const refresh = function () {
-            lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-        };
-        if (hasST) {
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add(tick);
-            gsap.ticker.lagSmoothing(0);
-            ScrollTrigger.addEventListener('refresh', refresh);
-        }
-        const destroy = function () {
-            if (destroyed) return;
-            destroyed = true;
-            if (hasST) {
-                gsap.ticker.remove(tick);
-                ScrollTrigger.removeEventListener('refresh', refresh);
-            }
-            lenis.destroy();
-            if (window.lenis === lenis) {
-                if (previousLenis === undefined) delete window.lenis;
-                else window.lenis = previousLenis;
-            }
-            if (window.destroyLenis === destroy) {
-                if (previousDestroy === undefined) delete window.destroyLenis;
-                else window.destroyLenis = previousDestroy;
-            }
-        };
-        window.lenis = lenis;
-        window.destroyLenis = destroy;
-        return destroy;
-    }
-
     const previousContext = window.gsapContext;
     const ctx = gsap.context(function (rootContext) {
         const handlers = [];
@@ -165,17 +121,12 @@
             return nav ? nav.offsetHeight : 0;
         };
 
-        /* In-page links: Lenis scrolls when it is running, the browser
-           otherwise. The target receives focus for keyboard users. */
+        /* In-page links. The target receives focus for keyboard users. */
         const scrollToTarget = function (target, focusEl) {
             if (!target) return;
             const offset = -navH() - 8;
-            if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-                window.lenis.scrollTo(target, { offset: offset, immediate: !motionOK() });
-            } else {
-                const y = target.getBoundingClientRect().top + window.scrollY + offset;
-                window.scrollTo({ top: y, behavior: motionOK() ? 'smooth' : 'auto' });
-            }
+            const y = target.getBoundingClientRect().top + window.scrollY + offset;
+            window.scrollTo({ top: y, behavior: motionOK() ? 'smooth' : 'auto' });
             if (focusEl) focusEl.focus({ preventScroll: true });
         };
         on(document, 'click', function (e) {
@@ -942,7 +893,6 @@
             isReduced: '(prefers-reduced-motion: reduce)'
         }, function (context) {
             const isMotion = context.conditions.isMotion;
-            const destroySmoothScroll = isMotion ? initLenis() : null;
             let undoBuyAll = null;
             if (isMotion) {
                 initHero(document.querySelector('[data-hero]'));
@@ -953,7 +903,6 @@
             }
             return function cleanupMedia() {
                 if (undoBuyAll) undoBuyAll();
-                if (destroySmoothScroll) destroySmoothScroll();
             };
         });
 
@@ -962,10 +911,7 @@
             document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
         }
 
-        const handleUnload = function () { rootContext.revert(); };
-        window.addEventListener('beforeunload', handleUnload);
         return function cleanupPage() {
-            window.removeEventListener('beforeunload', handleUnload);
             handlers.forEach(function (remove) { remove(); });
             handlers.length = 0;
             cleanups.forEach(function (fn) { if (typeof fn === 'function') fn(); });

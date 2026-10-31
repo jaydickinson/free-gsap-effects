@@ -30,12 +30,9 @@ Behaviour hooks are `data-` attributes (`data-crate`, `data-item`, `data-give-fo
 | `thanks.html` | The thank-you page the form submits to |
 | `assets/style.css` | Tokens, layout, section styles, reveal gates and reduced-motion overrides |
 | `assets/script.js` | Readable source |
-| `assets/script.min.js` | Minified copy of the same script; point the `<script>` tags at it in production if you like |
 | `assets/favicon.svg` | The crate mark |
 | `assets/fonts/` | Self-hosted Smooch Sans and Be Vietnam Pro (Latin woff2) and their licence, `OFL.txt` |
 | `assets/img/` | Bundled WebP images |
-| `assets/img-src/` | Transparent masters for the crate and the nine item cut-outs |
-| `assets/img-manifest.json` | Sources, crops and bake settings for every image |
 
 ---
 
@@ -109,11 +106,7 @@ The hero scrim uses its own fixed `--scrim-rgb` so a repaint never leaves the he
 
 ## Images
 
-All images are bundled WebP derivatives; nothing is hot-linked. Regenerate them with:
-
-```bash
-bun scripts/build-template-assets.ts charity-campaign-template --force
-```
+All images are bundled WebP derivatives; nothing is hot-linked. To use your own, replace a file in `assets/img/` with one of the same name and proportions, and update its alt text and any caption.
 
 **Photographs** (Pexels licence; free to use and modify, not to be sold unaltered):
 
@@ -128,11 +121,11 @@ bun scripts/build-template-assets.ts charity-campaign-template --force
 | `help-delivery.webp` | https://www.pexels.com/photo/7551581/ |
 | `thanks-unpacking.webp` | https://www.pexels.com/photo/6721918/ |
 
-`hero-sorting-room-phone.webp` is a 1200px-wide crop of the hero that phones in portrait load instead (the `<picture>` and the two preloads in the `<head>` of `index.html`). Its manifest crop starts at 64% of the width the phone never sees, so with the hero's `object-position: 64% 30%` it shows exactly the same window as the full frame. If you replace the hero, rebake both, or delete the `<source>` and the phone preload and drop the `media` attribute from the other preload.
+`hero-sorting-room-phone.webp` is a 1200px-wide crop of the hero that phones in portrait load instead (the `<picture>` and the two preloads in the `<head>` of `index.html`). Its crop starts at 64% of the width the phone never sees, so with the hero's `object-position: 64% 30%` it shows exactly the same window as the full frame. If you replace the hero, replace both, or delete the `<source>` and the phone preload and drop the `media` attribute from the other preload.
 
 The names and quotes attached to the photographs are fiction written for the demo; replace them with your own people, with their permission.
 
-**Crate and item cut-outs** (`crate.webp`, `item-*.webp`) are AI-generated images made for this template, with plain packaging and no brands. Their transparent masters are in `assets/img-src/`, and the manifest crops each one to its object. To use your own, save a transparent WebP or PNG in `assets/img-src/` under the same name, rebuild, and update the `width`/`height` attributes in `index.html`.
+**Crate and item cut-outs** (`crate.webp`, `item-*.webp`) are AI-generated images made for this template, with plain packaging and no brands. They are transparent WebP, cropped to each object. If you swap one for your own, keep it transparent and update the `width`/`height` attributes in `index.html`.
 
 ### Fonts
 
@@ -153,9 +146,8 @@ To swap them, put your `.woff2` files in `assets/fonts/`, point the `@font-face`
 ## Dependencies
 
 - GSAP 3.15.0 core and ScrollTrigger (jsDelivr). Works with GSAP 3.12+.
-- Lenis 1.3.17 (unpkg), optional. Remove its `<script>` tag, add `data-smooth="off"` to `<html>`, or add `?smooth=off` to the URL.
 - Smooch Sans and Be Vietnam Pro, self-hosted in `assets/fonts/`.
 
 ## Teardown
 
-Everything the script creates lives in one GSAP context exposed as `window.gsapContext`. `window.gsapContext.revert()` kills its tweens and ScrollTriggers, removes its listeners, the drawn crate slots and any drag ghost, and stops Lenis, leaving other animations on the page alone.
+Everything the script creates lives in one GSAP context exposed as `window.gsapContext`. `window.gsapContext.revert()` kills its tweens and ScrollTriggers, removes its listeners, the drawn crate slots and any drag ghost, leaving other animations on the page alone.

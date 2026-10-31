@@ -11,7 +11,7 @@ The demo brand is **Sorrel**, a fictional all-day cafe. Replace the copy, dishes
 3. Edit the header, the dishes and the footer in `index.html`.
 4. To reskin, change the six colour tokens in `assets/style.css` (see **Palette**).
 
-That is the entire setup. The GSAP and Lenis `<script>` tags near the bottom of `index.html` load from a CDN; leave them as they are.
+That is the entire setup. The GSAP `<script>` tags near the bottom of `index.html` load from a CDN; leave them as they are.
 
 ## Editing the menu
 
@@ -94,6 +94,5 @@ The menu runs on a sage-tint ground with near-black ink, one herb green and one 
 ## Dependencies
 
 - [GSAP](https://gsap.com/) 3.15.0 with ScrollTrigger (CDN)
-- [Lenis](https://github.com/darkroomengineering/lenis) 1.3.17 smooth scroll (CDN, optional; remove the block in `script.js` and its `<script>` tag to drop it)
 
 Yeseva One and Mukta load from Google Fonts.

@@ -34,10 +34,10 @@ Fonts load from Google Fonts and GSAP from a CDN. To go fully self-hosted, downl
 `assets/script.js` is the readable source and is what `index.html` loads. It is around 23KB, which is fine to ship as-is. If you would rather serve it minified, produce it yourself once your edits are done:
 
 ```bash
-bunx terser assets/script.js -c -m -o assets/script.min.js
+bunx terser assets/script.js -c -m -o assets/script.bundle.js
 ```
 
-Then point the last `<script>` tag in `index.html` at `assets/script.min.js`. Keep `script.js` as the file you edit and re-run the command after each change, otherwise the two quietly drift apart.
+Then point the last `<script>` tag in `index.html` at `assets/script.bundle.js`. Keep `script.js` as the file you edit and re-run the command after each change, otherwise the two quietly drift apart.
 
 ## Sections & Options
 
@@ -165,10 +165,6 @@ Once you have settled on one, the tidier end state is to copy its values into th
 
 That rule has to stay **below** the palette blocks. `:root[data-palette]` and `:root[data-palette="moss"]` have identical specificity, so source order is the only thing making it win; move it above them and an alternate palette will print in its own colours. If you strip the file back to a single palette, you can drop the rule with the rest (your one remaining palette *is* the default), but there is no cost to leaving it.
 
-## Smooth Scrolling
-
-Lenis is wired in and optional. Remove the CDN tag, the `initLenis` helper at the top of `script.js` and its one call to drop it. It shares GSAP's ticker with ScrollTrigger, never runs under reduced motion, and can be turned off with `data-smooth="off"` on `<html>` or `?smooth=off` in the URL.
-
 ## Accessibility
 
 - The mode toggle is a real pressed-state control (`aria-pressed`) with a live region announcing the change.
@@ -189,4 +185,3 @@ Lenis is wired in and optional. Remove the CDN tag, the `initLenis` helper at th
 - GSAP 3.15.0 (core)
 - ScrollTrigger
 - Flip
-- Lenis 1.3.17 (optional)
