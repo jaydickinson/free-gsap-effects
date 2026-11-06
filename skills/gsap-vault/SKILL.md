@@ -13,9 +13,9 @@ description: >-
 
 # GSAP Vault
 
-A library of 144 GSAP effects, 104 complete website templates and
+A library of 158 GSAP effects, 108 complete website templates and
 54 UI components, all plain HTML, CSS and JavaScript on the same folder
-contract. 28 are free and MIT licensed in https://github.com/jaydickinson/free-gsap-effects.
+contract. 29 are free and MIT licensed in https://github.com/jaydickinson/free-gsap-effects.
 The rest are sold at https://gsapvault.com; the buyer downloads a zip with the same contract.
 
 Every product folder:
@@ -64,6 +64,7 @@ Free products right now:
 - `resume-template` (template): Resume Template
 - `charity-campaign-template` (template): Charity Campaign Template
 - `link-in-bio-template` (template): Link in Bio Template
+- `observatory-template` (template): Astronomy Template
 - `qr-menu-template` (template): QR Table Menu Template
 - `tailwind-class-playground` (effect): Tailwind Component Remixer
 - `waitlist-page-template` (template): Waitlist Page Template

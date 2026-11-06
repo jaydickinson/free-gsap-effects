@@ -146,8 +146,9 @@ To swap them, put your `.woff2` files in `assets/fonts/`, point the `@font-face`
 ## Dependencies
 
 - GSAP 3.15.0 core and ScrollTrigger (jsDelivr). Works with GSAP 3.12+.
+- Lenis 1.3.17 (unpkg), optional. Remove its `<script>` tag, add `data-smooth="off"` to `<html>`, or add `?smooth=off` to the URL.
 - Smooch Sans and Be Vietnam Pro, self-hosted in `assets/fonts/`.
 
 ## Teardown
 
-Everything the script creates lives in one GSAP context exposed as `window.gsapContext`. `window.gsapContext.revert()` kills its tweens and ScrollTriggers, removes its listeners, the drawn crate slots and any drag ghost, leaving other animations on the page alone.
+Everything the script creates lives in one GSAP context exposed as `window.gsapContext`. `window.gsapContext.revert()` kills its tweens and ScrollTriggers, removes its listeners, the drawn crate slots and any drag ghost, and stops Lenis, leaving other animations on the page alone.

@@ -41,7 +41,7 @@
 
     gsap.registerPlugin(ScrollTrigger, Flip);
 
-    /* Jump the page (no easing). */
+    /* Jump the page, with no easing. */
     function jumpTo(y) {
         window.scrollTo(0, y);
     }

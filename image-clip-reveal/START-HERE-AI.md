@@ -1,6 +1,6 @@
 # Start Here: AI Setup Prompt
 
-Image Clip Reveal is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Image Clip Reveal is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, Codex, ChatGPT, GitHub Copilot, Windsurf, Gemini, and other coding assistants.
 
 ## Product context
 

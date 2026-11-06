@@ -1,6 +1,6 @@
 # Start Here: AI Setup Prompt
 
-Waitlist Page Template is a complete website template from GSAP Vault. This file is designed for Claude Code, Cursor, GitHub Copilot, Windsurf, and other coding assistants that can edit files. It works as plain HTML, CSS and JavaScript with no build step.
+Waitlist Page Template is a complete website template from GSAP Vault. This file is designed for Claude Code, Codex, Cursor, GitHub Copilot, Windsurf, Gemini, and other coding assistants that can edit files. It works as plain HTML, CSS and JavaScript with no build step.
 
 ## Product context
 

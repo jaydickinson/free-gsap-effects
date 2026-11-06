@@ -1,6 +1,6 @@
 # Start Here: AI Setup Prompt
 
-Progress Stepper is a production-ready GSAP UI element from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Progress Stepper is a production-ready GSAP UI element from GSAP Vault. This file is designed for Cursor, Claude Code, Codex, ChatGPT, GitHub Copilot, Windsurf, Gemini, and other coding assistants.
 
 ## Product context
 

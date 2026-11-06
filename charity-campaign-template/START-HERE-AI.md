@@ -1,13 +1,13 @@
 # Start Here: AI Setup Prompt
 
-Charity Campaign Template is a complete website template from GSAP Vault. This file is designed for Claude Code, Cursor, GitHub Copilot, Windsurf, and other coding assistants that can edit files. It works as plain HTML, CSS and JavaScript with no build step.
+Charity Campaign Template is a complete website template from GSAP Vault. This file is designed for Claude Code, Codex, Cursor, GitHub Copilot, Windsurf, Gemini, and other coding assistants that can edit files. It works as plain HTML, CSS and JavaScript with no build step.
 
 ## Product context
 
 - Product: Charity Campaign Template
 - Description: A free one-page appeal template where visitors give by packing a crate: drag tins, pasta and nappies off a shelf, watch the total rewrite what the gift does, and carry it into the donation form. Worked as a Sheffield food bank's winter appeal.
 - GSAP plugins: ScrollTrigger
-- Lenis smooth scrolling: not required
+- Lenis smooth scrolling: included
 
 The business in the template is a fictional worked example. Expect a first pass to get the brand, copy and structure in place. You supply the photographs and check the facts, then keep refining from there.
 

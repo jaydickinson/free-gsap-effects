@@ -1,6 +1,6 @@
 # Start Here: AI Setup Prompt
 
-Hover Underline is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Hover Underline is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, Codex, ChatGPT, GitHub Copilot, Windsurf, Gemini, and other coding assistants.
 
 ## Product context
 

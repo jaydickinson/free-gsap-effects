@@ -342,6 +342,9 @@ body {
 /* --- What the hero releases into -------------------------------- */
 
 .after {
+    /* Tucked under the hero's last pixel, so the sky cannot show as a hairline at the join. */
+    position: relative;
+    margin-top: -1px;
     padding: clamp(3.5rem, 11vh, 7rem) clamp(1.5rem, 6vw, 6rem);
     background: var(--ridge-near);
     color: var(--chalk);

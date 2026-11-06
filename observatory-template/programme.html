@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programme | Carrick Head Tracking Station</title>
+<meta name="description" content="Planetarium shows, radio dish sessions, talks and observing nights at Carrick Head, every week from Tuesday to Sunday. Filter by day or by dome, dish and headland.">
+<meta name="theme-color" content="#EFEBE1">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Adds .has-js before first paint so reveal targets never flash; the
+     timer takes it off again if script.js fails to arrive. -->
+<script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+<link rel="preload" href="assets/fonts/anybody-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/observing-night.webp" imagesrcset="assets/img/observing-night-960.webp 960w, assets/img/observing-night.webp 1672w" imagesizes="(max-width: 899px) 96vw, 80vw" fetchpriority="high">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="programme">
+<a class="skip" href="#main">Skip to content</a>
+<div class="gridlines" aria-hidden="true"></div>
+<header class="hdr">
+  <div class="hdr__in frame">
+    <a class="logo" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5c3 6 9 10 15 11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 4 18 15M12 10l4-4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 22l2-6 2 6z" fill="currentColor"/><path d="M3 22h18" stroke="currentColor" stroke-width="1.6"/></svg><span>Carrick Head</span><span class="logo__cs">CKH</span></a>
+    <span class="hdr__band mono">Band 1400&ndash;1430 MHz &middot; tuned to 1406.9</span>
+    <div class="clock" data-clock role="timer" aria-live="off">
+      <span class="clock__k">Next show</span>
+      <span class="clock__t" data-clock-t>Tue&ndash;Sun</span>
+      <span class="clock__what" data-clock-what>Shows from 10:30, observing Fri and Sat</span>
+    </div>
+    <button class="chan-btn" type="button" aria-expanded="false" aria-controls="channels" data-channels-btn hidden><span class="chan-btn__bars" aria-hidden="true"><i></i><i></i></span>Channels</button>
+  </div>
+  <nav class="dial frame" aria-label="Main" data-dial style="--needle: 23%">
+    <div class="dial__scale" aria-hidden="true"><span style="--x: 0.000%">1400</span><span style="--x: 16.667%">1405</span><span style="--x: 33.333%">1410</span><span style="--x: 50.000%">1415</span><span style="--x: 66.667%">1420</span><span style="--x: 83.333%">1425</span></div>
+    <ul class="dial__list">
+      <li style="--at: 7%"><a href="index.html"><span class="dial__name">Home</span><span class="dial__f" aria-hidden="true">00 &middot; 1402.1</span></a></li>
+      <li style="--at: 23%"><a href="programme.html" aria-current="page"><span class="dial__name">Programme</span><span class="dial__f" aria-hidden="true">01 &middot; 1406.9</span></a></li>
+      <li style="--at: 40%"><a href="instruments.html"><span class="dial__name">Instruments</span><span class="dial__f" aria-hidden="true">02 &middot; 1412.0</span></a></li>
+      <li style="--at: 57%"><a href="visit.html"><span class="dial__name">Visit</span><span class="dial__f" aria-hidden="true">03 &middot; 1417.1</span></a></li>
+      <li style="--at: 75%"><a href="schools.html"><span class="dial__name">Schools & Groups</span><span class="dial__f" aria-hidden="true">04 &middot; 1422.5</span></a></li>
+      <li style="--at: 92%"><a href="support.html"><span class="dial__name">Support</span><span class="dial__f" aria-hidden="true">05 &middot; 1427.6</span></a></li>
+    </ul>
+    <span class="dial__needle" aria-hidden="true"></span>
+  </nav>
+</header>
+<nav class="sheet" id="channels" aria-label="Channels" data-channels>
+  <div class="sheet__head"><span class="mono">Next show</span><span class="sheet__t" data-clock-t>&nbsp;</span></div>
+  <ul class="sheet__list">
+      <li><a href="index.html"><span class="sheet__n">00</span><span class="sheet__l">Home</span><span class="sheet__f" aria-hidden="true">1402.1</span></a></li>
+      <li><a href="programme.html" aria-current="page"><span class="sheet__n">01</span><span class="sheet__l">Programme</span><span class="sheet__f" aria-hidden="true">1406.9</span></a></li>
+      <li><a href="instruments.html"><span class="sheet__n">02</span><span class="sheet__l">Instruments</span><span class="sheet__f" aria-hidden="true">1412.0</span></a></li>
+      <li><a href="visit.html"><span class="sheet__n">03</span><span class="sheet__l">Visit</span><span class="sheet__f" aria-hidden="true">1417.1</span></a></li>
+      <li><a href="schools.html"><span class="sheet__n">04</span><span class="sheet__l">Schools & Groups</span><span class="sheet__f" aria-hidden="true">1422.5</span></a></li>
+      <li><a href="support.html"><span class="sheet__n">05</span><span class="sheet__l">Support</span><span class="sheet__f" aria-hidden="true">1427.6</span></a></li>
+  </ul>
+</nav>
+<main id="main">
+  <section class="frame" data-hero aria-labelledby="pg-title">
+    <div class="phead">
+      <div class="phead__meta" data-hero-fade>
+        <span class="box box--tuned">01 &middot; Programme &middot; 1406.9 MHz</span>
+        <span class="box">Tue to Sun &middot; 12 regular sessions</span>
+      </div>
+    </div>
+    <div class="sidehead" style="--em: 3.687">
+      <div class="sidehead__aside">
+        <h1 class="sidehead__title display" data-title id="pg-title"><span class="title-mask"><span class="fit fit-line" data-fit="programme" style="--em: 3.687">Programme</span></span></h1>
+      </div>
+      <div class="sidehead__media callouts">
+        <figure class="shot shot--wide" data-hero-fade><img src="assets/img/observing-night.webp" srcset="assets/img/observing-night-960.webp 960w, assets/img/observing-night.webp 1672w" sizes="(max-width: 899px) 96vw, 80vw" width="1672" height="940" alt="Blue hour on the headland: a volunteer in a red head torch guides a girl to the eyepiece of a white Dobsonian telescope between two refractors, with the last orange light on the sea and Dish One small on the skyline." fetchpriority="high"></figure>
+      </div>
+    </div>
+    <div class="nextshow" data-reveal>
+      <div class="nextshow__t"><span class="mono">Next on</span><span class="fig__v" data-clock-t>Daily</span></div>
+      <div class="nextshow__w"><span class="mono" data-clock-code>From 10:30</span><span class="h3" data-clock-title>Shows every day we are open</span></div>
+      <div class="nextshow__c"><a class="btn" href="visit.html#tickets">Tickets</a></div>
+    </div>
+  </section>
+
+  <section class="sec frame" aria-labelledby="week-title" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="sec__head">
+      <span class="box">The week</span>
+      <h2 id="week-title" class="display h2">Dome, dish and headland</h2>
+      <p>The same sessions run every week. Observing needs a clear sky: we make the call at 16:00 and post it here and at the gate.</p>
+    </div>
+    <div class="filters" data-filters role="group" aria-label="Filter the programme">
+      <div class="filters__row" data-js-only>
+        <span class="mono">Show</span>
+        <button class="fbtn" type="button" aria-pressed="true" data-filter-type="all">Everything</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-type="planetarium" style="--sw: var(--sea)"><i aria-hidden="true"></i>Planetarium</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-type="observing" style="--sw: var(--ink)"><i aria-hidden="true"></i>Observing</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-type="dish" style="--sw: var(--signal)"><i aria-hidden="true"></i>Dish One</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-type="talk" style="--sw: var(--stone)"><i aria-hidden="true"></i>Talks</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-type="family" style="--sw: var(--sea-2)"><i aria-hidden="true"></i>Family</button>
+      </div>
+      <div class="filters__row" data-js-only>
+        <span class="mono">Day</span>
+        <button class="fbtn" type="button" aria-pressed="true" data-filter-day="all">Any day</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="tue">Tue</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="wed">Wed</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="thu">Thu</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="fri">Fri</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="sat">Sat</button>
+          <button class="fbtn" type="button" aria-pressed="false" data-filter-day="sun">Sun</button>
+        <span class="filters__count mono" data-count aria-live="polite">12 of 12 sessions</span>
+      </div>
+    </div>
+    <div class="sched" data-sched>
+      <article class="row" id="tonights-sky" data-item data-type="planetarium" data-days="tue wed thu fri sat sun" style="--sw: var(--sea)">
+        <div class="row__code"><b>PL-01</b><span class="mono">Planetarium</span></div>
+        <div class="row__main"><h3>Tonight's Sky</h3><p>A live presenter flies the dome to whatever is up over the Lizard tonight, then sends you outside knowing where to look.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Tue to Sun</b><b>11:00, 15:00</b></div>
+        <div class="row__meta"><span class="mono">35 min &middot; All ages</span><b>With entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Tonight's Sky</span></a></div>
+      </article>
+      <article class="row" id="little-astronauts" data-item data-type="family" data-days="sat sun" style="--sw: var(--sea-2)">
+        <div class="row__code"><b>PL-04</b><span class="mono">Family</span></div>
+        <div class="row__main"><h3>Little Astronauts</h3><p>Lights stay low, never off. A gentle first show with the Moon, a rocket and a great deal of counting down.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Sat and Sun</b><b>10:30</b></div>
+        <div class="row__meta"><span class="mono">25 min &middot; Under 7</span><b>With entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Little Astronauts</span></a></div>
+      </article>
+      <article class="row" id="hydrogen" data-item data-type="dish" data-days="tue wed thu fri sat sun" style="--sw: var(--signal)">
+        <div class="row__code"><b>DS-01</b><span class="mono">Dish One</span></div>
+        <div class="row__main"><h3>Listening to Hydrogen</h3><p>Stand in the dish hut while Dish One points along the Milky Way and the 21 cm hydrogen line climbs out of the noise on the screen.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Tue to Sun</b><b>12:15</b></div>
+        <div class="row__meta"><span class="mono">30 min &middot; 10+</span><b>With entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Listening to Hydrogen</span></a></div>
+      </article>
+      <article class="row" id="rings" data-item data-type="planetarium" data-days="wed sun" style="--sw: var(--sea)">
+        <div class="row__code"><b>PL-03</b><span class="mono">Planetarium</span></div>
+        <div class="row__main"><h3>Saturn's Rings</h3><p>How a ring system 280,000 km across can be ten metres thick, and why it will not be there for ever. Saturn is due south on clear evenings this month.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Wed and Sun</b><b>13:30</b></div>
+        <div class="row__meta"><span class="mono">40 min &middot; 8+</span><b>With entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Saturn's Rings</span></a></div>
+      </article>
+      <article class="row" id="giant-planets" data-item data-type="planetarium" data-days="thu sat" style="--sw: var(--sea)">
+        <div class="row__code"><b>PL-02</b><span class="mono">Planetarium</span></div>
+        <div class="row__main"><h3>Giant Planets</h3><p>Jupiter's storms and moons at the scale of the dome, built from spacecraft data. On clear Thursdays the show ends at the telescopes as Jupiter rises.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Thu 19:30, Sat 13:30</b><b></b></div>
+        <div class="row__meta"><span class="mono">45 min &middot; 8+</span><b>£5 with entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Giant Planets</span></a></div>
+      </article>
+      <article class="row" id="rocket-lab" data-item data-type="family" data-days="sat" style="--sw: var(--sea-2)">
+        <div class="row__code"><b>FM-01</b><span class="mono">Family</span></div>
+        <div class="row__main"><h3>Rocket Lab</h3><p>Build a water rocket, fly it across the old car park, write down how high it went. Waterproofs strongly advised.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Sat</b><b>11:30</b></div>
+        <div class="row__meta"><span class="mono">50 min &middot; 6+</span><b>£4</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Rocket Lab</span></a></div>
+      </article>
+      <article class="row" id="pedestal" data-item data-type="dish" data-days="sat sun" style="--sw: var(--signal)">
+        <div class="row__code"><b>DS-02</b><span class="mono">Dish One</span></div>
+        <div class="row__main"><h3>Inside the Pedestal</h3><p>Up the ladder into the azimuth bearing room, where 200 tonnes of steel turn on a ring of steel balls the size of oranges.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Sat and Sun</b><b>14:30</b></div>
+        <div class="row__meta"><span class="mono">40 min &middot; 12+</span><b>£6</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Inside the Pedestal</span></a></div>
+      </article>
+      <article class="row" id="apollo-night" data-item data-type="talk" data-days="sun" style="--sw: var(--stone)">
+        <div class="row__code"><b>TK-02</b><span class="mono">Talks</span></div>
+        <div class="row__main"><h3>The Night of the Landing</h3><p>Told at console 4, where the night shift relayed the July 1969 pictures to Europe, by a volunteer who was on the late bus home that morning.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Sun</b><b>16:00</b></div>
+        <div class="row__meta"><span class="mono">45 min &middot; 10+</span><b>With entry</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for The Night of the Landing</span></a></div>
+      </article>
+      <article class="row" id="first-wednesday" data-item data-type="talk" data-days="wed" style="--sw: var(--stone)">
+        <div class="row__code"><b>TK-01</b><span class="mono">Talks</span></div>
+        <div class="row__main"><h3>Wednesday Talk</h3><p>A working astronomer, engineer or historian in the control room. Tea from the urn and questions until the caretaker turns the lights down.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Wed</b><b>19:30</b></div>
+        <div class="row__meta"><span class="mono">75 min &middot; Adults</span><b>£6</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Wednesday Talk</span></a></div>
+      </article>
+      <article class="row" id="satellite-spotting" data-item data-type="observing" data-days="sat" style="--sw: var(--ink)">
+        <div class="row__code"><b>OB-03</b><span class="mono">Observing</span></div>
+        <div class="row__main"><h3>Satellite Spotting</h3><p>The station's old job. We predict the evening's space station and satellite passes and you call them out as they cross the headland.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Sat</b><b>18:00</b></div>
+        <div class="row__meta"><span class="mono">60 min &middot; All ages</span><b>£8</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Satellite Spotting</span></a></div>
+      </article>
+      <article class="row" id="moonwatch" data-item data-type="observing" data-days="fri" style="--sw: var(--ink)">
+        <div class="row__code"><b>OB-01</b><span class="mono">Observing</span></div>
+        <div class="row__main"><h3>Moonwatch</h3><p>Craters along the terminator through the 406 mm Dobsonian, with a volunteer at the eyepiece. Clear skies only; we call it at 16:00.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Fri</b><b>19:00</b></div>
+        <div class="row__meta"><span class="mono">90 min &middot; All ages</span><b>£8</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Moonwatch</span></a></div>
+      </article>
+      <article class="row" id="deep-sky" data-item data-type="observing" data-days="fri sat" style="--sw: var(--ink)">
+        <div class="row__code"><b>OB-02</b><span class="mono">Observing</span></div>
+        <div class="row__main"><h3>Deep Sky Night</h3><p>Andromeda, the Pleiades and the Orion Nebula from a Bortle 3 headland, one volunteer to every telescope and a flask of soup at half time.</p></div>
+        <div class="row__when"><span class="mono">When</span><b>Fri and Sat</b><b>20:00</b></div>
+        <div class="row__meta"><span class="mono">2 hours &middot; 10+</span><b>£15</b></div>
+        <div class="row__go"><a class="btn btn--ghost" href="visit.html#tickets">Tickets<span class="vh"> for Deep Sky Night</span></a></div>
+      </article>
+      <div class="sched__empty" data-empty hidden>
+        <p class="h3">Nothing on that day</p>
+        <p class="dim">Observing runs on Friday and Saturday nights, talks on Wednesday and Sunday. <button class="fbtn" type="button" data-filter-reset>Show everything</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-sea sec" aria-labelledby="call-title">
+    <div class="gridline-band" aria-hidden="true"></div>
+    <div class="frame split">
+      <div class="split__a">
+        <span class="box">Observing nights</span>
+        <h2 id="call-title" class="display h2" style="margin-top:18px">The 16:00 call</h2>
+      </div>
+      <div class="split__b">
+        <ol class="ticks">
+          <li><span>16:00</span><p><strong>Go or no-go.</strong> The duty astronomer checks cloud and wind and posts the call here, by text to ticket holders, and on the board at the gate.</p></li>
+          <li><span>NO</span><p><strong>Cloudy?</strong> Your ticket moves to any other observing night, or swaps for a planetarium show the same evening.</p></li>
+          <li><span>GO</span><p><strong>Clear.</strong> Arrive 15 minutes early, park with dipped lights and let your eyes adjust while the telescopes cool.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec frame" aria-labelledby="dome-title">
+    <div class="split">
+      <figure class="split__a" data-reveal>
+        <div class="shot shot--32"><img src="assets/img/planetarium.webp" srcset="assets/img/planetarium-800.webp 800w, assets/img/planetarium.webp 1536w" sizes="(max-width: 899px) 96vw, 48vw" width="1536" height="1024" alt="The planetarium mid-show: rows of reclined seats in arcs, the audience looking up at the Milky Way across the dome, the star projector glowing in the middle." loading="lazy" decoding="async"></div>
+        <figcaption class="cap"><span>The dome, mid-show</span><span>60 seats &middot; 9 m</span></figcaption>
+      </figure>
+      <div class="split__b">
+        <span class="box">In the dome</span>
+        <h2 id="dome-title" class="display h2" style="margin:18px 0 .3em">Live, never canned</h2>
+        <p class="lead">Every show has a presenter at the desk, so the sky is tonight&rsquo;s sky and the questions get answered.</p>
+        <p class="dim">The dome fills the old equipment hall&rsquo;s north bay: a star projector in the middle, two digital projectors round the rim and seats that tilt back 30 degrees. Shows run 25 to 45 minutes; the doors close when it starts and the lights stay low enough to find your bag.</p>
+        <div class="figs" style="grid-template-columns:repeat(3,1fr);margin-top:24px">
+          <div class="fig"><span class="mono">Seats</span><span class="fig__v">60</span></div>
+          <div class="fig"><span class="mono">Dome</span><span class="fig__v">9<small>m</small></span></div>
+          <div class="fig"><span class="mono">Stars</span><span class="fig__v">9,110</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="ftr">
+  <div class="frame">
+    <div class="ftr__grid">
+      <div class="wide">
+        <h2 class="mono">Carrick Head Tracking Station</h2>
+        <p>Carrick Head, near Coverack<br>Helston, Cornwall TR12</p>
+        <p>A space-science centre run by the Carrick Head Trust, registered charity 1194417, with 140 volunteers.</p>
+      </div>
+      <div>
+        <h2 class="mono">Channels</h2>
+        <ul class="ftr__nav">
+          <li><a href="index.html"><i aria-hidden="true">00</i>Home</a></li>
+          <li><a href="programme.html" aria-current="page"><i aria-hidden="true">01</i>Programme</a></li>
+          <li><a href="instruments.html"><i aria-hidden="true">02</i>Instruments</a></li>
+          <li><a href="visit.html"><i aria-hidden="true">03</i>Visit</a></li>
+          <li><a href="schools.html"><i aria-hidden="true">04</i>Schools & Groups</a></li>
+          <li><a href="support.html"><i aria-hidden="true">05</i>Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="mono">Open</h2>
+        <p>Tue to Sun, 10:00 to 17:00</p>
+        <p>Late until 21:00 Wed and Thu, 22:30 Fri and Sat</p>
+        <p>Closed Mondays, except bank holidays</p>
+      </div>
+      <div class="wide">
+        <h2 class="mono">Contact</h2>
+        <p><a href="mailto:hello@carrickhead.org">hello@carrickhead.org</a></p>
+        <p><a href="tel:+441326000000">01326 000 000</a></p>
+        <p>Schools and groups: <a href="mailto:learning@carrickhead.org">learning@carrickhead.org</a></p>
+      </div>
+    </div>
+    <div class="ftr__mark display" aria-hidden="true"><span class="fit" data-fit="mark" style="--em: 3.897">Carrick Head</span></div>
+    <div class="ftr__base mono"><span>Callsign CKH &middot; 50&deg;00&prime;58&Prime;N 5&deg;05&prime;56&Prime;W</span><span>Dish One &middot; 26 m &middot; 1420 MHz</span><span>&copy; 2026 Carrick Head Trust</span></div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js" defer></script>
+<script src="assets/script.js" defer></script>
+</body>
+</html>

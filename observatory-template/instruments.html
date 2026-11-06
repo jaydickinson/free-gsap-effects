@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instruments | Carrick Head Tracking Station</title>
+<meta name="description" content="Spec sheets for the instruments at Carrick Head: the 26 m Dish One radio telescope, the 60-seat planetarium, the headland telescopes and the 1966 control room.">
+<meta name="theme-color" content="#EFEBE1">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Adds .has-js before first paint so reveal targets never flash; the
+     timer takes it off again if script.js fails to arrive. -->
+<script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+<link rel="preload" href="assets/fonts/anybody-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="instruments">
+<a class="skip" href="#main">Skip to content</a>
+<div class="gridlines" aria-hidden="true"></div>
+<header class="hdr">
+  <div class="hdr__in frame">
+    <a class="logo" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5c3 6 9 10 15 11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 4 18 15M12 10l4-4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 22l2-6 2 6z" fill="currentColor"/><path d="M3 22h18" stroke="currentColor" stroke-width="1.6"/></svg><span>Carrick Head</span><span class="logo__cs">CKH</span></a>
+    <span class="hdr__band mono">Band 1400&ndash;1430 MHz &middot; tuned to 1412.0</span>
+    <div class="clock" data-clock role="timer" aria-live="off">
+      <span class="clock__k">Next show</span>
+      <span class="clock__t" data-clock-t>Tue&ndash;Sun</span>
+      <span class="clock__what" data-clock-what>Shows from 10:30, observing Fri and Sat</span>
+    </div>
+    <button class="chan-btn" type="button" aria-expanded="false" aria-controls="channels" data-channels-btn hidden><span class="chan-btn__bars" aria-hidden="true"><i></i><i></i></span>Channels</button>
+  </div>
+  <nav class="dial frame" aria-label="Main" data-dial style="--needle: 40%">
+    <div class="dial__scale" aria-hidden="true"><span style="--x: 0.000%">1400</span><span style="--x: 16.667%">1405</span><span style="--x: 33.333%">1410</span><span style="--x: 50.000%">1415</span><span style="--x: 66.667%">1420</span><span style="--x: 83.333%">1425</span></div>
+    <ul class="dial__list">
+      <li style="--at: 7%"><a href="index.html"><span class="dial__name">Home</span><span class="dial__f" aria-hidden="true">00 &middot; 1402.1</span></a></li>
+      <li style="--at: 23%"><a href="programme.html"><span class="dial__name">Programme</span><span class="dial__f" aria-hidden="true">01 &middot; 1406.9</span></a></li>
+      <li style="--at: 40%"><a href="instruments.html" aria-current="page"><span class="dial__name">Instruments</span><span class="dial__f" aria-hidden="true">02 &middot; 1412.0</span></a></li>
+      <li style="--at: 57%"><a href="visit.html"><span class="dial__name">Visit</span><span class="dial__f" aria-hidden="true">03 &middot; 1417.1</span></a></li>
+      <li style="--at: 75%"><a href="schools.html"><span class="dial__name">Schools & Groups</span><span class="dial__f" aria-hidden="true">04 &middot; 1422.5</span></a></li>
+      <li style="--at: 92%"><a href="support.html"><span class="dial__name">Support</span><span class="dial__f" aria-hidden="true">05 &middot; 1427.6</span></a></li>
+    </ul>
+    <span class="dial__needle" aria-hidden="true"></span>
+  </nav>
+</header>
+<nav class="sheet" id="channels" aria-label="Channels" data-channels>
+  <div class="sheet__head"><span class="mono">Next show</span><span class="sheet__t" data-clock-t>&nbsp;</span></div>
+  <ul class="sheet__list">
+      <li><a href="index.html"><span class="sheet__n">00</span><span class="sheet__l">Home</span><span class="sheet__f" aria-hidden="true">1402.1</span></a></li>
+      <li><a href="programme.html"><span class="sheet__n">01</span><span class="sheet__l">Programme</span><span class="sheet__f" aria-hidden="true">1406.9</span></a></li>
+      <li><a href="instruments.html" aria-current="page"><span class="sheet__n">02</span><span class="sheet__l">Instruments</span><span class="sheet__f" aria-hidden="true">1412.0</span></a></li>
+      <li><a href="visit.html"><span class="sheet__n">03</span><span class="sheet__l">Visit</span><span class="sheet__f" aria-hidden="true">1417.1</span></a></li>
+      <li><a href="schools.html"><span class="sheet__n">04</span><span class="sheet__l">Schools & Groups</span><span class="sheet__f" aria-hidden="true">1422.5</span></a></li>
+      <li><a href="support.html"><span class="sheet__n">05</span><span class="sheet__l">Support</span><span class="sheet__f" aria-hidden="true">1427.6</span></a></li>
+  </ul>
+</nav>
+<main id="main">
+  <section class="frame" data-hero aria-labelledby="in-title">
+    <div class="phead">
+      <div class="phead__meta" data-hero-fade>
+        <span class="box box--tuned">02 &middot; Instruments &middot; 1412.0 MHz</span>
+        <span class="box">Four instruments &middot; all in use</span>
+      </div>
+      <h1 class="phead__title display" data-title id="in-title"><span class="title-mask"><span class="fit fit-line" data-fit="instruments" style="--em: 4.102">Instruments</span></span></h1>
+    </div>
+    <div data-instruments>
+      <div class="itabs" role="tablist" aria-label="Instruments" data-js-only>
+        <button class="itab" type="button" role="tab" id="tab-dish-one" aria-controls="dish-one" aria-selected="true" tabindex="0" data-itab><span class="mono">01</span><span class="h3">Dish One</span></button>
+        <button class="itab" type="button" role="tab" id="tab-planetarium" aria-controls="planetarium" aria-selected="false" tabindex="-1" data-itab><span class="mono">02</span><span class="h3">Planetarium</span></button>
+        <button class="itab" type="button" role="tab" id="tab-telescopes" aria-controls="telescopes" aria-selected="false" tabindex="-1" data-itab><span class="mono">03</span><span class="h3">Telescopes</span></button>
+        <button class="itab" type="button" role="tab" id="tab-control-room" aria-controls="control-room" aria-selected="false" tabindex="-1" data-itab><span class="mono">04</span><span class="h3">Control room</span></button>
+      </div>
+      <section class="ipanel" id="dish-one" role="tabpanel" aria-labelledby="tab-dish-one" data-ipanel>
+        <figure class="ipanel__photo">
+          <div class="shot shot--43"><img src="assets/img/dish-feed.webp" width="1200" height="900" alt="Looking up from the rim into the white bowl of Dish One: four struts hold the feed cabin at the focus, and an engineer in a hard hat and orange harness stands on the access gantry." fetchpriority="high"></div>
+          <figcaption class="cap"><span>Inside the bowl</span><span>Feed cabin on four struts</span></figcaption>
+        </figure>
+        <div class="ipanel__spec">
+          <span class="mono">01 &middot; Spec sheet</span>
+          <h2 class="display h2">Dish One</h2>
+          <p class="lead">A 1964 tracking antenna, restored by volunteers to listen to the hydrogen in our own galaxy.</p>
+          <p>Dish One followed satellites for 44 years. It now points along the Milky Way at 1420 MHz, where cold hydrogen gas gives itself away, and visitors steer it from the dish hut every day at 12:15.</p>
+          <div class="spec"><div class="spec__row"><span class="mono">Diameter</span><div><span class="spec__v"><span data-count="26" data-dec="0">26</span><small>m</small></span><p>552 steel panels, each set by hand.</p></div></div><div class="spec__row"><span class="mono">Surface accuracy</span><div><span class="spec__v"><span data-count="1.2" data-dec="1">1.2</span><small>mm rms</small></span><p>Good to about 20 GHz; we use it at 1.4.</p></div></div><div class="spec__row"><span class="mono">Slew rate</span><div><span class="spec__v"><span data-count="1.5" data-dec="1">1.5</span><small>°/s</small></span><p>A full turn in four minutes.</p></div></div><div class="spec__row"><span class="mono">Moving mass</span><div><span class="spec__v"><span data-count="200" data-dec="0">200</span><small>t</small></span><p>On a ring of 96 steel balls.</p></div></div></div>
+        </div>
+      </section>
+      <section class="ipanel" id="planetarium" role="tabpanel" aria-labelledby="tab-planetarium" data-ipanel hidden>
+        <figure class="ipanel__photo">
+          <div class="shot shot--43"><img src="assets/img/planetarium.webp" width="1536" height="1024" alt="The planetarium audience reclined under the projected Milky Way, the star projector glowing at the centre of the floor." loading="lazy" decoding="async"></div>
+          <figcaption class="cap"><span>North bay, old equipment hall</span><span>Opened 2023</span></figcaption>
+        </figure>
+        <div class="ipanel__spec">
+          <span class="mono">02 &middot; Spec sheet</span>
+          <h2 class="display h2">Planetarium</h2>
+          <p class="lead">A 9 m dome in the hall that used to hold the station&rsquo;s receivers.</p>
+          <p>A star projector rescued from a closing planetarium sits in the middle; two digital projectors round the rim add the planets, and a presenter runs every show live from a desk at the back. The seats tilt back 30 degrees; the front row is kept for wheelchairs and anyone who would rather not tilt.</p>
+          <div class="spec"><div class="spec__row"><span class="mono">Dome diameter</span><div><span class="spec__v"><span data-count="9" data-dec="0">9</span><small>m</small></span><p>Aluminium, perforated for sound.</p></div></div><div class="spec__row"><span class="mono">Seats</span><div><span class="spec__v"><span data-count="60" data-dec="0">60</span></span><p>Four wheelchair spaces, front row.</p></div></div><div class="spec__row"><span class="mono">Star projector</span><div><span class="spec__v"><span data-count="1" data-dec="0">1</span></span><p>Opto-mechanical, plus two digital projectors.</p></div></div><div class="spec__row"><span class="mono">Stars shown</span><div><span class="spec__v"><span data-count="9110" data-dec="0">9,110</span></span><p>Every star you could see from a perfect site.</p></div></div></div>
+        </div>
+      </section>
+      <section class="ipanel" id="telescopes" role="tabpanel" aria-labelledby="tab-telescopes" data-ipanel hidden>
+        <figure class="ipanel__photo">
+          <div class="shot shot--43"><img src="assets/img/telescopes.webp" width="1200" height="900" alt="The timber observatory shed on the headland at dusk, doors and roof open on a white refractor on a black pier, with granite and flowering gorse in front and the cliffs behind." loading="lazy" decoding="async"></div>
+          <figcaption class="cap"><span>The observatory shed at dusk</span><span>200 m from the cliff</span></figcaption>
+        </figure>
+        <div class="ipanel__spec">
+          <span class="mono">03 &middot; Spec sheet</span>
+          <h2 class="display h2">Headland telescopes</h2>
+          <p class="lead">A timber shed on the headland whose roof rolls back on rails, and two telescopes that come out of the store.</p>
+          <p>The 152 mm refractor lives in the shed and takes photographs. On observing nights the 406 mm Dobsonian is wheeled out for the crowd, and a hydrogen-alpha solar telescope shows the Sun&rsquo;s flares safely in the afternoon.</p>
+          <div class="spec"><div class="spec__row"><span class="mono">Main aperture</span><div><span class="spec__v"><span data-count="406" data-dec="0">406</span><small>mm</small></span><p>Dobsonian, the one with the step.</p></div></div><div class="spec__row"><span class="mono">Shed refractor</span><div><span class="spec__v"><span data-count="152" data-dec="0">152</span><small>mm</small></span><p>On a concrete pier, for imaging.</p></div></div><div class="spec__row"><span class="mono">Sky darkness</span><div><span class="spec__v"><span data-count="21.4" data-dec="1">21.4</span><small>mag/″²</small></span><p>Bortle 3. Light from Helston is behind the hill.</p></div></div><div class="spec__row"><span class="mono">Roof opens in</span><div><span class="spec__v"><span data-count="90" data-dec="0">90</span><small>s</small></span><p>By hand crank if the motor sulks.</p></div></div></div>
+        </div>
+      </section>
+      <section class="ipanel" id="control-room" role="tabpanel" aria-labelledby="tab-control-room" data-ipanel hidden>
+        <figure class="ipanel__photo">
+          <div class="shot shot--43"><img src="assets/img/control-room.webp" width="1536" height="1024" alt="The 1966 control room: grey-green consoles with round dials, the world plotting board under the wall clock and a teleprinter on a stand, with two visitors at the console." loading="lazy" decoding="async"></div>
+          <figcaption class="cap"><span>Consoles, plotting board, teleprinter</span><span>As it was in 2008</span></figcaption>
+        </figure>
+        <div class="ipanel__spec">
+          <span class="mono">04 &middot; Spec sheet</span>
+          <h2 class="display h2">Control room</h2>
+          <p class="lead">The room the station ran from, kept as it was the night it closed.</p>
+          <p>The consoles still light up. Tours run on the hour, and school groups use the room for a tracking pass flown against the clock, with headsets, checklists and the 1966 intercom.</p>
+          <div class="spec"><div class="spec__row"><span class="mono">Consoles</span><div><span class="spec__v"><span data-count="14" data-dec="0">14</span></span><p>Original, rewired 1985, restored 2020.</p></div></div><div class="spec__row"><span class="mono">Dials and meters</span><div><span class="spec__v"><span data-count="312" data-dec="0">312</span></span><p>1,106 bulbs replaced so far.</p></div></div><div class="spec__row"><span class="mono">Fitted out</span><div><span class="spec__v"><span data-count="1966" data-dec="0">1966</span></span><p>Two years after the dish.</p></div></div><div class="spec__row"><span class="mono">Last pass logged</span><div><span class="spec__v"><span data-count="2008" data-dec="0">2008</span></span><p>Page 214 of the final log book.</p></div></div></div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="sec frame" aria-labelledby="dw-title">
+    <div class="sec__head">
+      <span class="box">Drawing 1964/A/07</span>
+      <h2 id="dw-title" class="display h2">Tilt the dish</h2>
+      <p>From the original general-arrangement drawing. Move the elevation control and the bowl swings about its axis, 16.5 metres up.</p>
+    </div>
+    <div class="drawing" data-drawing>
+      <div class="drawing__svg">
+          <svg class="dw" viewBox="0 0 800 520" role="img" aria-labelledby="dw-t" focusable="false">
+            <title id="dw-t">Side elevation of Dish One: a 26 metre dish on a 14 metre pedestal, with its elevation axis 16.5 metres above the ground.</title>
+            <defs><pattern id="hz" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="14" class="hz"/></pattern></defs>
+            <line x1="20" y1="470" x2="780" y2="470"/>
+            <line class="thin" x1="20" y1="478" x2="780" y2="478"/>
+            <path d="M340,470 L362,300 L438,300 L460,470Z" class="paper"/>
+            <path d="M342.6,450 L457.4,450 L460,470 L340,470Z" fill="url(#hz)" stroke="none"/>
+            <rect x="372" y="380" width="22" height="36"/>
+            <line x1="366" y1="300" x2="392" y2="262"/><line x1="434" y1="300" x2="408" y2="262"/>
+            <rect class="thin" x="350" y="292" width="100" height="8"/>
+            <g data-dw-dish transform="translate(400 262) rotate(-40)">
+              <path d="M30,-200 Q-140,0 30,200" class="paper"/>
+              <path class="thin" d="M18,-170 Q-118,0 18,170 M2,-130 Q-92,0 2,130 M-10,-80 Q-70,0 -10,80"/>
+              <line x1="-55" y1="0" x2="-110" y2="-60"/><line x1="-55" y1="0" x2="-110" y2="60"/>
+              <rect x="-140" y="-36" width="40" height="72"/>
+              <line x1="30" y1="-200" x2="150" y2="0"/><line x1="30" y1="200" x2="150" y2="0"/>
+              <rect class="solid" x="146" y="-14" width="26" height="28"/>
+              <line class="dimln" x1="-55" y1="0" x2="330" y2="0"/>
+              <text class="lab-side" x="180" y="-20">FEED CABIN</text>
+            </g>
+            <circle class="solid" cx="400" cy="262" r="7"/>
+            <line class="dimln" x1="560" y1="262" x2="760" y2="262"/>
+            <line class="dimln" x1="560" y1="470" x2="760" y2="470"/>
+            <line x1="740" y1="262" x2="740" y2="470"/><path class="solid" d="M735,272 740,262 745,272Z M735,460 740,470 745,460Z"/>
+            <text class="lab-side" x="650" y="372">16.5 M</text>
+            <text class="lab-side" x="650" y="388">ELEVATION AXIS</text>
+            <line class="dimln" x1="40" y1="300" x2="340" y2="300"/>
+            <line x1="60" y1="300" x2="60" y2="470"/><path class="solid" d="M55,310 60,300 65,310Z M55,460 60,470 65,460Z"/>
+            <text class="lab-side" x="72" y="392">14 M PEDESTAL</text>
+            <text x="32" y="40">DISH ONE &middot; SIDE ELEVATION &middot; SCALE 1:100</text>
+            <text x="32" y="62" data-dw-label>ELEVATION 40&deg; &middot; RANGE 5&deg; TO 90&deg;</text>
+          </svg>
+      </div>
+      <div class="drawing__side">
+        <div class="field">
+          <div class="range-lab"><label class="mono" for="el-range">Elevation</label><span class="spec__v"><span data-dw-out>40</span><small>&deg;</small></span></div>
+          <input class="range" id="el-range" type="range" min="5" max="90" step="1" value="40" data-dw-range>
+        </div>
+        <div class="spec">
+          <div class="spec__row"><span class="mono">Pointing</span><p data-dw-note style="margin:0">Mid-sky: the angle it uses for hydrogen along the Milky Way.</p></div>
+          <div class="spec__row"><span class="mono">Wind limit</span><p style="margin:0">Parked at 90&deg;, pointing straight up, when gusts pass 50 mph. The headland sees that most winters.</p></div>
+          <div class="spec__row"><span class="mono">Below 5&deg;</span><p style="margin:0">The rim would hit the pedestal, so the drives stop it.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-sea sec--tight" aria-labelledby="st-title">
+    <div class="gridline-band" aria-hidden="true"></div>
+    <div class="frame">
+      <h2 id="st-title" class="box" style="margin-bottom:18px">Station status &middot; updated by the duty volunteer</h2>
+      <div class="status" data-reveal-group>
+        <div><span class="chip is-on"><i></i>Operational</span><span class="h3">Dish One</span><p>Hydrogen survey of the Cygnus arm, week 3 of 6.</p></div>
+        <div><span class="chip is-on"><i></i>Open</span><span class="h3">Planetarium</span><p>New Saturn show running Wed and Sun.</p></div>
+        <div><span class="chip"><i></i>Maintenance</span><span class="h3">Solar scope</span><p>Filter away for recoating; back for the half-term week.</p></div>
+        <div><span class="chip is-on"><i></i>Open</span><span class="h3">Control room</span><p>Tours on the hour, 11:00 to 16:00.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="ftr">
+  <div class="frame">
+    <div class="ftr__grid">
+      <div class="wide">
+        <h2 class="mono">Carrick Head Tracking Station</h2>
+        <p>Carrick Head, near Coverack<br>Helston, Cornwall TR12</p>
+        <p>A space-science centre run by the Carrick Head Trust, registered charity 1194417, with 140 volunteers.</p>
+      </div>
+      <div>
+        <h2 class="mono">Channels</h2>
+        <ul class="ftr__nav">
+          <li><a href="index.html"><i aria-hidden="true">00</i>Home</a></li>
+          <li><a href="programme.html"><i aria-hidden="true">01</i>Programme</a></li>
+          <li><a href="instruments.html" aria-current="page"><i aria-hidden="true">02</i>Instruments</a></li>
+          <li><a href="visit.html"><i aria-hidden="true">03</i>Visit</a></li>
+          <li><a href="schools.html"><i aria-hidden="true">04</i>Schools & Groups</a></li>
+          <li><a href="support.html"><i aria-hidden="true">05</i>Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="mono">Open</h2>
+        <p>Tue to Sun, 10:00 to 17:00</p>
+        <p>Late until 21:00 Wed and Thu, 22:30 Fri and Sat</p>
+        <p>Closed Mondays, except bank holidays</p>
+      </div>
+      <div class="wide">
+        <h2 class="mono">Contact</h2>
+        <p><a href="mailto:hello@carrickhead.org">hello@carrickhead.org</a></p>
+        <p><a href="tel:+441326000000">01326 000 000</a></p>
+        <p>Schools and groups: <a href="mailto:learning@carrickhead.org">learning@carrickhead.org</a></p>
+      </div>
+    </div>
+    <div class="ftr__mark display" aria-hidden="true"><span class="fit" data-fit="mark" style="--em: 3.897">Carrick Head</span></div>
+    <div class="ftr__base mono"><span>Callsign CKH &middot; 50&deg;00&prime;58&Prime;N 5&deg;05&prime;56&Prime;W</span><span>Dish One &middot; 26 m &middot; 1420 MHz</span><span>&copy; 2026 Carrick Head Trust</span></div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="assets/script.js" defer></script>
+</body>
+</html>

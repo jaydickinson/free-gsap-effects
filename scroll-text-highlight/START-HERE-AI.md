@@ -1,6 +1,6 @@
 # Start Here: AI Setup Prompt
 
-Scroll Text Highlight is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, ChatGPT, GitHub Copilot, Windsurf, and other coding assistants.
+Scroll Text Highlight is a production-ready GSAP effect from GSAP Vault. This file is designed for Cursor, Claude Code, Codex, ChatGPT, GitHub Copilot, Windsurf, Gemini, and other coding assistants.
 
 ## Product context
 

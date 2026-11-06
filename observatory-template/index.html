@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrick Head Tracking Station | Planetarium, radio dish and observing nights in Cornwall</title>
+<meta name="description" content="A 1964 satellite-tracking station on the Lizard, now a space-science centre: a 26 m radio dish you can operate, a 60-seat planetarium and observing nights on the headland.">
+<meta name="theme-color" content="#EFEBE1">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Adds .has-js before first paint so reveal targets never flash; the
+     timer takes it off again if script.js fails to arrive. -->
+<script data-cfasync="false">(function(d){d.classList.add('has-js');setTimeout(function(){if(!d.classList.contains('js-ready'))d.classList.remove('has-js')},4000)})(document.documentElement)</script>
+<link rel="preload" href="assets/fonts/anybody-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-dish.webp" imagesrcset="assets/img/hero-dish-960.webp 960w, assets/img/hero-dish.webp 1672w" imagesizes="(max-width: 899px) 96vw, 80vw" media="(min-width: 700px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-dish-m.webp" media="(max-width: 699px)" fetchpriority="high">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="home">
+<a class="skip" href="#main">Skip to content</a>
+<div class="gridlines" aria-hidden="true"></div>
+<header class="hdr">
+  <div class="hdr__in frame">
+    <a class="logo" href="index.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5c3 6 9 10 15 11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 4 18 15M12 10l4-4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 22l2-6 2 6z" fill="currentColor"/><path d="M3 22h18" stroke="currentColor" stroke-width="1.6"/></svg><span>Carrick Head</span><span class="logo__cs">CKH</span></a>
+    <span class="hdr__band mono">Band 1400&ndash;1430 MHz &middot; tuned to 1402.1</span>
+    <div class="clock" data-clock role="timer" aria-live="off">
+      <span class="clock__k">Next show</span>
+      <span class="clock__t" data-clock-t>Tue&ndash;Sun</span>
+      <span class="clock__what" data-clock-what>Shows from 10:30, observing Fri and Sat</span>
+    </div>
+    <button class="chan-btn" type="button" aria-expanded="false" aria-controls="channels" data-channels-btn hidden><span class="chan-btn__bars" aria-hidden="true"><i></i><i></i></span>Channels</button>
+  </div>
+  <nav class="dial frame" aria-label="Main" data-dial style="--needle: 7%">
+    <div class="dial__scale" aria-hidden="true"><span style="--x: 0.000%">1400</span><span style="--x: 16.667%">1405</span><span style="--x: 33.333%">1410</span><span style="--x: 50.000%">1415</span><span style="--x: 66.667%">1420</span><span style="--x: 83.333%">1425</span></div>
+    <ul class="dial__list">
+      <li style="--at: 7%"><a href="index.html" aria-current="page"><span class="dial__name">Home</span><span class="dial__f" aria-hidden="true">00 &middot; 1402.1</span></a></li>
+      <li style="--at: 23%"><a href="programme.html"><span class="dial__name">Programme</span><span class="dial__f" aria-hidden="true">01 &middot; 1406.9</span></a></li>
+      <li style="--at: 40%"><a href="instruments.html"><span class="dial__name">Instruments</span><span class="dial__f" aria-hidden="true">02 &middot; 1412.0</span></a></li>
+      <li style="--at: 57%"><a href="visit.html"><span class="dial__name">Visit</span><span class="dial__f" aria-hidden="true">03 &middot; 1417.1</span></a></li>
+      <li style="--at: 75%"><a href="schools.html"><span class="dial__name">Schools & Groups</span><span class="dial__f" aria-hidden="true">04 &middot; 1422.5</span></a></li>
+      <li style="--at: 92%"><a href="support.html"><span class="dial__name">Support</span><span class="dial__f" aria-hidden="true">05 &middot; 1427.6</span></a></li>
+    </ul>
+    <span class="dial__needle" aria-hidden="true"></span>
+  </nav>
+</header>
+<nav class="sheet" id="channels" aria-label="Channels" data-channels>
+  <div class="sheet__head"><span class="mono">Next show</span><span class="sheet__t" data-clock-t>&nbsp;</span></div>
+  <ul class="sheet__list">
+      <li><a href="index.html" aria-current="page"><span class="sheet__n">00</span><span class="sheet__l">Home</span><span class="sheet__f" aria-hidden="true">1402.1</span></a></li>
+      <li><a href="programme.html"><span class="sheet__n">01</span><span class="sheet__l">Programme</span><span class="sheet__f" aria-hidden="true">1406.9</span></a></li>
+      <li><a href="instruments.html"><span class="sheet__n">02</span><span class="sheet__l">Instruments</span><span class="sheet__f" aria-hidden="true">1412.0</span></a></li>
+      <li><a href="visit.html"><span class="sheet__n">03</span><span class="sheet__l">Visit</span><span class="sheet__f" aria-hidden="true">1417.1</span></a></li>
+      <li><a href="schools.html"><span class="sheet__n">04</span><span class="sheet__l">Schools & Groups</span><span class="sheet__f" aria-hidden="true">1422.5</span></a></li>
+      <li><a href="support.html"><span class="sheet__n">05</span><span class="sheet__l">Support</span><span class="sheet__f" aria-hidden="true">1427.6</span></a></li>
+  </ul>
+</nav>
+<main id="main">
+  <section class="hero frame" data-hero aria-labelledby="hero-title">
+    <div class="phead">
+      <div class="phead__meta" data-hero-fade>
+        <span class="box">Tracking station &middot; est. 1964</span>
+        <span class="box">The Lizard, Cornwall</span>
+        <span class="box">Dish One &middot; 26 m &middot; 1420 MHz</span>
+      </div>
+    </div>
+    <div class="sidehead" style="--em: 3.886">
+      <div class="sidehead__aside">
+        <h1 class="sidehead__title display" data-title id="hero-title"><span class="title-mask"><span class="fit fit-line" data-fit="home" style="--em: 3.886">Carrick Head</span></span><span class="vh"> Tracking Station: planetarium, radio dish and observing nights</span></h1>
+      </div>
+      <div class="sidehead__media callouts">
+        <figure class="shot shot--wide">
+        <picture><source media="(max-width: 699px)" srcset="assets/img/hero-dish-m.webp" width="752" height="940"><img src="assets/img/hero-dish.webp" srcset="assets/img/hero-dish-960.webp 960w, assets/img/hero-dish.webp 1672w" sizes="(max-width: 899px) 96vw, 80vw" width="1672" height="941" alt="Dish One seen from behind in low afternoon sun, the white bowl tilted up with a black numeral 1 painted on its back and hazard stripes round the pedestal, while a family of four watches from the fence on the left." fetchpriority="high"></picture>
+      </figure><div class="co co--hero" style="--x:16.667%;--y:81%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">1</span><span class="co__lab">Visitors&rsquo; fence</span></div>
+      <div class="co co--hero" style="--x:50%;--y:44%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">2</span><span class="co__lab">Dish One &middot; 26 m</span></div>
+      <div class="co co--hero co--left" style="--x:83.333%;--y:48%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">3</span><span class="co__lab">Elevation bearing</span></div>
+      </div>
+      <div class="sidehead__foot">    <div class="leaders" aria-hidden="true"><span style="--x:16.667%" data-leader></span><span style="--x:50%" data-leader></span><span style="--x:83.333%" data-leader></span></div>
+    <div class="cards" data-reveal-group>
+      <a class="card" href="visit.html">
+        <span class="card__top"><span class="card__n" aria-hidden="true">1</span><span class="mono">Visit</span></span>
+        <span class="h3">Open Tue to Sun</span>
+        <p>Twenty-five minutes from Helston on the B3293, or a mile along the coast path from Coverack.</p><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+      <a class="card" href="instruments.html">
+        <span class="card__top"><span class="card__n" aria-hidden="true">2</span><span class="mono">Instruments</span></span>
+        <span class="h3">A dish you can steer</span>
+        <p>Built in 1964 to follow satellites, rebuilt by volunteers to listen for hydrogen in the Milky Way.</p><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+      <a class="card" href="programme.html#hydrogen">
+        <span class="card__top"><span class="card__n" aria-hidden="true">3</span><span class="mono">Programme</span></span>
+        <span class="h3">Steer it at 12:15</span>
+        <p>Turn the dish yourself every day we are open, then stay for the dome and, on Fridays and Saturdays, the headland after dark.</p><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+    </div>
+</div>
+    </div>
+  </section>
+
+  <section class="band on-sea slew" aria-labelledby="slew-title" data-slew>
+    <div class="gridline-band" aria-hidden="true"></div>
+    <div class="frame">
+      <div class="sec__head">
+        <span class="box">Hands on &middot; tonight from 21:00</span>
+        <h2 id="slew-title" class="display h2">Slew the dish</h2>
+        <p>Drag the reticle across tonight&rsquo;s sky and Dish One turns to follow at its real rate. Lock on to something and we will tell you when it is on the programme.</p>
+      </div>
+      <div class="slew__grid">
+        <div class="slew__board-wrap">
+          <div class="slew__bar">
+            <div class="chips" aria-hidden="true">
+              <span class="chip is-on" data-chip="idle"><i></i>Parked</span>
+              <span class="chip" data-chip="slew"><i></i>Slewing</span>
+              <span class="chip" data-chip="track"><i></i>On target</span>
+              <span class="chip chip--lock" data-chip="lock"><i></i>Locked</span>
+            </div>
+            <span class="mono" data-js-only>Drag, tap or use the arrow keys</span>
+          </div>
+          <div class="board" data-board tabindex="0" role="application" aria-roledescription="sky board" aria-label="Sky board. Arrow keys move the dish one degree, Shift and an arrow five. Enter locks on to the nearest target." aria-describedby="slew-status">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <g class="board__grid"><line x1="12.5" y1="0" x2="12.5" y2="93.02325581395348"/><line x1="25" y1="0" x2="25" y2="93.02325581395348"/><line x1="37.5" y1="0" x2="37.5" y2="93.02325581395348"/><line x1="50" y1="0" x2="50" y2="93.02325581395348"/><line x1="62.5" y1="0" x2="62.5" y2="93.02325581395348"/><line x1="75" y1="0" x2="75" y2="93.02325581395348"/><line x1="87.5" y1="0" x2="87.5" y2="93.02325581395348"/><line x1="0" y1="75.5813953488372" x2="100" y2="75.5813953488372"/><line x1="0" y1="58.139534883720934" x2="100" y2="58.139534883720934"/><line x1="0" y1="40.69767441860465" x2="100" y2="40.69767441860465"/><line x1="0" y1="23.25581395348837" x2="100" y2="23.25581395348837"/><line x1="0" y1="5.813953488372093" x2="100" y2="5.813953488372093"/><line class="h" x1="0" y1="93.02325581395348" x2="100" y2="93.02325581395348"/></g>
+              <polyline class="board__iss" points="86.67,83.72 84.06,76.44 81.46,69.28 78.85,62.36 76.25,55.81 73.65,49.74 71.04,44.25 68.44,39.44 65.83,35.38 63.23,32.16 60.62,29.81 58.02,28.38 55.42,27.91 52.81,28.38 50.21,29.81 47.60,32.16 45.00,35.38 42.40,39.44 39.79,44.25 37.19,49.74 34.58,55.81 31.98,62.36 29.38,69.28 26.77,76.44 24.17,83.72"/>
+              <path class="board__ridge" d="M0,93.02325581395348 L0,91.27906976744185 C8,88.95348837209302 14,90.69767441860465 22,90.11627906976744 S36,88.37209302325581 44,91.62790697674417 L58,91.16279069767442 C66,86.62790697674419 76,89.53488372093024 84,91.3953488372093 L100,90.46511627906978 L100,100 L0,100Z"/>
+            </svg>
+            <div class="board__stars" aria-hidden="true"><i style="left:0.01%;top:7.82%;--s:1.4px"></i><i style="left:21.06%;top:21.52%;--s:1.4px"></i><i style="left:32.93%;top:19.87%;--s:2px"></i><i style="left:54.29%;top:24.83%;--s:1.4px"></i><i style="left:81.68%;top:60.72%;--s:1.4px"></i><i style="left:70.79%;top:23.83%;--s:1.4px"></i><i style="left:68.39%;top:41.51%;--s:2px"></i><i style="left:80.74%;top:72.30%;--s:1.4px"></i><i style="left:92.32%;top:24.54%;--s:1.4px"></i><i style="left:57.74%;top:8.44%;--s:2px"></i><i style="left:37.22%;top:52.47%;--s:2px"></i><i style="left:33.23%;top:69.25%;--s:1.4px"></i><i style="left:42.85%;top:55.98%;--s:3px"></i><i style="left:55.74%;top:21.53%;--s:2px"></i><i style="left:5.86%;top:57.87%;--s:1.4px"></i><i style="left:50.88%;top:45.27%;--s:1.4px"></i><i style="left:90.90%;top:79.93%;--s:1.4px"></i><i style="left:34.41%;top:26.33%;--s:2px"></i><i style="left:51.49%;top:67.96%;--s:1.4px"></i><i style="left:28.36%;top:50.00%;--s:1.4px"></i><i style="left:33.26%;top:36.46%;--s:1.4px"></i><i style="left:23.32%;top:8.82%;--s:1.4px"></i><i style="left:86.30%;top:28.53%;--s:1.4px"></i><i style="left:51.62%;top:38.56%;--s:1.4px"></i><i style="left:93.96%;top:47.30%;--s:2px"></i><i style="left:25.11%;top:32.19%;--s:1.4px"></i><i style="left:33.06%;top:47.74%;--s:2px"></i><i style="left:87.76%;top:73.54%;--s:2px"></i><i style="left:7.77%;top:46.47%;--s:1.4px"></i><i style="left:7.79%;top:2.59%;--s:1.4px"></i><i style="left:63.24%;top:70.09%;--s:1.4px"></i><i style="left:59.29%;top:70.75%;--s:2px"></i><i style="left:88.46%;top:9.94%;--s:2px"></i><i style="left:90.78%;top:19.21%;--s:1.4px"></i><i style="left:1.05%;top:60.14%;--s:1.4px"></i><i style="left:0.16%;top:29.91%;--s:1.4px"></i><i style="left:74.11%;top:39.79%;--s:1.4px"></i><i style="left:23.80%;top:10.54%;--s:1.4px"></i><i style="left:37.39%;top:9.68%;--s:1.4px"></i><i style="left:48.93%;top:87.55%;--s:2px"></i><i style="left:63.69%;top:7.73%;--s:1.4px"></i><i style="left:90.01%;top:65.76%;--s:3px"></i><i style="left:56.53%;top:25.22%;--s:1.4px"></i><i style="left:22.28%;top:63.78%;--s:1.4px"></i><i style="left:5.23%;top:18.60%;--s:2px"></i><i style="left:71.41%;top:39.09%;--s:1.4px"></i><i style="left:11.03%;top:7.95%;--s:1.4px"></i><i style="left:68.79%;top:9.77%;--s:1.4px"></i><i style="left:88.31%;top:12.01%;--s:3px"></i><i style="left:95.43%;top:18.93%;--s:1.4px"></i><i style="left:24.82%;top:21.65%;--s:2px"></i><i style="left:39.83%;top:61.38%;--s:1.4px"></i><i style="left:88.70%;top:34.36%;--s:1.4px"></i><i style="left:62.15%;top:21.12%;--s:1.4px"></i><i style="left:72.52%;top:45.16%;--s:1.4px"></i><i style="left:31.17%;top:3.33%;--s:3px"></i><i style="left:63.24%;top:11.24%;--s:2px"></i><i style="left:19.95%;top:27.77%;--s:1.4px"></i><i style="left:49.74%;top:34.46%;--s:2px"></i><i style="left:94.58%;top:40.37%;--s:1.4px"></i><i style="left:44.67%;top:67.91%;--s:1.4px"></i><i style="left:52.17%;top:34.14%;--s:1.4px"></i><i style="left:75.71%;top:50.17%;--s:2px"></i><i style="left:2.60%;top:55.63%;--s:1.4px"></i><i style="left:20.28%;top:22.00%;--s:1.4px"></i><i style="left:23.57%;top:26.69%;--s:1.4px"></i><i style="left:7.53%;top:18.35%;--s:2px"></i><i style="left:91.54%;top:8.58%;--s:1.4px"></i><i style="left:95.89%;top:83.84%;--s:2px"></i><i style="left:60.10%;top:21.91%;--s:2px"></i><i style="left:3.70%;top:70.94%;--s:1.4px"></i><i style="left:10.82%;top:76.41%;--s:1.4px"></i><i style="left:60.50%;top:6.08%;--s:1.4px"></i><i style="left:13.36%;top:64.42%;--s:1.4px"></i><i style="left:24.33%;top:42.43%;--s:3px"></i><i style="left:42.26%;top:25.63%;--s:2px"></i><i style="left:39.69%;top:45.68%;--s:1.4px"></i><i style="left:23.01%;top:15.84%;--s:3px"></i></div>
+            <div class="board__axis" aria-hidden="true"><span class="ax" style="left:12.5%;top:93.02325581395348%">E 90&deg;</span><span class="ax" style="left:31.25%;top:93.02325581395348%">SE 135&deg;</span><span class="ax" style="left:50%;top:93.02325581395348%">S 180&deg;</span><span class="ax" style="left:68.75%;top:93.02325581395348%">SW 225&deg;</span><span class="ax" style="left:87.5%;top:93.02325581395348%">W 270&deg;</span><span class="ax ax--el" style="top:75.5813953488372%">EL 15&deg;</span><span class="ax ax--el" style="top:58.139534883720934%">EL 30&deg;</span><span class="ax ax--el" style="top:40.69767441860465%">EL 45&deg;</span><span class="ax ax--el" style="top:23.25581395348837%">EL 60&deg;</span><span class="ax ax--el" style="top:5.813953488372093%">EL 75&deg;</span></div>
+            <div class="board__tgts" aria-hidden="true">
+          <span class="tgt" data-target="moon" data-az="228" data-el="21" style="left:70.00%;top:68.60%"><b class="tgt__moon"></b><span class="tgt__ring"></span><span class="tgt__lab">The Moon</span></span>
+          <span class="tgt" data-target="jupiter" data-az="84" data-el="14" style="left:10.00%;top:76.74%"><b class="tgt__pl"></b><span class="tgt__ring"></span><span class="tgt__lab">Jupiter</span></span>
+          <span class="tgt" data-target="saturn" data-az="166" data-el="37" style="left:44.17%;top:50.00%"><b class="tgt__pl"></b><span class="tgt__ring"></span><span class="tgt__lab">Saturn</span></span>
+          <span class="tgt" data-target="andromeda" data-az="104" data-el="66" style="left:18.33%;top:16.28%"><b class="tgt__gal"></b><span class="tgt__ring"></span><span class="tgt__lab">Andromeda Galaxy</span></span>
+          <span class="tgt" data-target="iss" data-az="196" data-el="54" style="left:56.67%;top:30.23%"><b class="tgt__sat"></b><span class="tgt__ring"></span><span class="tgt__lab">Space Station pass</span></span>
+            </div>
+            <div class="boresight" data-boresight aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 0v5M8 11v5M0 8h5M11 8h5"/></svg></div>
+            <div class="reticle" data-reticle aria-hidden="true"><svg viewBox="-32 -32 64 64"><circle r="20"/><line x1="-32" y1="0" x2="-12" y2="0"/><line x1="12" y1="0" x2="32" y2="0"/><line x1="0" y1="-32" x2="0" y2="-12"/><line x1="0" y1="12" x2="0" y2="32"/></svg></div>
+          </div>
+          <div class="slew__foot mono"><span>Alt-az chart &middot; 50&deg;N &middot; early November, 21:00 GMT</span><span>Dish slew 1.5&deg;/s, shown 25&times; faster</span></div>
+        </div>
+        <div class="slew__panel">
+          <div class="slew__schem">
+            <svg class="schem" viewBox="0 0 300 190" aria-hidden="true" focusable="false">
+              <line x1="6" y1="182" x2="294" y2="182"/>
+              <path d="M118,182 L132,110 L168,110 L182,182Z"/>
+              <path class="hz" d="M120.4,170 L179.6,170 L182,182 L118,182Z" data-hazard/>
+              <line x1="134" y1="110" x2="146" y2="92"/><line x1="166" y1="110" x2="154" y2="92"/>
+              <g data-dish transform="translate(150 92) rotate(-30)">
+                <path class="bowl" d="M12,-74 Q-52,0 12,74 L6,74 Q-60,0 6,-74Z"/>
+                <line x1="-20" y1="0" x2="-44" y2="-26"/><line x1="-20" y1="0" x2="-44" y2="26"/>
+                <rect x="-56" y="-14" width="16" height="28"/>
+                <line x1="12" y1="-74" x2="60" y2="0"/><line x1="12" y1="74" x2="60" y2="0"/>
+                <rect class="fill" x="58" y="-6" width="12" height="12"/>
+                <line class="dim" x1="-20" y1="0" x2="120" y2="0"/>
+              </g>
+              <circle class="fill" cx="150" cy="92" r="3.5"/>
+              <text x="8" y="16">DISH ONE &middot; SIDE ELEVATION</text>
+              <g transform="translate(262 44)">
+                <circle r="26"/>
+                <text x="-3" y="-30">N</text><text x="30" y="3">E</text><text x="-3" y="38">S</text><text x="-38" y="3">W</text>
+                <g data-needle transform="rotate(180)"><line x1="0" y1="6" x2="0" y2="-22"/><circle class="fill" r="2.5"/></g>
+              </g>
+            </svg>
+          </div>
+          <div class="readouts">
+            <div class="ro"><span class="ro__k mono">Azimuth</span><span class="ro__v" data-ro-az>180.0<small>&deg;</small></span></div>
+            <div class="ro"><span class="ro__k mono">Elevation</span><span class="ro__v" data-ro-el>30.0<small>&deg;</small></span></div>
+          </div>
+          <div class="sig">
+            <div class="sig__row"><span class="mono">Signal &middot; 1420.4 MHz</span><span class="sig__v" data-ro-sig>SNR 0.8 dB</span></div>
+            <svg class="sig__spec" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><line x1="100" y1="0" x2="100" y2="60"/><polyline data-spec points="0.0,41.5 3.2,43.8 6.3,48.7 9.5,47.6 12.7,49.6 15.9,46.6 19.0,46.4 22.2,43.2 25.4,48.6 28.6,43.6 31.7,43.9 34.9,47.6 38.1,48.2 41.3,45.4 44.4,48.5 47.6,46.3 50.8,47.2 54.0,50.4 57.1,43.1 60.3,49.6 63.5,49.5 66.7,44.0 69.8,47.8 73.0,50.1 76.2,47.8 79.4,49.5 82.5,45.9 85.7,46.7 88.9,48.0 92.1,49.4 95.2,48.8 98.4,43.7 101.6,49.8 104.8,46.4 107.9,43.2 111.1,44.8 114.3,42.1 117.5,47.2 120.6,48.5 123.8,44.0 127.0,49.0 130.2,44.2 133.3,48.7 136.5,46.3 139.7,45.8 142.9,44.4 146.0,43.4 149.2,46.7 152.4,47.5 155.6,44.6 158.7,43.8 161.9,46.4 165.1,49.2 168.3,48.1 171.4,43.5 174.6,50.0 177.8,44.3 181.0,43.6 184.1,48.0 187.3,50.3 190.5,48.1 193.7,45.9 196.8,42.4 200.0,41.5"/></svg>
+          </div>
+          <div class="targets">
+            <span class="mono">Point at</span>
+            <ul class="targets__list">
+              <li><a class="tgt-btn" href="programme.html#moonwatch" data-goto="moon"><span>The Moon</span><span>228&deg; / 21&deg;</span></a></li>
+              <li><a class="tgt-btn" href="programme.html#giant-planets" data-goto="jupiter"><span>Jupiter</span><span>84&deg; / 14&deg;</span></a></li>
+              <li><a class="tgt-btn" href="programme.html#rings" data-goto="saturn"><span>Saturn</span><span>166&deg; / 37&deg;</span></a></li>
+              <li><a class="tgt-btn" href="programme.html#deep-sky" data-goto="andromeda"><span>Andromeda</span><span>104&deg; / 66&deg;</span></a></li>
+              <li><a class="tgt-btn" href="programme.html#satellite-spotting" data-goto="iss"><span>Space Station</span><span>196&deg; / 54&deg;</span></a></li>
+            </ul>
+          </div>
+          <div class="lock" data-lock hidden aria-live="polite">
+            <span class="lock__k" data-lock-k>Locked &middot; AZ 0&deg; EL 0&deg;</span>
+            <span class="lock__t" data-lock-t>Target</span>
+            <p data-lock-note></p>
+            <a href="programme.html" data-lock-link>See it on the programme</a>
+          </div>
+          <p class="vh" id="slew-status" aria-live="polite" data-slew-status></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec frame" aria-labelledby="log-title">
+    <div class="sec__head">
+      <span class="box">Station log</span>
+      <h2 id="log-title" class="display h2">Sixty years of looking up</h2>
+      <p>Built to hand television across the Atlantic, closed when the satellites moved on, bought back for a pound.</p>
+    </div>
+    <div class="log">
+      <figure class="log__photo" data-reveal>
+        <div class="shot shot--43"><img src="assets/img/archive-build.webp" width="1200" height="900" alt="Black and white photograph of Dish One half built in 1964: one side panelled with the numeral 1, the other bare steel ribs, two workers on the frame and scaffold, and a crane on the right." loading="lazy" decoding="async"></div>
+        <figcaption class="cap"><span>Dish One, half panelled</span><span>1964 &middot; station archive</span></figcaption>
+      </figure>
+      <ol class="log__list" data-reveal-group>
+        <li><span class="log__y">1964</span><p><strong>Dish One is commissioned.</strong> Its first job is following the early communications satellites across the Atlantic sky.</p></li>
+        <li><span class="log__y">1969</span><p><strong>The night shift relays the Moon landing.</strong> Pictures come in from across the Atlantic and go out to European broadcasters from console 4.</p></li>
+        <li><span class="log__y">2008</span><p><strong>The last tracking pass.</strong> The site closes and the dish is parked pointing straight up.</p></li>
+        <li><span class="log__y">2019</span><p><strong>Bought for one pound.</strong> The Carrick Head Trust takes on the station, and 600 volunteers start on the rust.</p></li>
+        <li><span class="log__y">2021</span><p><strong>Dish One turns again,</strong> now listening at 1420 MHz for hydrogen in the Milky Way. The gates open to the public.</p></li>
+        <li><span class="log__y">2023</span><p><strong>The planetarium opens</strong> in the old equipment hall: a 9 m dome and 60 seats.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band on-signal sec" aria-labelledby="week-title">
+    <div class="gridline-band" aria-hidden="true"></div>
+    <div class="frame">
+      <div class="sec__head">
+        <span class="box">This week at the station</span>
+        <h2 id="week-title" class="display h2">Days in the dome, nights on the head</h2>
+        <p>Shows run every day we are open. Observing goes ahead when the sky is clear, and we post the call at 16:00 on the day.</p>
+      </div>
+      <div class="tiles" data-reveal-group>
+        <a class="tile tile--ink" href="programme.html#deep-sky">
+          <span class="tile__k mono"><span>OB-02</span><span>Fri and Sat 20:00</span></span>
+          <span><span class="h3">Deep Sky Night</span><p>Andromeda, the Pleiades and the Orion Nebula from a Bortle 3 headland, one volunteer to every telescope and a flask of soup at half time.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+        <div class="tile tile--photo">
+          <figure class="shot"><img src="assets/img/planetarium-800.webp" width="800" height="533" alt="An audience reclined in the planetarium, looking up at the Milky Way projected across the dome, with the star projector glowing at the centre." loading="lazy" decoding="async"></figure>
+        </div>
+        <a class="tile tile--paper" href="programme.html#hydrogen">
+          <span class="tile__k mono"><span>DS-01</span><span>Daily 12:15</span></span>
+          <span><span class="h3">Listening to Hydrogen</span><p>Stand in the dish hut while Dish One points along the Milky Way and the 21 cm hydrogen line climbs out of the noise on the screen.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+        <a class="tile tile--paper" href="programme.html#giant-planets">
+          <span class="tile__k mono"><span>PL-02</span><span>Thu 19:30, Sat 13:30</span></span>
+          <span><span class="h3">Giant Planets</span><p>Jupiter's storms and moons at the scale of the dome, built from spacecraft data. On clear Thursdays the show ends at the telescopes as Jupiter rises.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+        <a class="tile tile--sea-lt" href="programme.html#little-astronauts">
+          <span class="tile__k mono"><span>PL-04</span><span>Sat and Sun 10:30</span></span>
+          <span><span class="h3">Little Astronauts</span><p>Lights stay low, never off. A gentle first show with the Moon, a rocket and a great deal of counting down.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+        <a class="tile tile--paper" href="programme.html">
+          <span class="tile__k mono"><span>12 regular sessions</span></span>
+          <span><span class="h3">The whole week</span><p>Filter by day, dome, dish or headland.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec frame" aria-labelledby="room-title">
+    <div class="sec__head">
+      <span class="box">Gallery &middot; the 1966 control room</span>
+      <h2 id="room-title" class="display h2">Every dial still in place</h2>
+      <p>The room the station ran from, kept as it was the night it closed. Volunteers run tours, and school groups fly a tracking pass from the consoles.</p>
+    </div>
+    <div class="callouts" data-reveal>
+      <figure class="shot shot--wide shot--keep" style="--op:50% 30%"><img src="assets/img/control-room.webp" srcset="assets/img/control-room-960.webp 960w, assets/img/control-room.webp 1536w" sizes="(max-width: 1520px) 96vw, 1520px" width="1536" height="1024" alt="The 1966 control room: a bank of grey-green consoles with round dials on the left, a world plotting board under a wall clock, and a teleprinter on a stand, with a boy in a hoodie reaching for a dial while a woman with a backpack watches." loading="lazy" decoding="async"></figure>
+      <div class="co" style="--x:16.667%;--y:46%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">1</span><span class="co__lab">Console bank</span></div>
+      <div class="co" style="--x:50%;--y:51%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">2</span><span class="co__lab">Console 4</span></div>
+      <div class="co co--left" style="--x:83.333%;--y:54%"><span class="co__line" data-leader></span><span class="co__dot" aria-hidden="true">3</span><span class="co__lab">Teleprinter</span></div>
+    </div>
+    <div class="leaders" aria-hidden="true"><span style="--x:16.667%" data-leader></span><span style="--x:50%" data-leader></span><span style="--x:83.333%" data-leader></span></div>
+    <div class="cards" data-reveal-group>
+      <div class="card"><span class="card__top"><span class="card__n" aria-hidden="true">1</span><span class="mono">14 consoles &middot; 312 dials</span></span><span class="h3">Console bank</span><p>All original, all wired. The volunteers who restored them kept a log of every bulb they replaced: 1,106 so far.</p></div>
+      <div class="card"><span class="card__top"><span class="card__n" aria-hidden="true">2</span><span class="mono">Tours on the hour</span></span><span class="h3">Console 4</span><p>Where the 1969 pictures went out. Behind it, the world plotting board still carries the last night&rsquo;s satellite tracks under the station clock.</p></div>
+      <a class="card" href="instruments.html#control-room"><span class="card__top"><span class="card__n" aria-hidden="true">3</span><span class="mono">Prints tonight&rsquo;s passes</span></span><span class="h3">Teleprinter</span><p>Once it printed tracking orders. Now it types the evening&rsquo;s space station passes for the Satellite Spotting crowd.</p><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    </div>
+  </section>
+
+  <section class="sec--tight frame" aria-labelledby="figs-title">
+    <h2 id="figs-title" class="box" style="margin-bottom:18px">The station in figures</h2>
+    <div class="figs figs--5" data-reveal-group>
+      <div class="fig"><span class="mono">Dish diameter</span><span class="fig__v">26<small>m</small></span><p>Steel, 552 surface panels, 200 tonnes on the move.</p></div>
+      <div class="fig"><span class="mono">Planetarium</span><span class="fig__v">60<small>seats</small></span><p>Under a 9 m dome.</p></div>
+      <div class="fig"><span class="mono">Listening at</span><span class="fig__v">1420<small>MHz</small></span><p>The hydrogen line.</p></div>
+      <div class="fig"><span class="mono">Sky quality</span><span class="fig__v">21.4<small>SQM</small></span><p>Bortle 3 on a clear night.</p></div>
+      <div class="fig"><span class="mono">On the headland since</span><span class="fig__v">1964</span><p>Reopened 2021.</p></div>
+    </div>
+  </section>
+
+  <section class="pair" aria-label="Get involved">
+    <a class="on-ink" href="support.html" data-reveal>
+      <span class="mono">05 &middot; Support</span>
+      <span><span class="display h2">Keep it turning</span><p>2,140 members pay for the grease, the power and the paint. Membership starts at &pound;4 a month and gets you in free all year.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+    <a class="on-signal" href="visit.html" data-reveal>
+      <span class="mono">03 &middot; Visit</span>
+      <span><span class="display h2">Plan a visit</span><p>Hours, tickets, the road from Helston, the path from Coverack and how to behave in the dark.</p></span><svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 12.5 12.5 3.5M5 3.5h7.5V11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+  </section>
+</main>
+<footer class="ftr">
+  <div class="frame">
+    <div class="ftr__grid">
+      <div class="wide">
+        <h2 class="mono">Carrick Head Tracking Station</h2>
+        <p>Carrick Head, near Coverack<br>Helston, Cornwall TR12</p>
+        <p>A space-science centre run by the Carrick Head Trust, registered charity 1194417, with 140 volunteers.</p>
+      </div>
+      <div>
+        <h2 class="mono">Channels</h2>
+        <ul class="ftr__nav">
+          <li><a href="index.html" aria-current="page"><i aria-hidden="true">00</i>Home</a></li>
+          <li><a href="programme.html"><i aria-hidden="true">01</i>Programme</a></li>
+          <li><a href="instruments.html"><i aria-hidden="true">02</i>Instruments</a></li>
+          <li><a href="visit.html"><i aria-hidden="true">03</i>Visit</a></li>
+          <li><a href="schools.html"><i aria-hidden="true">04</i>Schools & Groups</a></li>
+          <li><a href="support.html"><i aria-hidden="true">05</i>Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="mono">Open</h2>
+        <p>Tue to Sun, 10:00 to 17:00</p>
+        <p>Late until 21:00 Wed and Thu, 22:30 Fri and Sat</p>
+        <p>Closed Mondays, except bank holidays</p>
+      </div>
+      <div class="wide">
+        <h2 class="mono">Contact</h2>
+        <p><a href="mailto:hello@carrickhead.org">hello@carrickhead.org</a></p>
+        <p><a href="tel:+441326000000">01326 000 000</a></p>
+        <p>Schools and groups: <a href="mailto:learning@carrickhead.org">learning@carrickhead.org</a></p>
+      </div>
+    </div>
+    <div class="ftr__mark display" aria-hidden="true"><span class="fit" data-fit="mark" style="--em: 3.897">Carrick Head</span></div>
+    <div class="ftr__base mono"><span>Callsign CKH &middot; 50&deg;00&prime;58&Prime;N 5&deg;05&prime;56&Prime;W</span><span>Dish One &middot; 26 m &middot; 1420 MHz</span><span>&copy; 2026 Carrick Head Trust</span></div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="assets/script.js" defer></script>
+</body>
+</html>
